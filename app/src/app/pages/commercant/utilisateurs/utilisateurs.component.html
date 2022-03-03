@@ -1,0 +1,52 @@
+<div class="container my-">
+    <div class="row p-2">
+        <div class="card card-body shadow mb-5">
+            <div>
+                <h4 class="text-dark-green">Ajouter un utilisateur</h4>
+            </div>
+
+            <div class="row justify-content-between">
+                <div class="col">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, <br> <br> vero officia. Ad aperiam enim id exercitationem, nihil aut alias iure voluptatem blanditiis quia sunt ullam ea optio ipsam impedit omnis!
+                </div>
+                <div class="col">
+                    <form nz-form>
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired nzFor="iban">Nom</nz-form-label>
+                            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
+                                E-mail!">
+                                <input nz-input id="nom" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired nzFor="iban">Email</nz-form-label>
+                            <nz-form-control [nzSm]="24" [nzXs]="20" nzErrorTip="The input is not valid
+                                E-mail!">
+                                <input nz-input id="nom" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired nzFor="iban">Role</nz-form-label>
+                            <nz-form-control [nzSm]="4" [nzXs]="20" nzErrorTip="The input is not valid
+                                E-mail!">
+                                <nz-select ngModel="lucy">
+                                    <nz-option nzValue="Administrateur" nzLabel="Administrateur"></nz-option>
+                                    <nz-option nzValue="Vendeur" nzLabel="Vendeur"></nz-option>
+                                    <nz-option nzValue="Opérateur" nzLabel="Opérateur" nzDisabled></nz-option>
+                                    <nz-option nzValue="Manager" nzLabel="Manager" nzDisabled></nz-option>
+                                    <nz-option nzValue="Propriétaire" nzLabel="Propriétaire" nzDisabled></nz-option>
+                                    <nz-option nzValue="Désactivé" nzLabel="Désactivé" nzDisabled></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body shadow raduis-xm">
+            <div>
+                <h4 class="text-dark-green">Liste des utilisateur</h4>
+            </div>
+        </div>
+    </div>
+</div>

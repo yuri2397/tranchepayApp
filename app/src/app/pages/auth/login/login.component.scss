@@ -1,0 +1,26 @@
+* {
+    font-family: "Poppins";
+}
+
+.back {
+    position: relative;
+    background: url("/assets/img/login.png");
+    height: 100%;
+}
+
+label {
+    font-size: 18px;
+}
+
+.bg-login {
+    background: url("/assets/img/login.png");
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.numeric-keyboard[_ngcontent-dnx-c138] {
+    width: 50% !important;
+    border-radius: 10px 10px 0 0;
+}

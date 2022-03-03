@@ -1,0 +1,23 @@
+<h3 class="text-dark-green bold">Nos Partenaires</h3>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="col" *ngFor="let item of partenaires">
+        <div class="card shadow-sm">
+            <img src="{{ item.logo_url }}" class="bd-placeholder-img card-img-top" width="100%" height="225">
+
+            <div class="card-body">
+                <h4 class="card-text text-dark-green bold">{{ item.nom }}</h4>
+                <p *ngIf="item.site_web"><a class="text-dark-green bold btn shadow-sm border" href="{{ item.site_web }}">VOIR LE SITE <i class="bi bi-link-45deg bold"></i></a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loadData>
+    <div class="container w-100" style="width: 100%;">
+        <nz-skeleton [nzActive]="true"></nz-skeleton>
+        <br>
+        <nz-skeleton [nzActive]="true"></nz-skeleton>
+        <br>
+        <nz-skeleton [nzActive]="true"></nz-skeleton>
+    </div>
+</ng-template>

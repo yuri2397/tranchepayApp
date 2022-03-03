@@ -1,0 +1,66 @@
+* {
+    font-family: "Poppins";
+}
+
+#com {
+    background: linear-gradient(113deg, #009dd1 0%, #85ffc2 40%);
+    width: 100%;
+    position: relative;
+    background-size: 100%;
+    padding-top: 30px;
+    margin-bottom: 50px;
+}
+
+#com h1 {
+    margin: 0 0 20px 0;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 56px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#com p {
+    font-size: 25px;
+}
+
+.com-hero-img {
+    width: 100%;
+    position: relative;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.com-how-icon {
+    font-size: 100%;
+}
+
+.phone-img {
+    width: 100%;
+    position: relative;
+    bottom: -20%;
+}
+
+.active-btn {
+    background-color: #fff;
+    border-radius: 5px;
+    color: #004f69;
+    padding: 5px;
+    width: min-content;
+    font-family: "Poppins";
+}
+
+@media screen and (max-width: 575px) {
+    #com {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    #com h1 {
+        font-size: 25px;
+        font-weight: 600;
+        line-height: 35px;
+    }
+    #com p {
+        font-size: 20px;
+    }
+}

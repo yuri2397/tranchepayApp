@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div class="row py-3">
+        <div class="col">
+            <div *ngIf="!isLoad; else loadData" class="card card-body shadow raduis-xm">
+                <div class="row alig-items-between justify-content-between mt-2">
+                    <div class="col">
+                        <div class="section-title">
+                            <h1>SOLDE: {{ boutique.compte.solde }} FCFA</h1>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button (click)="openRetraitModal()" nz-button class="btn primary-btn shadow">Faire un retrait</button>
+                    </div>
+                </div>
+                <nz-divider nzOrientation="left" nzPlain [nzText]="'Liste de vos retraits d\'argent'"></nz-divider>
+                <div class="card-card-body">
+                    <nz-table #nzTable [nzData]="boutique.compte.retraits" nzTableLayout="fixed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">MONTANT</th>
+                                <th class="text-center">VIA</th>
+                                <th class="text-center">DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of nzTable.data">
+                                <td class="text-center">{{ data.montant }} FCFA</td>
+                                <td class="text-center">{{ data.via }}</td>
+                                <td class="text-center">{{ data.date | date }}</td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+            </div>
+            <ng-template #loadData>
+                <div class="card card-body shadow raduis-xm">
+                    <nz-skeleton [nzActive]="true"></nz-skeleton>
+                    <nz-skeleton [nzActive]="true"></nz-skeleton>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

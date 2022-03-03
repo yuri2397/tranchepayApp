@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="card card-body shadow raduis-xm">
+            <nz-tabset nzSize="large">
+                <nz-tab nzTitle="Conditions Générales de Tranchepay"></nz-tab>
+                <nz-tab nzTitle="Vos conditions particulières">
+                    <nz-list nzBordered [nzHeader]="condition_header">
+                        <nz-list-item>
+                            <span nz-typography><mark>Conditions Générales d'Utilisation</mark></span> {{ data[0] }}
+                        </nz-list-item>
+                        <nz-list-item>
+                            <span nz-typography><mark>Conditions Générales de Vente - Vendeur</mark></span> {{ data[0] }}
+                        </nz-list-item>
+                        <nz-list-item>
+                            <span nz-typography><mark>Accord relatif à la protection des données</mark></span> {{ data[0] }}
+                        </nz-list-item>
+                        <nz-list-item>
+                            <span nz-typography><mark>Politique de Confidentialité</mark></span> {{ data[0] }}
+                        </nz-list-item>
+                    </nz-list>
+                </nz-tab>
+                <nz-tab nzTitle="Conditions Générales de Tranchepay"></nz-tab>
+            </nz-tabset>
+        </div>
+    </div>
+</div>
+
+<ng-template #condition_header>
+    <div class="section-title">
+        <h1>Les liens vers les conditions générales de TranchePay</h1>
+    </div>
+</ng-template>

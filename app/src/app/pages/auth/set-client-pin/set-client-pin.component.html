@@ -1,0 +1,42 @@
+<div class="bg ">
+    <div class="center">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div class="card  shadow-sm border card-body raduis-sm">
+                    <h1 class="text-dark-green">
+                        Activer votre compte.
+                    </h1>
+                    <form nz-form [formGroup]="validateForm">
+                        <div class="row my-2">
+                            <div class="col form-group-client">
+                                <label for="telephone">Téléphone *</label>
+                                <input type="text" minlength="9" maxlength="9" class="form-control shadow-sm" id="telephone" formControlName="telephone" required name="telephone">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col form-group-client">
+                                <label for="telephone">Code d'activation *</label>
+                                <input type="text" minlength="4" maxlength="4" class="form-control shadow-sm" id="code" formControlName="code" required name="code">
+                            </div>
+                        </div>
+                        <div class="row  my-2">
+                            <div class="col form-group-client">
+                                <label for="pin">Code Pin *</label>
+                                <input type="password" minlength="4" maxlength="4" required formControlName="pin" aria-label="pin" aria-describedby="pin" class="form-control shadow-sm" id="pin" name="pin">
+                            </div>
+                        </div>
+                        <div class="row  my-2">
+                            <div class="col form-group-client">
+                                <label for="pin_conf">Confirmer votre code pin *</label>
+                                <input type="password" class="form-control shadow-sm" minlength="4" maxlength="4" formControlName="pin_conf" required id="pin_conf" name="pin_conf">
+                            </div>
+                        </div>
+                        <div>
+                            <button (click)="save()" [disabled]="!validateForm.valid" nz-button [nzLoading]="isLoad" class="btn submit-btn border my-2 shadow" type="submit">CONFIRMER</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

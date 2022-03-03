@@ -1,0 +1,105 @@
+<header id="header" class="d-flex align-items-center bg-once">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a class="navbar-brand p-0 me-2" href="/" aria-label="Bootstrap">
+            <img src="/assets/img/logo.png" width="100" height="100" class="d-block my-1" viewBox="0 0 118 94" role="img">
+        </a>
+
+        <nav id="navbar" [class]="menuState.navbar">
+            <ul>
+                <li><a class="nav-link scrollto {{ isCollapse ? 'text-green' : 'text-white' }}" [routerLink]="['/home/page-documentation']">DOCUMENTATION</a></li>
+                <li><a class="nav-link scrollto    {{ isCollapse ? 'text-green' : 'text-white' }} " [routerLink]="['/home/page-commercant']">COMMERCANT</a></li>
+                <li><a class="nav-link scrollto   {{ isCollapse ? 'text-green' : 'text-white' }}" [routerLink]="['/home/page-client']">PARTICULIER</a></li>
+                <li><a class="nav-link scrollto me-5 active {{ isCollapse ? 'text-dark-green' : 'text-white' }}" [routerLink]="['/home/page-contact']">CONTACTEZ-NOUS</a></li>
+                <li><a class="nav-link scrollto  {{ isCollapse ? 'text-dark-green' : 'text-white' }} " [routerLink]="['/auth/login']">CONNEXION</a></li>
+                <li><a class="nav-link scrollto {{ menuState.btnInscription }}" [routerLink]="['/auth/register']">CRÉER UN COMPTE</a></li>
+            </ul>
+            <i (click)="menuClicked()" [class]="menuState.icon"></i>
+        </nav>
+        <!-- .navbar -->
+
+    </div>
+</header>
+
+<section class="bg">
+    <div class="container mt-100">
+        <div class="my-5">
+            <h1 class="bold text-dark-green text-center">Contactez-nous <span class="text-green">dès maintenant</span>
+            </h1>
+        </div>
+
+        <div class="row">
+            <div class="card card-body border shadow raduis-xm">
+                <div class="row px-4 my-2">
+                    <div class="col-md-7">
+                        <section id="contact" class="contact">
+                            <div class="container">
+                                <div class="section-title">
+                                    <p>Renseignez ce formulaire</p>
+                                    <span>Nous reviendrons vers vous dans les plus brefs délais.</span>
+                                </div>
+
+                                <form nz-form [formGroup]="validateForm">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" value="client" type="radio" checked (change)="typeChange($event)" ame="type" formControlName="type" id="type">
+                                            <label class="form-check-label" for="particulier">
+                                              Particulier
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" value="commercant" checked type="radio" name="type" (change)="typeChange($event)" formControlName="type" id="type">
+                                            <label class="form-check-label" for="commercant">
+                                              Commerçant
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-4">
+                                        <label for="full_name" nzRequired>Prénoms Nom *</label>
+                                        <input nz-input type="text" placeholder="Prénom et Nom" class="form-control shadow-sm" id="full_name" formControlName="full_name" name="prenoms">
+                                    </div>
+                                    <div class="row my-4">
+                                        <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12 form-group">
+                                            <label for="email" nzRequired>Email *</label>
+                                            <input type="email" placeholder="Votre adresse e-mail" class="form-control shadow-sm" id="email" formControlName="email" name="email">
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12   form-group">
+                                            <label for="telephone">Téléphone</label>
+                                            <input type="text" aria-label="telephone" placeholder="Numéro de téléphone" minlength="9" maxlength="9" formControlName="telephone" aria-describedby="telephone" class="form-control shadow-sm" id="telephone" name="telephone">
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="isCommercant">
+                                        <div class="row my-4">
+                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12 form-group">
+                                                <label for="entreprise" nzRequired>Nom de votre entreprise *</label>
+                                                <input type="text" class="form-control shadow-sm" placeholder="Nom de votre entreprise" id="entreprise" required formControlName="entreprise" name="entreprise">
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12  form-group">
+                                                <label for="site">Lien site web</label>
+                                                <input type="text" aria-label="site" placeholder="Votre site web" formControlName="site" aria-describedby="ninea" class="form-control shadow-sm" id="site" name="site">
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="form-group">
+                                        <label for="message">Message *</label>
+                                        <textarea rows="5" placeholder="Merci de taper votre message" formControlName="message" class="form-control shadow-sm" id="message" name="message"></textarea>
+                                    </div>
+                                    <button (click)="save()" [disabled]="!validateForm.valid" nz-button [nzLoading]="isLoad" class="btn submit-btn shadow btn-block mt-3" type="submit">
+                                            ENVOYEZ VOTRE DEMANDE
+                                    </button>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-5 d-none d-xl-block d-lg-block d-sm-block d-xs-none d-sm-none align-self-end">
+                        <img src="/assets/img/question.svg" width="100%" alt="QUESTIONNAIRE">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</section>

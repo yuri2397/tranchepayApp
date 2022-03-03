@@ -1,0 +1,224 @@
+<header id="header" class="d-flex align-items-center bg-once">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a class="navbar-brand p-0 me-2" href="/" aria-label="Bootstrap">
+            <img src="/assets/img/logo.png" width="100" height="100" class="d-block my-1" viewBox="0 0 118 94" role="img">
+        </a>
+
+        <nav id="navbar" [class]="menuState.navbar">
+            <ul>
+                <li><a class="nav-link scrollto {{ isCollapse ? 'text-green' : 'text-white' }}" [routerLink]="['/home/page-documentation']">DOCUMENTATION</a></li>
+                <li><a class="nav-link scrollto   active {{ isCollapse ? 'text-dark-green' : 'text-white' }} " [routerLink]="['/home/page-commercant']">COMMERCANT</a></li>
+                <li><a class="nav-link scrollto  {{ isCollapse ? 'text-green' : 'text-white' }}" [routerLink]="['/home/page-client']">PARTICULIER</a></li>
+                <li><a class="nav-link scrollto me-5  {{ isCollapse ? 'text-green' : 'text-white' }}" [routerLink]="['/home/page-contact']">CONTACTEZ-NOUS</a></li>
+                <li><a class="nav-link scrollto  {{ isCollapse ? 'text-dark-green' : 'text-white' }} " [routerLink]="['/auth/login']">CONNEXION</a></li>
+                <li><a class="nav-link scrollto {{ menuState.btnInscription }}" [routerLink]="['/auth/register']">CRÉER UN COMPTE</a></li>
+            </ul>
+            <i (click)="menuClicked()" [class]="menuState.icon"></i>
+        </nav>
+        <!-- .navbar -->
+
+    </div>
+</header>
+
+<div class="home-bg py-5" id="com">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 m-auto">
+                <h1 class="text-white com-title">Tranche Pay, la solution de paiement intégrable sur n’importe quel site e-commerce
+                </h1>
+                <p class="text-white com-sub-title">Rapide pour vos clients et facile pour vous.</p>
+
+                <a class="btn primary-btn shadow text-white my-2">Télécharger l'API <i class="bi bi-link-45deg bold"></i></a>
+            </div>
+            <div class="col-md-6 ">
+                <img src="assets/img/commercant_hero.jpg" class="com-hero-img" alt="" srcset="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="com-section-bg pt-5 details">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-5 col-xl-5 col-lg-5 col-xs-12 col-sm-12 my-5">
+                <div class="card card-body raduis-sm shadow">
+                    <h3 class="text-dark-green fw-md">80% des plateformes</h3>
+                    <p class="text-dark-green">
+                        Tranche Pay pour plus de flexibilité et plus de pouvoir d’achat pour vos clients
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class=" row align-items-center justify-content-center ">
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12" data-aos="fade-right">
+                <img src="/assets/img/intregration.gif" width="100%" alt="INTEGRATION DE TRANCHEPAY">
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 my-3">
+                <h3 class="text-dark-green fw-md">Comment intégrer Tranche Pay sur votre site?</h3>
+                <br><br>
+                <div>
+                    <div class="card-card-body nice-card raduis-sm shadow px-3 py-2">
+                        <div class="col-3 p-2 text-center">
+                            <div class="col-3 number-round">1</div>
+                        </div>
+                        <div class="row  align-items-center justify-content-start">
+                            <div class="col-2 mx-2">
+                                <i class=" m-0 card-icon text-dark-green bi bi-plus-circle-fill"> </i>
+                            </div>
+                            <div class="col">
+                                <p class="text-dark-green">
+                                    Créez votre compte commerçant
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br> <br><br>
+                    <div class="card-card-body nice-card raduis-sm shadow px-3 py-2">
+                        <div class="col-3 p-2 text-center">
+                            <div class="col-3 number-round">2</div>
+                        </div>
+                        <div class="row  align-items-center justify-content-start">
+                            <div class="col-2 mx-2">
+                                <i class=" m-0 card-icon text-dark-green bi bi-arrow-down-circle-fill"> </i>
+                            </div>
+                            <div class="col">
+                                <p class="text-dark-green">
+                                    Téléchargez l’API Tranche Pay Ou téléchargez le module adapté à votre site marchand si vous utilisez une de ces plateformes e-commerce (Wordpress, prestashop, Magento, Shopify)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br> <br><br>
+                    <div class="card-card-body nice-card raduis-sm shadow px-3 py-2">
+                        <div class="col-3 p-2 text-center">
+                            <div class="col-3 number-round">3</div>
+                        </div>
+                        <div class="row  align-items-center justify-content-start">
+                            <div class="col-2 mx-2">
+                                <i class=" m-0 card-icon text-dark-green bi bi-share-fill"> </i>
+                            </div>
+                            <div class="col">
+                                <p class="text-dark-green">
+                                    Déployez Tranche Pay en un claquement de doigts
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 my-5">
+                <div class="col">
+                    <h3 class="text-dark-green fw-md">
+                        Comment enregistrer un paiement en Boutique?
+                    </h3>
+                    <br><br>
+                    <div class="card-card-body nice-card raduis-sm shadow px-3">
+                        <div class="col-3 p-2 text-center">
+                            <div class="col-3 number-round">1</div>
+                        </div>
+                        <div class="row  align-items-center justify-content-start">
+                            <div class="col-2 mx-2">
+                                <i class=" m-0 card-icon text-dark-green bi bi-info-circle-fill"> </i>
+                            </div>
+                            <div class="col">
+                                <p class="text-dark-green">
+                                    Entrez les coordonnées de votre client
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="card-card-body nice-card raduis-sm shadow px-3 py-2">
+                        <div class="col-3 p-2 text-center">
+                            <div class="col-3 number-round">2</div>
+                        </div>
+                        <div class="row  align-items-center justify-content-start">
+                            <div class="col-2 mx-2">
+                                <i class=" m-0 card-icon text-dark-green bi bi-cash-coin"> </i>
+                            </div>
+                            <div class="col">
+                                <p class="text-dark-green">
+                                    Votre client effectue son paiement (sur votre interface ou directement sur son mobile)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="card-card-body nice-card raduis-sm shadow px-3 py-2">
+                        <div class="col-3 p-2 text-center">
+                            <div class="col-3 number-round">3</div>
+                        </div>
+                        <div class="row  align-items-center justify-content-start">
+                            <div class="col-2 mx-2">
+                                <i class=" m-0 card-icon text-dark-green bi bi-check-circle-fill"> </i>
+                            </div>
+                            <div class="col">
+                                <p class="text-dark-green">
+                                    Acceptation instantanée
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12" data-aos="fade-left">
+                <img src="/assets/img/mobile_login.gif" width="100%" alt="INTEGRATION DE TRANCHEPAY">
+            </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-center align-items-center">
+            <div data-aos="fade-up" class="col-md-6 order-1 order-sm-1 order-lg-0 order-md-0 col-lg-6 col-sm-12 col-xs-12">
+                <img src="/assets/img/Subscriber.gif" width="100%" alt="POURQUOI TRACHEPAY?">
+
+                <br><br>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="mx-2">
+                        <button class="btn primary-btn">CONNEXION</button>
+                    </div>
+                    <div class="mx-2">
+                        <button class="btn info-btn">CRÉER UN COMPTE</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 order-0 order-sm-0 order-md-1 order-lg-1 col-lg-6 col-sm-12 col-xs-12 content">
+                <h3 class="text-dark-green fw-md">
+                    Pourquoi choisir Tranchepay?
+                </h3>
+                <ul class="text-dark-green">
+                    <li><i class="bi bi-check"></i> Fonctionne pour toutes vos ventes : Facilité de paiement dédiée à tous les marchands petits ou grands. En ligne ou en boutique.
+                    </li>
+                    <li><i class="bi bi-check"></i> Paiement Immédiat : Vous êtes payés en totalité tout de suite quel que soit l’option de paiement de votre client.</li>
+                    <li><i class="bi bi-check"></i> Plusieurs moyen de paiement : Mobile Money, Visa, Mastercard.</li>
+                    <li><i class="bi bi-check"></i> Augmenter votre chiffre d’affaires : Vendre avec Tanche Pay augmentera vos ventes et facilitera la gestion de votre entreprise.</li>
+                    <li><i class="bi bi-check"></i> Aucun Stress : Tranche Pay assume tous les risques de crédit et de fraude afin que vous puissiez vous concentrer sur la gestion de votre entreprise.</li>
+                    <li><i class="bi bi-check"></i> Aucune Surprise : Pas de frais de mise en place. Pas d'abonnement. Pas d'engagement. Vous payez uniquement ce qui transite par Tranche Pay.</li>
+                </ul>
+
+            </div>
+
+        </div>
+        <section class="about py-5">
+            <div class="container">
+                <div class="card card-body about-bg shadow-sm raduis-sm">
+                    <div class="text-center icon-boxes d-flex flex-column px-md-5 px-xs-1
+                        justify-content-center py-3">
+                        <h4 class="text-tranche text-white fw-md">Vous avez une question spécifique à nous poser
+                        </h4>
+                        <p class="text-white mx-md-5 mx-xs-1">Pour prendre contact avec nos équipe.</p>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <button nz-button class="my-2 btn btn-1 my-4 shadow p-0">
+                                    <a [routerLink]="['/page-contact']">CONTACTEZ NOUS</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

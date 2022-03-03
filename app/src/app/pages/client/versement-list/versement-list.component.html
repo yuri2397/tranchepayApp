@@ -1,0 +1,24 @@
+<div class="container">
+    <h3 class="my-3 text-dark-green bold">Mes versements</h3>
+    <br>
+    <nz-table #basicTable [nzData]="versements" [nzLoading]="isLoad">
+        <thead>
+            <tr>
+                <th class="text-dark-green">REFERENCE</th>
+                <th class="text-dark-green">MÉTHODE</th>
+                <th class="text-dark-green">MONTANT</th>
+                <th class="text-dark-green">COMMANDE</th>
+                <th class="text-dark-green">DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td class="bold text-dark-green">{{ data.reference }}</td>
+                <td class="bold text-dark-green">{{ data.via }}</td>
+                <td class="text-dark-green">{{ data.montant }} FCFA</td>
+                <td class="text-dark-green">{{ data.commande.reference }}</td>
+                <td class="text-dark-green">{{ data.date_time | date:'d MMMM y' }}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

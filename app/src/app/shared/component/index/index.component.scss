@@ -1,0 +1,30 @@
+.bg-home {
+    background-color: #eee;
+}
+
+* {
+    font-family: 'Poppins';
+    outline: none;
+}
+
+#features {
+    background: url("/assets/img/home_bg_1.png") no-repeat;
+    background-size: contain;
+}
+
+#home_offer {
+    background: url('/assets/img/home_bg_2.png');
+    background-size: cover;
+}
+
+.host-img {
+    width: 60%;
+}
+
+.logo {
+    width: 10em;
+}
+
+.round {
+    border-radius: 10px;
+}

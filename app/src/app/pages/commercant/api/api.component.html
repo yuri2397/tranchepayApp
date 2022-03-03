@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="card card-body shadow raduis-xm my-3">
+        <div class="section-title">
+            <h1>Configuration de vos applications</h1>
+        </div>
+        <hr>
+        <nz-table #basicTable [nzData]="dataSet">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Déscription</th>
+                    <th>Date de création</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td>{{data.name}}</td>
+                    <td>{{data.age}}</td>
+                    <td>{{data.address}}</td>
+                    <td>
+                        <a>Action 一 {{data.name}}</a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a>Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <hr>
+        <div class="row justify-content-evenly">
+            <div class="col-4">
+                <button nz-button nzType="primary">Ajouter une nouvelle
+                    application</button>
+
+            </div>
+            <div class="col-4">
+                <button nz-button nzType="default" nzDanger>Voir le guide d'utilisation</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+* {
+    font-family: "Poppins";
+}
+
+.store_btn {
+    width: 100%;
+}
+
+.title-sm {
+    font-size: 20px;
+}
+
+.active-btn {
+    background-color: #fff;
+    border-radius: 5px;
+    color: #004f69;
+    padding: 5px;
+    width: min-content;
+    font-family: "Poppins";
+}
+
+.bg {
+    background: url("/assets/img/home_bg_1.png") no-repeat;
+    background-size: cover;
+    height: max-content;
+}

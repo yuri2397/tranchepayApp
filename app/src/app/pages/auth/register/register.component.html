@@ -1,0 +1,59 @@
+<header class="d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="logo">
+            <a href="/"><img src="assets/img/logo2.png" width="100" class="img-fluid"></a>
+        </div>
+    </div>
+</header>
+<div class="hero-login">
+
+</div>
+<main>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7 col-sm-10 m-auto">
+                <div class="card login-card-bg shadow raduis-sm">
+                    <div class="card-body">
+                        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="form my-3">
+                            <h3 class="text-dark-green">Créer votre compte
+                            </h3>
+                            <div class="form-group my-4">
+                                <div>
+                                    <div class="form-check">
+                                        <input formControlName="profile" class="form-check-input" type="radio" required name="profile" value='client' id="particulier">
+                                        <label class="form-check-label
+                                            text-dark-green" for="particulier">
+                                            S’inscrire en tant que particulier
+                                        </label>
+                                    </div>
+                                    <p class="p-3">
+                                        Vous n’êtes pas encore inscrit ? Créer votre compte particulier pour payer vos achats à votre rythme. Paiement en plusieurs fois, simple et garanti !
+                                    </p>
+                                </div>
+                                <div>
+                                    <div class="form-check">
+                                        <input formControlName="profile" class="form-check-input" type="radio" value="commercant" required name="profile" id="commercant">
+                                        <label class="form-check-label
+                                            text-dark-green" for="commercant">
+                                            S’inscrire en tant que commerçant
+                                        </label>
+                                    </div>
+                                    <p class="px-3 py-3">
+                                        Vous n’êtes pas encore inscrit ? Créer votre compte commerçant pour proposer le paiement en plusieurs fois à vos clients.
+                                    </p>
+                                </div>
+                            </div>
+                            <button (click)="go()" class="btn btn-3 shadow btn-block
+                                col-12 my-3" [disabled]="validateForm.invalid">CONTINUER</button>
+                            <div class="text-center my-3">
+                                <span class="text- text-center">Vous avez déjà un compte ?<a [routerLink]="['/auth/login']"
+                                        class="text-dark-green bold"> CONNECTEZ-VOUS</a>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,33 @@
+.bg {
+    background: url("/assets/img/home_bg_1.png");
+    background-size: cover;
+    height: 100vh;
+}
+
+.form-group-client>label,
+.login-form-label {
+    font-family: "Poppins Light" sans-serif;
+}
+
+.form-group-client>.form-control,
+.login-form-label {
+    border: 1px solid rgb(221, 220, 220);
+    border-radius: 8px;
+}
+
+.form-group-client>.form-control:focus {
+    color: #000000;
+    background-color: #fff;
+    border-color: #010246;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.submit-btn {
+    color: #fff;
+    background-color: #010246;
+    font-family: "Poppins";
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 5px;
+}

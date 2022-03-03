@@ -1,0 +1,85 @@
+<nz-layout class="layout">
+    <nz-sider nzCollapsible class="bg" [(nzCollapsed)]="isCollapsed" [nzWidth]="280" [nzTrigger]="null">
+        <div class="logo">
+            <img src="/assets/img/logo2.png" alt="logo">
+            <h1>{{ title }}</h1>
+        </div>
+        <ul nz-menu class="bg mt-3" nzMode="inline">
+            <li nzSelected="true" nz-menu-item (click)="goto('commandes')">
+                <i nz-icon nzType="unordered-list" class="icon" nzTheme="outline"></i>
+                <span class="text-dark-green bold">Mes Commandes</span>
+            </li>
+            <li nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'" [nzTitle]="activite">
+                <ng-template #activite>
+                    <i nz-icon nzType="dashboard" class="icon" nzTheme="outline"></i>
+
+                    <span class="text-dark-green bold">
+                        Mes Activités
+                    </span>
+                </ng-template>
+
+                <ul>
+                    <li nz-menu-item (click)="goto('versement-create')">
+
+                        <i nz-icon nzType="double-right" class="icon" nzTheme="outline"></i>
+                        <span class="text-dark-green bold">Effectuer un versement</span>
+                    </li>
+                    <li nz-menu-item (click)="goto('versement-list')">
+                        <i nz-icon nzType="ordered-list" class="icon" nzTheme="outline"></i>
+                        <span class="text-dark-green bold">Listes des versements</span>
+                    </li>
+                    <li nz-menu-item (click)="goto('deplafonnement')">
+                        <i nz-icon nzType="up-circle" class="icon" nzTheme="outline"></i>
+                        <span class="text-dark-green bold">Déplafonnement</span>
+                    </li>
+                    <li nz-menu-item (click)="goto('demande-financement')">
+                        <i nz-icon nzType="dollar-circle" class="icon" nzTheme="outline"></i>
+                        <span class="text-dark-green bold">Demande de financement</span>
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu nzOpen [nzTitle]="profil">
+                <ng-template #profil>
+                    <i nz-icon nzType="user" class="icon" nzTheme="outline"></i>
+
+                    <span class="text-dark-green bold">
+                        Mon profil
+                    </span>
+                </ng-template>
+                <ul>
+                    <li nz-menu-item (click)="goto('coordonnees')">
+                        <i nz-icon nzType="info-circle" class="icon" nzTheme="outline"></i>
+                        <span class="text-dark-green bold">Coordonnées</span>
+                    </li>
+                    <li nz-menu-item (click)="goto('securite')">
+                        <i nz-icon nzType="lock" class="icon" nzTheme="outline"></i>
+                        <span class="text-dark-green bold">Connexion et sécurité</span>
+                    </li>
+                </ul>
+            </li>
+            <li nz-menu-item (click)="goto('service-client')">
+                <i nz-icon nzType="question-circle" class="icon" nzTheme="outline"></i>
+                <span class="text-dark-green bold">Service Client</span>
+            </li>
+            <li nz-menu-item (click)="goto('partenaires')">
+                <i nz-icon nzType="link" class="icon" nzTheme="outline"></i>
+                <span class="text-dark-green bold">Nos Partenaires</span>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="isCollapsed = !isCollapsed"></i>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <div class="card card-body raduis-sm shadow">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </nz-content>
+        <nz-footer>
+            <h6 class="text-dark-green text-center">&copy; 2022 tous droits reservé, <a href="/">TRANCHPAY</a></h6>
+        </nz-footer>
+    </nz-layout>
+</nz-layout>
