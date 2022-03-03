@@ -24,14 +24,7 @@ registerLocaleData(fr);
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    LoginComponent,
-    ProfileComponent,
-    ClientComponent,
-    CommercantComponent,
-    UsersComponent,
-    ParametreComponent,
-    CommandesComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
