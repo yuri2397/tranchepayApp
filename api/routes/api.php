@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\CommercantController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\DeplafonnementController;
+use App\Http\Controllers\Api\AdminController;
 
 /**
  * MIXED
@@ -85,3 +86,9 @@ Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
    Route::get("", [CommandeController::class, 'index']);
    Route::get("show/{id}", [CommandeController::class, 'show']);
 });
+
+
+Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
+    Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
+});
+

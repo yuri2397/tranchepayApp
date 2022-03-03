@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Compte;
 use App\Traits\Notification;
+use App\Models\Admin;
 
 class AuthController extends Controller
 {
@@ -49,6 +50,8 @@ class AuthController extends Controller
             "model_type" => $user->model_type
         ], 200);
     }
+
+  
 
     public function registerClient(Request $request)
     {
