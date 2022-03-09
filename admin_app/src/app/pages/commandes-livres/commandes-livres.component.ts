@@ -1,13 +1,13 @@
-import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Commande } from 'src/app/models/commande';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-commandes',
-  templateUrl: './commandes.component.html',
-  styleUrls: ['./commandes.component.scss']
+  selector: 'app-commandes-livres',
+  templateUrl: './commandes-livres.component.html',
+  styleUrls: ['./commandes-livres.component.scss']
 })
-export class CommandesComponent implements OnInit {
+export class CommandesLivresComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
   constructor(private Authsrv: AuthService) {}
@@ -18,10 +18,10 @@ export class CommandesComponent implements OnInit {
 
   findAll() {
     this.isLoad = true;
-    this.Authsrv.findCommandes().subscribe({
+    this.Authsrv.findFinalCommandes().subscribe({
       next: (response) => {
         this.commandes = response;
-        console.log("AZIZ"+JSON.stringify(this.commandes) );
+        console.log(this.commandes);
         this.isLoad = false;
       },
 
@@ -30,6 +30,5 @@ export class CommandesComponent implements OnInit {
       },
     });
   }
-
 
 }

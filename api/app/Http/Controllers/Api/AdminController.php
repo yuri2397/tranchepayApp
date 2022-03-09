@@ -36,4 +36,15 @@ class AdminController extends Controller
     {
         return Commande::limit(20)->orderBy("created_at", "desc")->get();
     }
+
+
+    public function progressCommandes()
+    {
+        return Commande::limit(20)->where("etat_commande_id",2)->get();
+    }
+
+    public function finalCommandes()
+    {
+        return Commande::limit(20)->where("etat_commande_id",3)->get();
+    }
 }

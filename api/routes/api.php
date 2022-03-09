@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\AdminController;
 
 /**
  * MIXED
- */ 
+ */
 
 Route::post("contact-us", [ClientController::class, "contactUs"]);
 
@@ -88,7 +88,13 @@ Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
 });
 
 
+/**
+ * Admin Service
+ */
 Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
+    Route::get('last-commandes', [AdminController::class, "lastCommandes"])->withoutMiddleware("auth:admin");
+    Route::get('load-commmandes', [AdminController::class, "progressCommandes"])->withoutMiddleware("auth:admin");
+    Route::get('final-commandes', [AdminController::class, "finalCommandes"])->withoutMiddleware("auth:admin");
 });
 

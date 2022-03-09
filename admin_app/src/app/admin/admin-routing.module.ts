@@ -1,3 +1,5 @@
+import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
+import { CommandesLivresComponent } from './../pages/commandes-livres/commandes-livres.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from '../pages/client/client.component';
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'clients', component: ClientComponent },
   { path: 'commercant', component: CommercantComponent },
   { path: 'commandes', component: CommandesComponent },
+  { path: 'commandes-livres', component: CommandesLivresComponent },
+  { path: 'commandes-encours', component: CommandesEncoursComponent },
 ];
 
 @NgModule({
