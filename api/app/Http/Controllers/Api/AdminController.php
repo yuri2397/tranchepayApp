@@ -7,6 +7,7 @@ use App\Traits\Utils;
 use App\Models\Commande;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -30,6 +31,17 @@ class AdminController extends Controller
             "token" => $user->createToken($request->device_name),
             "user" => $user,
         ], 200);
+    }
+
+
+    public function getClients()
+    {
+        return Client::limit(10)->get();
+    }
+
+    public function getAdmin()
+    {
+        return Admin::all();
     }
 
     public function lastCommandes()

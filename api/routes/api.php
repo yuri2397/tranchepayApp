@@ -96,5 +96,7 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::get('last-commandes', [AdminController::class, "lastCommandes"])->withoutMiddleware("auth:admin");
     Route::get('load-commmandes', [AdminController::class, "progressCommandes"])->withoutMiddleware("auth:admin");
     Route::get('final-commandes', [AdminController::class, "finalCommandes"])->withoutMiddleware("auth:admin");
+    Route::get('clients', [AdminController::class, "getClient"])->withoutMiddleware("auth:admin");
+    Route::get('admins', [AdminController::class, "getAdmin"])->withoutMiddleware("auth:admin");
 });
 
