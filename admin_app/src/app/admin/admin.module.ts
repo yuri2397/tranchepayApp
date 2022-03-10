@@ -1,3 +1,6 @@
+import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +14,8 @@ import { LoginComponent } from '../pages/login/login.component';
 import { ParametreComponent } from '../pages/parametre/parametre.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { UsersComponent } from '../pages/users/users.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-livres.component';
 
 
 @NgModule({
@@ -22,12 +27,16 @@ import { UsersComponent } from '../pages/users/users.component';
     CommercantComponent,
     UsersComponent,
     ParametreComponent,
-    CommandesComponent
+    CommandesComponent,
+    CommandesLivresComponent,
+    CommandesEncoursComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    
+    NzDropDownModule,
+    NzButtonModule,
+    NzIconModule
   ]
 })
 export class AdminModule { }

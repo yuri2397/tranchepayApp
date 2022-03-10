@@ -30,8 +30,7 @@ registerLocaleData(fr);
   declarations: [
     AppComponent,
     LoginComponent,
-    CommandesLivresComponent,
-    CommandesEncoursComponent
+    
   ],
   imports: [
     BrowserModule,
