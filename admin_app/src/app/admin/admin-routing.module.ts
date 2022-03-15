@@ -1,3 +1,4 @@
+import { UsersComponent } from './../pages/users/users.component';
 import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
 import { CommandesLivresComponent } from './../pages/commandes-livres/commandes-livres.component';
 import { NgModule } from '@angular/core';
@@ -10,12 +11,13 @@ import { AdminComponent } from './admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/:email', component: DashboardComponent },
   { path: 'clients', component: ClientComponent },
   { path: 'commercant', component: CommercantComponent },
   { path: 'commandes', component: CommandesComponent },
   { path: 'commandes-livres', component: CommandesLivresComponent },
   { path: 'commandes-encours', component: CommandesEncoursComponent },
+  { path: 'user', component: UsersComponent },
 ];
 
 @NgModule({

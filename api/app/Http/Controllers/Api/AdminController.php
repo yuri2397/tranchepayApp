@@ -8,6 +8,7 @@ use App\Models\Commande;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Commercant;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -21,9 +22,9 @@ class AdminController extends Controller
 
         $user = Admin::whereEmail($request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || ($request->password!=$user->password)) {
             return response()->json([
-                "message" => "Nom d'utilisateur ou mot passe incorrect."
+                "message" => "Email ou mot passe incorrect."
             ], 422);
         }
 
@@ -37,6 +38,11 @@ class AdminController extends Controller
     public function getClients()
     {
         return Client::limit(10)->get();
+    }
+
+    public function getCommercants()
+    {
+        return Commercant::all();
     }
 
     public function getAdmin()

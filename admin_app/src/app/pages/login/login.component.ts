@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      username: [
+      email: [
         null,
         [Validators.required],
       ],
@@ -39,11 +39,15 @@ export class LoginComponent implements OnInit {
 
   login() {
 
+    console.log("aziz  "+this.validateForm.value.email);
+    console.log("sy  "+this.validateForm.value.password);
+
     this.isLoad = true;
     this.AuthSrv
-      .login(this.validateForm.value.username, this.validateForm.value.password)
+      .login(this.validateForm.value.email, this.validateForm.value.password)
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.loginSuccess(response);
           this.isLoad = false;
         },
@@ -67,7 +71,7 @@ export class LoginComponent implements OnInit {
 
     this.AuthSrv.setToken(response.token.accessToken);
     this.AuthSrv.setUser(response.user);
-    this.router.navigate(['admin/dashboard' + response.user.email ])
+    this.router.navigate(['admin/dashboard/' + response.user.email ])
   }
 
 }

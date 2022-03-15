@@ -1,1 +1,25 @@
-<p>commercant works!</p>
+<nz-table #nzTable [nzData]="commercants" nzTableLayout="fixed">
+    <thead>
+        <tr>
+            <th nzWidth="60px"></th>
+            <th>PRENOM</th>
+            <th>NOM</th>
+            <th>TELEPHONE</th>
+            <th>ADRESSE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of nzTable.data">
+            <tr>
+                <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+                <td>{{ data.prenoms }}</td>
+                <td>{{ data.nom }}</td>
+                <td>{{ data.telephone }}</td>
+                <td>{{ data.adresse }}</td>
+            </tr>
+            <tr [nzExpand]="expandSet.has(data.id)">
+                <span>Commercant au nom de {{ data.prenoms+" "+data.nom+" et a pour numéro de téléphone :"+ data.telephone }}</span>
+            </tr>
+        </ng-container>
+    </tbody>
+</nz-table>

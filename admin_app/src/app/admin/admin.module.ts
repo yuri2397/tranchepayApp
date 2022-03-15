@@ -2,8 +2,10 @@ import { CommandesEncoursComponent } from './../pages/commandes-encours/commande
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NgModule } from '@angular/core';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { CommonModule } from '@angular/common';
-
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { ClientComponent } from '../pages/client/client.component';
@@ -36,7 +38,10 @@ import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-li
     AdminRoutingModule,
     NzDropDownModule,
     NzButtonModule,
-    NzIconModule
+    NzIconModule,
+    NzTableModule,
+    NzBadgeModule,
+    NzFormModule
   ]
 })
 export class AdminModule { }

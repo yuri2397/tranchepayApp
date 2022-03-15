@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ClientComponent implements OnInit {
   clients!: Client[];
   isLoad = true;
+  expandSet = new Set<number>();
   constructor(private Authsrv: AuthService) {}
 
   ngOnInit(): void {
@@ -31,4 +32,12 @@ export class ClientComponent implements OnInit {
     });
   }
 
+
+  onExpandChange(id: number, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
 }

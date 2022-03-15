@@ -1,3 +1,4 @@
+import { Commercant } from './../models/commercant';
 import { Admin } from './../models/admin';
 import { Base } from './../shared/http/base';
 import { Injectable } from '@angular/core';
@@ -22,11 +23,11 @@ export class AuthService extends Base{
  * @author Abdou Aziz Sy NDIAYE
  * @since 09.03.2022
  */
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     return this.http.post<LoginResponse>(
       this.endPoint + 'login',
       {
-        username: username,
+        email: email,
         password: password,
       },
       {
@@ -52,7 +53,7 @@ export class AuthService extends Base{
  * @since 09.03.2022
  */
   findProgressCommandes() {
-    return this.http.get<Commande[]>(this.endPoint + 'load-commandes', {
+    return this.http.get<Commande[]>(this.endPoint + 'load-commmandes', {
       headers: this.authorizationHeaders,
     });
   }
@@ -91,5 +92,19 @@ export class AuthService extends Base{
       headers: this.authorizationHeaders,
     });
   }
+
+
+   /**
+ * La liste des commercants
+ * @author Abdou Aziz Sy NDIAYE
+ * @since 11.03.2022
+ */
+    findCommercants()
+    {
+      return this.http.get<Commercant[]>(this.endPoint + 'commercants', {
+        headers: this.authorizationHeaders,
+      });
+    }
+
 
 }
