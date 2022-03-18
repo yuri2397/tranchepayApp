@@ -8,16 +8,40 @@ import { CommandesComponent } from '../pages/commandes/commandes.component';
 import { CommercantComponent } from '../pages/commercant/commercant.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AdminComponent } from './admin.component';
+import { AuthGuard } from '../guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard/:email', component: DashboardComponent },
-  { path: 'clients', component: ClientComponent },
-  { path: 'commercant', component: CommercantComponent },
-  { path: 'commandes', component: CommandesComponent },
-  { path: 'commandes-livres', component: CommandesLivresComponent },
-  { path: 'commandes-encours', component: CommandesEncoursComponent },
-  { path: 'user', component: UsersComponent },
+  { path: 'dashboard/:email', component: DashboardComponent
+
+  },
+  { path: 'clients',
+      component: ClientComponent,
+      canActivate:[AuthGuard],
+
+   },
+  { path: 'commercant',
+      component: CommercantComponent ,
+      canActivate:[AuthGuard],
+  },
+  { path: 'commandes',
+      component: CommandesComponent,
+      canActivate:[AuthGuard]
+    },
+  { path: 'commandes-livres',
+      component: CommandesLivresComponent,
+      canActivate:[AuthGuard]
+    },
+  { path: 'commandes-encours',
+  component:CommandesEncoursComponent,
+  canActivate:[AuthGuard],
+
+  },
+  { path: 'user',
+    component: UsersComponent,
+    canActivate:[AuthGuard],
+
+  },
 ];
 
 @NgModule({

@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -41,7 +42,8 @@ import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-li
     NzIconModule,
     NzTableModule,
     NzBadgeModule,
-    NzFormModule
+    NzFormModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

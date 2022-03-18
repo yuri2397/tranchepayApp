@@ -10,6 +10,7 @@ import { Commande } from 'src/app/models/commande';
 export class CommandesComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
+  titre:any;
   constructor(private Authsrv: AuthService) {}
 
   ngOnInit(): void {
@@ -30,6 +31,22 @@ export class CommandesComponent implements OnInit {
       },
     });
   }
+
+  serarchcommande()
+  {
+    if(this.titre=="")
+    {
+      this.ngOnInit();
+    }
+    else
+    {
+      this.commandes=this.commandes.filter((result: Commande)=>{
+        return result.boutique.nom.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+      })
+    }
+
+  }
+
 
 
 }

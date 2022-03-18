@@ -39,22 +39,16 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-    console.log("aziz  "+this.validateForm.value.email);
-    console.log("sy  "+this.validateForm.value.password);
-
     this.isLoad = true;
     this.AuthSrv
       .login(this.validateForm.value.email, this.validateForm.value.password)
       .subscribe({
         next: (response) => {
-          console.log(response);
           this.loginSuccess(response);
           this.isLoad = false;
         },
         error: (errors) => {
           this.isLoad = false;
-          console.log(errors);
-
           this.notification.create("error", "Message d'erreur", errors.error.message, {
             nzDuration: 5000
           });
@@ -67,8 +61,6 @@ export class LoginComponent implements OnInit {
 
 
   private loginSuccess(response: LoginResponse) {
-    console.log("RESPONSE:", response);
-
     this.AuthSrv.setToken(response.token.accessToken);
     this.AuthSrv.setUser(response.user);
     this.router.navigate(['admin/dashboard/' + response.user.email ])

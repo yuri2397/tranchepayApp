@@ -11,6 +11,7 @@ export class CommandesEncoursComponent implements OnInit {
 
   commandes!: Commande[];
   isLoad = true;
+  titre:any;
   constructor(private Authsrv: AuthService) {}
 
   ngOnInit(): void {
@@ -30,6 +31,20 @@ export class CommandesEncoursComponent implements OnInit {
         console.error(errors);
       },
     });
+  }
+  serarchcommande()
+  {
+    if(this.titre=="")
+    {
+      this.ngOnInit();
+    }
+    else
+    {
+      this.commandes=this.commandes.filter((result: Commande)=>{
+        return result.boutique.nom.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+      })
+    }
+
   }
 
 

@@ -1,6 +1,21 @@
 <div class="container">
     <h3 class="my-3 text-dark-green bold">Les dernières commandes</h3>
     <br>
+    <div class="col-sm-7">
+        <!-- Top search START -->
+        <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
+            <div class="col-sm-7">
+
+                <div class="search-box">
+                    <input [(ngModel)]="titre" (ngModelChange)="serarchcommande()" type="text" class="form-control" placeholder="Boutique&hellip;">
+                </div>
+
+                <!-- Top search END -->
+            </div>
+        </div>
+        <!-- Top search END -->
+    </div>
+    <br>
     <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
         <thead>
             <tr>

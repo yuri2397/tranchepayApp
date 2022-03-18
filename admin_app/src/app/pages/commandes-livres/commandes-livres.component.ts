@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CommandesLivresComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
+  titre:any;
+  commande:any=[];
   constructor(private Authsrv: AuthService) {}
 
   ngOnInit(): void {
@@ -21,6 +23,7 @@ export class CommandesLivresComponent implements OnInit {
     this.Authsrv.findFinalCommandes().subscribe({
       next: (response) => {
         this.commandes = response;
+        this.commande=response;
         console.log(this.commandes);
         this.isLoad = false;
       },
@@ -29,6 +32,20 @@ export class CommandesLivresComponent implements OnInit {
         console.error(errors);
       },
     });
+  }
+  serarchcommande()
+  {
+    if(this.titre=="")
+    {
+      this.ngOnInit();
+    }
+    else
+    {
+      this.commandes=this.commandes.filter((result: Commande)=>{
+        return result.boutique.nom.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+      })
+    }
+
   }
 
 }
