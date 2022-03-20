@@ -45,6 +45,13 @@ class AdminController extends Controller
         return Commercant::with(['boutique','boutique.commandes'])->get();
     }
 
+    public function showCommercantById($id)
+    {
+        return Commercant::with(['boutique','boutique.commandes'])
+        ->whereId($id)
+        ->first();
+    }
+
     public function getAdmin()
     {
         return Admin::all();
