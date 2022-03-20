@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Commercant } from './../../models/commercant';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,7 @@ export class CommercantComponent implements OnInit {
   isLoad = true;
   commercants!:Commercant[];
   expandSet = new Set<number>();
-  constructor(private Authsrv:AuthService) { }
+  constructor(private Authsrv:AuthService,private route:Router) { }
 
   ngOnInit(): void {
     this.findAll();
@@ -39,6 +40,8 @@ export class CommercantComponent implements OnInit {
       },
     });
   }
+
+
 
 
 }

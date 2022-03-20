@@ -47,6 +47,13 @@ export class AuthService extends Base{
     });
   }
 
+  findCommandeByBoutiqueCommercant(id:any)
+  {
+    return this.http.get<Commande[]>(this.endPoint + 'commercants/'+id, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
    /**
  * la liste des commandes en-cours
  * @author Abdou Aziz Sy NDIAYE

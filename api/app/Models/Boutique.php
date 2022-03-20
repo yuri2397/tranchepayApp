@@ -22,5 +22,5 @@ class Boutique extends Model
         return $this->hasOne(Compte::class);
     }
 
-    
+
 }

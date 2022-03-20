@@ -1,0 +1,91 @@
+<div class="container">
+    <h3 class="my-3 text-dark-green bold">Les commandes faites par les clients</h3>
+    <br>
+    <div class="col-sm-7">
+        <!-- Top search START -->
+        <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
+            <div class="col-sm-7">
+
+                <div class="search-box">
+                    <input type="text" class="form-control" placeholder="Boutique&hellip;">
+                </div>
+
+                <!-- Top search END -->
+            </div>
+        </div>
+        <!-- Top search END -->
+    </div>
+    <br>
+    <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
+        <thead>
+            <tr>
+                <th class="bold text-dark-green">REFERENCE</th>
+                <th class="bold text-dark-green">PRIX TOTAL</th>
+                <th class="bold text-dark-green">NOMBRE PRODUITS</th>
+                <th class="bold text-dark-green">COMMISSION</th>
+                <th class="bold text-dark-green">CLIENT</th>
+                <th class="bold text-dark-green">DATE LIMITE</th>
+                <th class="bold text-dark-green">ETAT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td class="text-dark-green">{{ data.reference }}
+                </td>
+                <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
+                <td class="text-dark-green">{{data.nb_produits}}</td>
+                <td class="text-dark-green">{{ data.commission }} FCFA</td>
+                <td class="text-dark-green">{{ data.client.prenoms }}
+                    <span>  </span> {{ data.client.nom }}</td>
+
+                <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
+                <td class="text-dark-green">
+                    <ng-container *ngIf="data.etat_commande.nom=='load'; else elseTemplate">
+                        <nz-tag nzColor="processing">Processing</nz-tag>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <nz-tag nzColor="success">Finish</nz-tag>
+                    </ng-template>
+
+
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <hr>
+    <h3 class="my-3 text-dark-green bold">Boutique</h3>
+    <br>
+    <div class="col-sm-7">
+        <!-- Top search START -->
+        <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
+            <div class="col-sm-7">
+
+                <div class="search-box">
+                    <input type="text" class="form-control" placeholder="Boutique&hellip;">
+                </div>
+
+                <!-- Top search END -->
+            </div>
+        </div>
+        <!-- Top search END -->
+    </div>
+    <br>
+    <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
+        <thead>
+            <tr>
+                <th class="bold text-dark-green">NOM</th>
+                <th class="bold text-dark-green">ADRESSE</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data ; let i=index">
+
+                <td class="text-dark-green">{{ data.boutique.nom }}
+                </td>
+                <td class="text-dark-green">{{ data.boutique.addresse }}</td>
+
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

@@ -1,3 +1,5 @@
+import { DetailsCommercantComponent } from './../pages/details-commercant/details-commercant.component';
+import { DetailsClientsComponent } from './../pages/details-clients/details-clients.component';
 import { UsersComponent } from './../pages/users/users.component';
 import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
 import { CommandesLivresComponent } from './../pages/commandes-livres/commandes-livres.component';
@@ -42,6 +44,16 @@ const routes: Routes = [
     canActivate:[AuthGuard],
 
   },
+  { path: 'detailclient/:id',
+    component: DetailsClientsComponent,
+    canActivate:[AuthGuard],
+
+  },
+  { path: 'commercant/show/:id',
+  component: DetailsCommercantComponent,
+  canActivate:[AuthGuard],
+
+},
 ];
 
 @NgModule({

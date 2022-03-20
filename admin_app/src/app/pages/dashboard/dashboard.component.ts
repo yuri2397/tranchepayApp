@@ -6,16 +6,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit,OnDestroy {
+export class DashboardComponent implements OnInit {
 
   constructor(private AuthSrv:AuthService) { }
 
   ngOnInit(): void {
   }
 
-  ngOnDestroy(): void {
-      this.AuthSrv.logout();
-  }
+
 
 
 }

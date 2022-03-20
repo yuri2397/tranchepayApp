@@ -19,7 +19,9 @@ import { ProfileComponent } from '../pages/profile/profile.component';
 import { UsersComponent } from '../pages/users/users.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-livres.component';
-
+import { DetailsClientsComponent } from '../pages/details-clients/details-clients.component';
+import { DetailsCommercantComponent } from '../pages/details-commercant/details-commercant.component';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,10 @@ import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-li
     ParametreComponent,
     CommandesComponent,
     CommandesLivresComponent,
-    CommandesEncoursComponent
+    CommandesEncoursComponent,
+    DetailsClientsComponent,
+    DetailsCommercantComponent,
+
   ],
   imports: [
     CommonModule,
@@ -43,7 +48,9 @@ import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-li
     NzTableModule,
     NzBadgeModule,
     NzFormModule,
-    FormsModule
+    FormsModule,
+    NzTagModule
+
   ]
 })
 export class AdminModule { }

@@ -93,11 +93,12 @@ Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
  */
 Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
-    Route::get('last-commandes', [AdminController::class, "lastCommandes"])->withoutMiddleware("auth:admin");
-    Route::get('commercants', [AdminController::class, "getCommercants"])->withoutMiddleware("auth:admin");
-    Route::get('load-commmandes', [AdminController::class, "progressCommandes"])->withoutMiddleware("auth:admin");
-    Route::get('final-commandes', [AdminController::class, "finalCommandes"])->withoutMiddleware("auth:admin");
-    Route::get('clients', [AdminController::class, "getClients"])->withoutMiddleware("auth:admin");
-    Route::get('admins', [AdminController::class, "getAdmin"])->withoutMiddleware("auth:admin");
+    Route::get('last-commandes', [AdminController::class, "lastCommandes"]);
+    Route::get('commercants', [AdminController::class, "getCommercants"]);
+    Route::get('commercants/{id}', [AdminController::class, "getCommandeByBoutiqueId"]);
+    Route::get('load-commmandes', [AdminController::class, "progressCommandes"]);
+    Route::get('final-commandes', [AdminController::class, "finalCommandes"]);
+    Route::get('clients', [AdminController::class, "getClients"]);
+    Route::get('admins', [AdminController::class, "getAdmin"]);
 });
 

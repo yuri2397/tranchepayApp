@@ -42,7 +42,7 @@ class AdminController extends Controller
 
     public function getCommercants()
     {
-        return Commercant::all();
+        return Commercant::with(['boutique','boutique.commandes'])->get();
     }
 
     public function getAdmin()
@@ -64,5 +64,10 @@ class AdminController extends Controller
     public function finalCommandes()
     {
         return Commande::limit(20)->where("etat_commande_id",3)->get();
+    }
+
+    public function getCommandeByBoutiqueId(string $id)
+    {
+        return Commande::limit(20)->where("boutique_id",$id)->get();
     }
 }
