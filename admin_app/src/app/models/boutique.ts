@@ -1,3 +1,4 @@
+import { Commande } from './commande';
 import { Compte } from './compte';
 export class Boutique {
     id!: number;
@@ -5,6 +6,7 @@ export class Boutique {
     addresse!: string;
     commercant_id!: number;
     compte!: Compte;
+    commandes!: Commande[];
     created_at!: Date;
     updated_at!: Date;
 }
