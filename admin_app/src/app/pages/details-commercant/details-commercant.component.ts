@@ -1,3 +1,4 @@
+import { Commercant } from './../../models/commercant';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +11,8 @@ import { Commande } from 'src/app/models/commande';
 })
 export class DetailsCommercantComponent implements OnInit {
   isLoad = true;
-  commandes!: Commande[];
+  commercant!: Commercant;
+  commandes!:Commande[];
   id: any;
   constructor(private route:ActivatedRoute,private AuthSrv:AuthService) { }
 
@@ -18,10 +20,11 @@ export class DetailsCommercantComponent implements OnInit {
     this.id=this.route.snapshot.paramMap.get('id');
     console.log("je suis id :"+this.id);
     this.isLoad = true;
-    this.AuthSrv.findCommandeByBoutiqueCommercant(this.id).subscribe({
+    this.AuthSrv.findCommercant(this.id).subscribe({
       next: (response) => {
-        this.commandes = response;
-        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.commandes) );
+        this.commercant = response;
+        this.commandes=this.commercant.boutique.commandes;
+        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.commercant) );
         this.isLoad = false;
       },
 

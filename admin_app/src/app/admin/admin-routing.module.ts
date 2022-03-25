@@ -54,6 +54,10 @@ const routes: Routes = [
   canActivate:[AuthGuard],
 
 },
+{ path: 'clients/show/:id',
+  component: DetailsClientsComponent,
+  canActivate:[AuthGuard],
+},
 ];
 
 @NgModule({

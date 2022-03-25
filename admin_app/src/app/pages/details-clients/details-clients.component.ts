@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Client } from 'src/app/models/client';
+import { Commande } from 'src/app/models/commande';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-details-clients',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsClientsComponent implements OnInit {
 
-  constructor() { }
+  isLoad = true;
+  client!:Client;
+  commandes!:Commande[];
+  id: any;
+  constructor(private route:ActivatedRoute,private AuthSrv:AuthService) { }
 
   ngOnInit(): void {
+
+    this.id=this.route.snapshot.paramMap.get('id');
+    console.log("je suis id :"+this.id);
+    this.isLoad = true;
+    this.AuthSrv.findClient(this.id).subscribe({
+      next: (response) => {
+        this.client = response;
+        this.commandes=this.client.commandes;
+        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.client) );
+        this.isLoad = false;
+      },
+
+      error: (errors) => {
+        console.error(errors);
+      },
+    });
   }
 
 }

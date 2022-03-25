@@ -33,7 +33,7 @@
                     <td>{{ data.nom }}</td>
                     <td>{{ data.telephone }}</td>
                     <td>{{ data.adresse }}</td>
-                    <td class="text-dark-green"><i routerLink="show/{{ data.boutique.id}}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i>
+                    <td class="text-dark-green"><i routerLink="show/{{ data.id}}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i>
                     </td>
                 </tr>
                 <tr [nzExpand]="expandSet.has(data.id)">

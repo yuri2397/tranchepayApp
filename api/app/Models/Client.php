@@ -11,7 +11,7 @@ class Client extends Model
     use Uuids;
     use HasFactory;
 
-    protected $with = ['deplafonnement'];
+    protected $with = ['deplafonnement','commandes'];
 
     public function deplafonnement()
     {

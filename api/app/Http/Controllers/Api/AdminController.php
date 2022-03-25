@@ -51,6 +51,12 @@ class AdminController extends Controller
         ->whereId($id)
         ->first();
     }
+    public function ShowClienById($id)
+    {
+        return Client::with(['commandes'])
+        ->whereId($id)
+        ->first();
+    }
 
     public function getAdmin()
     {

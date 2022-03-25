@@ -47,9 +47,16 @@ export class AuthService extends Base{
     });
   }
 
-  findCommandeByBoutiqueCommercant(id:any)
+  findCommercant(id:any)
   {
-    return this.http.get<Commande[]>(this.endPoint + 'commercants/'+id, {
+    return this.http.get<Commercant>(this.endPoint + 'commercants/'+id, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  findClient(id:any)
+  {
+    return this.http.get<Client>(this.endPoint + 'client/'+id, {
       headers: this.authorizationHeaders,
     });
   }

@@ -13,6 +13,7 @@ export class Commercant {
     boutique!:   Boutique;
     pin!: number;
 
+
     constructor(){
         this.boutique = new Boutique();
     }
