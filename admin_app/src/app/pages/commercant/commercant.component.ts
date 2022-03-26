@@ -12,6 +12,7 @@ export class CommercantComponent implements OnInit {
   isLoad = true;
   commercants!:Commercant[];
   expandSet = new Set<number>();
+  titre:any;
   constructor(private Authsrv:AuthService,private route:Router) { }
 
   ngOnInit(): void {
@@ -41,7 +42,20 @@ export class CommercantComponent implements OnInit {
     });
   }
 
+  serarchcommercant()
+  {
+    if(this.titre=="")
+    {
+      this.ngOnInit();
+    }
+    else
+    {
+      this.commercants=this.commercants.filter((result: Commercant)=>{
+        return result.prenoms.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+      })
+    }
 
+  }
 
 
 }

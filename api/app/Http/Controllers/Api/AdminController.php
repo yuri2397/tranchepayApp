@@ -8,8 +8,10 @@ use App\Models\Commande;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use App\Models\Commercant;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Commercant;
+
 
 class AdminController extends Controller
 {
@@ -34,6 +36,29 @@ class AdminController extends Controller
         ], 200);
     }
 
+    public function registerAdmin(Request $request)
+    {
+        $this->validate($request, [
+            'full_name' => 'required|string',
+            'email' => 'required|string',
+            'password' =>"required|min:8",
+        ]);
+
+        try{
+            $admin=new  Admin();
+            $admin->full_name=$request->full_name;
+            $admin->email=$request->full_name;
+            $admin->password=Hash::make($request->password);
+            $admin->save();
+            return response()->json($admin, 201);
+        }
+        catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th
+            ], 500);
+        }
+
+    }
 
     public function getClients()
     {

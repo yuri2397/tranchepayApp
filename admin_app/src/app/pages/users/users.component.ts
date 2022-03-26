@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-users',
@@ -13,60 +14,17 @@ export class UsersComponent implements OnInit {
 admins!:Admin[];
 isLoad=true;
 validateForm!: FormGroup;
+isVisible = false;
+isConfirmLoading = false;
 
-
-submitForm(): void {
-  console.log('submit', this.validateForm.value);
-}
-
-resetForm(e: MouseEvent): void {
-  e.preventDefault();
-  this.validateForm.reset();
-  for (const key in this.validateForm.controls) {
-    if (this.validateForm.controls.hasOwnProperty(key)) {
-      this.validateForm.controls[key].markAsPristine();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-  }
-}
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
+passwordVisible = false;
+  password?: string;
 
 
 
 
+constructor(private Authsrv: AuthService,private fb: FormBuilder,private modalService: NzModalService) {
 
-
-
-constructor(private Authsrv: AuthService,private fb: FormBuilder) {
-  this.validateForm = this.fb.group({
-    userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required]],
-    confirm: ['', [this.confirmValidator]],
-    comment: ['', [Validators.required]]
-  });
 }
 
   ngOnInit(): void {
@@ -85,6 +43,28 @@ constructor(private Authsrv: AuthService,private fb: FormBuilder) {
       error: (errors) => {
         console.error(errors);
       },
+    });
+  }
+
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  showConfirm(): void {
+    this.modalService.confirm({
+      nzTitle: 'Confirm',
+      nzContent: 'Bla bla ...',
+      nzOkText: 'OK',
+      nzCancelText: 'Cancel'
     });
   }
 

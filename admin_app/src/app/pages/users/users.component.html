@@ -1,35 +1,77 @@
-<form nz-form (ngSubmit)="submitForm()">
-    <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
-            <input nz-input formControlName="userName" placeholder="async validate try to write JasonWood" />
-            <ng-template #userErrorTpl let-control>
-                <ng-container *ngIf="control.hasError('required')">Please input your username!</ng-container>
-                <ng-container *ngIf="control.hasError('duplicated')">The username is redundant!</ng-container>
-            </ng-template>
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
-            <input nz-input formControlName="email" placeholder="email" type="email" />
-            <ng-template #emailErrorTpl let-control>
-                <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!</ng-container>
-                <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
-            </ng-template>
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
-            <input nz-input type="password" formControlName="password" />
-        </nz-form-control>
-    </nz-form-item>
+<div class="row">
+    <div class="col-sm-6">
+        <h4 style=" margin-bottom: 16px;">Les administrateurs</h4>
+    </div>
 
-    <nz-form-item>
-        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
-            <button nz-button (click)="resetForm($event)">Reset</button>
-        </nz-form-control>
-    </nz-form-item>
-</form>
+
+    <br>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <!-- Top search START -->
+        <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
+            <div class="col-sm-7">
+
+                <div class="search-box">
+                    <input type="text" class="form-control" placeholder="Email&hellip;">
+                </div>
+
+                <!-- Top search END -->
+            </div>
+        </div>
+        <!-- Top search END -->
+    </div>
+    <div class="col-sm-6">
+        <button nz-button nzType="default" (click)="showModal()">
+  <span>Create Admin</span>
+</button>
+    </div>
+
+</div><br><br>
+
+<nz-table #middleTable nzSize="middle" [nzData]="admins">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of middleTable.data">
+            <td>{{ data.id }}</td>
+            <td>{{ data.full_name }}</td>
+            <td>{{ data.email }}</td>
+        </tr>
+    </tbody>
+</nz-table>
+
+
+<div>
+
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Enregistrer Admin" nzOkText="Enregistrer" nzCancelText="Cancel" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+        <ng-container *nzModalContent>
+
+            <nz-input-group nzSize="large" [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input placeholder="Enter  fullname" />
+            </nz-input-group>
+            <ng-template #prefixTemplateUser><i nz-icon nzType="user"></i></ng-template>
+            <ng-template #suffixTemplateInfo>
+                <i nz-icon nz-tooltip nzTooltipTitle="Extra information" nzType="info-circle"></i>
+            </ng-template>
+            <br />
+            <br />
+            <input nz-input placeholder="Email" nzSize="large" />
+            <br />
+            <br />
+            <nz-input-group nzSize="large" [nzSuffix]="suffixTemplate">
+                <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="password" [(ngModel)]="password" nzSize="large" />
+            </nz-input-group>
+            <ng-template #suffixTemplate>
+                <i style=" cursor: pointer;" nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+            </ng-template>
+
+        </ng-container>
+    </nz-modal>
+</div>
+<br />

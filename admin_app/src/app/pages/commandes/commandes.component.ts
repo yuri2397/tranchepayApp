@@ -41,7 +41,7 @@ export class CommandesComponent implements OnInit {
     else
     {
       this.commandes=this.commandes.filter((result: Commande)=>{
-        return result.boutique.nom.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+        return result.reference.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
       })
     }
 

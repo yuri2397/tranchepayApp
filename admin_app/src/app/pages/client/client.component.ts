@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ClientComponent implements OnInit {
   clients!: Client[];
   isLoad = true;
+  titre:any;
   expandSet = new Set<number>();
   constructor(private Authsrv: AuthService) {}
 
@@ -39,5 +40,20 @@ export class ClientComponent implements OnInit {
     } else {
       this.expandSet.delete(id);
     }
+  }
+
+  serarchclient()
+  {
+    if(this.titre=="")
+    {
+      this.ngOnInit();
+    }
+    else
+    {
+      this.clients=this.clients.filter((result: Client)=>{
+        return result.prenoms.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+      })
+    }
+
   }
 }

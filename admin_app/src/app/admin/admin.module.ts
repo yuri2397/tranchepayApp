@@ -9,12 +9,14 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { AdminRoutingModule } from './admin-routing.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { AdminComponent } from './admin.component';
 import { ClientComponent } from '../pages/client/client.component';
 import { CommandesComponent } from '../pages/commandes/commandes.component';
 import { CommercantComponent } from '../pages/commercant/commercant.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { ParametreComponent } from '../pages/parametre/parametre.component';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
@@ -57,7 +59,9 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     NzTagModule,
     NzListModule,
     NzDividerModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    NzModalModule,
+    NzInputModule
 
   ]
 })
