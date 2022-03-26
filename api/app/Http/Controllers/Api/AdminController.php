@@ -120,4 +120,5 @@ class AdminController extends Controller
         return Commande::with(['versements','produits'])
         ->whereId($id)->first();
     }
+
 }

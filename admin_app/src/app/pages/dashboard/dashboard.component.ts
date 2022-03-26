@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
@@ -8,9 +9,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private AuthSrv:AuthService) { }
+   email:any ;
+  constructor(private AuthSrv:AuthService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.email=this.route.snapshot.paramMap.get('email');
+    console.log(this.email)
   }
 
 

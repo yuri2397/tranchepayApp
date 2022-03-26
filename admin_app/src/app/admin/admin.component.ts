@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { DashboardComponent } from './../pages/dashboard/dashboard.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
@@ -8,10 +9,13 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit,OnDestroy {
-
-  constructor(private Authsrv: AuthService,private route:Router) { }
+id:any;
+dashbord!:DashboardComponent;
+  constructor(private Authsrv: AuthService,private route:Router,private rout: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log("cc c'est moi"+this.dashbord.email)
+
   }
   ngOnDestroy(): void
   {

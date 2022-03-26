@@ -3,71 +3,45 @@
     <h3 class="breadcrumbs-title">Details sur le Client</h3>
     <br>
 
+
+
+
+
     <div class="row">
 
 
+        <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
+            <div class="collapsible-header active">
+                <h6>Identifiant</h6>
+            </div>
+            <div class="card card-body raduis-sm border">
+                <nz-list>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>PRENOM</b></span> {{client?.prenoms}}
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>NOM</b></span>{{client?.nom}}
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>ADRESSE</b></span> {{client?.adresse}}
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>TELEPHONE</b></span> {{client?.telephone}}
+                    </nz-list-item>
 
-        <div class="col s12 m6 l6">
-
-            <div class="card">
-
-                <div class="card-content">
-                    <div class="collapsible-header active">
-                        <h6> Identifiant</h6>
-                    </div>
-
-                    <table class="table display bordered hover table-responsive">
-                        <tbody class="no-border-y">
-
-                            <tr>
-                                <td><strong>Prenom</strong></td>
-                                <td class="text-right padding-4">
-                                    <ng-container *ngIf="!client?.prenoms; else elseTemplate">
-                                        <nz-tag nzColor="error">Indéfinie</nz-tag>
-                                    </ng-container>
-                                    <ng-template #elseTemplate>
-
-                                        {{client?.prenoms}}
-                                    </ng-template>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td><strong>Nom</strong></td>
-                                <td class="text-right padding-4">
-                                    {{client?.nom}}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Adresse</strong></td>
-                                <td class="text-right padding-4">
-
-                                    <ng-container *ngIf="!client?.adresse; else elseTemplate">
-                                        <nz-tag nzColor="error">Indéfinie</nz-tag>
-                                    </ng-container>
-                                    <ng-template #elseTemplate>
-                                        {{client?.adresse}}
-                                    </ng-template>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Téléphone</strong></td>
-                                <td class="text-right padding-4">
-                                    {{client?.telephone}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+                </nz-list>
             </div>
         </div>
 
+
+
+
     </div>
+
+
+
+
+
     <hr>
     <div class="col s12 m12">
 

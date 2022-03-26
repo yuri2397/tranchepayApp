@@ -6,91 +6,46 @@
     <div class="row">
 
 
-
-        <div class="col s12 m6 l6">
-
-            <div class="card">
-
-                <div class="card-content">
-                    <div class="collapsible-header active">
-                        <h6> Identifiant</h6>
-                    </div>
-
-                    <table class="table display bordered hover">
-                        <tbody class="no-border-y">
-
-                            <tr>
-                                <td><strong>Prenom</strong></td>
-                                <td class="text-right padding-4">
-                                    <ng-container *ngIf="!commercant?.prenoms; else elseTemplate">
-                                        <nz-tag nzColor="error">Indéfinie</nz-tag>
-                                    </ng-container>
-                                    <ng-template #elseTemplate>
-
-                                        {{commercant?.prenoms}}
-                                    </ng-template>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td><strong>Nom</strong></td>
-                                <td class="text-right padding-4">
-                                    {{commercant?.nom}}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Adresse</strong></td>
-                                <td class="text-right padding-4">
-                                    {{commercant?.adresse}}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Téléphone</strong></td>
-                                <td class="text-right padding-4">
-                                    {{commercant?.telephone}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+                <div class="collapsible-header active">
+                    <h6> Identifiant</h6>
                 </div>
-
-            </div>
-        </div>
-
-
-
-        <div class="col s12 m6 l6">
-            <div class="card">
-                <div class="card-content">
-                    <fieldset>
-                        <div class="collapsible-header active">
-                            <h6> Informations relatives à la boutique</h6>
-                        </div>
-
-                        <table class="table display bordered hover">
-                            <tbody class="no-border-y">
-                                <tr>
-                                    <td><strong>Nom</strong></td>
-                                    <td class="text-right padding-5">{{commercant?.boutique?.nom}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Adresse</strong></td>
-                                    <td class="text-right padding-5">{{commercant?.boutique?.addresse}}</td>
-
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-                    </fieldset>
+                <div class="card card-body raduis-sm border">
+                    <nz-list>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>PRENOM</b></span> {{commercant?.prenoms}}
+                        </nz-list-item>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>NOM</b></span> {{commercant?.nom}}
+                        </nz-list-item>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>ADRESSE</b></span> {{commercant?.adresse}}
+                        </nz-list-item>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>TELEPHONE</b></span> {{commercant?.telephone}}
+                        </nz-list-item>
+                    </nz-list>
                 </div>
             </div>
-        </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
+                <div class="collapsible-header active">
+                    <h6> Informations relatives à la boutique</h6>
+                </div>
+                <div class="card card-body raduis-sm border">
+                    <nz-list>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>BOUTIQUE</b></span>{{commercant?.boutique?.nom}}
+                        </nz-list-item>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>ADRESSE</b></span>{{commercant?.boutique?.addresse}}
+                        </nz-list-item>
 
+                    </nz-list>
+                </div>
+            </div>
+
+        </div>
 
 
     </div>
