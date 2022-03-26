@@ -42,7 +42,7 @@
                     </td>
                     <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i></td>
                 </tr>
-                {{data.id}}
+
                 <tr [nzExpand]="expandSet.has(data.id)">
                     <span>Commercant au nom de {{ data.prenoms+" "+data.nom+" et a pour numéro de téléphone :"+ data.telephone }}</span>
                 </tr>

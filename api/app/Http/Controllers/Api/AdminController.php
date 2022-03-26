@@ -83,4 +83,16 @@ class AdminController extends Controller
     {
         return Commande::limit(20)->where("boutique_id",$id)->get();
     }
+
+
+    public function findcommandeByClienId($id)
+    {
+        return Commande::limit(20)->where("client_id",$id)->get();
+    }
+
+    public function findcommande($id)
+    {
+        return Commande::with(['versements','produits'])
+        ->whereId($id)->first();
+    }
 }

@@ -1,3 +1,5 @@
+import { Versement } from './versement';
+import { Produit } from './produit';
 import { Boutique } from './boutique';
 import { EtatVente } from './etat-vente';
 import { Client } from './client';
@@ -19,5 +21,7 @@ export class Commande {
     created_at!: Date;
     updated_at!: Date;
     client!: Client;
+    produits!:Produit[];
+    versements!:Versement[];
     etat_commande!: EtatVente;
 }

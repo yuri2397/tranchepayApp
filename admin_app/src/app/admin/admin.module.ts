@@ -2,6 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzListModule } from 'ng-zorro-antd/list';
 import { NgModule } from '@angular/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -15,6 +16,8 @@ import { CommercantComponent } from '../pages/commercant/commercant.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { ParametreComponent } from '../pages/parametre/parametre.component';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { UsersComponent } from '../pages/users/users.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -22,6 +25,7 @@ import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-li
 import { DetailsClientsComponent } from '../pages/details-clients/details-clients.component';
 import { DetailsCommercantComponent } from '../pages/details-commercant/details-commercant.component';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { DetailsCommandeComponent } from '../pages/details-commande/details-commande.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     CommandesEncoursComponent,
     DetailsClientsComponent,
     DetailsCommercantComponent,
+    DetailsCommandeComponent,
 
   ],
   imports: [
@@ -49,7 +54,10 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     NzBadgeModule,
     NzFormModule,
     FormsModule,
-    NzTagModule
+    NzTagModule,
+    NzListModule,
+    NzDividerModule,
+    NzSkeletonModule
 
   ]
 })

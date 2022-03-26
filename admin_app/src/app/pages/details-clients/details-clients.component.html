@@ -16,7 +16,7 @@
                         <h6> Identifiant</h6>
                     </div>
 
-                    <table class="table display bordered hover">
+                    <table class="table display bordered hover table-responsive">
                         <tbody class="no-border-y">
 
                             <tr>
@@ -44,7 +44,13 @@
                             <tr>
                                 <td><strong>Adresse</strong></td>
                                 <td class="text-right padding-4">
-                                    {{client?.adresse}}
+
+                                    <ng-container *ngIf="!client?.adresse; else elseTemplate">
+                                        <nz-tag nzColor="error">Indéfinie</nz-tag>
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        {{client?.adresse}}
+                                    </ng-template>
                                 </td>
                             </tr>
 
@@ -84,7 +90,7 @@
                     <!-- Top search END -->
                 </div>
                 <br>
-                <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
+                <nz-table #basicTable [nzData]="commandes" nzTableLayout="fixed" [nzLoading]="isLoad">
                     <thead>
                         <tr>
                             <th class="bold text-dark-green">REFERENCE</th>

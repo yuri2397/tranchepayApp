@@ -54,9 +54,23 @@ export class AuthService extends Base{
     });
   }
 
+  findCommande(id:any)
+  {
+    return this.http.get<Commande>(this.endPoint + 'commande/'+id, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
   findClient(id:any)
   {
-    return this.http.get<Client>(this.endPoint + 'client/'+id, {
+    return this.http.get<Client>(this.endPoint + 'clients/'+id, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  findCommandeByClient(id:any)
+  {
+    return this.http.get<Commande[]>(this.endPoint + 'commande-client/'+id, {
       headers: this.authorizationHeaders,
     });
   }
@@ -118,6 +132,14 @@ export class AuthService extends Base{
       return this.http.get<Commercant[]>(this.endPoint + 'commercants', {
         headers: this.authorizationHeaders,
       });
+    }
+
+    montantVerser(data: Commande) {
+      let res = 0;
+      data.versements.forEach((e) => {
+        res += e.montant;
+      });
+      return res;
     }
 
 

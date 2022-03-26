@@ -24,6 +24,7 @@ registerLocaleData(fr);
     AppComponent,
     LoginComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,7 @@ registerLocaleData(fr);
     NzButtonModule,
     NzDropDownModule,
     ReactiveFormsModule,
+
 
 
   ],

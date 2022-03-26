@@ -25,7 +25,6 @@ export class DetailsClientsComponent implements OnInit {
     this.AuthSrv.findClient(this.id).subscribe({
       next: (response) => {
         this.client = response;
-        this.commandes=this.client.commandes;
         console.log("AZIZ sy Ndiaye"+JSON.stringify(this.client) );
         this.isLoad = false;
       },
@@ -34,6 +33,19 @@ export class DetailsClientsComponent implements OnInit {
         console.error(errors);
       },
     });
+
+    this.AuthSrv.findCommandeByClient(this.id).subscribe({
+      next: (response) => {
+        this.commandes = response;
+        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.commandes) );
+        this.isLoad = false;
+      },
+
+      error: (errors) => {
+        console.error(errors);
+      },
+    });
+
   }
 
 }
