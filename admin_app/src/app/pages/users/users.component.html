@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-6">
-        <h4 style=" margin-bottom: 16px;">Les administrateurs</h4>
+        <h4 style=" margin-bottom: 16px;">Liste Des Administrateurs</h4>
     </div>
 
 
@@ -64,6 +64,13 @@
             <input nz-input placeholder="Email" nzSize="large" />
             <br />
             <br />
+            <nz-select nzSize="large" style="width: 100%;" nzAllowClear nzPlaceHolder="Select Role">
+                <nz-option nzLabel="SuperAdmin" nzValue="SuperAdmin">Super Admin</nz-option>
+                <nz-option nzLabel="AdminSimple" nzValue="AdminSimple">Simple Admin</nz-option>
+                <nz-option nzLabel="Role+" nzValue="Role+">Role +</nz-option>
+            </nz-select>
+            <br>
+            <br>
             <nz-input-group nzSize="large" [nzSuffix]="suffixTemplate">
                 <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="password" [(ngModel)]="password" nzSize="large" />
             </nz-input-group>

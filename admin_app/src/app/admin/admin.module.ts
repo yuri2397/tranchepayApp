@@ -6,6 +6,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NgModule } from '@angular/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { AdminRoutingModule } from './admin-routing.module';
@@ -61,7 +62,8 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     NzDividerModule,
     NzSkeletonModule,
     NzModalModule,
-    NzInputModule
+    NzInputModule,
+    NzSelectModule
 
   ]
 })
