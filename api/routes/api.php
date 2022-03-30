@@ -103,6 +103,7 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::get('commande/{id}', [AdminController::class, "findcommande"]);
     Route::get('clients', [AdminController::class, "getClients"]);
     Route::get('admins', [AdminController::class, "getAdmin"]);
+    Route::get('commercant-inactif', [AdminController::class, "findCommercantInactif"]);
     Route::post('create/new-admin', [AdminController::class, 'registerAdmin']);
 
 });

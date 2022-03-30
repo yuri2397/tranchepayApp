@@ -25,8 +25,25 @@
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>TELEPHONE</b></span> {{commercant?.telephone}}
                         </nz-list-item>
+                        <nz-list-item class="text-dark-green">
+                            <span nz-typography><b>ETAT COMPTE</b></span>
+                            <ng-container *ngIf="commercant?.created_at; else elseTemplate">
+                                <nz-tag nzColor="success">Actif</nz-tag>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <nz-tag nzColor="processing">Non Actif</nz-tag>
+                            </ng-template>
+
+                        </nz-list-item><br>
+                        <div class="col-sm-6">
+                            <button nz-button nzType="default">
+                             <span>Desactivé Compte</span>
+                       </button>
+                        </div>
                     </nz-list>
                 </div>
+                <br>
+
             </div>
             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
                 <div class="collapsible-header active">
@@ -42,7 +59,9 @@
                         </nz-list-item>
 
                     </nz-list>
+
                 </div>
+
             </div>
 
         </div>

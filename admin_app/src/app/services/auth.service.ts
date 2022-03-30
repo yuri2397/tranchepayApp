@@ -108,8 +108,12 @@ export class AuthService extends Base{
     });
   }
 
-
-
+  findCommercantInacif()
+  {
+    return this.http.get<Commercant[]>(this.endPoint + 'commercant-inactif', {
+      headers: this.authorizationHeaders,
+    });
+  }
 
    /**
  * La liste des administrateurs
