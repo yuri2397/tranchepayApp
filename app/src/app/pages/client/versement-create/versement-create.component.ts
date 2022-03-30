@@ -1,3 +1,4 @@
+import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./versement-create.component.scss']
 })
 export class VersementCreateComponent implements OnInit {
+  load: boolean = false;
 
-  constructor() { }
+  constructor(private modal: NzModalRef) { }
 
   ngOnInit(): void {
+  }
+
+  destroy(data: boolean){
+    this.modal.destroy(data);
+  }
+
+  save(){
+    this.load = true;
   }
 
 }

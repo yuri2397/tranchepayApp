@@ -52,7 +52,7 @@ import { ShowComponent } from 'src/app/pages/client/commandes/show/show.componen
     CoordonneesComponent,
     SecuriteComponent,
     ProfileComponent,
-    ShowComponent
+    ShowComponent,
   ],
   imports: [
     CommonModule,

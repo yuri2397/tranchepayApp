@@ -41,3 +41,18 @@ body {
     height: 100%;
     width: 100%;
 }
+
+.ant-modal-header {
+    padding: 16px 24px;
+    color: #004f69;
+    font-family: Poppins;
+    font-weight: 700;
+    background: #79f2c3;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 2px 2px 0 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.ant-modal-content {
+    border-radius: 8px;
+}

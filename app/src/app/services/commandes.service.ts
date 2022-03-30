@@ -26,4 +26,8 @@ export class CommandesService extends Base{
     });
     return res;
   }
+
+  montantRestant(data: Commande){
+    return Number(data.prix_total) + Number(data.commission) - this.montantVerser(data);
+  }
 }

@@ -1,6 +1,19 @@
 <ng-container *ngIf="!isLoad; else elseTemplate">
-    <h3 class="text-dark-green bold">Commmande: {{ commande.reference}}</h3>
-    <br>
+    <div class="d-flex my-3 justify-content-between align-items-center">
+        <div>
+            <button nz-tooltip [nzTooltipTitle]="'Revenir en arrièr'" class="mx-2" (click)="onBack()" mat-mini-fab color="default">
+                <i nz-icon nzType="arrow-left"></i>
+            </button>
+            <span class="h4 text-dark-green mx-2">Détails de la commande</span>
+        </div>
+        <div *ngIf="commande.etat_commande.nom != 'finish'">
+            <div class="mx-1">
+                <button nz-button class="btn submit-btn border my-2 shadow" (click)="openAddVersementModal()">
+                    Faire un versement
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
             <div class="card card-body raduis-sm border">
@@ -14,6 +27,13 @@
                     <nz-list-item class="text-dark-green">
                         <span nz-typography><b>COMMISSION</b></span> {{ commande.commission }} FCFA
                     </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>État commande</b></span>
+                        <nz-tag [nzColor]="etatColor(commande)">
+                            {{ etatCommande(commande) }}
+                        </nz-tag>
+                    </nz-list-item>
+
                 </nz-list>
             </div>
         </div>
@@ -34,6 +54,9 @@
                     </nz-list-item>
                     <nz-list-item class="text-dark-green">
                         <span nz-typography><b>TOTAL VERSEMENT</b></span> {{ commandeService.montantVerser(commande) }} FCFA
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>MONTANT RESTANT</b></span> {{ commandeService.montantRestant(commande) }} FCFA
                     </nz-list-item>
                 </nz-list>
             </div>
