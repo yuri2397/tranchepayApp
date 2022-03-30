@@ -121,4 +121,10 @@ class AdminController extends Controller
         ->whereId($id)->first();
     }
 
+
+    public function findCommercantInactif()
+    {
+        return Commercant::lmit(5)->where('created_at',null)->orderBy("created_at", "desc")->get();
+    }
+
 }

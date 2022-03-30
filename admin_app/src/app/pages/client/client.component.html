@@ -1,5 +1,5 @@
 <div class="container">
-    <h3 class="my-3 text-dark-green bold">Les Clients</h3>
+    <h3 class="my-3 text-dark-green bold">Liste Des Clients</h3>
     <br>
     <div class="col-sm-7">
 
@@ -13,18 +13,18 @@
     <nz-table #nzTable [nzData]="clients" nzTableLayout="fixed" [nzLoading]="isLoad">
         <thead>
             <tr>
-                <th nzWidth="60px"></th>
+
                 <th>PRENOM</th>
                 <th>NOM</th>
                 <th>TELEPHONE</th>
                 <th>ADRESSE</th>
-                <th class="bold text-dark-green">ACTION</th>
+                <th class="bold text-dark-green">DETAILS</th>
             </tr>
         </thead>
         <tbody>
             <ng-container *ngFor="let data of nzTable.data">
                 <tr>
-                    <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+
                     <td>{{ data.prenoms }}</td>
                     <td>{{ data.nom }}</td>
                     <td>{{ data.telephone }}</td>
@@ -39,9 +39,7 @@
                     <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i></td>
                 </tr>
 
-                <tr [nzExpand]="expandSet.has(data.id)">
-                    <span>Commercant au nom de {{ data.prenoms+" "+data.nom+" et a pour numéro de téléphone :"+ data.telephone }}</span>
-                </tr>
+
             </ng-container>
         </tbody>
     </nz-table>

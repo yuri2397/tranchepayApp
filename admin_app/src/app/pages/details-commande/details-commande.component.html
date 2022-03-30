@@ -3,6 +3,9 @@
     <br>
     <div class="row">
         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+            <div class="collapsible-header active">
+                <h6>Informations ralatives à la commande</h6>
+            </div>
             <div class="card card-body raduis-sm border">
                 <nz-list>
                     <nz-list-item class="text-dark-green">
@@ -16,8 +19,13 @@
                     </nz-list-item>
                 </nz-list>
             </div>
+            <br>
         </div>
+        <br>
         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
+            <div class="collapsible-header active">
+                <h6>Informations relatives à la boutique</h6>
+            </div>
             <div class="card card-body raduis-sm border">
                 <nz-list>
                     <nz-list-item class="text-dark-green">
@@ -34,6 +42,28 @@
                     </nz-list-item>
                     <nz-list-item class="text-dark-green">
                         <span nz-typography><b>TOTAL VERSEMENT</b></span>{{AuthSrv.montantVerser(commande)}}FCA
+                    </nz-list-item>
+                </nz-list>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
+            <div class="collapsible-header active">
+                <h6>Informations relatives au Client</h6>
+            </div>
+            <div class="card card-body raduis-sm border">
+                <nz-list>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>PRENOM</b></span> {{ commande.client.prenoms }}
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>NOM</b></span> {{ commande.client.nom }}
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>TELEPHONE</b></span> {{ commande.client.telephone }}
+                    </nz-list-item>
+                    <nz-list-item class="text-dark-green">
+                        <span nz-typography><b>ADRESSE</b></span>{{ commande.client.adresse}}
                     </nz-list-item>
                 </nz-list>
             </div>
