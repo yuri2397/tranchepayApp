@@ -1,13 +1,39 @@
-<div *nzModalContent="">
-
+<div>
+    <div class="card border border-radius-sm p-3">
+        <nz-list>
+            <nz-list-item class="text-dark-green">
+                <span nz-typography><b>REFERENCE</b></span> {{ commande.reference }}
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+                <span nz-typography><b>TOTAL VERSEMENT</b></span> {{ commandeService.montantVerser(commande) }} FCFA
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+                <span nz-typography><b>MONTANT RESTANT</b></span> {{ commandeService.montantRestant(commande) }} FCFA
+            </nz-list-item>
+        </nz-list>
+    </div>
+    <form nz-form nzLayout="vertical" class="my-4" [formGroup]="form">
+        <nz-form-item>
+            <nz-form-label nzRequired>MONTANT À VERSER</nz-form-label>
+            <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="amountErrorTpl">
+                <input class="form-control shadow-sm" nz-input type="number" min="0" formControlName="amount" placeholder="Montant à verser" />
+                <ng-template #amountErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Donner le montant à verser</ng-container>
+                    <ng-container *ngIf="control.hasError('max')">Montant restant {{ commandeService.montantRestant(commande) }} FCFA
+                    </ng-container>
+                </ng-template>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
 </div>
+
 <div *nzModalFooter>
     <div class="d-flex justify-content-between align-items-center">
         <div>
-            <button nz-button class="btn info-btn border my-2 shadow">Annuler</button>
+            <button nz-button class="btn info-btn border my-2 shadow-sm" (click)="destroy(null)">Annuler</button>
         </div>
         <div>
-            <button nz-button class="btn submit-btn border my-2 shadow">Continuer</button>
+            <button [disabled]="!form.valid" [nzLoading]="load" (click)="save()" nz-button class="btn submit-btn border my-2 shadow-sm">Continuer</button>
         </div>
     </div>
 </div>

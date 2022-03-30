@@ -1889,12 +1889,15 @@ section {
 }
 
 .form-group>.form-control,
-.login-form-label {
+.login-form-label,
+.ant-input {
     border: 1px solid rgb(221, 220, 220);
     border-radius: 8px;
 }
 
-.form-group>.form-control:focus {
+.form-group>.form-control:focus,
+.ant-input:focus,
+.ant-input:hover {
     color: #000000;
     font-family: "Poppins";
     background-color: #fff;

@@ -99,7 +99,7 @@ class ClientController extends Controller
 
                     $versement = new Versement;
                     $versement->date_time = now();
-                    $versement->via = 'INCONNUE';
+                    $versement->via = 'PAIEMENT EN LIGNE';
                     $versement->reference = $token;
                     $versement->montant = $amount;
                     $versement->commande_id = $commande->id;
@@ -113,7 +113,6 @@ class ClientController extends Controller
                     }
                     return response()->json([], 200);
                 }
-
             }
             else {
                 die("Cette requête n'a pas été émise par PayDunya");
@@ -154,7 +153,7 @@ class ClientController extends Controller
             foreach ($commande->produits as $value) {
                 $invoice->addItem($value->nom, $value->quantite, $value->prix_unitaire, $value->quantite * $value->prix_unitaire);
             }
-            $invoice->setDescription("Nouveau versement pour la commande #" . $commande->id);
+            $invoice->setDescription("Nouveau versement pour la commande #" . $commande->reference);
             $invoice->setTotalAmount($request->montant);
 
             // set custom data
@@ -172,13 +171,11 @@ class ClientController extends Controller
                 return response()->json($invoice->response_text, 400);
             }
         }
-
         else {
             return response()->json([
                 "message" => "Commande introuvable",
             ], 404);
         }
-
     }
 
     public function clientCancelURL()

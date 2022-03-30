@@ -1,3 +1,4 @@
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { VersementCreateComponent } from './../../versement-create/versement-create.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Commande } from 'src/app/models/commande';
@@ -17,10 +18,10 @@ export class ShowComponent implements OnInit {
   isLoad = true;
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientService,
     public commandeService: CommandesService,
     private location: Location,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private notification: NzNotificationService
   ) {}
 
   ngOnInit(): void {
@@ -47,11 +48,19 @@ export class ShowComponent implements OnInit {
       .create({
         nzTitle: 'Faire un versement',
         nzContent: VersementCreateComponent,
+        nzComponentParams: {
+          commande: this.commande,
+        },
         nzCentered: true,
         nzClosable: false,
-        nzMaskClosable: true,
+        nzMaskClosable: false,
       })
-      .afterClose.subscribe((data) => {});
+      .afterClose.subscribe((data: string | null) => {
+        if (data) {
+          this.notification.success('Notification', 'Votre versement est en préparation, vous serez rediriger d\'ici peu');
+          window.location.href = data;
+        }
+      });
   }
 
   etatCommande(data: Commande): string {
