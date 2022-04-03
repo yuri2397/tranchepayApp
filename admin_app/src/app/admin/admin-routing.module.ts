@@ -12,68 +12,61 @@ import { CommercantComponent } from '../pages/commercant/commercant.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../guard/auth.guard';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent
-
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'clients', component: ClientComponent, canActivate: [AuthGuard] },
+  {
+    path: 'commercant',
+    component: CommercantComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'clients',
-      component: ClientComponent,
-      canActivate:[AuthGuard],
-
-   },
-  { path: 'commercant',
-      component: CommercantComponent ,
-      canActivate:[AuthGuard],
+  {
+    path: 'commandes',
+    component: CommandesComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'commandes',
-      component: CommandesComponent,
-      canActivate:[AuthGuard]
-    },
-  { path: 'commandes-livres',
-      component: CommandesLivresComponent,
-      canActivate:[AuthGuard]
-    },
-  { path: 'commandes-encours',
-  component:CommandesEncoursComponent,
-  canActivate:[AuthGuard],
-
+  {
+    path: 'commandes-livres',
+    component: CommandesLivresComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'user',
-    component: UsersComponent,
-    canActivate:[AuthGuard],
-
+  {
+    path: 'commandes-encours',
+    component: CommandesEncoursComponent,
   },
-  { path: 'detailclient/:id',
+  { path: 'user', component: UsersComponent },
+  {
+    path: 'detailclient/:id',
     component: DetailsClientsComponent,
-    canActivate:[AuthGuard],
-
   },
-  { path: 'commercant/show/:id',
-  component: DetailsCommercantComponent,
-  canActivate:[AuthGuard],
+  {
+    path: 'commercant/show/:id',
+    component: DetailsCommercantComponent,
+  },
+  {
+    path: 'clients/show/:id',
+    component: DetailsClientsComponent,
+  },
 
-},
-{ path: 'clients/show/:id',
-  component: DetailsClientsComponent,
-  canActivate:[AuthGuard],
-},
-
-{ path: 'commandes/show/:id',
-  component: DetailsCommandeComponent,
-  canActivate:[AuthGuard],
-},
-{ path: 'commandes-livres/show/:id',
-  component: DetailsCommandeComponent,
-  canActivate:[AuthGuard],
-},
-{ path: 'commandes-encours/show/:id',
-  component: DetailsCommandeComponent,
-  canActivate:[AuthGuard],
-},
-
-
+  {
+    path: 'commandes/show/:id',
+    component: DetailsCommandeComponent,
+  },
+  {
+    path: 'commandes-livres/show/:id',
+    component: DetailsCommandeComponent,
+  },
+  {
+    path: 'commandes-encours/show/:id',
+    component: DetailsCommandeComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+  },
 ];
 
 @NgModule({

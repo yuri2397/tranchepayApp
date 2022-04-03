@@ -1,65 +1,41 @@
-<main>
-    <section class="p-0 d-flex align-items-center position-relative overflow-hidden">
+<div class="row center" style="flex-direction: column;">
+    <div>
+        <div class="col-6 card p-3 border shadow-sm">
+            <!-- Title -->
+            <h1 class="fs-2">Login into Tranchpay!</h1>
 
-        <div class="container-fluid">
-            <div class="row">
-                <!-- left -->
-                <div class="col-12 col-lg-6 d-md-flex align-items-center justify-content-center bg-primary bg-opacity-10 vh-lg-100">
-                    <div class="p-3 p-lg-5">
-                        <!-- Title -->
-                        <div class="text-center">
-                            <h2 class="fw-bold">Bienvenue dans Tranchpay</h2>
-                        </div>
-
-                        <img src="assets/images/element/16.svg" class="mt-5" alt="">
-
+            <!-- Form START -->
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                <!-- Email -->
+                <div class="mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Email address *</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i
+                                class="bi bi-envelope-fill"></i></span>
+                        <input autocomplete="false" type="text" class="form-control border-0 bg-light rounded-end ps-1" placeholder="E-mail" nz-input formControlName="email" id="email" name="email">
+                    </div>
+                </div>
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="inputPassword5" class="form-label">Password *</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i
+                                class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control border-0 bg-light rounded-end ps-1" placeholder="password" nz-input formControlName="password" id="password" name="password">
+                    </div>
+                    <div id="passwordHelpBlock" class="form-text">
+                        Your password must be 8 characters at least
                     </div>
                 </div>
 
-                <!-- Right -->
-                <div class="col-12 col-lg-6 m-auto">
-                    <div class="row my-5">
-                        <div class="col-sm-10 col-xl-8 m-auto">
-                            <!-- Title -->
-                            <span class="mb-0 fs-1">👋</span>
-                            <h1 class="fs-2">Login into Tranchpay!</h1>
-                            <p class="lead mb-4">Nice to see you! Please log in with your account.</p>
-
-                            <!-- Form START -->
-                            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-                                <!-- Email -->
-                                <div class="mb-4">
-                                    <label for="exampleInputEmail1" class="form-label">Email address *</label>
-                                    <div class="input-group input-group-lg">
-                                        <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="bi bi-envelope-fill"></i></span>
-                                        <input autocomplete="false" type="text" class="form-control border-0 bg-light rounded-end ps-1" placeholder="E-mail" nz-input formControlName="email" id="email" name="email">
-                                    </div>
-                                </div>
-                                <!-- Password -->
-                                <div class="mb-4">
-                                    <label for="inputPassword5" class="form-label">Password *</label>
-                                    <div class="input-group input-group-lg">
-                                        <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="fas fa-lock"></i></span>
-                                        <input type="password" class="form-control border-0 bg-light rounded-end ps-1" placeholder="password" nz-input formControlName="password" id="password" name="password">
-                                    </div>
-                                    <div id="passwordHelpBlock" class="form-text">
-                                        Your password must be 8 characters at least
-                                    </div>
-                                </div>
-
-                                <!-- Button -->
-                                <div class="align-items-center mt-0">
-                                    <button nz-button (click)="login()" [nzLoading]="isLoad" class="bg-primary" class="btn btn-3 shadow btn-block
+                <!-- Button -->
+                <div class="align-items-center mt-0">
+                    <button nz-button (click)="login()" [nzLoading]="isLoad" class="btn btn-3 shadow-sm btn-block
                                   col-12 my-3 padding-4" type="submit">CONNEXION</button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                    <!-- Row END -->
                 </div>
-            </div>
-            <!-- Row END -->
+            </form>
+
         </div>
-    </section>
-</main>
+        <!-- Row END -->
+    </div>
+</div>

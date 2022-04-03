@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   commercants!: Commercant[];
   constructor(
-    private Authsrv: AuthService,
+    public Authsrv: AuthService,
     private route: Router,
     private rout: ActivatedRoute
   ) {}
@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.findCommercantInactif();
   }
-  
+
   ngOnDestroy(): void {
     this.signout();
   }
