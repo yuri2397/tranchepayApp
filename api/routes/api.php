@@ -93,17 +93,17 @@ Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
  */
 Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
-    Route::get('last-commandes', [AdminController::class, "lastCommandes"]);
-    Route::get('commercants', [AdminController::class, "getCommercants"]);
-    Route::get('commercants/{id}', [AdminController::class, "showCommercantById"]);
-    Route::get('clients/{id}', [AdminController::class, "ShowClienById"]);
-    Route::get('load-commmandes', [AdminController::class, "progressCommandes"]);
-    Route::get('commande-client/{id}', [AdminController::class, "findcommandeByClienId"]);
-    Route::get('final-commandes', [AdminController::class, "finalCommandes"]);
-    Route::get('commande/{id}', [AdminController::class, "findcommande"]);
-    Route::get('clients', [AdminController::class, "getClients"]);
-    Route::get('admins', [AdminController::class, "getAdmin"]);
-    Route::get('commercant-inactif', [AdminController::class, "findCommercantInactif"]);
-    Route::post('create/new-admin', [AdminController::class, 'registerAdmin']);
+    Route::get('last-commandes', [AdminController::class, "lastCommandes"])->middleware('permission:lister commande');
+    Route::get('commercants', [AdminController::class, "getCommercants"])->middleware('permission:lister commercant');
+    Route::get('commercants/{id}', [AdminController::class, "showCommercantById"])->middleware('permission:voir commercant');
+    Route::get('clients/{id}', [AdminController::class, "ShowClienById"])->middleware('permission:voir client');
+    Route::get('load-commmandes', [AdminController::class, "progressCommandes"])->middleware('permission:lister commande');
+    Route::get('commande-client/{id}', [AdminController::class, "findcommandeByClienId"])->middleware('permission:voir commande');
+    Route::get('final-commandes', [AdminController::class, "finalCommandes"])->middleware('permission:lister commande');
+    Route::get('commande/{id}', [AdminController::class, "findcommande"])->middleware('permission:voir commande');
+    Route::get('clients', [AdminController::class, "getClients"])->middleware('permission:lister client');
+    Route::get('admins', [AdminController::class, "getAdmin"])->middleware('permission:lister commande');
+    Route::get('commercant-inactif', [AdminController::class, "findCommercantInactif"])->middleware('permission:lister commercant');
+    Route::post('create/new-admin', [AdminController::class, 'registerAdmin'])->middleware('permission:creer utilisateur');
 });
 
