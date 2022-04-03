@@ -18,80 +18,80 @@ class RoleSeeder extends Seeder
         $permissions = [
             [
                 "name" => "voir commercant",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "creer commercant",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "supprimer commercant",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "modifier commercant",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "lister commercant",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "creer client",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "voir client",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "modifier client",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "supprimer client",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "lister client",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "creer commande",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "voir commande",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "modifier commande",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "supprimer commande",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "lister commande",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],[
                 "name" => "voir dashboard",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "voir utilisateur",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "modifier utilisateur",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "supprimer utilisateur",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "lister utilisateur",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "creer utilisateur",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ],
             [
                 "name" => "voir permissions",
-                "guard_name" => "api"
+                "guard_name" => "admin"
             ]
         ];
 

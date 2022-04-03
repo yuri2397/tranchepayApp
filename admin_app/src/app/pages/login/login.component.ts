@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
   private loginSuccess(response: LoginResponse) {
     this.AuthSrv.setToken(response.token.accessToken);
     this.AuthSrv.setUser(response.user);
-    this.router.navigate(['admin/dashboard/' + response.user.email ])
+    this.router.navigate(['admin/dashboard'])
   }
 
 }

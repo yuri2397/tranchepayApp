@@ -7,36 +7,37 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent implements OnInit,OnDestroy {
-id:any;
-isCollapsed = false;
+export class AdminComponent implements OnInit, OnDestroy {
+  id: any;
+  isCollapsed = false;
 
-commercants!:Commercant[];
-  constructor(private Authsrv: AuthService,private route:Router,private rout: ActivatedRoute) { }
+  commercants!: Commercant[];
+  constructor(
+    private Authsrv: AuthService,
+    private route: Router,
+    private rout: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.findCommercantInactif();
   }
-  ngOnDestroy(): void
-  {
-   this.signout();
+  
+  ngOnDestroy(): void {
+    this.signout();
   }
 
-  signout()
-  {
+  signout() {
     this.Authsrv.logout();
     this.route.navigate(['']);
   }
 
-  findCommercantInactif()
-  {
+  findCommercantInactif() {
     this.Authsrv.findCommercantInacif().subscribe({
       next: (response) => {
         this.commercants = response;
-        console.log("AZIZ 97"+JSON.stringify(this.commercants) );
-
+        console.log('AZIZ 97' + JSON.stringify(this.commercants));
       },
 
       error: (errors) => {
@@ -45,7 +46,7 @@ commercants!:Commercant[];
     });
   }
 
-  goto(route: string){
+  goto(route: string) {
     this.route.navigate(['/admin/' + route]);
   }
 }
