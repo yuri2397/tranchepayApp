@@ -1,3 +1,4 @@
+import { Admin, Permission } from './../../models/admin';
 export abstract class AbstractPreferences {
   private _token_id: string =
     '3f43ffc3692114ded2a222e57e1b2fb7d1a4b3e106f0a370a441cd93';
@@ -29,5 +30,21 @@ export abstract class AbstractPreferences {
     return this.getFromSession<string>(this._token_id);
   }
 
+  public setUserPermissions(user: Admin) {
+    sessionStorage.setItem('permissions', JSON.stringify(user.permissions));
+  }
 
+  public getUserPermissions(): Permission[] {
+    return JSON.parse(sessionStorage.getItem('permissions')!);
+  }
+
+  can(permission: string) {
+    let test = false;
+    this.getUserPermissions().forEach((p) => {
+      if (p.name === permission) {
+        test = true;
+      }
+    });
+    return test;
+  }
 }

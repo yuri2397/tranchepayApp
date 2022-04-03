@@ -11,7 +11,7 @@ export class CommandesComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
   titre:any;
-  constructor(private Authsrv: AuthService) {}
+  constructor(public Authsrv: AuthService) {}
 
   ngOnInit(): void {
     this.findAll();

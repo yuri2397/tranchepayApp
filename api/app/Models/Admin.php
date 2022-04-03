@@ -17,7 +17,10 @@ class Admin extends Authenticatable
     use Uuids;
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
+
+    protected $with = ['permissions'];
+
+    /** 
      * The attributes that are mass assignable.
      *
      * @var string[]

@@ -25,7 +25,7 @@
                 <th class="bold text-dark-green">BOUTIQUE</th>
                 <th class="bold text-dark-green">CLIENT</th>
                 <th class="bold text-dark-green">DATE LIMITE</th>
-                <th class="bold text-dark-green">VOIR DETAILS</th>
+                <th *ngIf="Authsrv.can('voir commande')" class="bold text-dark-green">VOIR DETAILS</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                 <td class="text-dark-green">{{ data.boutique.nom }}</td>
                 <td class="text-dark-green">{{ data.client.prenoms+" " }}{{ data.client.nom}}</td>
                 <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
-                <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i></td>
+                <td *ngIf="Authsrv.can('voir commande')" class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i></td>
             </tr>
         </tbody>
     </nz-table>

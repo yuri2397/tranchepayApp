@@ -5,11 +5,11 @@
             <h1>TranchePay Admin</h1>
         </div>
         <ul nz-menu class="bg mt-3" nzMode="inline">
-            <li nzSelected="true" nz-menu-item (click)="goto('dashboard')">
+            <li *ngIf="Authsrv.can('voir dashboard')" nzSelected="true" nz-menu-item (click)="goto('dashboard')">
                 <i nz-icon nzType="dot-chart" class="icon" nzTheme="outline"></i>
                 <span class="text-dark-green bold">Dashboard</span>
             </li>
-            <li nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'" [nzTitle]="activite">
+            <li *ngIf="Authsrv.can('lister commande')" nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'" [nzTitle]="activite">
                 <ng-template #activite>
                     <i nz-icon nzType="shopping" class="icon" nzTheme="outline"></i>
                     <span class="text-dark-green bold">
@@ -33,14 +33,22 @@
                 </ul>
             </li>
             <li nz-menu-item (click)="goto('commercant')">
-                <i nz-icon nzType="solution" class="icon" nzTheme="outline"></i>
+                <i nz-icon nzType="fire" class="icon" nzTheme="outline"></i>
                 <span class="text-dark-green bold">Commerçants</span>
             </li>
-            <li nz-menu-item (click)="goto('user')">
+            <li *ngIf="Authsrv.can('lister client')" nz-menu-item (click)="goto('clients')">
+                <i nz-icon nzType="solution" class="icon" nzTheme="outline"></i>
+                <span class="text-dark-green bold">Nos clients</span>
+            </li>
+            <li *ngIf="Authsrv.can('lister partenaire')" nz-menu-item (click)="goto('users')">
                 <i nz-icon nzType="link" class="icon" nzTheme="outline"></i>
                 <span class="text-dark-green bold">Partenaire</span>
             </li>
-            <li nz-menu-item (click)="goto('user')">
+            <li nz-menu-item (click)="goto('profile')">
+                <i nz-icon nzType="user" class="icon" nzTheme="outline"></i>
+                <span class="text-dark-green bold">Profile</span>
+            </li>
+            <li *ngIf="Authsrv.can('lister utilisateur')" nz-menu-item (click)="goto('user')">
                 <i nz-icon nzType="safety" class="icon" nzTheme="outline"></i>
                 <span class="text-dark-green bold">Administrateurs</span>
             </li>
