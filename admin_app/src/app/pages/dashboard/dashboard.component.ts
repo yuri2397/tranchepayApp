@@ -9,12 +9,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-   email:any ;
-  constructor(private AuthSrv:AuthService,private route:ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.email=this.route.snapshot.paramMap.get('email');
-    console.log(this.email)
   }
 
 

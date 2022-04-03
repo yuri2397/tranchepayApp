@@ -68,7 +68,6 @@ export class DeplafonnementComponent implements OnInit {
       .deplafonnement(this.validateForm.value.cni, this.cniRecto, this.cniVerso)
       .subscribe({
         next: (response) => {
-          this.findClient();
           this.notification.success("Notification", response.message);
           this.isBtnLoad = false;
         },

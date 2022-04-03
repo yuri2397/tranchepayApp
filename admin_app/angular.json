@@ -29,14 +29,27 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "src/styles.scss"],
+                        "assets": [{
+                                "glob": "**/*",
+                                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                                "output": "/assets/"
+                            },
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
+                        "styles": [
+                            "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                            "src/styles.scss"
+                        ],
                         "scripts": [
-                            "src/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js",
-                            "src/assets/vendor/purecounterjs/dist/purecounter_vanilla.js",
-                            "src/assets/vendor/apexcharts/js/apexcharts.min.js",
-                            "src/assets/vendor/overlay-scrollbar/js/OverlayScrollbars.min.js",
-                            "src/assets/js/functions.js"
+                            "./node_modules/jquery/dist/jquery.min.js",
+                            "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+                            "./src/assets/vendor/purecounter/purecounter.js",
+                            "./src/assets/vendor/aos/aos.js",
+                            "./src/assets/vendor/glightbox/js/glightbox.min.js",
+                            "./src/assets/vendor/swiper/swiper-bundle.min.js",
+                            "./src/assets/js/main.js"
                         ]
                     },
                     "configurations": {
@@ -96,7 +109,10 @@
                         "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "scss",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "src/styles.scss"],
+                        "styles": [
+                            "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                            "src/styles.scss"
+                        ],
                         "scripts": []
                     }
                 }

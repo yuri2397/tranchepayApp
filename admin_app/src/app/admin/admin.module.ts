@@ -28,6 +28,7 @@ import { CommandesLivresComponent } from '../pages/commandes-livres/commandes-li
 import { DetailsClientsComponent } from '../pages/details-clients/details-clients.component';
 import { DetailsCommercantComponent } from '../pages/details-commercant/details-commercant.component';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { DetailsCommandeComponent } from '../pages/details-commande/details-commande.component';
 
 @NgModule({
@@ -63,8 +64,8 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     NzSkeletonModule,
     NzModalModule,
     NzInputModule,
-    NzSelectModule
-
+    NzSelectModule,
+    NzLayoutModule,
   ]
 })
 export class AdminModule { }

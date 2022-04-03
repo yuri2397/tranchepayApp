@@ -40,7 +40,6 @@ class PartenaireController extends Controller
         $p->site_web = $request->site_web;
         
         return $p;
-
     }
 
     /**

@@ -1,47 +1,43 @@
-<body>
+<div class="container card-body radius-sm">
+    <h3 class="my-3 text-dark-green bold">Liste des commandes livrées</h3>
+    <br>
+    <div class="col-sm-7">
 
-    <div class="container">
-        <h3 class="my-3 text-dark-green bold">Liste des commandes livrées</h3>
-        <br>
-        <div class="col-sm-7">
-
-            <div class="search-box">
-                <input [(ngModel)]="titre" (ngModelChange)="serarchcommande()" type="text" class="form-control" placeholder="Boutique&hellip;">
-            </div>
-
-            <!-- Top search END -->
+        <div class="search-box">
+            <input [(ngModel)]="titre" (ngModelChange)="serarchcommande()" type="text" class="form-control" placeholder="Boutique&hellip;">
         </div>
-        <br>
-        <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
-            <thead>
-                <tr>
-                    <th class="bold text-dark-green">REFERENCE</th>
-                    <th class="bold text-dark-green">PRIX TOTAL</th>
-                    <th class="bold text-dark-green">NOMBRE PRODUITS</th>
-                    <th class="bold text-dark-green">COMMISSION</th>
-                    <th class="bold text-dark-green">BOUTIQUE</th>
-                    <th class="bold text-dark-green">CLIENT</th>
-                    <th class="bold text-dark-green">DATE LIMITE</th>
-                    <th class="bold text-dark-green">DETAILS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of basicTable.data">
-                    <td class="text-dark-green">{{ data.reference }}
-                    </td>
-                    <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
-                    <td class="text-dark-green">{{data.nb_produits}}</td>
-                    <td class="text-dark-green">{{ data.commission }} FCFA</td>
-                    <td class="text-dark-green">{{ data.boutique.nom }}</td>
-                    <td class="text-dark-green">{{ data.client.prenoms+" " }}{{data.client.nom}}</td>
 
-                    <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
-                    <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i>
-                        <a routerLink=" "> <i nz-icon nzType="delete" nzTheme="outline" style="color: rgb(241, 11, 11);"></i></a>
-                    </td>
-                </tr>
-            </tbody>
-        </nz-table>
+        <!-- Top search END -->
     </div>
+    <br>
+    <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
+        <thead>
+            <tr>
+                <th class="bold text-dark-green">REFERENCE</th>
+                <th class="bold text-dark-green">PRIX TOTAL</th>
+                <th class="bold text-dark-green">NOMBRE PRODUITS</th>
+                <th class="bold text-dark-green">COMMISSION</th>
+                <th class="bold text-dark-green">BOUTIQUE</th>
+                <th class="bold text-dark-green">CLIENT</th>
+                <th class="bold text-dark-green">DATE LIMITE</th>
+                <th class="bold text-dark-green">DETAILS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td class="text-dark-green">{{ data.reference }}
+                </td>
+                <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
+                <td class="text-dark-green">{{data.nb_produits}}</td>
+                <td class="text-dark-green">{{ data.commission }} FCFA</td>
+                <td class="text-dark-green">{{ data.boutique.nom }}</td>
+                <td class="text-dark-green">{{ data.client.prenoms+" " }}{{data.client.nom}}</td>
 
-</body>
+                <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
+                <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i>
+                    <a routerLink=" "> <i nz-icon nzType="delete" nzTheme="outline" style="color: rgb(241, 11, 11);"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

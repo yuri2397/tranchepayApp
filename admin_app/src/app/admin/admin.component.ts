@@ -11,14 +11,13 @@ import { AuthService } from '../services/auth.service';
 })
 export class AdminComponent implements OnInit,OnDestroy {
 id:any;
-dashbord!:DashboardComponent;
+isCollapsed = false;
+
 commercants!:Commercant[];
   constructor(private Authsrv: AuthService,private route:Router,private rout: ActivatedRoute) { }
 
   ngOnInit(): void {
-    console.log("cc c'est moi"+this.dashbord.email);
     this.findCommercantInactif();
-
   }
   ngOnDestroy(): void
   {
@@ -46,4 +45,7 @@ commercants!:Commercant[];
     });
   }
 
+  goto(route: string){
+    this.route.navigate(['/admin/' + route]);
+  }
 }

@@ -1,5 +1,5 @@
-<div class="container">
-    <h3 class="my-3 text-dark-green bold">Liste des dernières commandes</h3>
+<div class="card-body radius-sm">
+    <h2 class="my-3 text-dark-green bold">Liste des dernières commandes</h2>
     <br>
     <div class="col-sm-7">
         <!-- Top search START -->
@@ -21,7 +21,6 @@
             <tr>
                 <th class="bold text-dark-green">REFERENCE</th>
                 <th class="bold text-dark-green">PRIX TOTAL</th>
-                <th class="bold text-dark-green">NOMBRE PRODUITS</th>
                 <th class="bold text-dark-green">COMMISSION</th>
                 <th class="bold text-dark-green">BOUTIQUE</th>
                 <th class="bold text-dark-green">CLIENT</th>
@@ -34,7 +33,6 @@
                 <td class="text-dark-green">{{ data.reference }}
                 </td>
                 <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
-                <td class="text-dark-green">{{data.nb_produits}}</td>
                 <td class="text-dark-green">{{ data.commission }} FCFA</td>
                 <td class="text-dark-green">{{ data.boutique.nom }}</td>
                 <td class="text-dark-green">{{ data.client.prenoms+" " }}{{ data.client.nom}}</td>
