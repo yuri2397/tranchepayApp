@@ -13,8 +13,8 @@ export class Base extends AbstractPreferences {
   private _super_admin = 'super admin';
   private _editeur = 'chef de département';
   protected httpClient!: HttpClient;
-  protected _returnUrl = 'http://tranchepay.com/';
-  protected _cancelUrl = 'http://tranchepay.com/';
+  protected _returnUrl = 'https://tranchepay.com/';
+  protected _cancelUrl = 'https://tranchepay.com/';
 
   _canDeleteErreurs!: string[];
   _canDeleteSubTitle!: string;

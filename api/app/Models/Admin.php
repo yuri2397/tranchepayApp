@@ -13,8 +13,9 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
+    use HasRoles;
     use Uuids;
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.

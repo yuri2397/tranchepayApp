@@ -41,7 +41,7 @@ export class AuthService extends Base{
  * @author Abdou Aziz Sy NDIAYE
  * @since 09.03.2022
  */
-  findCommandes() {
+    findCommandes() {
     return this.http.get<Commande[]>(this.endPoint + 'last-commandes', {
       headers: this.authorizationHeaders,
     });
