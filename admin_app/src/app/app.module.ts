@@ -37,9 +37,6 @@ registerLocaleData(fr);
     NzButtonModule,
     NzDropDownModule,
     ReactiveFormsModule,
-
-
-
   ],
   providers: [{ provide: NZ_I18N, useValue: fr_FR }],
   bootstrap: [AppComponent]

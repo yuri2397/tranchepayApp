@@ -32,7 +32,7 @@
                     </li>
                 </ul>
             </li>
-            <li nz-menu-item (click)="goto('commercant')">
+            <li nz-menu-item *ngIf="Authsrv.can('lister commercant')" (click)="goto('commercant')">
                 <i nz-icon nzType="fire" class="icon" nzTheme="outline"></i>
                 <span class="text-dark-green bold">Commerçants</span>
             </li>
