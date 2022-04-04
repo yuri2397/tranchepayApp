@@ -1,5 +1,5 @@
 import { Commercant } from './../models/commercant';
-import { Admin } from './../models/admin';
+import { Admin, Permission } from './../models/admin';
 import { Base } from './../shared/http/base';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -53,6 +53,14 @@ export class AuthService extends Base{
       headers: this.authorizationHeaders,
     });
   }
+
+  allPermissions()
+  {
+    return this.http.get<Permission[]>(this.endPoint + 'all-permissions', {
+      headers: this.authorizationHeaders,
+    });
+  }
+
 
   findCommande(id:any)
   {

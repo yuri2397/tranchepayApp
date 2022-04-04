@@ -64,11 +64,13 @@
             <input nz-input placeholder="Email" nzSize="large" />
             <br />
             <br />
-            <nz-select nzSize="large" style="width: 100%;" nzAllowClear nzPlaceHolder="Select Role">
-                <nz-option nzLabel="SuperAdmin" nzValue="SuperAdmin">Super Admin</nz-option>
-                <nz-option nzLabel="AdminSimple" nzValue="AdminSimple">Simple Admin</nz-option>
-                <nz-option nzLabel="Role+" nzValue="Role+">Role +</nz-option>
+
+            <nz-select nzMode="multiple" nzSize="large" nzPlaceHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
+                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name"></nz-option>
+
             </nz-select>
+            <br />
+
             <br>
             <br>
             <nz-input-group nzSize="large" [nzSuffix]="suffixTemplate">

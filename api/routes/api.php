@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CommercantController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\DeplafonnementController;
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\PermissionsController;
 
 /**
  * MIXED
@@ -105,5 +106,6 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::get('admins', [AdminController::class, "getAdmin"])->middleware('can:lister commande');
     Route::get('commercant-inactif', [AdminController::class, "findCommercantInactif"])->middleware('can:lister commercant');
     Route::post('create/new-admin', [AdminController::class, 'registerAdmin'])->middleware('can:creer utilisateur');
+    Route::get('all-permissions', [PermissionsController::class, 'allPermissions'])->middleware('can:voir permissions');
 });
 

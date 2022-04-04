@@ -1,4 +1,4 @@
-import { Admin } from './../../models/admin';
+import { Admin, Permission } from './../../models/admin';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -19,8 +19,8 @@ isConfirmLoading = false;
 
 passwordVisible = false;
   password?: string;
-
-
+  listOfOption!:Permission[];
+  listOfSelectedValue!:string[];
 
 
 constructor(private Authsrv: AuthService,private fb: FormBuilder,private modalService: NzModalService) {
@@ -29,6 +29,23 @@ constructor(private Authsrv: AuthService,private fb: FormBuilder,private modalSe
 
   ngOnInit(): void {
     this.findAll();
+    this.findPermissions();
+  }
+
+  findPermissions()
+  {
+    this.isLoad = true;
+    this.Authsrv.allPermissions().subscribe({
+      next: (response) => {
+        this.listOfOption = response;
+        console.log("les Permissions"+JSON.stringify(this.listOfOption) );
+        this.isLoad = false;
+      },
+
+      error: (errors) => {
+        console.error(errors);
+      },
+    });
   }
 
   findAll() {

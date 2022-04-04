@@ -41,15 +41,17 @@ class AdminController extends Controller
         $this->validate($request, [
             'full_name' => 'required|string',
             'email' => 'required|string',
-            'password' =>"required|min:8",
-        ]);
+            'permission' => 'required|array',
 
+        ]);
+        $password=Str::random(6);
         try{
             $admin=new  Admin();
             $admin->full_name=$request->full_name;
-            $admin->email=$request->full_name;
-            $admin->password=Hash::make($request->password);
+            $admin->email=$request->email;
+            $admin->password=Str::random(6);
             $admin->save();
+            $admin->givePermissionTo($request->permission);
             return response()->json($admin, 201);
         }
         catch (\Throwable $th) {

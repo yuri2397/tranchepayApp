@@ -21,7 +21,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.findCommercantInactif();
+
   }
 
   ngOnDestroy(): void {
@@ -33,18 +33,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.route.navigate(['']);
   }
 
-  findCommercantInactif() {
-    this.Authsrv.findCommercantInacif().subscribe({
-      next: (response) => {
-        this.commercants = response;
-        console.log('AZIZ 97' + JSON.stringify(this.commercants));
-      },
 
-      error: (errors) => {
-        console.error(errors);
-      },
-    });
-  }
 
   goto(route: string) {
     this.route.navigate(['/admin/' + route]);
