@@ -11,12 +11,13 @@ import { VentesComponent } from './../../pages/commercant/ventes/ventes.componen
 import { DashboardComponent } from './../../pages/commercant/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CommercantComponent } from './commercant.component';
 import { AjouterVentesComponent } from 'src/app/pages/commercant/ventes/ajouter-ventes/ajouter-ventes.component';
+import { ShowComponent } from 'src/app/pages/client/commandes/show/show.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'accueil'},
   { path: 'accueil', component: DashboardComponent },
+  { path: 'ventes/show/:id', component: ShowComponent },
   { path: 'ventes', component: VentesComponent },
   { path: 'soldes', component: SoldesComponent },
   { path: 'comptabilite', component: ComptabiliteComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'conditions', component: ConditionsComponent },
   { path: 'parrainages', component: ParrainagesComponent },
   { path: 'aide', component: ServiceClientComponent },
-  {path: 'add-vente', component: AjouterVentesComponent}
+  {path: 'add-vente', component: AjouterVentesComponent},
+
 ];
 
 @NgModule({

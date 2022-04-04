@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { SecuriteComponent } from './../../pages/client/securite/securite.component';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
@@ -38,7 +39,6 @@ import { CoordonneesComponent } from '../../pages/client/coordonnees/coordonnees
 import { ProfileComponent } from '../../pages/client/profile/profile.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
-import { ShowComponent } from 'src/app/pages/client/commandes/show/show.component';
 
 @NgModule({
   declarations: [
@@ -52,42 +52,8 @@ import { ShowComponent } from 'src/app/pages/client/commandes/show/show.componen
     CoordonneesComponent,
     SecuriteComponent,
     ProfileComponent,
-    ShowComponent,
   ],
-  imports: [
-    CommonModule,
-    ClientRoutingModule,
-    NzLayoutModule,
-    NzListModule,
-    NzIconModule,
-    MatIconModule,
-    NzDropDownModule,
-    NzToolTipModule,
-    NzCardModule,
-    NzTableModule,
-    NzDividerModule,
-    NzTabsModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatButtonModule,
-    NzFormModule,
-    NzInputModule,
-    NzButtonModule,
-    NzAlertModule,
-    NzSelectModule,
-    NzTagModule,
-    NzPageHeaderModule,
-    NzModalModule,
-    NzDrawerModule,
-    NzGridModule,
-    NzNotificationModule,
-    NzImageModule,
-    NzDividerModule,
-    NzStepsModule,
-    NzSkeletonModule,
-    NzListModule
-  ],
-  exports: [SecuriteComponent]
+  imports: [ClientRoutingModule, SharedModule],
+  exports: [SecuriteComponent],
 })
 export class ClientModule {}

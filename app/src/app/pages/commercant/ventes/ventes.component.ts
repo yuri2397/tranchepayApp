@@ -40,12 +40,11 @@ export class VentesComponent implements OnInit {
       error: (errors) => {
         this.isLoad = false;
         console.log(errors);
-        
       },
     });
   }
 
-  etatColor(data: Commande){
+  etatColor(data: Commande) {
     let etat = 'green';
     switch (data.etat_commande.nom) {
       case 'append':
@@ -96,5 +95,9 @@ export class VentesComponent implements OnInit {
 
   openCreateVenteModal() {
     this.router.navigate(['/commercant/add-vente']);
+  }
+
+  goto(route: string) {
+    this.router.navigate([route]);
   }
 }
