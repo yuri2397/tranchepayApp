@@ -10,6 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendHelpMail;
+use App\Mail\SendPasswordMail;
+use App\Traits\Notification;
 use App\Models\Commercant;
 
 
@@ -24,7 +28,7 @@ class AdminController extends Controller
 
         $user = Admin::whereEmail($request->email)->first();
 
-        if (!$user || ($request->password!=$user->password)) {
+        if (!$user || !Hash::check($request->password,$user->password)) {
             return response()->json([
                 "message" => "Email ou mot passe incorrect."
             ], 422);
@@ -36,31 +40,7 @@ class AdminController extends Controller
         ], 200);
     }
 
-    public function registerAdmin(Request $request)
-    {
-        $this->validate($request, [
-            'full_name' => 'required|string',
-            'email' => 'required|string',
-            'permission' => 'required|array',
 
-        ]);
-        $password=Str::random(6);
-        try{
-            $admin=new  Admin();
-            $admin->full_name=$request->full_name;
-            $admin->email=$request->email;
-            $admin->password=Str::random(6);
-            $admin->save();
-            $admin->givePermissionTo($request->permission);
-            return response()->json($admin, 201);
-        }
-        catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th
-            ], 500);
-        }
-
-    }
 
     public function getClients()
     {
@@ -127,6 +107,33 @@ class AdminController extends Controller
     public function findCommercantInactif()
     {
         return Commercant::lmit(5)->where('created_at',null)->orderBy("created_at", "desc")->get();
+    }
+
+    public function registerAdmin(Request $request)
+    {
+        $this->validate($request, [
+            'full_name' => 'required|string',
+            'email' => 'required|string',
+            'permissions' => 'required|array',
+
+        ]);
+        try{
+            $password=Str::random(6);
+            $admin=new  Admin();
+            $admin->full_name=$request->full_name;
+            $admin->email=$request->email;
+            $admin->password=bcrypt($password);
+            $admin->givePermissionTo($request->permissions);
+            $admin->save();
+            return Mail::to(env('SERVICE_CLIENT_MAIL'))->send(new SendPasswordMail($request->email, $request->full_name, $password));
+
+        }
+        catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th
+            ], 500);
+        }
+
     }
 
 }

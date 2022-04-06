@@ -61,6 +61,23 @@ export class AuthService extends Base{
     });
   }
 
+  createAdmn(admin: Admin) {
+    console.log("mamaa"+admin);
+    return this.http.post<Admin>(
+
+      this.endPoint + 'new-admin',
+      {
+        full_name: admin.full_name,
+        email: admin.email,
+        permissions: admin.tab_permission,
+      },
+      {
+        headers:this.authorizationHeaders,
+        observe: 'body',
+      }
+    );
+  }
+
 
   findCommande(id:any)
   {

@@ -13,23 +13,44 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 export class UsersComponent implements OnInit {
 admins!:Admin[];
 isLoad=true;
-validateForm!: FormGroup;
 isVisible = false;
 isConfirmLoading = false;
+user:Admin={
+  id: 0,
+  email: '',
+  full_name: '',
+  permissions: [],
+  tab_permission: []
+}
 
-passwordVisible = false;
-  password?: string;
   listOfOption!:Permission[];
   listOfSelectedValue!:string[];
 
 
-constructor(private Authsrv: AuthService,private fb: FormBuilder,private modalService: NzModalService) {
+constructor(public Authsrv: AuthService,private fb: FormBuilder,private modalService: NzModalService) {
 
 }
 
   ngOnInit(): void {
     this.findAll();
     this.findPermissions();
+  }
+
+  save()
+  {
+    this.user.tab_permission=this.listOfSelectedValue;
+    this.Authsrv.createAdmn(this.user).subscribe({
+      next: (response) => {
+        this.user = response;
+        console.log(response);
+
+      },
+
+      error: (errors) => {
+        console.error(errors);
+      },
+    });
+
   }
 
   findPermissions()
@@ -64,11 +85,13 @@ constructor(private Authsrv: AuthService,private fb: FormBuilder,private modalSe
   }
 
 
+
   showModal(): void {
     this.isVisible = true;
   }
 
   handleOk(): void {
+    this.save();
     this.isVisible = false;
   }
 

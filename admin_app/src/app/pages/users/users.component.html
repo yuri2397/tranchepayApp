@@ -22,7 +22,7 @@
         <!-- Top search END -->
     </div>
     <div class="col-sm-6">
-        <button nz-button nzType="default" (click)="showModal()">
+        <button *ngIf="Authsrv.can('creer utilisateur')" nz-button nzType="default" (click)="showModal()">
   <span>Create Admin</span>
 </button>
     </div>
@@ -53,7 +53,7 @@
         <ng-container *nzModalContent>
 
             <nz-input-group nzSize="large" [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input placeholder="Enter  fullname" />
+                <input [(ngModel)]="user.full_name" type="text" nz-input placeholder="Enter  fullname" />
             </nz-input-group>
             <ng-template #prefixTemplateUser><i nz-icon nzType="user"></i></ng-template>
             <ng-template #suffixTemplateInfo>
@@ -61,7 +61,7 @@
             </ng-template>
             <br />
             <br />
-            <input nz-input placeholder="Email" nzSize="large" />
+            <input [(ngModel)]="user.email" nz-input placeholder="Email" nzSize="large" />
             <br />
             <br />
 
@@ -71,16 +71,9 @@
             </nz-select>
             <br />
 
-            <br>
-            <br>
-            <nz-input-group nzSize="large" [nzSuffix]="suffixTemplate">
-                <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="password" [(ngModel)]="password" nzSize="large" />
-            </nz-input-group>
-            <ng-template #suffixTemplate>
-                <i style=" cursor: pointer;" nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
-            </ng-template>
 
         </ng-container>
     </nz-modal>
+
 </div>
 <br />

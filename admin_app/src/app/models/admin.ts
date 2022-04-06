@@ -2,8 +2,8 @@ export interface Admin {
   id: number;
   email: string;
   full_name: string;
-  password: string;
   permissions: Permission[];
+  tab_permission:string[];
 }
 
 export interface Permission {
