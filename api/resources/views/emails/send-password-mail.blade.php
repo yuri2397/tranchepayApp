@@ -6,9 +6,9 @@
 - Prénoms et Nom : {{ $full_name }}
 - Email : {{ $email }}
 
+-votre mot de passe en tant que Administrateur est:{{ $email }}
 @endcomponent
 
--votre mot de passe en tant que Administrateur est:{{ $email }}
 
 {{ config('app.name') }}
 @endcomponent
