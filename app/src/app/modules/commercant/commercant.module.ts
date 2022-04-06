@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { RetraitComponent } from './../../pages/commercant/retrait/retrait.component';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
@@ -60,36 +61,8 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     RetraitComponent,
   ],
   imports: [
-    CommonModule,
     CommercantRoutingModule,
-    NzLayoutModule,
-    NzListModule,
-    NzIconModule,
-    MatIconModule,
-    NzDropDownModule,
-    NzToolTipModule,
-    NzCardModule,
-    NzTableModule,
-    NzDividerModule,
-    NzTabsModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    NzSkeletonModule,
-    FormsModule,
-    MatButtonModule,
-    NzFormModule,
-    NzInputModule,
-    NzButtonModule,
-    NzAlertModule,
-    NzSelectModule,
-    NzTagModule,
-    NzPageHeaderModule,
-    NzModalModule,
-    NzDrawerModule,
-    NzGridModule,
-    NzNotificationModule,
-    NzStepsModule,
-    NzRadioModule,
+    SharedModule,
   ],
 })
 export class CommercantModule {}

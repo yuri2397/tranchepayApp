@@ -10,10 +10,10 @@
             <ng-container *ngFor="let item of menuItems">
                 <li (click)="routerLink(item)" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
                     item.title : ''" [nzSelected]='selected(item)'>
-                    <i nz-icon>
-                        <mat-icon style="color: #ffffff;">{{ item.icon }}</mat-icon>
+                    <i nz-icon nzType="{{ item.icon }}" class="icon" nzTheme="outline">
+                        
                     </i>
-                    <span class="text-white">{{ item.title }}</span>
+                    <span class="text-dark-green bold">{{ item.title }}</span>
                 </li>
             </ng-container>
         </ul>
@@ -26,16 +26,16 @@
                     <span class="header-trigger" (click)="isCollapsed=
                         !isCollapsed">
                         <ng-container *ngIf="isCollapsed; else elseTemplate">
-                            <mat-icon>menu_open</mat-icon>
+                            <i nz-icon nzType="double-right" nzTheme="outline"></i>
                         </ng-container>
                         <ng-template #elseTemplate>
-                            <mat-icon>close</mat-icon>
+                            <i nz-icon nzType="double-left" nzTheme="outline"></i>
                         </ng-template>
                     </span>
                 </div>
                 <div class="mx-3">
                     <button mat-mini-fab color="primary" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-                        <mat-icon>account_circle</mat-icon>
+                        <i nz-icon nzType="user" nzTheme="outline"></i>
                     </button>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>

@@ -107,3 +107,19 @@ nz-content {
 .bg-grad {
     background: linear-gradient(-180deg, #009dd1, #85ffc2 120%);
 }
+
+.icon {
+    color: #000b26;
+    font-size: 20px;
+}
+
+.ant-menu-inline .ant-menu-item::after,
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after {
+    border-right: 3px solid #000b26;
+}
+
+.ant-menu-item .ant-menu-item-selected .ng-star-inserted {
+    background-color: white !important;
+}
