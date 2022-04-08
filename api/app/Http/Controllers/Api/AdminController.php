@@ -136,4 +136,10 @@ class AdminController extends Controller
 
     }
 
+
+    public function ShowAdminById($id)
+    {
+        return Admin::Where('id',$id)->first();
+    }
+
 }
