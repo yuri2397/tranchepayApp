@@ -125,8 +125,8 @@ class AdminController extends Controller
             $admin->password=bcrypt($password);
             $admin->givePermissionTo($request->permissions);
             $admin->save();
-           // return Mail::to(env('SERVICE_CLIENT_MAIL'))->send(new SendPasswordMail($request->email, $request->full_name, $password));
-           return response()->json($password, 201);
+            return Mail::to($request->email)->send(new SendPasswordMail($request->email, $request->full_name, $password));
+           //return response()->json($password, 201);
         }
         catch (\Throwable $th) {
             return response()->json([
