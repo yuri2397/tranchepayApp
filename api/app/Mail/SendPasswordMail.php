@@ -33,7 +33,7 @@ class SendPasswordMail extends Mailable
      */
     public function build()
     {
-        return $this->subject("TranchePay, formulaire de contact.")
+        return $this->subject("TranchePay, Infomataion compte .")
         ->markdown("emails.send-password-mail")->with([
             "full_name" => $this->full_name,
             "email" => $this->email,

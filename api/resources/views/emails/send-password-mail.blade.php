@@ -1,12 +1,11 @@
 @component('mail::message')
-# Message dépuis TRANCHEPAY.
+TRANCHPAY VOUS A CREE VOTRE COMPTE AVEC LES INFORMATIONS CI-DESSOUS
 
 @component('mail::panel')
-# INFORMATIONS DU CLIENT
+
 - Prénoms et Nom : {{ $full_name }}
 - Email : {{ $email }}
-
--votre mot de passe en tant que Administrateur est:{{ $email }}
+- Mot de passe :{{ $password }}
 @endcomponent
 
 
