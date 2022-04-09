@@ -1,5 +1,5 @@
 import { Admin } from './../../models/admin';
-import { AbstractPreferences } from "./preference";
+import { AbstractPreferences } from './preference';
 import { environment as env } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 export class Base extends AbstractPreferences {
@@ -7,7 +7,6 @@ export class Base extends AbstractPreferences {
   private _api = env.api;
   protected _baseUrl!: string;
   protected httpClient!: HttpClient;
-
 
   constructor() {
     super();
@@ -56,6 +55,12 @@ export class Base extends AbstractPreferences {
   }
 
   logout() {
+    return this.http.get(this.api + 'admin/logout',{
+      headers: this.authorizationHeaders
+    });
+  }
+
+  clearSession() {
     sessionStorage.clear();
     localStorage.clear();
   }

@@ -36,6 +36,11 @@ export class AuthService extends Base{
       }
     );
   }
+
+  getCurrentUser(){
+    return this.setUser
+  }
+
  /**
  * trouve la liste des ddernière commandes
  * @author Abdou Aziz Sy NDIAYE

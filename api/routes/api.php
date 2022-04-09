@@ -94,6 +94,7 @@ Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
  */
 Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
+    Route::get("logout", [AdminController::class, "logout"]);
     Route::get('last-commandes', [AdminController::class, "lastCommandes"])->middleware('can:lister commande');
     Route::get('commercants', [AdminController::class, "getCommercants"])->middleware('can:lister commercant');
     Route::get('commercants/{id}', [AdminController::class, "showCommercantById"])->middleware('can:voir commercant');
