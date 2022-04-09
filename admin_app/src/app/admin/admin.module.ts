@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommandesEncoursComponent } from './../pages/commandes-encours/commandes-encours.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -52,6 +52,7 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     CommonModule,
     AdminRoutingModule,
     NzDropDownModule,
+    ReactiveFormsModule,
     NzButtonModule,
     NzIconModule,
     NzTableModule,

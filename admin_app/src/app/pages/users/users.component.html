@@ -6,7 +6,7 @@
 
     <br>
 </div>
-<div class="row">
+<div class="row justify-content-between">
     <div class="col-sm-6">
         <!-- Top search START -->
         <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
@@ -21,29 +21,32 @@
         </div>
         <!-- Top search END -->
     </div>
-    <div class="col-sm-6">
-        <button *ngIf="Authsrv.can('creer utilisateur')" nz-button nzType="default" (click)="showModal()">
-  <span>Create Admin</span>
-</button>
+    <div class="col-sm-6 text-end">
+        <button *ngIf="Authsrv.can('creer utilisateur')" class="btn submit-btn border my-2 shadow-sm" nz-button (click)="showModal()">
+            <span>Create Admin</span>
+        </button>
     </div>
 
 </div><br><br>
 
-<nz-table #middleTable nzSize="middle" [nzData]="admins">
+<nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad">
     <thead>
         <tr>
 
             <th>Name</th>
             <th>Email</th>
-            <th>Show</th>
+            <th *ngIf="Authsrv.can('voir utilisateur')">Voir détails</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let data of middleTable.data">
-
             <td>{{ data.full_name }}</td>
             <td>{{ data.email }}</td>
-            <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;" *ngIf="Authsrv.can('voir utilisateur')"></i>
+            <td class="text-dark-green" *ngIf="Authsrv.can('voir utilisateur')">
+                <button (click)="show(data)" class="btn submit-btn my-2 shadow-sm" nz-button nzShape="circle">
+                    <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </button>
+            </td>
         </tr>
     </tbody>
 </nz-table>
@@ -63,12 +66,12 @@
             </ng-template>
             <br />
             <br />
-            <input [(ngModel)]="user.email" nz-input placeholder="Email" nzSize="large" />
+            <input [(ngModel)]="user.email" class="form-control w-100" placeholder="Email" />
             <br />
             <br />
-
-            <nz-select nzMode="multiple" nzSize="large" nzPlaceHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
-                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name"></nz-option>
+            <nz-select nzMode="multiple" class="form-control w-100" nzPlaceHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
+                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name">
+                </nz-option>
             </nz-select>
             <br />
 
