@@ -2,6 +2,10 @@ import { Router } from '@angular/router';
 import { Admin } from './../../models/admin';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Admin } from 'src/app/models/admin';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-profile',

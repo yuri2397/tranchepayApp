@@ -37,7 +37,13 @@ const routes: Routes = [
     path: 'commandes-encours',
     component: CommandesEncoursComponent,
   },
-  { path: 'user', component: UsersComponent },
+  { path: 'user',
+    component: UsersComponent
+   },
+   { path: 'user/show/:id',
+   component: ProfileComponent
+  },
+
   {
     path: 'detailclient/:id',
     component: DetailsClientsComponent,

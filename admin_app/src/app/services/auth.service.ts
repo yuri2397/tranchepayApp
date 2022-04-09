@@ -178,5 +178,12 @@ export class AuthService extends Base{
       return res;
     }
 
+    findAdminById(id:any)
+    {
+      return this.http.get<Admin>(this.endPoint + 'admin/'+id, {
+        headers: this.authorizationHeaders,
+      });
+    }
+
 
 }

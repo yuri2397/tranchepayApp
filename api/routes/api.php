@@ -108,5 +108,6 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::get('commercant-inactif', [AdminController::class, "findCommercantInactif"])->middleware('can:lister commercant');
     Route::post('new-admin', [AdminController::class, "registerAdmin"])->middleware('can:creer utilisateur');
     Route::get('all-permissions', [PermissionsController::class, 'allPermissions'])->middleware('can:voir permissions');
+    Route::get('admin/{id}', [AdminController::class, 'ShowAdminById'])->middleware('can:voir utilisateur');
 });
 
