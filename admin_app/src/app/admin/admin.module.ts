@@ -3,6 +3,7 @@ import { CommandesEncoursComponent } from './../pages/commandes-encours/commande
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzListModule } from 'ng-zorro-antd/list';
+
 import { NgModule } from '@angular/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -66,6 +67,7 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     NzInputModule,
     NzSelectModule,
     NzLayoutModule,
+
   ]
 })
 export class AdminModule { }
