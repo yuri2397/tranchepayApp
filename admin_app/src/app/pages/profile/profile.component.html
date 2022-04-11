@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <div class="card card-body border raduis-sm">
+                <img src="/assets/img/logo.png" alt="LOGO" class="logo_" (load)="imgLoad($event)">
+                <nz-divider nzText="{{ user.full_name }}"></nz-divider>
+                <h5 class="text-dark-blue m-auto my-3">{{ user.email }}</h5>
+                <button (click)="logout()" [nzLoading]="logoutLoad" nz-button class="btn submit-btn border my-2 shadow-sm">SE DÉCONNECTER</button>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 my-sm-2">
+            <div class="card card-body border raduis-sm">
+                <h5 class="mb-3">Change votre mot de passe</h5>
+                <form nz-form [formGroup]="validateForm" class="login-form">
+                    <div class="mb-4">
+                        <label for="exampleInputEmail1" class="form-label">Mot de passe</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i
+                                    class="bi bi-envelope-fill"></i></span>
+                            <input autocomplete="false" type="password" class="form-control bg-light rounded-end " placeholder="Mot de passe" nz-input formControlName="password">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="exampleInputEmail1" class="form-label">Nouveau Mot de passe</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i
+                                    class="bi bi-envelope-fill"></i></span>
+                            <input autocomplete="false" type="password" class="form-control bg-light rounded-end " placeholder="Nouveau Mot de passe" nz-input formControlName="new_password">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="exampleInputEmail1" class="form-label">Confirmer le mot de passe</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i
+                                    class="bi bi-envelope-fill"></i></span>
+                            <input autocomplete="false" type="password" class="form-control bg-light rounded-end" placeholder="Confirmer le mot de passe" nz-input formControlName="new_password_conf">
+                        </div>
+                    </div>
+                    <button nz-button [disabled]="!validateForm.valid" class="btn submit-btn border my-2 shadow-sm" (click)="updatepassword()" [nzLoading]="isLoad">
+                        Valider
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

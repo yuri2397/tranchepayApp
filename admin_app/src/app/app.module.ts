@@ -25,6 +25,8 @@ registerLocaleData(fr);
     LoginComponent,
 
 
+
+
   ],
   imports: [
     BrowserModule,

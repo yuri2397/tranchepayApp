@@ -36,6 +36,11 @@ export class AuthService extends Base{
       }
     );
   }
+
+  getCurrentUser(){
+    return this.setUser
+  }
+
  /**
  * trouve la liste des ddernière commandes
  * @author Abdou Aziz Sy NDIAYE
@@ -179,6 +184,49 @@ export class AuthService extends Base{
         headers: this.authorizationHeaders,
       });
     }
+    fidMisssingPermission(admin:Admin)
+    {
+      return this.http.post<Admin>(
 
+        this.endPoint + 'missing',
+        {
+          full_name: admin.full_name,
+          email: admin.email,
+          permissions:Array(admin.permissions) ,
+        },
+        {
+          headers:this.authorizationHeaders,
+          observe: 'body',
+        }
+      );
+    }
+
+
+    deleteAdmin(id:any)
+    {
+      return this.http.delete<Admin>(this.endPoint + 'delete/'+id, {
+        headers: this.authorizationHeaders,
+      });
+    }
+
+    EditAdmin(id:any,admin:Admin)
+    {
+
+
+
+      return this.http.put<Admin>(
+        this.endPoint + 'edit-admin/'+id,
+        {
+          id: id,
+          email: admin.email,
+          full_name:admin.full_name,
+          permissions:admin.permissions
+        },
+        {
+          headers: this.authorizationHeaders,
+
+        }
+      );
+    }
 
 }

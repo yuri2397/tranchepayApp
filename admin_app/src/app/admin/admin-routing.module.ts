@@ -1,3 +1,4 @@
+import { ShowAdminComponent } from './../pages/show-admin/show-admin.component';
 import { DetailsCommandeComponent } from './../pages/details-commande/details-commande.component';
 import { DetailsCommercantComponent } from './../pages/details-commercant/details-commercant.component';
 import { DetailsClientsComponent } from './../pages/details-clients/details-clients.component';
@@ -41,7 +42,7 @@ const routes: Routes = [
     component: UsersComponent
    },
    { path: 'user/show/:id',
-   component: ProfileComponent
+   component: ShowAdminComponent
   },
 
   {
