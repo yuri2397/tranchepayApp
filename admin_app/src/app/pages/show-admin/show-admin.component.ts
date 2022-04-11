@@ -92,7 +92,7 @@ export class ShowAdminComponent implements OnInit {
         nzOkText: 'Oui',
         nzOkType: 'primary',
         nzOkDanger: true,
-        nzOnOk: () => this.deleteAdmin(),
+        nzOnOk: () => 'ok',
         nzCancelText: 'Non',
         nzOnCancel: () => console.log('Cancel')
       });
@@ -114,6 +114,16 @@ export class ShowAdminComponent implements OnInit {
       });
     }
 
-
+    showDeleteAdministrateurConfirm(): void {
+      this.modal.confirm({
+        nzTitle: 'Voulez vous vraiment supprimer cet Administrateur?',
+        nzOkText: 'Oui',
+        nzOkType: 'primary',
+        nzOkDanger: true,
+        nzOnOk: () => this.deleteAdmin(),
+        nzCancelText: 'Non',
+        nzOnCancel: () => console.log('Cancel')
+      });
+    }
 
 }

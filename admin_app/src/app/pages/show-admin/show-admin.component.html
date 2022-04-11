@@ -4,9 +4,9 @@
             <div class="card card-body border raduis-sm">
 
                 <img src="assets/img/logo.png" alt="..." class="logo"><br>
-                <p>Prenom nom:{{admin?.full_name}}</p>
-                <p>Email :{{admin?.email}}</p>
-                <button nz-button nzType="dashed" (click)="showDeleteConfirm()">Delete</button>
+                <p><b>Prenom</b> : {{admin?.full_name}}</p>
+                <p><b>Email</b> : {{admin?.email}}</p>
+                <button nz-button nzType="dashed" (click)="showDeleteAdministrateurConfirm()" nzStyle=" margin-right: 8px;">Supprimer</button>
 
             </div>
         </div>

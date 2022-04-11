@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Commande } from 'src/app/models/commande';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -12,7 +13,7 @@ export class CommandesLivresComponent implements OnInit {
   isLoad = true;
   titre:any;
   commande:any=[];
-  constructor(private Authsrv: AuthService) {}
+  constructor(private Authsrv: AuthService,private modal: NzModalService) {}
 
   ngOnInit(): void {
     this.findAll();
@@ -46,6 +47,17 @@ export class CommandesLivresComponent implements OnInit {
       })
     }
 
+  }
+  showDeleteConfirm(): void {
+    this.modal.confirm({
+      nzTitle: 'Voulez vous vraiment supprimer cet Commande?',
+      nzOkText: 'Oui',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => 'Ok',
+      nzCancelText: 'Non',
+      nzOnCancel: () => console.log('Cancel')
+    });
   }
 
 }

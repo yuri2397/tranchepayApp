@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Commande } from 'src/app/models/commande';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-details-commercant',
@@ -14,7 +15,7 @@ export class DetailsCommercantComponent implements OnInit {
   commercant!: Commercant;
   commandes!:Commande[];
   id: any;
-  constructor(private route:ActivatedRoute,private AuthSrv:AuthService) { }
+  constructor(private route:ActivatedRoute,private AuthSrv:AuthService,private modal: NzModalService) { }
 
   ngOnInit(): void {
     this.id=this.route.snapshot.paramMap.get('id');
@@ -31,6 +32,18 @@ export class DetailsCommercantComponent implements OnInit {
       error: (errors) => {
         console.error(errors);
       },
+    });
+  }
+
+  showDesactiveConfirm(): void {
+    this.modal.confirm({
+      nzTitle: 'Voulez vous vraiment Desactiver cet Compte?',
+      nzOkText: 'Oui',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => 'Ok',
+      nzCancelText: 'Non',
+      nzOnCancel: () => console.log('Cancel')
     });
   }
 
