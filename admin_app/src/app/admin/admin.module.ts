@@ -5,6 +5,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NgModule } from '@angular/core';
+
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -70,6 +71,7 @@ import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
     NzSelectModule,
     NzLayoutModule,
     NzPopconfirmModule,
+
 
   ]
 })

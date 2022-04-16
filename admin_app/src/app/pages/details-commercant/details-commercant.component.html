@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container responsive">
 
     <h3 class="breadcrumbs-title">Details sur le Commerçant</h3>
     <br>
@@ -11,19 +11,31 @@
                 <div class="collapsible-header active">
                     <h6> Identifiant</h6>
                 </div>
-                <div class="card card-body raduis-sm border">
+                <div class="card card-body raduis-sm border responsive">
                     <nz-list>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>PRENOM</b></span> {{commercant?.prenoms}}
+                            <span *ngIf="commercant?.prenoms==null">
+                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
+                            </span>
                         </nz-list-item>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>NOM</b></span> {{commercant?.nom}}
+                            <span *ngIf="commercant?.nom==null">
+                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
+                            </span>
                         </nz-list-item>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>ADRESSE</b></span> {{commercant?.adresse}}
+                            <span *ngIf="commercant?.adresse==null">
+                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
+                            </span>
                         </nz-list-item>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>TELEPHONE</b></span> {{commercant?.telephone}}
+                            <span *ngIf="commercant?.telephone==null">
+                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
+                            </span>
                         </nz-list-item>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>ETAT COMPTE</b></span>
@@ -35,10 +47,17 @@
                             </ng-template>
 
                         </nz-list-item><br>
-                        <div class="col-sm-6">
-                            <button (click)="showDesactiveConfirm()" nz-button nzType="default">
+                        <div class="col-sm-6 ">
+                            <button (click)="showDesactiveConfirm()" *ngIf="commercant?.created_at" nz-button nzType="default">
                              <span>Desactivé Compte</span>
                        </button>
+
+                        </div>
+                        <div class="col-sm-6 ">
+                            <button (click)="showActiveConfirm()" *ngIf="!commercant?.created_at" nz-button nzType="default">
+                           <span>Activé Compte</span>
+                     </button>
+
                         </div>
                     </nz-list>
                 </div>
@@ -53,9 +72,15 @@
                     <nz-list>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>BOUTIQUE</b></span>{{commercant?.boutique?.nom}}
+                            <span *ngIf="commercant?.boutique?.nom==null">
+                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
+                            </span>
                         </nz-list-item>
                         <nz-list-item class="text-dark-green">
                             <span nz-typography><b>ADRESSE</b></span>{{commercant?.boutique?.addresse}}
+                            <span *ngIf="commercant?.boutique?.addresse==null">
+                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
+                            </span>
                         </nz-list-item>
 
                     </nz-list>
@@ -71,8 +96,8 @@
     <hr>
     <div class="col s12 m12">
 
-        <div class="card">
-            <div class="container">
+        <div class="card ">
+            <div class="container responsive">
                 <h5 class="my-3 text-dark-green bold">Les commandes</h5>
                 <br>
                 <div class="col-sm-7">
@@ -81,7 +106,7 @@
                         <div class="col-sm-7">
 
                             <div class="search-box">
-                                <input type="text" class="form-control" placeholder="REFERENCE&hellip;">
+                                <input [(ngModel)]="titre" (ngModelChange)="serarchcommande()" type="text" class="form-control" placeholder="REFERENCE&hellip;">
                             </div>
 
                             <!-- Top search END -->

@@ -111,5 +111,7 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::get('admin/{id}', [AdminController::class, 'ShowAdminById'])->middleware('can:voir utilisateur');
     Route::delete('delete/{id}', [AdminController::class, 'destroy'])->middleware('can:supprimer utilisateur');
     Route::put('edit-admin/{id}', [AdminController::class, 'update']);
+    Route::put('desactive/{id}', [AdminController::class, 'DesactiveCompte']);
+    Route::put('active/{id}', [AdminController::class, 'ActiveCompte']);
 });
 

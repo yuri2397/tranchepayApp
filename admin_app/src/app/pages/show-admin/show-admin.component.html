@@ -13,7 +13,7 @@
         <div class="col">
             <div class="card card-body border raduis-sm">
 
-                <h3 [ngStyle]="{ margin: '16px 0' }">Liste Des Permissions <i nz-icon nzType="plus" nzTheme="outline" style="color: rgb(103, 241, 11);" (click)="showModal()"></i></h3>
+                <h3 [ngStyle]="{ margin: '16px 0' }">Liste Des Permissions <a (click)="showModal()"><i nz-icon nzType="plus" nzTheme="outline" style="color: rgb(103, 241, 11);" ></i></a> </h3>
 
                 <ul nz-list [nzDataSource]="Permissions" nzBordered nzSize="large">
 
@@ -22,7 +22,6 @@
 
                         </ul>
                         {{ item?.name }}&nbsp;
-                        <a> <i nz-icon nzType="delete" (click)="showDeleteConfirm()" nzTheme="outline" style="color: rgb(241, 11, 11);" *ngIf="AuthSrv.can('supprimer utilisateur')"></i></a>
 
                     </li>
 

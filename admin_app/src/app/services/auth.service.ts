@@ -228,5 +228,35 @@ export class AuthService extends Base{
         }
       );
     }
+    dsactiveCompte(id:any,commercant:Commercant)
+    {
+      return this.http.put<Commercant>(
+        this.endPoint + 'desactive/'+id,
+        {
+          id: id,
+
+        },
+        {
+          headers: this.authorizationHeaders,
+
+        }
+      );
+    }
+
+    activeCompte(id:any)
+    {
+      return this.http.put<Commercant>(
+        this.endPoint + 'active/'+id,
+        {
+          id: id,
+
+        },
+        {
+          headers: this.authorizationHeaders,
+
+        }
+      );
+    }
+
 
 }

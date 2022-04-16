@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Admin, Permission } from './../../models/admin';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +12,8 @@ import {
 } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-users',
@@ -37,7 +40,9 @@ export class UsersComponent implements OnInit {
     public Authsrv: AuthService,
     private fb: FormBuilder,
     private modalService: NzModalService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
+
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +101,8 @@ export class UsersComponent implements OnInit {
   handleOk(): void {
     this.save();
     this.isVisible = false;
+    this.toastr.success('Enregistrement effecué avec succès', 'Success');
+    this.findAll();
   }
 
   handleCancel(): void {
@@ -114,4 +121,6 @@ export class UsersComponent implements OnInit {
   show(user: any) {
     this.router.navigate(['/admin/user/show/' + user.id])
   }
+
+
 }
