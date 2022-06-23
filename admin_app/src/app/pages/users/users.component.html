@@ -1,12 +1,12 @@
-<div class="row">
-    <div class="col-sm-6">
+<div class="row responsive">
+    <div class="col-sm-6 responsive">
         <h4 style=" margin-bottom: 16px;">Liste Des Administrateurs</h4>
     </div>
 
 
     <br>
 </div>
-<div class="row justify-content-between">
+<div class="row justify-content-between responsive">
     <div class="col-sm-6">
         <!-- Top search START -->
         <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
@@ -29,7 +29,7 @@
 
 </div><br><br>
 
-<nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad">
+<nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad" [nzScroll]="{ y: '240px' }">
     <thead>
         <tr>
 
@@ -57,7 +57,8 @@
     <nz-modal [(nzVisible)]="isVisible" nzTitle="Enregistrer Admin" nzOkText="Enregistrer" nzCancelText="Cancel" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
         <ng-container *nzModalContent>
 
-            <nz-input-group nzSize="large" [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+            <nz-input-group nzSize="large">
+                <label for="">NOM</label>
                 <input [(ngModel)]="user.full_name" type="text" nz-input placeholder="Enter  fullname" />
             </nz-input-group>
             <ng-template #prefixTemplateUser><i nz-icon nzType="user"></i></ng-template>
@@ -66,10 +67,12 @@
             </ng-template>
             <br />
             <br />
+            <label for="">EMAIL</label>
             <input [(ngModel)]="user.email" class="form-control w-100" placeholder="Email" />
             <br />
             <br />
-            <nz-select nzMode="multiple" class="form-control w-100" nzPlaceHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
+            <label for="">PERMISSIONS</label>
+            <nz-select nzMode="multiple" class="form-control w-100" [(ngModel)]="listOfSelectedValue">
                 <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name">
                 </nz-option>
             </nz-select>

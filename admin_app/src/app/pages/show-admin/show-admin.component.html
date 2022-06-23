@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card card-body border raduis-sm">
+
+                <img src="assets/img/logo.png" alt="..." class="logo"><br>
+                <p><b>Prenom</b> : {{admin?.full_name}}</p>
+                <p><b>Email</b> : {{admin?.email}}</p>
+                <button nz-button nzType="dashed" (click)="showDeleteAdministrateurConfirm()" nzStyle=" margin-right: 8px;">Supprimer</button>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body border raduis-sm">
+
+                <h3 [ngStyle]="{ margin: '16px 0' }">Liste Des Permissions <a (click)="showModal()"><i nz-icon nzType="plus" nzTheme="outline" style="color: rgb(103, 241, 11);" ></i></a> </h3>
+
+                <ul nz-list [nzDataSource]="Permissions" nzBordered nzSize="large">
+
+                    <li nz-list-item *ngFor="let item of Permissions" nzNoFlex>
+                        <ul nz-list-item-actions>
+
+                        </ul>
+                        {{ item?.name }}&nbsp;
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<nz-modal [nzVisible]="visibleModal" nzTitle="Ajouter une permission" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Permission</nz-form-label>
+
+
+        <nz-select nzMode="multiple" class="form-control w-100" [(ngModel)]="listOfSelectedValue">
+            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name">
+            </nz-option>
+        </nz-select>
+
+    </ng-container>
+</nz-modal>

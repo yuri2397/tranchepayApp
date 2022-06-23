@@ -35,7 +35,7 @@
 
                 <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
                 <td class="text-dark-green"><i routerLink="show/{{ data.id }}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i>
-                    <a routerLink=" "> <i nz-icon nzType="delete" nzTheme="outline" style="color: rgb(241, 11, 11);"></i></a>
+                    <a routerLink=" "> <i nz-icon nzType="delete" (click)="showDeleteConfirm()" nzTheme="outline" style="color: rgb(241, 11, 11);"></i></a>
                 </td>
             </tr>
         </tbody>

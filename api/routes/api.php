@@ -110,6 +110,10 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::post('new-admin', [AdminController::class, "registerAdmin"])->middleware('can:creer utilisateur');
     Route::get('all-permissions', [PermissionsController::class, 'allPermissions'])->middleware('can:voir permissions');
     Route::get('admin/{id}', [AdminController::class, 'ShowAdminById'])->middleware('can:voir utilisateur');
+    Route::delete('delete/{id}', [AdminController::class, 'destroy'])->middleware('can:supprimer utilisateur');
+    Route::put('edit-admin/{id}', [AdminController::class, 'update']);
+    Route::put('desactive/{id}', [AdminController::class, 'DesactiveCompte']);
+    Route::put('active/{id}', [AdminController::class, 'ActiveCompte']);
 });
 
 

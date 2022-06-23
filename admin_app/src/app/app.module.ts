@@ -7,7 +7,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { LoginComponent } from './pages/login/login.component';
 
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
@@ -16,6 +16,7 @@ import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 registerLocaleData(fr);
 
@@ -23,6 +24,8 @@ registerLocaleData(fr);
   declarations: [
     AppComponent,
     LoginComponent,
+
+
 
 
   ],
@@ -37,6 +40,8 @@ registerLocaleData(fr);
     NzButtonModule,
     NzDropDownModule,
     ReactiveFormsModule,
+    NzPopconfirmModule,
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [{ provide: NZ_I18N, useValue: fr_FR }],
   bootstrap: [AppComponent]

@@ -14,9 +14,10 @@ use App\Traits\Notification;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
+use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
@@ -147,5 +148,86 @@ class AdminController extends Controller
     {
         return Admin::Where('id',$id)->first();
     }
+
+    public function ShowMissingPermission(Request $request)
+    {
+
+       $permissions= (array)$request->permissions;
+
+        $permission=Permission::all();
+
+        foreach ($permission as $p) {
+
+            return Permission::Where($p->name,'!=',$permissions[0]->name)->get();
+
+
+            }
+    }
+
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Admin::find($id)->delete();
+    }
+
+
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+        $admin=$request->all();
+        Admin::find($id)->update($admin);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function DesactiveCompte(Request $request, $id)
+    {
+
+        $commercant=Commercant::find($id);
+        if($commercant->created_at!=null)
+        {
+            $commercant->created_at=null;
+        }
+
+        $commercant->update();
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ActiveCompte(Request $request, $id)
+    {
+
+        $commercant=Commercant::find($id);
+        if($commercant->created_at==null)
+        {
+            $commercant->created_at=Carbon::today();
+        }
+
+        $commercant->update();
+    }
+
 
 }

@@ -3,7 +3,9 @@ import { CommandesEncoursComponent } from './../pages/commandes-encours/commande
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NgModule } from '@angular/core';
+
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -30,6 +32,7 @@ import { DetailsCommercantComponent } from '../pages/details-commercant/details-
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { DetailsCommandeComponent } from '../pages/details-commande/details-commande.component';
+import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,7 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     DetailsClientsComponent,
     DetailsCommercantComponent,
     DetailsCommandeComponent,
-
+    ShowAdminComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +70,9 @@ import { DetailsCommandeComponent } from '../pages/details-commande/details-comm
     NzInputModule,
     NzSelectModule,
     NzLayoutModule,
+    NzPopconfirmModule,
+
+
   ]
 })
 export class AdminModule { }
