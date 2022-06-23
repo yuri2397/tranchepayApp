@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\DeplafonnementController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\PermissionsController;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * MIXED
@@ -111,3 +112,9 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
     Route::get('admin/{id}', [AdminController::class, 'ShowAdminById'])->middleware('can:voir utilisateur');
 });
 
+
+Route::get("/artisan", function(){
+    Artisan::call('migrate');
+    Artisan::call('migrate');
+    return 'OAKY';
+});

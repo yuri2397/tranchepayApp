@@ -19,6 +19,7 @@ class AddAdminUser extends Seeder
         $user = new Admin();
         $user->full_name = "Super admin";
         $user->email = "admin@tranchepay.com";
+        $user->telephone = "33000000";
         $user->password = Hash::make("password");
         $user->save();
 
