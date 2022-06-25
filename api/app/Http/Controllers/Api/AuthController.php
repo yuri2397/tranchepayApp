@@ -21,7 +21,7 @@ use App\Models\Admin;
 class AuthController extends Controller
 {
     use Utils, Notification;
-    
+
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -35,8 +35,7 @@ class AuthController extends Controller
             return response()->json([
                 "message" => "Nom d'utilisateur ou mot passe incorrect."
             ], 422);
-        }
-        else if($this->isCommercant($user) && $user->email_verify_at == null){
+        } else if ($this->isCommercant($user) && $user->email_verify_at == null) {
             return response()->json([
                 "message" => "Votre compte n'est toujours activé. Votre demande et toujours en cours d'étude."
             ], 401);
@@ -51,7 +50,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-  
+
 
     public function registerClient(Request $request)
     {
@@ -81,14 +80,12 @@ class AuthController extends Controller
             $resets->email = $request->telephone;
             $resets->token = $token;
             $resets->save();
-            
+
             $message = "BIENVENUE SUR TRANCHE PAY.\nVotre compte client a été crée. Merci d'utiliser ce code pour activer votre compte.\nCODE D'ACTIVATION: $token.\nTRANCHEPAY";
             $this->sendSMS($message, '+221' . $client->telephone);
 
             return response()->json($client, 201);
-
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th
             ], 500);
@@ -123,38 +120,43 @@ class AuthController extends Controller
             "password" => "required|min:4"
         ]);
 
-        $commercant = new Commercant;
-        $commercant->prenoms = $request->prenoms;
-        $commercant->nom = $request->nom;
-        $commercant->telephone = $request->telephone;
-        $commercant->adresse = $request->adresse;
-        $commercant->save();
+        try {
+            DB::beginTransaction();
+            $commercant = new Commercant;
+            $commercant->prenoms = $request->prenoms;
+            $commercant->nom = $request->nom;
+            $commercant->telephone = $request->telephone;
+            $commercant->adresse = $request->adresse;
+            $commercant->save();
 
-        $user = new User;
-        $user->username = $request->telephone;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->model = $commercant->id;
-        $user->model_type = "Commercant";
-        $user->save();
+            $user = new User;
+            $user->username = $request->telephone;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->model = $commercant->id;
+            $user->model_type = "Commercant";
+            $user->save();
 
-        $boutique = new Boutique;
-        $boutique->nom = $request->boutique;
-        $boutique->addresse = $request->adresse;
-        $boutique->commercant_id = $commercant->id;
-        $boutique->save();
+            $boutique = new Boutique;
+            $boutique->nom = $request->boutique;
+            $boutique->addresse = $request->adresse;
+            $boutique->commercant_id = $commercant->id;
+            $boutique->save();
 
-        $compte = new Compte;
-        $compte->boutique_id = $boutique->id;
-        $compte->solde = 0;
-        $compte->save();
+            $compte = new Compte;
+            $compte->boutique_id = $boutique->id;
+            $compte->solde = 0;
+            $compte->save();
 
-        
-        // SEND MESSAGE
-        $message = "BIENVENUE SUR TRANCHE PAY.\nVotre compte a été bien crée. Votre compte sera activé après vérification.\nMERCI POUR VOTRE CONFIANCE.";
-        $this->sendSMS($message, '+221' . $commercant->telephone);
-
-        return Commercant::with('boutique')->find($commercant->id);
+            // SEND MESSAGE
+            $message = "BIENVENUE SUR TRANCHE PAY.\nVotre compte a été bien crée. Votre compte sera activé après vérification.\nMERCI POUR VOTRE CONFIANCE.";
+            $this->sendSMS($message, '+221' . $commercant->telephone);
+            DB::commit();
+            return Commercant::with('boutique')->find($commercant->id);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     public function activerCompte($telephone, $token)
@@ -167,8 +169,7 @@ class AuthController extends Controller
             $user->save();
             DB::table('password_resets')->where('email', '=', $resets->email)->delete();
             return $this->redirect('https://tranchepay.com/auth', 302);
-        }
-        else {
+        } else {
             return $this->redirect('https://tranchepay.com/unauthorization', 302);
         }
     }
@@ -190,8 +191,7 @@ class AuthController extends Controller
             return response()->json([
                 "message" => "Votre mot de passe est modifié avec succès."
             ], 200);
-        }
-        else {
+        } else {
             return response()->json([
                 "message" => "Votre code pin est incorrecte."
             ], 422);
@@ -208,12 +208,10 @@ class AuthController extends Controller
             return response()->json([
                 "message" => "Votre code pin est correcte."
             ], 200);
-        }
-        else {
+        } else {
             return response()->json([
                 "message" => "Votre code pin est incorrecte."
             ], 422);
         }
-
     }
 }

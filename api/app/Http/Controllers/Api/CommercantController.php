@@ -104,14 +104,14 @@ class CommercantController extends Controller
         $commande->commission = $prix_total * $mode->interet;
         $commande->save();
 
-        foreach ($request->produits as $value) {
-            $p = new Produit;
-            $p->nom = $value['nom'];
-            $p->quantite = $value['quantite'];
-            $p->commande_id = $commande->id;
-            $p->prix_unitaire = $value['prix_unitaire'];
-            $p->save();
-        }
+        // foreach ($request->produits as $value) {
+        //     $p = new Produit;
+        //     $p->nom = $value['nom'];
+        //     $p->quantite = $value['quantite'];
+        //     $p->commande_id = $commande->id;
+        //     $p->prix_unitaire = $value['prix_unitaire'];
+        //     $p->save();
+        // }
 
         /**
          * Proceder au paiement du premier tranche
