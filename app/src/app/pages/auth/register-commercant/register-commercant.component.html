@@ -32,13 +32,22 @@
                                     <p>Créer un compte commercant</p>
                                 </div>
 
-                                <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                                <form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
                                     <div class="row my-4">
                                         <div class="col-md-6 col-sm-12
                                             form-group">
-                                            <label for="prenoms">Prénoms *</label>
-                                            <input type="text" class="form-control
+                                            <nz-form-item>
+                                              <label for="prenoms">Prénoms *</label>
+                                              <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="prenoms">
+                                                  <input type="text" class="form-control
                                                 shadow-sm" formControlName="prenoms" id="prenoms" required name="prenoms">
+                                                <ng-template #prenoms let-control>
+                                                  <ng-container *ngIf="control.hasError('required')">
+                                                    Champ obligatoire
+                                                  </ng-container>
+                                                </ng-template>
+                                              </nz-form-control>
+                                            </nz-form-item>
                                         </div>
                                         <div class="col-md-6 col-sm-12
                                             form-group">

@@ -66,7 +66,6 @@ export class RegisterClientComponent implements OnInit {
   }
 
   menuClicked() {
-    console.log('MENU', this.isCollapse);
     if (!this.isCollapse) {
       this.menuState = this.collapse;
     } else {

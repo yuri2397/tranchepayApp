@@ -13,6 +13,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgNumericKeyboardModule } from 'ng-numeric-keyboard';
+import { NzFormModule } from "ng-zorro-antd/form";
+
+
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { NgNumericKeyboardModule } from 'ng-numeric-keyboard';
     NzNotificationModule,
     NzIconModule,
     MatIconModule,
-    NgNumericKeyboardModule
+    NgNumericKeyboardModule,
+    NzFormModule
   ],
 })
 export class AuthModule {}
