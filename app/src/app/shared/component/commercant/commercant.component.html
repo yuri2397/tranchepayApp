@@ -176,10 +176,10 @@
                 <br><br>
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="mx-2">
-                        <button class="btn primary-btn">CONNEXION</button>
+                        <a class="btn primary-btn" [routerLink]="['/auth/login']">CONNEXION</a>
                     </div>
                     <div class="mx-2">
-                        <button class="btn info-btn">CRÉER UN COMPTE</button>
+                        <a class="btn info-btn" [routerLink]="['/auth/register']">CRÉER UN COMPTE</a>
                     </div>
                 </div>
             </div>
@@ -212,7 +212,7 @@
                         <div class="d-flex justify-content-center">
                             <div>
                                 <button nz-button class="my-2 btn btn-1 my-4 shadow p-0">
-                                    <a [routerLink]="['/page-contact']">CONTACTEZ NOUS</a>
+                                    <a [routerLink]="['/home/page-contact']">CONTACTEZ NOUS</a>
                                 </button>
                             </div>
                         </div>

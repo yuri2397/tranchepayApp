@@ -16,6 +16,7 @@ declare interface MenuClass {
   styleUrls: ['./register-client.component.scss'],
 })
 export class RegisterClientComponent implements OnInit {
+  currentYear:any;
   validateForm!: FormGroup;
   isLoad = false;
   @ViewChild('preloader') preloader!: ElementRef;
@@ -43,6 +44,7 @@ export class RegisterClientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentYear = new Date().getFullYear();
     this.isCollapse = true;
     this.menuState = this.collapse;
     setTimeout(() => {

@@ -166,13 +166,21 @@
             </div>
         </div>
 
-        <section class="about">
-            <div class="container my-3">
-                <div class="card card-body green-color shadow-sm raduis-sm">
-                    <div class="text-center icon-boxes d-flex flex-column px-5 justify-content-center py-3">
-                        <h4 class=" text-tranche text-white">Vous avez une question spécifique à nous poser</h4>
-                        <p style="margin: auto; width: 60%" class="text-white">Pour prendre contact avec nos équipe.</p>
-                        <button class="btn-jum my-2 btn btn-sm shadow bg-white text-green p-2">CONTACTEZ NOUS</button>
+        <section class="about py-5">
+            <div class="container">
+                <div class="card card-body about-bg shadow-sm raduis-sm">
+                    <div class="text-center icon-boxes d-flex flex-column px-md-5 px-xs-1
+                        justify-content-center py-3">
+                        <h4 class="text-tranche text-white fw-md">Vous avez une question spécifique à nous poser
+                        </h4>
+                        <p class="text-white mx-md-5 mx-xs-1">Pour prendre contact avec nos équipe.</p>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <button nz-button class="my-2 btn btn-1 my-4 shadow p-0">
+                                    <a [routerLink]="['/home/page-contact']">CONTACTEZ NOUS</a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
