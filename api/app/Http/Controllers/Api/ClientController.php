@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendClientHelpMail;
 use Illuminate\Http\Request;
 use App\Traits\Utils;
 use App\Models\Client;
@@ -26,7 +27,7 @@ class ClientController extends Controller
     use Paydunya;
     use Notification;
 
-    
+
     public function profile()
     {
         return $this->authClient();
@@ -239,7 +240,7 @@ class ClientController extends Controller
         ]);
 
         if ($request->type === "client")
-            return Mail::to(env('SERVICE_CLIENT_MAIL'))->send(new SendHelpMail($request->email, $request->full_name, $request->message, $request->telephone, $request->site, $request->entreprise));
+            return Mail::to(env('SERVICE_CLIENT_MAIL'))->send(new SendClientHelpMail($request->email, $request->full_name, $request->message, $request->telephone, $request->site, $request->entreprise));
         return Mail::to(env('SERVICE_COMMERCANT_MAIL'))->send(new SendHelpMail($request->email, $request->full_name, $request->message, $request->telephone, $request->site, $request->entreprise));
     }
 

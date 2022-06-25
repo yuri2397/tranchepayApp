@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba2b7958e982b5b343f96c7e605a1ede",
+    "content-hash": "3e2af8c08ca4737b92e5ae3f7ba8a4c0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -264,6 +264,7 @@
             "time": "2021-08-13T13:06:58+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "dirape/token",
             "version": "V2.3",
             "source": {
@@ -665,6 +666,8 @@
             "time": "2020-05-29T18:28:51+00:00"
         },
         {
+=======
+>>>>>>> 7b97a0c1ada0ef018b9e0b19844677f155abadee
             "name": "doctrine/inflector",
             "version": "2.0.4",
             "source": {
@@ -3721,6 +3724,7 @@
             "time": "2022-04-04T05:15:45+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -3784,6 +3788,22 @@
                 "shasum": ""
             },
             "require": {
+=======
+            "name": "psr/container",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
+                "shasum": ""
+            },
+            "require": {
+>>>>>>> 7b97a0c1ada0ef018b9e0b19844677f155abadee
                 "php": ">=7.4.0"
             },
             "type": "library",
@@ -10750,7 +10770,11 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
+<<<<<<< HEAD
         "php": "^8.1"
+=======
+        "php": "^7.3|^8.0"
+>>>>>>> 7b97a0c1ada0ef018b9e0b19844677f155abadee
     },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"

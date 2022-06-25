@@ -75,7 +75,7 @@ export class ContactComponent implements OnInit {
       );
       this.validateForm.addControl(
         'site',
-        new FormControl('', [Validators.required])
+        new FormControl('', [Validators.minLength(3)])
       );
       this.isCommercant = true;
     }
@@ -91,7 +91,7 @@ export class ContactComponent implements OnInit {
   }
 
   save() {
-    
+
     this.isLoad = true;
     this.clientService
       .contactUs(
@@ -114,8 +114,6 @@ export class ContactComponent implements OnInit {
         },
         error: (errors) => {
           this.isLoad = false;
-          console.log(errors);
-
           this.notification.error('Notification', errors.error.message);
         },
       });

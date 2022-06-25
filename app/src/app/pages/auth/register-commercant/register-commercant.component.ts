@@ -23,6 +23,7 @@ declare interface MenuClass {
   styleUrls: ['./register-commercant.component.scss'],
 })
 export class RegisterCommercantComponent implements OnInit {
+  currentYear:any;
   validateForm!: FormGroup;
   isLoad = false;
   collapse: MenuClass = {
@@ -52,6 +53,7 @@ export class RegisterCommercantComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentYear = new Date().getFullYear();
     this.isCollapse = true;
     this.menuState = this.collapse;
 

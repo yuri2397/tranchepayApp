@@ -38,7 +38,7 @@
                                     <span>Nous reviendrons vers vous dans les plus brefs délais.</span>
                                 </div>
 
-                                <form nz-form [formGroup]="validateForm">
+                                <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm">
                                     <div class="form-group">
                                         <div class="form-check">
                                             <input class="form-check-input" value="client" type="radio" checked (change)="typeChange($event)" ame="type" formControlName="type" id="type">
@@ -54,35 +54,91 @@
                                         </div>
                                     </div>
                                     <div class="form-group mt-4">
-                                        <label for="full_name" nzRequired>Prénoms Nom *</label>
-                                        <input nz-input type="text" placeholder="Prénom et Nom" class="form-control shadow-sm" id="full_name" formControlName="full_name" name="prenoms">
+                                      <nz-form-item>
+                                        <label for="full_name" nzRequired>Prénom et Nom *</label>
+                                        <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="full_name">
+                                            <input nz-input type="text" placeholder="Prénom et Nom" class="form-control shadow-sm" id="full_name" formControlName="full_name" name="prenoms">
+                                          <ng-template #full_name let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                              Champ obligatoire
+                                            </ng-container>
+                                          </ng-template>
+                                        </nz-form-control>
+                                      </nz-form-item>
                                     </div>
                                     <div class="row my-4">
                                         <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12 form-group">
+                                          <nz-form-item>
                                             <label for="email" nzRequired>Email *</label>
-                                            <input type="email" placeholder="Votre adresse e-mail" class="form-control shadow-sm" id="email" formControlName="email" name="email">
+                                            <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="email">
+                                                <input type="email" placeholder="Votre adresse e-mail" class="form-control shadow-sm" id="email" formControlName="email" name="email">
+                                              <ng-template #email let-control>
+                                                <ng-container *ngIf="control.hasError('required')">
+                                                  Champ obligatoire
+                                                </ng-container>
+                                              </ng-template>
+                                            </nz-form-control>
+                                          </nz-form-item>
                                         </div>
                                         <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12   form-group">
+                                          <nz-form-item>
                                             <label for="telephone">Téléphone</label>
-                                            <input type="text" aria-label="telephone" placeholder="Numéro de téléphone" minlength="9" maxlength="9" formControlName="telephone" aria-describedby="telephone" class="form-control shadow-sm" id="telephone" name="telephone">
+                                            <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="telephone">
+                                              <nz-input-group nzAddOnBefore="+221">
+                                                <input type="text" nz-input aria-label="telephone" placeholder="Numéro de téléphone" minlength="9" maxlength="9" formControlName="telephone" aria-describedby="telephone" class="form-control shadow-sm" id="telephone" name="telephone">
+                                              </nz-input-group>
+                                              <ng-template #telephone let-control>
+                                                <ng-container *ngIf="control.hasError('pattern')">
+                                                  Format incorrecte
+                                                </ng-container>
+                                              </ng-template>
+                                            </nz-form-control>
+                                          </nz-form-item>
                                         </div>
                                     </div>
                                     <ng-container *ngIf="isCommercant">
                                         <div class="row my-4">
                                             <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12 form-group">
+                                              <nz-form-item>
                                                 <label for="entreprise" nzRequired>Nom de votre entreprise *</label>
-                                                <input type="text" class="form-control shadow-sm" placeholder="Nom de votre entreprise" id="entreprise" required formControlName="entreprise" name="entreprise">
+                                                <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="entreprise">
+                                                    <input type="text" class="form-control shadow-sm" placeholder="Nom de votre entreprise" id="entreprise" required formControlName="entreprise" name="entreprise">
+                                                  <ng-template #entreprise let-control>
+                                                    <ng-container *ngIf="control.hasError('required')">
+                                                      Champ obligatoire
+                                                    </ng-container>
+                                                  </ng-template>
+                                                </nz-form-control>
+                                              </nz-form-item>
                                             </div>
                                             <div class="col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12  form-group">
+                                              <nz-form-item>
                                                 <label for="site">Lien site web</label>
-                                                <input type="text" aria-label="site" placeholder="Votre site web" formControlName="site" aria-describedby="ninea" class="form-control shadow-sm" id="site" name="site">
+                                                <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="site">
+                                                  <input type="text" aria-label="site" placeholder="Votre site web" formControlName="site" aria-describedby="ninea" class="form-control shadow-sm" id="site" name="site">
+                                                  <ng-template #site let-control>
+                                                    <ng-container *ngIf="control.hasError('pattern')">
+                                                      Format incorrecte
+                                                    </ng-container>
+                                                  </ng-template>
+                                                </nz-form-control>
+                                              </nz-form-item>
                                             </div>
                                         </div>
                                     </ng-container>
 
                                     <div class="form-group">
+                                      <nz-form-item>
                                         <label for="message">Message *</label>
-                                        <textarea rows="5" placeholder="Merci de taper votre message" formControlName="message" class="form-control shadow-sm" id="message" name="message"></textarea>
+                                        <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="message">
+                                            <textarea rows="5" placeholder="Merci de taper votre message" formControlName="message" class="form-control shadow-sm" id="message" name="message"></textarea>
+                                          <ng-template #message let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                              Champ obligatoire
+                                            </ng-container>
+                                          </ng-template>
+                                        </nz-form-control>
+                                      </nz-form-item>
                                     </div>
                                     <button (click)="save()" [disabled]="!validateForm.valid" nz-button [nzLoading]="isLoad" class="btn submit-btn shadow btn-block mt-3" type="submit">
                                             ENVOYEZ VOTRE DEMANDE
