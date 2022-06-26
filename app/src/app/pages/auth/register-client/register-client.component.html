@@ -29,29 +29,60 @@
                                 <p>Créer un compte client</p>
                             </div>
 
-                            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                            <form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
                                 <div class="row my-2">
                                     <div class="col form-group">
+                                      <nz-form-item>
                                         <label for="prenoms">Prénoms *</label>
-                                        <input type="text" class="form-control
+                                        <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="prenoms">
+                                          <input type="text" class="form-control
                                                 shadow-sm" id="prenoms" formControlName="prenoms" required name="prenoms">
+                                          <ng-template #prenoms let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                              Champ obligatoire
+                                            </ng-container>
+                                          </ng-template>
+                                        </nz-form-control>
+                                      </nz-form-item>
                                     </div>
                                 </div>
                                 <div class="row my-2">
                                     <div class="col form-group">
+                                      <nz-form-item>
                                         <label for="nom">Nom *</label>
-                                        <input type="text" required formControlName="nom" aria-label="nom" aria-describedby="nom" class="form-control shadow-sm" id="nom" name="nom">
+                                        <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="nom">
+                                          <input type="text" required formControlName="nom" aria-label="nom" aria-describedby="nom" class="form-control shadow-sm" id="nom" name="nom">
+                                          <ng-template #nom let-control>
+                                            <ng-container *ngIf="control.hasError('required')">
+                                              Champ obligatoire
+                                            </ng-container>
+                                          </ng-template>
+                                        </nz-form-control>
+                                      </nz-form-item>
                                     </div>
                                 </div>
                                 <div class="row my-2">
                                     <div class="col form-group">
-                                        <label for="telephone">Téléphone *</label>
+                                        <!-- <label for="telephone">Téléphone *</label>
                                         <div class="input-group">
                                             <span class="input-group-text" id="indicateur">
                                                     <img src="/assets/img/senegal.png" width="25px" alt="+221">
                                                 </span>
                                             <input type="text" minlength="9" maxlength="9" formControlName="telephone" required aria-label="telephone" aria-describedby="telephone" class="form-control shadow-sm" id="telephone" name="telephone">
-                                        </div>
+                                        </div> -->
+                                      <nz-form-item>
+                                        <label for="telephone">Téléphone *</label>
+                                        <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="telephone">
+                                          <nz-input-group nzAddOnBefore="+221">
+                                            <input type="text" minlength="9" maxlength="9" formControlName="telephone" required aria-label="telephone" aria-describedby="telephone" class="form-control shadow-sm" id="telephone" name="telephone">
+                                          </nz-input-group>
+                                          <ng-template #telephone let-control>
+                                            <ng-container *ngIf="control.hasError('pattern')">
+                                              Format incorrecte
+                                            </ng-container>
+                                          </ng-template>
+                                        </nz-form-control>
+                                      </nz-form-item>
                                     </div>
                                 </div>
                                 <div class="row justify-content-between my-3">
