@@ -9,13 +9,13 @@
         </nz-tag></span>
     </ng-template>
     <ng-container *ngIf="client.deplafonner == 0; else deplafonner">
-        <div class="row container">
-            <p class="alert text-dark-green">
+        <div class="row  text-center">
+            <p class="alert text-dark-green h3">
                 Déplofonner votre compte pour plus d'avantage.
             </p>
             <br>
             <br>
-            <div class="center col-md-6 col-lg-6 col-sm-8 col-xs-12">
+            <div class="m-auto col-5">
                 <form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm" class="border raduis-sm p-4">
                     <nz-form-item class="form-group my-3">
                         <nz-form-label [nzSpan]="12" nzRequired>Numéro CNI</nz-form-label>

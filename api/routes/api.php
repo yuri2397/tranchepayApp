@@ -1,17 +1,20 @@
 <?php
 
+use App\Models\ModePayement;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\SharedController;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\CommandeController;
-use App\Http\Controllers\Api\ClientController;
-use App\Http\Controllers\Api\CommercantController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Api\DeplafonnementController;
-use App\Http\Controllers\Api\AdminController;
-use App\Http\Controllers\Api\PermissionsController;
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\TestController;
+use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\SharedController;
+use App\Http\Controllers\Api\CommandeController;
+use App\Http\Controllers\Api\CommercantController;
+use App\Http\Controllers\Api\PermissionsController;
+use App\Http\Controllers\Api\DeplafonnementController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Models\User;
 
 /**
  * MIXED
@@ -23,9 +26,9 @@ Route::post("contact-us", [ClientController::class, "contactUs"]);
  * IPN
  */
 
-Route::post("client-ipn", [ClientController::class , 'clientIPN']);
-Route::get("client-cancel_url", [ClientController::class , 'clientCancelURL']);
-Route::get("client-return_url", [ClientController::class , 'clientReturnURL']);
+Route::post("client-ipn", [ClientController::class, 'clientIPN']);
+Route::get("client-cancel_url", [ClientController::class, 'clientCancelURL']);
+Route::get("client-return_url", [ClientController::class, 'clientReturnURL']);
 Route::post("fp-ipn", [CommercantController::class, "fpIPN"]);
 
 /**
@@ -33,11 +36,11 @@ Route::post("fp-ipn", [CommercantController::class, "fpIPN"]);
  */
 
 Route::prefix("auth")->group(function () {
-    Route::post('login', [AuthController::class , 'login', 'cors'])->name("se_connecter");
-    Route::get("amc/{telephone}/{token}", [AuthController::class , 'activerCompte'])->name("verifier_telephone");
-    Route::post('register-client', [AuthController::class , 'registerClient']);
-    Route::post('register-commercant', [AuthController::class , 'registerCommercant']);
-    Route::post('set-client-pin', [AuthController::class , 'setCodePin']);
+    Route::post('login', [AuthController::class, 'login', 'cors'])->name("se_connecter");
+    Route::get("amc/{telephone}/{token}", [AuthController::class, 'activerCompte'])->name("verifier_telephone");
+    Route::post('register-client', [AuthController::class, 'registerClient']);
+    Route::post('register-commercant', [AuthController::class, 'registerCommercant']);
+    Route::post('set-client-pin', [AuthController::class, 'setCodePin']);
     Route::put('new-pin', [AuthController::class, 'newClientPin'])->middleware("auth:api");
     Route::post('check-password', [AuthController::class, 'ckeckPassword'])->middleware("auth:api");
 });
@@ -48,13 +51,15 @@ Route::prefix("auth")->group(function () {
  */
 
 Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function () {
-    Route::get('profile', [CommercantController::class , 'profile']);
-    Route::get('dashboard', [CommercantController::class , 'dashboard']);
-    Route::get('ventes', [CommercantController::class , 'ventes']);
-    Route::get('solde', [CommercantController::class , 'solde']);
-    Route::post('retrait', [CommercantController::class , 'retrait']);
-    Route::post("new-commande", [CommercantController::class , "createCommande"]);
-    Route::get('search-client/{telephone}', [ClientController::class , 'search']);
+    Route::get('profile', [CommercantController::class, 'profile']);
+    Route::get('dashboard', [CommercantController::class, 'dashboard']);
+    Route::get('ventes', [CommercantController::class, 'ventes']);
+    Route::get('solde', [CommercantController::class, 'solde']);
+    Route::post('retrait', [CommercantController::class, 'retrait']);
+    Route::post('new-user', [AuthController::class, 'addCommercantUsers']);
+    Route::post('users', [CommercantController::class, 'users']);
+    Route::post("new-commande", [CommercantController::class, "createCommande"]);
+    Route::get('search-client/{telephone}', [ClientController::class, 'search']);
 });
 
 
@@ -64,12 +69,14 @@ Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function ()
 
 
 Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
-    Route::get('profile', [ClientController::class , 'profile']);
-    Route::post('create', [RegisteredUserController::class , "create"]);
+    Route::get('profile', [ClientController::class, 'profile']);
+    Route::post('create', [RegisteredUserController::class, "create"]);
     Route::get('commandes', [ClientController::class, "commandes"]);
     Route::get('versements', [ClientController::class, "versementsClient"]);
-    Route::post('do-versement', [ClientController::class , "effectuerVersement"]);
+    Route::post('do-versement', [ClientController::class, "effectuerVersement"]);
     Route::post('deplafonnement', [DeplafonnementController::class, 'store']);
+    Route::get('paddings', [ClientController::class, 'paddings']);
+    Route::post('paddings/confirme/{id}', [ClientController::class, 'confirmePaddings']);
 });
 
 
@@ -77,7 +84,7 @@ Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
  * SHARED
  */
 Route::prefix('shared')->middleware(['auth:api', 'cors'])->group(function () {
-    Route::get('partenaires', [SharedController::class , 'partenaires']);
+    Route::get('partenaires', [SharedController::class, 'partenaires']);
     Route::get('mode-paiement/{client}', [SharedController::class, 'modePaiement']);
 });
 
@@ -86,15 +93,15 @@ Route::prefix('shared')->middleware(['auth:api', 'cors'])->group(function () {
  * Commandes Service
  */
 Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
-   Route::get("", [CommandeController::class, 'index']);
-   Route::get("show/{id}", [CommandeController::class, 'show']);
+    Route::get("", [CommandeController::class, 'index']);
+    Route::get("show/{id}", [CommandeController::class, 'show']);
 });
 
 
 /**
  * Admin Service
  */
-Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
+Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function () {
     Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
     Route::get("logout", [AdminController::class, "logout"]);
     Route::get('last-commandes', [AdminController::class, "lastCommandes"])->middleware('can:lister commande');
@@ -118,11 +125,11 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function (){
 });
 
 
-Route::get("/artisan", function(){
-    Artisan::call('migrate');
-    Artisan::call('migrate');
-    return 'OAKY';
+Route::get("/artisan", function () {
+    $user = User::whereModelType("Commercant")->first();
+    $user->givePermissionTo(Permission::whereGuardName("api")->get());
+    return User::with("permissions")->whereModelType("Commercant")->first();
 });
 
 
-Route::any("/test",[TestController::class, "index"]);
+Route::any("/test", [TestController::class, "index"]);

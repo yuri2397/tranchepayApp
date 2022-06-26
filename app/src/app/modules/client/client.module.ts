@@ -39,6 +39,7 @@ import { CoordonneesComponent } from '../../pages/client/coordonnees/coordonnees
 import { ProfileComponent } from '../../pages/client/profile/profile.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { ConfirmePayementComponent } from '../../pages/client/confirme-payement/confirme-payement.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
     CoordonneesComponent,
     SecuriteComponent,
     ProfileComponent,
+    ConfirmePayementComponent,
   ],
   imports: [ClientRoutingModule, SharedModule],
   exports: [SecuriteComponent],

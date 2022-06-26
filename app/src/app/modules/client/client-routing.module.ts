@@ -1,3 +1,4 @@
+import { ConfirmePayementComponent } from './../../pages/client/confirme-payement/confirme-payement.component';
 import { ProfileComponent } from './../../pages/client/profile/profile.component';
 import { PartenairesComponent } from './../../shared/component/partenaires/partenaires.component';
 import { ServiceClientComponent } from './../../shared/component/service-client/service-client.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'securite', component: SecuriteComponent },
   { path: 'service-client', component: ServiceClientComponent },
   { path: 'partenaires', component: PartenairesComponent },
+  { path: 'payements', component: ConfirmePayementComponent },
 ];
 
 @NgModule({

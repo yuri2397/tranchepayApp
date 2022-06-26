@@ -2,11 +2,10 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { VersementCreateComponent } from './../../versement-create/versement-create.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Commande } from 'src/app/models/commande';
-import { CommandesService } from './../../../../services/commandes.service';
-import { ClientService } from './../../../../services/client.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { CommandesService } from 'src/app/services/commandes.service';
 
 @Component({
   selector: 'app-show',

@@ -27,9 +27,9 @@
                         <i nz-icon nzType="up-circle" class="icon" nzTheme="outline"></i>
                         <span class="text-dark-green bold">Déplafonnement</span>
                     </li>
-                    <li nz-menu-item (click)="goto('demande-financement')">
+                    <li nz-menu-item (click)="goto('payements')">
                         <i nz-icon nzType="dollar-circle" class="icon" nzTheme="outline"></i>
-                        <span class="text-dark-green bold">Demande de financement</span>
+                        <span class="text-dark-green bold">Mes paiements</span>
                     </li>
                 </ul>
             </li>
@@ -67,7 +67,7 @@
             <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="isCollapsed = !isCollapsed"></i>
         </nz-header>
         <nz-content>
-            <div class="inner-content">
+            <div class="inner-content p-sm-0 p-xs-0 m-sm-0 m-xs-0">
                 <div class="card card-body raduis-sm shadow">
                     <router-outlet></router-outlet>
                 </div>
