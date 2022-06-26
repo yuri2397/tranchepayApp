@@ -13,6 +13,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AjouterVentesComponent } from 'src/app/pages/commercant/ventes/ajouter-ventes/ajouter-ventes.component';
 import { ShowComponent } from 'src/app/pages/client/commandes/show/show.component';
+import { ProfileComponent } from 'src/app/pages/commercant/profile/profile.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'accueil'},
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'conditions', component: ConditionsComponent },
   { path: 'parrainages', component: ParrainagesComponent },
   { path: 'aide', component: ServiceClientComponent },
+  { path: 'profile', component: ProfileComponent },
   {path: 'add-vente', component: AjouterVentesComponent},
 
 ];

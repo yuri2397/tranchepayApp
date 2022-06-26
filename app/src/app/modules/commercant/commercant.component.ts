@@ -133,4 +133,8 @@ export class CommercantComponent implements OnInit {
     });
     return r;
   }
+
+  goto(value: string){
+    this.router.navigate(['/commercant/' + value]);
+  }
 }

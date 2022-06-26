@@ -28,9 +28,10 @@ import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { NzTagModule } from "ng-zorro-antd/tag";
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { ShowComponent } from "../pages/client/commandes/show/show.component";
+import { SecuriteComponent } from "../pages/client/securite/securite.component";
 
 @NgModule({
-  declarations: [ShowComponent],
+  declarations: [ShowComponent, SecuriteComponent],
   imports: [
     CommonModule,
     NzLayoutModule,
@@ -92,6 +93,7 @@ import { ShowComponent } from "../pages/client/commandes/show/show.component";
     NzNotificationModule,
     NzStepsModule,
     NzRadioModule,
+    
   ],
   exports: [
     ShowComponent,
@@ -153,6 +155,7 @@ import { ShowComponent } from "../pages/client/commandes/show/show.component";
     NzGridModule,
     NzNotificationModule,
     NzStepsModule,
+    SecuriteComponent,
     NzRadioModule,
   ],
 })

@@ -58,6 +58,8 @@ Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function ()
     Route::get('solde', [CommercantController::class, 'solde']);
     Route::post('retrait', [CommercantController::class, 'retrait']);
     Route::post('new-user', [AuthController::class, 'addCommercantUsers']);
+    Route::delete('remove-user/{id}', [AuthController::class, 'removeCommercantUsers']);
+    Route::put('update-user/{id}', [AuthController::class, 'updateCommercantUsers']);
     Route::get('users', [CommercantController::class, 'users']);
     Route::post("new-commande", [CommercantController::class, "createCommande"]);
     Route::get('search-client/{telephone}', [ClientController::class, 'search']);

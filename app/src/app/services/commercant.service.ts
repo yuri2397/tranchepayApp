@@ -91,11 +91,34 @@ export class CommercantService extends Base {
     );
   }
 
+  edit(i: Commercant, permissions: string[]) {
+    return this.http.put<any>(
+      this.endPoint + 'update-user/' + i.id,
+      {
+        prenom: i.prenoms,
+        nom: i.nom,
+        adresse: i.adresse,
+        telephone: i.telephone,
+        permissions: permissions,
+      },
+      {
+        headers: this.authorizationHeaders,
+        observe: 'body',
+      }
+    );
+  }
+
+  del(i: Commercant) {
+    return this.http.put<any>(this.endPoint + 'remove-user/' + i.id, {
+      headers: this.authorizationHeaders,
+      observe: 'body',
+    });
+  }
+
   getUsers() {
     return this.http.get<Commercant[]>(this.endPoint + 'users', {
       headers: this.authorizationHeaders,
       observe: 'body',
     });
   }
-
 }

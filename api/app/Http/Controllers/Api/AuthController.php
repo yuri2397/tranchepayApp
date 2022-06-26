@@ -272,4 +272,42 @@ class AuthController extends Controller
             throw $th;
         }
     }
+    
+    
+    public function removeCommercantUsers(Commercant $commercant){
+        return $commercant->delete();
+    }
+
+
+    public function updateCommercantUsers(Request $request, Commercant $commercant){
+        $request->validate([
+            "telephone" => "required|exists:commercants,telephone",
+            "telephone" => "required|exists:users,username",
+            "prenom" => "required",
+            "nom" => "required",
+            "permissions" => "required|array"
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $commercant->prenoms = $request->prenom;
+            $commercant->nom = $request->nom;
+            $commercant->telephone = $request->telephone;
+            $commercant->adresse = $request->adresse;
+            $commercant->save();
+
+            $user = User::whereModelType("Commercant")->whereModel($commercant->id)->first();
+            $user->username = $request->telephone;
+            $user->email = $request->email;
+            $user->save();
+
+            $user->givePermissionTo($request->permissions);
+            DB::commit();
+            return Commercant::find($commercant->id);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+        
+    }
 }
