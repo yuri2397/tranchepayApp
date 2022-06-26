@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Client;
+use App\Models\Commande;
+use App\Traits\OMPayement;
+use Illuminate\Http\Request;
+
+class TestController extends Controller
+{
+    use OMPayement;
+    public function index()
+    {
+        $client = new Client();
+        $client->telephone = '786175702';
+        $client->id = 1;
+        $commande  = new Commande();
+        $commande->id = "1";
+        $commande->reference = time();
+        return $this->requestOMPayement(1000,$commande, $client);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

@@ -19,7 +19,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    window.onload = () => this.preloader.nativeElement.remove();
+    setTimeout(() => this.preloader.nativeElement.remove(), 3000);
   }
 
   ngOnInit(): void {

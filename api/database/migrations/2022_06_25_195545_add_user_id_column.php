@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateAdminsTable extends Migration
+class AddUserIdColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class UpdateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->string("full_name");
-            $table->string("email")->unique();
-            $table->string("password");
-            $table->string("image_path")->nullable();
+        Schema::table('paddings', function (Blueprint $table) {
+            $table->uuid("user_id");
         });
     }
 
@@ -28,7 +25,7 @@ class UpdateAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::table('admins', function (Blueprint $table) {
+        Schema::table('paddings', function (Blueprint $table) {
             //
         });
     }

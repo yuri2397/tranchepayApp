@@ -22,14 +22,21 @@
 <main class="bg">
     <div class="container">
         <div class="row">
+            
             <div class="card card-body shadow my-5 raduis-xm">
                 <div class="row px-4 my-2">
                     <div class="col">
                         <section id="contact" class="contact">
                             <div class="container">
-
                                 <div class="section-title">
                                     <p>Créer un compte commercant</p>
+                                </div>
+                                <div class="alert alert-danger" *ngIf="hasError">
+                                    <ul>
+                                        <li *ngIf="errors?.telephone">{{ errors.telephone[0] }}</li>
+                                        <li *ngIf="errors?.email">{{ errors.email[0] }}</li>
+                                        <li *ngIf="errors?.boutique">{{ errors.boutique[0] }}</li>
+                                    </ul>
                                 </div>
 
                                 <form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
@@ -106,7 +113,7 @@
                                                         src="/assets/img/user.png"
                                                         width="25px" alt="+221">
                                                 </span>
-                                                <input type="mail" required aria-label="email" formControlName="email" ria-describedby="email" class="form-control
+                                                <input type="email" required aria-label="email" formControlName="email" ria-describedby="email" class="form-control
                                                     shadow-sm" id="email" name="email">
                                             </div>
                                         </div>
@@ -118,7 +125,7 @@
                                                         src="/assets/img/senegal.png"
                                                         width="25px" alt="+221">
                                                 </span>
-                                                <input type="text" required aria-label="telephone" formControlName="telephone" ria-describedby="telephone" class="form-control
+                                                <input type="text" required aria-label="phone" formControlName="telephone" ria-describedby="phone" class="form-control
                                                     shadow-sm" id="telephone" name="telephone">
                                             </div>
                                         </div>
@@ -164,7 +171,6 @@
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
                         </section>
                     </div>

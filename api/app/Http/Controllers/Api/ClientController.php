@@ -18,6 +18,7 @@ use App\Models\EtatCommande;
 use App\Models\Compte;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendHelpMail;
+use App\Models\Padding;
 use App\Traits\Notification;
 
 class ClientController extends Controller
@@ -122,6 +123,20 @@ class ClientController extends Controller
         catch (Exception $e) {
             die();
         }
+    }
+
+    public function confirmePayement(Request $request)
+    {
+
+        $request->validate([
+            "padding" => "required|exists:paddings,reference",
+            "commande" => "required|exists:commandes,id"
+        ]);
+
+        $commande = Commande::find($request->id);
+        $padding = Padding::whereReference($request->padding)->first();
+        $user = $this->authClient();
+        return $this->confirmeClientPayement($padding, $user, $commande, $request->condePin);
     }
 
     public function effectuerVersement(Request $request)

@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\DeplafonnementController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\PermissionsController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Artisan;
 
 /**
@@ -122,3 +123,6 @@ Route::get("/artisan", function(){
     Artisan::call('migrate');
     return 'OAKY';
 });
+
+
+Route::any("/test",[TestController::class, "index"]);

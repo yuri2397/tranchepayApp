@@ -43,6 +43,8 @@ export class RegisterCommercantComponent implements OnInit {
   };
 
   isCollapse!: boolean;
+  hasError = false;
+  errors: any;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -73,15 +75,13 @@ export class RegisterCommercantComponent implements OnInit {
         ],
         pin: [
           null,
-          [Validators.required,
-            Validators.minLength(4),
-            Validators.maxLength(12),],
-        ],
-        pin_conf: [
-          null,
           [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(12),
           ],
         ],
+        pin_conf: [null, []],
       },
       { validators: this.checkPasswords }
     );
@@ -100,6 +100,7 @@ export class RegisterCommercantComponent implements OnInit {
   submitForm() {}
 
   save() {
+    this.hasError = false;
     this.isLoad = true;
     let commercant = new Commercant();
     commercant.prenoms = this.validateForm.value.prenoms;
@@ -119,14 +120,12 @@ export class RegisterCommercantComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       },
       error: (errors) => {
-        if (errors.status == 422) {
-          let err = errors.error.errors;
-          if (err.telephone) {
-            this.notification.error('Erreur', err.telephone[0]);
-          }
-          if (err.boutique) {
-            this.notification.error('Erreur', err.boutique[0]);
-          }
+        console.log(errors);
+        
+        if (errors.status < 500) {
+          (this.errors = errors.error.errors), (this.hasError = true);
+        } else {
+          this.notification.error('Erreur', errors.error.message);
         }
         this.isLoad = false;
       },

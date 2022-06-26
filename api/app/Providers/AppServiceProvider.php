@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Laravel\Passport\Passport;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Client;
+use Ramsey\Uuid\Uuid;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    //
+        //
     }
 
     /**
@@ -27,5 +29,13 @@ class AppServiceProvider extends ServiceProvider
         Passport::routes();
         Passport::tokensExpireIn(now()->addDays(15));
         Passport::refreshTokensExpireIn(now()->addDays(30));
+        Client::creating(function (Client $client) {
+            $client->incrementing = false;
+            $client->id = \Ramsey\Uuid\Uuid::uuid4()->toString();
+        });
+
+        Client::retrieved(function (Client $client) {
+            $client->incrementing = false;
+        });
     }
 }

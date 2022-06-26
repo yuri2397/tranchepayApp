@@ -11,6 +11,7 @@ use App\Models\Commande;
 use App\Models\Versement;
 use App\Models\Commercant;
 use App\Models\EtatCommande;
+use App\Models\Padding;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
@@ -18,7 +19,7 @@ use Paydunya\Checkout\CheckoutInvoice;
 
 trait Utils
 {
-    use Paydunya;
+    use Paydunya, OMPayement;
 
     protected $commercant_session_key = 'commercant';
     protected $client_session_ket = 'client';
@@ -96,47 +97,26 @@ trait Utils
      */
     public function paiementEnLigne(Request $request, Commande $commande, Client $client)
     {
-        $this->initPayement();
-        $this->setReturnUrl(env("CLIENT_RETURN_URL"));
-        $this->setCancelUrl(env("CLIENT_CANCEL_URL"));
 
-        $invoice = new CheckoutInvoice();
-        $invoice->setCallbackUrl(URL::to("/") . "/api/fp-ipn");
+        $callBackUrl = URL::to("/") . "/api/fp-ipn";
 
-        foreach ($commande->produits as $value) {
-            $invoice->addItem($value->nom, $value->quantite, $value->prix_unitaire, $value->quantite * $value->prix_unitaire);
+        switch ($request->via) {
+            case 'om':
+                $om = $this->requestOMPayement($request->first_part,$commande, $client);
+
+                break;
+
+            case 'wave':
+
+                break;
         }
-        $invoice->setDescription("Premier versement pour la commande: " . $commande->reference);
-        $invoice->setTotalAmount($request->first_part);
-        $commercant = $this->authCommercantWithBoutique();
-        // set custom data
-        $invoice->addCustomData('client_phone', $client->telephone);
-        $invoice->addCustomData('client_id', $client->id);
-        $invoice->addCustomData('boutique_id', $commande->boutique->id);
-        $invoice->addCustomData('commande_id', $commande->id);
-        $invoice->addCustomData('compte_id', $commercant->boutique->compte->id);
-        $invoice->addCustomData('amount', $request->first_part);
-        $invoice->addCustomData('reference', $commande->reference);
 
-
-        if ($invoice->create()) {
-            $url = $invoice->getInvoiceUrl();
-            $message = "Bonjour " . $client->prenoms . "\nVotre commande de  " . $request->first_part . " FCFA chez " . $commercant->boutique->nom . " est en attente. Merci de payer la premier tranche en cliquant sur le lien : " . $url . ".\n\nTRANCHEPAY";
-            return [
-                "error" => false,
-                "code" => 201,
-                "sms" => $message,
-                "message" => "La commande est bien enregistrée. Nous attendons la confirmation du client."
-            ];
-        }
-        else {
-            $commande->delete();
-            return [
-                "error" => true,
-                "code" => 400,
-                "message" => $invoice->response_text
-            ];
-        }
+        $commande->delete();
+        return [
+            "error" => true,
+            "code" => 400,
+            "message" => "Le payement est annulée de meme que la commande. Merci de réessayer plus tard."
+        ];
     }
 
 
@@ -151,8 +131,6 @@ trait Utils
      */
     public function isPossibleForClient(Request $request, Client $client, User $user, Commercant $commercant)
     {
-
-        
 
         //SI LE COMPTE CLIENT EST ACTIVÉ
         if ($user->email_verify_at == null) {
@@ -185,13 +163,13 @@ trait Utils
         if ($request->first_part < $prix_total * (1 / 3)) {
             return [
                 "error" => true,
-                "message" => "Le premier versement doit être supérieur ou égal au montant total de la commande."
+                "message" => "Le premier versement doit être supérieur ou égal à 1/3 du montant de la commande."
             ];
         }
 
         // SI LE COMPTE CLIENT PEUX FAIRE UNE COMMANDE DE CETTE PRIX
         $max = Param::whereCle("max_pay")->first()->valeur;
-        if($client->deplafonner == false && $prix_total > $max){
+        if ($client->deplafonner == false && $prix_total > $max) {
             return [
                 "error" => true,
                 "message" => "Impossible de faire une commande supérieur à " . $max . " FCFA pour ce client."
@@ -219,7 +197,12 @@ trait Utils
         return Commercant::with("boutique")->find($user->model);
     }
 
-    public function authClient()
+    public function confirmeClientPayement(Padding $padding, Client $client, Commande $commande, $codePin)
+    {
+        return $this->confirmePayement($padding, $client, $commande, $codePin);
+    }
+
+    public function authClient(): Client
     {
         $user = User::find(auth()->id());
         return Client::find($user->model);
@@ -273,7 +256,6 @@ trait Utils
             ->get();
 
         return $result;
-
     }
 
     public function commercantVentes()
