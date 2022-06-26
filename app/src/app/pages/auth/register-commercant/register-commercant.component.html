@@ -22,7 +22,7 @@
 <main class="bg">
     <div class="container">
         <div class="row">
-            
+
             <div class="card card-body shadow my-5 raduis-xm">
                 <div class="row px-4 my-2">
                     <div class="col">
@@ -106,28 +106,54 @@
                                     </div>
                                     <div class="row my-4">
                                         <div class="col-md-6 col-sm-12 form-group">
+                                          <nz-form-item>
                                             <label for="telephone">Adresse E-mail *</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text" id="email-span">
-                                                    <img
-                                                        src="/assets/img/user.png"
-                                                        width="25px" alt="+221">
-                                                </span>
-                                                <input type="email" required aria-label="email" formControlName="email" ria-describedby="email" class="form-control
-                                                    shadow-sm" id="email" name="email">
-                                            </div>
+                                            <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="email">
+                                              <input type="email" required aria-label="email" formControlName="email" ria-describedby="email" class="form-control
+                                                  shadow-sm" id="email" name="email">
+                                              <ng-template #email let-control>
+                                                <ng-container *ngIf="control.hasError('required')">
+                                                  Champ obligatoire
+                                                </ng-container>
+                                              </ng-template>
+                                            </nz-form-control>
+                                          </nz-form-item>
+                                          <!-- <label for="telephone">Adresse E-mail *</label>
+                                          <div class="input-group">
+                                              <span class="input-group-text" id="email-span">
+                                                  <img
+                                                      src="/assets/img/user.png"
+                                                      width="25px" alt="+221">
+                                              </span>
+                                              <input type="email" required aria-label="email" formControlName="email" ria-describedby="email" class="form-control
+                                                  shadow-sm" id="email" name="email">
+                                          </div> -->
                                         </div>
                                         <div class="col-md-6 col-sm-12 form-group">
+                                          <nz-form-item>
                                             <label for="telephone">Téléphone *</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text" id="indicateur">
-                                                    <img
-                                                        src="/assets/img/senegal.png"
-                                                        width="25px" alt="+221">
-                                                </span>
+                                            <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="telephone">
+                                              <nz-input-group nzAddOnBefore="+221">
                                                 <input type="text" required aria-label="phone" formControlName="telephone" ria-describedby="phone" class="form-control
-                                                    shadow-sm" id="telephone" name="telephone">
-                                            </div>
+                                                  shadow-sm" id="telephone" name="telephone">
+                                              </nz-input-group>
+                                              <ng-template #telephone let-control>
+                                                <ng-container *ngIf="control.hasError('pattern')">
+                                                  Format incorrecte
+                                                </ng-container>
+                                              </ng-template>
+                                            </nz-form-control>
+                                          </nz-form-item>
+                                          <!-- <label for="telephone">Téléphone *</label>
+                                          <div class="input-group">
+                                              <span class="input-group-text" id="indicateur">
+                                                  <img
+                                                      src="/assets/img/senegal.png"
+                                                      width="25px" alt="+221">
+                                              </span>
+                                              <input type="text" required aria-label="phone" formControlName="telephone" ria-describedby="phone" class="form-control
+                                                  shadow-sm" id="telephone" name="telephone">
+                                          </div> -->
                                         </div>
                                     </div>
                                     <div class="row my-4">
