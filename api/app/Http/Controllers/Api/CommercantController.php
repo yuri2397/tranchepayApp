@@ -184,14 +184,14 @@ class CommercantController extends Controller
         $users = BoutiqueHasUser::whereBoutiqueId($this->authCommercant()->boutique->id)->get();
 
         $commercants = User::find(array_map(function ($e) {
-            return $e->user_id;
-        }, $users));
+            return $e['user_id'];
+        }, $users->toArray()));
 
         return  Commercant::find(array_map(function ($e) {
-            if ($e->model_type == "Commercant") {
-                return $e->model;
+            if ($e['model_type'] == "Commercant") {
+                return $e['model'];
             }
             return -1;
-        }, $commercants));
+        }, $commercants->toArray()));
     }
 }

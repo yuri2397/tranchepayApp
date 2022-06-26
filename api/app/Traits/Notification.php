@@ -19,8 +19,8 @@ trait Notification
             ->first();
         if ($access_token == null) {
             $response = $this->demandeSMSToken();
-            if($response == null)
-                throw new ExpiredException("Une erreur s'est produit. Merci de reessayer plus tard.");
+            if($response == null || !array_key_exists('access_token', $response))
+                throw new ExpiredException(json_encode($response));
             $access_token = Param::whereCle("access_token")->first();
             $access_token->valeur = $response['access_token'];
             $access_token->save();

@@ -74,7 +74,7 @@ export class CommercantService extends Base {
     });
   }
 
-  addCommercantUsers(user: Commercant, permissions: []) {
+  addCommercantUsers(user: Commercant, permissions: string[]) {
     return this.http.post<any>(
       this.endPoint + 'new-user',
       {
@@ -97,4 +97,5 @@ export class CommercantService extends Base {
       observe: 'body',
     });
   }
+
 }

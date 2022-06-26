@@ -8,6 +8,7 @@ declare interface RouteInfo {
   icon: string;
   class: string;
   roles: string[];
+  permissions: string[];
 }
 
 export const ROUTES: RouteInfo[] = [
@@ -17,6 +18,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'dot-chart',
     class: '',
     roles: ['super admin'],
+    permissions: ['administrateur'],
   },
   {
     path: 'ventes',
@@ -24,6 +26,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'shopping',
     class: '',
     roles: ['super admin'],
+    permissions: ['vendeur', 'administrateur'],
+
   },
   {
     path: 'soldes',
@@ -31,6 +35,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'dollar-circle',
     class: '',
     roles: ['super admin'],
+    permissions: ['administrateur'],
+
   },
   
   {
@@ -39,6 +45,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'user',
     class: '',
     roles: ['super admin'],
+    permissions: ['administrateur', 'opérateur'],
+
   },
   {
     path: 'api',
@@ -46,6 +54,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'link',
     class: '',
     roles: ['super admin'],
+    permissions: ['administrateur'],
+
   },
   {
     path: 'conditions',
@@ -53,6 +63,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'safety-certificate',
     class: '',
     roles: ['super admin'],
+    permissions: ['*'],
+
   },
   {
     path: 'parrainages',
@@ -60,6 +72,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'rocket',
     class: '',
     roles: ['super admin'],
+    permissions: ['*'],
+
   },
   {
     path: 'aide',
@@ -67,6 +81,8 @@ export const ROUTES: RouteInfo[] = [
     icon: 'question-circle',
     class: '',
     roles: ['super admin'],
+    permissions: ['*'],
+
   },
   {
     path: 'parametres',
@@ -74,6 +90,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'setting',
     class: '',
     roles: ['super admin'],
+    permissions: ['*'],
   },
 ];
 
@@ -104,5 +121,16 @@ export class CommercantComponent implements OnInit {
 
   selected(item: RouteInfo) {
     return this.router.url.indexOf(item.path) !== -1 ? true : false;
+  }
+
+  can(item: RouteInfo){
+
+    let r = false;
+    this.authService.getUser().permissions?.forEach((e) => {
+      if (item.permissions.indexOf(e.name) != -1 || item.permissions.indexOf('*') != -1) {
+        r = true;
+      }
+    });
+    return r;
   }
 }

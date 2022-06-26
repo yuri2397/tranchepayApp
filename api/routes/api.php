@@ -41,6 +41,7 @@ Route::prefix("auth")->group(function () {
     Route::post('register-client', [AuthController::class, 'registerClient']);
     Route::post('register-commercant', [AuthController::class, 'registerCommercant']);
     Route::post('set-client-pin', [AuthController::class, 'setCodePin']);
+    Route::get('permissions', [AuthController::class, 'listPermissions']);
     Route::put('new-pin', [AuthController::class, 'newClientPin'])->middleware("auth:api");
     Route::post('check-password', [AuthController::class, 'ckeckPassword'])->middleware("auth:api");
 });
@@ -57,7 +58,7 @@ Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function ()
     Route::get('solde', [CommercantController::class, 'solde']);
     Route::post('retrait', [CommercantController::class, 'retrait']);
     Route::post('new-user', [AuthController::class, 'addCommercantUsers']);
-    Route::post('users', [CommercantController::class, 'users']);
+    Route::get('users', [CommercantController::class, 'users']);
     Route::post("new-commande", [CommercantController::class, "createCommande"]);
     Route::get('search-client/{telephone}', [ClientController::class, 'search']);
 });

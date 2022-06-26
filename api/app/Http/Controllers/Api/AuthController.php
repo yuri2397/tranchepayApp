@@ -111,6 +111,11 @@ class AuthController extends Controller
         return $user;
     }
 
+    public function listPermissions(Request $request)
+    {
+        return Permission::whereGuardName($request->guard)->get();
+    }
+
     public function registerCommercant(Request $request)
     {
         $this->validate($request, [
@@ -225,7 +230,8 @@ class AuthController extends Controller
     {
         $request->validate([
             "telephone" => "required|unique:commercants,telephone",
-            "prenoms" => "required",
+            "telephone" => "required|unique:users,username",
+            "prenom" => "required",
             "nom" => "required",
             "permissions" => "required|array"
         ]);
@@ -234,7 +240,7 @@ class AuthController extends Controller
         try {
             DB::beginTransaction();
             $commercant = new Commercant;
-            $commercant->prenoms = $request->prenoms;
+            $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
             $commercant->adresse = $request->adresse;
