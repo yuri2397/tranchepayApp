@@ -20,10 +20,15 @@ const routes: Routes = [
   //     {
   //       path: '',
   //       loadChildren: () =>
-  //         import('./modules/view/view.module').then((m) => m.ViewModule),
+  //         import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
   //     },
   //   ],
   // },
+  {
+    path: 'page-documentation',
+    loadChildren: () =>
+      import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
+  },
 ];
 
 @NgModule({

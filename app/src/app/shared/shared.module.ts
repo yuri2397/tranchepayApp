@@ -33,9 +33,10 @@ import { DocumentationServicesComponent } from './component/documentation-servic
 import { DocumentationApiComponent } from './component/documentation-api/documentation-api.component';
 import { DocumentationCommercantComponent } from './component/documentation-commercant/documentation-commercant.component';
 import { DocumentationParticulierComponent } from './component/documentation-particulier/documentation-particulier.component';
+import { DocumentationPresentationComponent } from './component/documentation-presentation/documentation-presentation.component';
 
 @NgModule({
-  declarations: [ShowComponent, SecuriteComponent, DocumentationServicesComponent, DocumentationApiComponent, DocumentationCommercantComponent, DocumentationParticulierComponent],
+  declarations: [ShowComponent, SecuriteComponent, DocumentationServicesComponent, DocumentationApiComponent, DocumentationCommercantComponent, DocumentationParticulierComponent, DocumentationPresentationComponent],
   imports: [
     CommonModule,
     NzLayoutModule,
