@@ -7,6 +7,8 @@ import { DashboardResponse } from '../models/dash-board-response';
 import { VentesResponse } from '../models/ventes-response';
 import { Client } from '../models/client';
 import { Produit } from '../models/produit';
+import { Commercant } from '../models/commercant';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +41,7 @@ export class CommercantService extends Base {
         client_id: client_id,
         mode_paiement: mode_paiement,
         first_part: p_tranche,
-        type: type
+        type: type,
       },
       {
         headers: this.authorizationHeaders,
@@ -67,6 +69,54 @@ export class CommercantService extends Base {
 
   getSolde() {
     return this.http.get<Boutique>(this.endPoint + 'solde', {
+      headers: this.authorizationHeaders,
+      observe: 'body',
+    });
+  }
+
+  addCommercantUsers(user: Commercant, permissions: string[]) {
+    return this.http.post<any>(
+      this.endPoint + 'new-user',
+      {
+        prenom: user.prenoms,
+        nom: user.nom,
+        adresse: user.adresse,
+        telephone: user.telephone,
+        permissions: permissions,
+      },
+      {
+        headers: this.authorizationHeaders,
+        observe: 'body',
+      }
+    );
+  }
+
+  edit(i: Commercant, permissions: string[]) {
+    return this.http.put<any>(
+      this.endPoint + 'update-user/' + i.id,
+      {
+        prenom: i.prenoms,
+        nom: i.nom,
+        adresse: i.adresse,
+        telephone: i.telephone,
+        permissions: permissions,
+      },
+      {
+        headers: this.authorizationHeaders,
+        observe: 'body',
+      }
+    );
+  }
+
+  del(i: Commercant) {
+    return this.http.put<any>(this.endPoint + 'remove-user/' + i.id, {
+      headers: this.authorizationHeaders,
+      observe: 'body',
+    });
+  }
+
+  getUsers() {
+    return this.http.get<Commercant[]>(this.endPoint + 'users', {
       headers: this.authorizationHeaders,
       observe: 'body',
     });

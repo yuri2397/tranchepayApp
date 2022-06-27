@@ -4,12 +4,14 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use Uuids;
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -39,8 +41,20 @@ class User extends Authenticatable
         'email_verify_at' => 'datetime',
     ];
 
-        public function username()
+    public function username()
     {
         return 'username';
+    }
+
+    protected $with = ['permissions'];
+
+    public function hasPermission($permission)
+    {
+        foreach ($this->permissions as $value) {
+            if($value->name === $permission){
+                return true;
+            }
+        }
+        return false;
     }
 }

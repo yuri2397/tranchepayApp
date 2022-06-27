@@ -64,6 +64,20 @@ nz-content {
     min-height: 360px;
 }
 
+@media(max-width: 576px) {
+    .inner-content {
+        padding: 0;
+        min-height: 360px;
+    }
+}
+
+@media(max-width: 768px) {
+    .inner-content {
+        padding: 0;
+        min-height: 360px;
+    }
+}
+
 nz-footer {
     text-align: center;
 }

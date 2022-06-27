@@ -1,40 +1,15 @@
-<div class="container ">
-    <h3 class="text-dark-green bold my-3">Heureux de vous revoir {{ client.prenoms }},</h3>
-
-    <div class="row h-100">
-        <div class="col-md-4 col-xs-12">
-            <img nz-image width="200px" nzSrc="/assets/img/logo.png" alt="" />
-        </div>
-        <div class="col">
-            <div class="card card-body raduis-sm  border">
-                <div class="d-flex align-items-baseline">
-                    <div class="mx-2">
-                        <i class="icon-md fas fa-user text-green"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-dark-green ">{{ client.prenoms }} {{ client.nom }}</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-baseline">
-                    <div class="mx-2">
-                        <i class="icon-md fas fa-phone-alt text-green"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-dark-green">{{ client.telephone}}</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-baseline">
-                    <div class="mx-2">
-                        <i class="icon-md fas fa-map-marker-alt text-green"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-dark-green">{{ client.adresse! }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="col-md-6 m-auto my-4 shadow-sm">
+  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+      <strong class="d-inline-block mb-2 text-primary">Bienvenue sur tranchepay</strong>
+      <h3 class="mb-0">{{ client.prenoms }} {{ client.nom }}</h3>
+      <div class="mb-1 text-muted">+222 {{ client.telephone }}</div>
+      <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional
+        content.</p>
+      <a (click)="logout()" class="stretched-link shadow-sm border py-2 text-center raduis-sm lead">Se déconnecter</a>
     </div>
-    <div class="center my-3">
-        <button (click)="logout()" nz-button class="btn submit-btn border my-2 shadow">SE DÉCONNECTER</button>
+    <div class="col-auto d-none d-lg-block">
+      <img class="bd-placeholder-img" width="200" height="200" src="/assets/img/logo.png" alt="LOGO">
     </div>
+  </div>
 </div>

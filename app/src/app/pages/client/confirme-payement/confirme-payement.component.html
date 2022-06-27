@@ -1,0 +1,21 @@
+<div>
+    <h3 class="my-3 text-dark-green bold">Mes paiements en attentes de confirmation</h3>
+    <nz-table #nzTable [nzData]="data" [nzPageSize]="10">
+      <thead>
+        <tr>
+          <th>Réference</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of nzTable.data">
+            <td>{{ i.reference }}</td>
+            <td>{{ i.type }}</td>
+            <td>{{ i.date }}</td>
+            <td><button nz-button (click)="confirme(i)">Confirmer</button></td>
+        </tr>
+      </tbody>
+    </nz-table>
+</div>

@@ -1,0 +1,24 @@
+<div class="card card-body shadow raduis-sm">
+  <div class="row">
+    <div class="col">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col raduis-sm  p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block h3 mb-2 text-primary">{{ profile.boutique.nom }}</strong>
+          <h3 class="mb-0">{{ profile.prenoms }} {{ profile.nom }}</h3>
+          <div class="mb-1 text-muted">+222 {{ profile.telephone }}</div>
+          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to
+            additional
+            content.</p>
+          <a (click)="logout()" class="stretched-link shadow-sm border py-2 text-center raduis-sm lead">Se
+            déconnecter</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img class="bd-placeholder-img" width="200" height="200" src="/assets/img/logo.png" alt="LOGO">
+        </div>
+      </div>
+    </div>
+    <div class="col border raduis-sm">
+      <app-securite></app-securite>
+    </div>
+  </div>
+</div>

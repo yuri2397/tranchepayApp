@@ -1,3 +1,4 @@
+import { Permission } from './role';
 import { Commande } from './commande';
 
 export interface User {
@@ -8,6 +9,7 @@ export interface User {
   etat: number;
   model: number;
   model_type: string;
+  permissions: Permission[];
   created_at: Date;
   updated_at: Date;
 }

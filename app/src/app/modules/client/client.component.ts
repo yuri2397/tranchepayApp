@@ -43,7 +43,7 @@ export class ClientComponent implements OnInit {
   };
   isCollapse!: boolean;
 
-  isCollapsed = false;
+  isCollapsed = true;
   title = 'TRANCHEPAY';
   constructor(
     private router: Router,

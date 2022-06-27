@@ -1,52 +1,98 @@
-<div class="container my-">
-    <div class="row p-2">
-        <div class="card card-body shadow mb-5">
-            <div>
-                <h4 class="text-dark-green">Ajouter un utilisateur</h4>
-            </div>
-
-            <div class="row justify-content-between">
-                <div class="col">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, <br> <br> vero officia. Ad aperiam enim id exercitationem, nihil aut alias iure voluptatem blanditiis quia sunt ullam ea optio ipsam impedit omnis!
-                </div>
-                <div class="col">
-                    <form nz-form>
-                        <nz-form-item>
-                            <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired nzFor="iban">Nom</nz-form-label>
-                            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
-                                E-mail!">
-                                <input nz-input id="nom" />
-                            </nz-form-control>
-                        </nz-form-item>
-                        <nz-form-item>
-                            <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired nzFor="iban">Email</nz-form-label>
-                            <nz-form-control [nzSm]="24" [nzXs]="20" nzErrorTip="The input is not valid
-                                E-mail!">
-                                <input nz-input id="nom" />
-                            </nz-form-control>
-                        </nz-form-item>
-                        <nz-form-item>
-                            <nz-form-label [nzSm]="4" [nzXs]="20" nzRequired nzFor="iban">Role</nz-form-label>
-                            <nz-form-control [nzSm]="4" [nzXs]="20" nzErrorTip="The input is not valid
-                                E-mail!">
-                                <nz-select ngModel="lucy">
-                                    <nz-option nzValue="Administrateur" nzLabel="Administrateur"></nz-option>
-                                    <nz-option nzValue="Vendeur" nzLabel="Vendeur"></nz-option>
-                                    <nz-option nzValue="Opérateur" nzLabel="Opérateur" nzDisabled></nz-option>
-                                    <nz-option nzValue="Manager" nzLabel="Manager" nzDisabled></nz-option>
-                                    <nz-option nzValue="Propriétaire" nzLabel="Propriétaire" nzDisabled></nz-option>
-                                    <nz-option nzValue="Désactivé" nzLabel="Désactivé" nzDisabled></nz-option>
-                                </nz-select>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card card-body shadow raduis-xm">
-            <div>
-                <h4 class="text-dark-green">Liste des utilisateur</h4>
-            </div>
-        </div>
+<div class="card card-body shadow raduis-xm">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="section-title p-1 m-2">
+      <h1>Liste des utilisateurs</h1>
     </div>
+    <div>
+      <button (click)="addUser()" nz-button class="btn submit-btn border my-2 shadow">
+        AJOUTER UN UTITLISATEUR
+      </button>
+    </div>
+  </div>
+  <nz-table [nzLoading]="isLoad" #nzTable [nzData]="users" [nzPageSize]="10">
+    <thead>
+      <tr>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Téléphone</th>
+        <th nzWidth="200px">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.prenoms }}</td>
+        <td>{{ i.nom }}</td>
+        <td>{{ i.telephone }}</td>
+        <td class="d-flex">
+          <a class="btn border btn-sm text-dark-green" (click)="edit(i)">Modifier</a>
+          <a class="btn border btn-sm mx-2 text-danger" (click)="del(i)">Supprimer</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>
+
+
+
+<nz-modal [(nzVisible)]="isVisible" [nzMaskClosable]="false" nzWidth="40%" nzCentered nzTitle="Ajouter un nouveau utilisateurs" (nzOnCancel)="isVisible = false">
+  <div *nzModalContent>
+    <form nzLayout="vertical" nz-form [formGroup]="form">
+      <div class="alert alert-danger" *ngIf="hasError">
+        <ul>
+            <li *ngIf="errors?.telephone">{{ errors.telephone[0] }}</li>
+            <li *ngIf="errors?.email">{{ errors.email[0] }}</li>
+            <li *ngIf="errors?.boutique">{{ errors.boutique[0] }}</li>
+        </ul>
+    </div>
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Prénom</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
+                  E-mail!">
+              <input nz-input id="prenom" formControlName="prenom" name="prenom" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Nom</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
+                  E-mail!">
+              <input nz-input id="nom" formControlName="nom" name="nom" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Téléphone</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
+                  E-mail!">
+              <input nz-input id="telephone" formControlName="telephone" name="telephone" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Permissions</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
+                  E-mail!">
+              <nz-select id="permissions" formControlName="permissions" name="permissions" nzMode="tags" nzPlaceHolder="Tag Mode" [(ngModel)]="selectedPermissions">
+                <nz-option *ngFor="let option of permissions" [nzLabel]="option.name.toLocaleLowerCase()" [nzValue]="option.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" [disabled]="createLoad" class="btn raduis-xs border my-2 shadow" (click)="isVisible = false">Annuler</button>
+    <button nz-button (click)="save()" [disabled]="!form.valid"  [nzLoading]="createLoad" class="btn submit-btn  border my-2 shadow">
+      Enregistrer
+    </button>
+  </div>
+</nz-modal>

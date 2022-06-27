@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Compte;
 use App\Traits\Notification;
 use App\Models\Admin;
+use App\Models\BoutiqueHasUser;
+use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
@@ -45,6 +47,7 @@ class AuthController extends Controller
         return response()->json([
             "token" => $user->createToken($request->device_name),
             "user" => $user,
+            'permissions' => $user->permissions,
             "data" => $auth,
             "model_type" => $user->model_type
         ], 200);
@@ -75,7 +78,7 @@ class AuthController extends Controller
             $user->model = $client->id;
             $user->save();
             // ADD TOKEN
-            $token = strtoupper(Str::random(4));
+            $token = random_int(100000, 999999);
             $resets = new PasswordResets;
             $resets->email = $request->telephone;
             $resets->token = $token;
@@ -106,6 +109,11 @@ class AuthController extends Controller
         $user->save();
         PasswordResets::whereToken($request->token)->delete();
         return $user;
+    }
+
+    public function listPermissions(Request $request)
+    {
+        return Permission::whereGuardName($request->guard)->get();
     }
 
     public function registerCommercant(Request $request)
@@ -147,6 +155,9 @@ class AuthController extends Controller
             $compte->boutique_id = $boutique->id;
             $compte->solde = 0;
             $compte->save();
+
+            $permissions = Permission::whereGuardName("api")->get();
+            $user->givePermissionTo($permissions);
 
             // SEND MESSAGE
             $message = "BIENVENUE SUR TRANCHE PAY.\nVotre compte a été bien crée. Votre compte sera activé après vérification.\nMERCI POUR VOTRE CONFIANCE.";
@@ -213,5 +224,90 @@ class AuthController extends Controller
                 "message" => "Votre code pin est incorrecte."
             ], 422);
         }
+    }
+
+    public function addCommercantUsers(Request $request)
+    {
+        $request->validate([
+            "telephone" => "required|unique:commercants,telephone",
+            "telephone" => "required|unique:users,username",
+            "prenom" => "required",
+            "nom" => "required",
+            "permissions" => "required|array"
+        ]);
+        $proprietaire = $this->authCommercant();
+
+        try {
+            DB::beginTransaction();
+            $commercant = new Commercant;
+            $commercant->prenoms = $request->prenom;
+            $commercant->nom = $request->nom;
+            $commercant->telephone = $request->telephone;
+            $commercant->adresse = $request->adresse;
+            $commercant->save();
+
+            $user = new User;
+            $password = "trachepay" . random_int(10, 99);
+            $user->username = $request->telephone;
+            $user->email = $request->email;
+            $user->password = bcrypt($password);
+            $user->model = $commercant->id;
+            $user->model_type = "Commercant";
+            $user->save();
+
+            $compte = new BoutiqueHasUser();
+            $compte->user_id = $user->id;
+            $compte->boutique_id = $proprietaire->boutique->id;
+            $compte->save();
+
+            $user->givePermissionTo($request->permissions);
+
+            // SEND MESSAGE
+            $message = "BIENVENUE SUR TRANCHE PAY.\nLa boutique " . $proprietaire->boutique->nom . " a crée un compte utilisateur pour vous. Vos identifiants de connexion sont: \nTél: " . $user->username . "\nMot de passe: " . $password."\nhttps://tranchepay.com/auth/login";
+            $this->sendSMS($message, '+221' . $commercant->telephone);
+            DB::commit();
+            return Commercant::with('boutique')->find($commercant->id);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
+    
+    
+    public function removeCommercantUsers(Commercant $commercant){
+        return $commercant->delete();
+    }
+
+
+    public function updateCommercantUsers(Request $request, Commercant $commercant){
+        $request->validate([
+            "telephone" => "required|exists:commercants,telephone",
+            "telephone" => "required|exists:users,username",
+            "prenom" => "required",
+            "nom" => "required",
+            "permissions" => "required|array"
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $commercant->prenoms = $request->prenom;
+            $commercant->nom = $request->nom;
+            $commercant->telephone = $request->telephone;
+            $commercant->adresse = $request->adresse;
+            $commercant->save();
+
+            $user = User::whereModelType("Commercant")->whereModel($commercant->id)->first();
+            $user->username = $request->telephone;
+            $user->email = $request->email;
+            $user->save();
+
+            $user->givePermissionTo($request->permissions);
+            DB::commit();
+            return Commercant::find($commercant->id);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+        
     }
 }

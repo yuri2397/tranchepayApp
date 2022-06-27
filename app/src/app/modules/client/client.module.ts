@@ -37,8 +37,7 @@ import { DeplafonnementComponent } from '../../pages/client/deplafonnement/depla
 import { DemandeFinancementComponent } from '../../pages/client/demande-financement/demande-financement.component';
 import { CoordonneesComponent } from '../../pages/client/coordonnees/coordonnees.component';
 import { ProfileComponent } from '../../pages/client/profile/profile.component';
-import { NzImageModule } from 'ng-zorro-antd/image';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { ConfirmePayementComponent } from '../../pages/client/confirme-payement/confirme-payement.component';
 
 @NgModule({
   declarations: [
@@ -50,10 +49,9 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
     DeplafonnementComponent,
     DemandeFinancementComponent,
     CoordonneesComponent,
-    SecuriteComponent,
     ProfileComponent,
+    ConfirmePayementComponent,
   ],
   imports: [ClientRoutingModule, SharedModule],
-  exports: [SecuriteComponent],
 })
 export class ClientModule {}

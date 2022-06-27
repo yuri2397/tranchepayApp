@@ -11,16 +11,13 @@ use App\Models\Commande;
 use App\Traits\Paydunya;
 use App\Models\Versement;
 use App\Models\Commercant;
-use PHPUnit\TextUI\Command;
 use PHPUnit\Util\Exception;
 use App\Models\EtatCommande;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
-use Paydunya\Checkout\CheckoutInvoice;
-use App\Http\Controllers\NotificationController;
+use App\Models\BoutiqueHasUser;
 use App\Models\ModePayement;
 use App\Traits\Notification;
 
@@ -81,7 +78,7 @@ class CommercantController extends Controller
 
         $check = $this->isPossibleForClient($request, $client, $user, $commercant);
         if ($check["error"] == true) {
-            if ($check["sms"])
+            if (array_key_exists("sms", $check))
                 $this->sendSMS($check['sms'], '+221' . $client->telephone);
             return response()->json([
                 "message" => $check['message']
@@ -124,8 +121,7 @@ class CommercantController extends Controller
             return response()->json([
                 "message" => $response['message']
             ], $response['code']);
-        }
-        else {
+        } else {
             $response = $this->paiementEnCaise($request, $commande, $client);
             $this->sendSMS($response['sms'], '+221' . $client->telephone);
             return response()->json([
@@ -175,14 +171,27 @@ class CommercantController extends Controller
                     DB::commit();
                     return response()->json([], 200);
                 }
-
-            }
-            else {
+            } else {
                 die("Cette requête n'a pas été émise par PayDunya");
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    public function users()
+    {
+        $users = BoutiqueHasUser::whereBoutiqueId($this->authCommercant()->boutique->id)->get();
+
+        $commercants = User::find(array_map(function ($e) {
+            return $e['user_id'];
+        }, $users->toArray()));
+
+        return  Commercant::find(array_map(function ($e) {
+            if ($e['model_type'] == "Commercant") {
+                return $e['model'];
+            }
+            return -1;
+        }, $commercants->toArray()));
     }
 }

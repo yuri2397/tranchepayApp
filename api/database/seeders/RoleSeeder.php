@@ -92,6 +92,18 @@ class RoleSeeder extends Seeder
             [
                 "name" => "voir permissions",
                 "guard_name" => "admin"
+            ],
+            [
+                "name" => "administrateur",
+                "guard_name" => "api"
+            ],
+            [
+                "name" => "vendeur",
+                "guard_name" => "api"
+            ],
+            [
+                "name" => "opérateur",
+                "guard_name" => "api"
             ]
         ];
 

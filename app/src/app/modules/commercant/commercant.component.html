@@ -8,7 +8,7 @@
         </div>
         <ul nz-menu class="bg-grad" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
             <ng-container *ngFor="let item of menuItems">
-                <li (click)="routerLink(item)" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
+                <li *ngIf="can(item)" (click)="routerLink(item)" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
                     item.title : ''" [nzSelected]='selected(item)'>
                     <i nz-icon nzType="{{ item.icon }}" class="icon" nzTheme="outline">
                         
@@ -39,7 +39,7 @@
                     </button>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item>Profile</li>
+                            <li nz-menu-item (click)="goto('profile')">Profile</li>
                             <li (click)="logout()" nz-menu-item>Déconnexion</li>
                         </ul>
                     </nz-dropdown-menu>

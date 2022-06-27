@@ -7,6 +7,7 @@ use App\Models\Param;
 use App\Models\Client;
 use App\Models\Compte;
 use App\Models\Boutique;
+use App\Models\BoutiqueHasUser;
 use App\Models\Commande;
 use App\Models\Versement;
 use App\Models\Commercant;
@@ -31,8 +32,12 @@ trait Utils
 
     public function getUserInfo(User $user)
     {
-        if ($user->model_type == "Commercant") {
+        if ($user->model_type == "Commercant" && $user->hasPermission('administrateur')) {
             return Commercant::with("boutique")->find($user->model);
+        }else if ($user->model_type == "Commercant"){
+            $commercant = Commercant::find($user->model);
+            $commercant->boutique = BoutiqueHasUser::whereUserId($commercant->model)->first()->boutique;
+            return $commercant;
         }
         return Client::with("commandes")->find($user->model);
     }

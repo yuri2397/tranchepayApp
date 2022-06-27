@@ -1,10 +1,11 @@
+import { Permission } from './../models/role';
+import { Commercant } from './../models/commercant';
 import { Router } from '@angular/router';
 import { LoginResponse } from './../models/login-response';
 import { HttpClient } from '@angular/common/http';
 import { Base } from './../shared/http/base';
 import { Injectable } from '@angular/core';
 import { Client } from '../models/client';
-import { Commercant } from '../models/commercant';
 
 @Injectable({
   providedIn: 'root',
@@ -115,5 +116,11 @@ export class AuthService extends Base {
         headers: this.authorizationHeaders,
       }
     );
+  }
+
+  getPermissions(guard = "api") {
+    return this.http.get<Permission[]>(this.endPoint + `permissions?guard=${guard}`, {
+      headers: this.authorizationHeaders,
+    });
   }
 }

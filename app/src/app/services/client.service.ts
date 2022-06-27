@@ -95,6 +95,18 @@ export class ClientService extends Base {
     });
   }
 
+  paddings() {
+    return this.http.get<any[]>(this.endPoint + 'paddings', {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  confirmePayement(i: any){
+    return this.http.post<any>(this.endPoint + 'paddings/confirme/' + i.id, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
   deplafonnement(cni: string, recto: any, verso: any) {
     var myFormData = new FormData();
     myFormData.append('cni', cni);
@@ -108,4 +120,6 @@ export class ClientService extends Base {
       },
     });
   }
+
+
 }
