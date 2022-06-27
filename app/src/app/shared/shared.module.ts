@@ -29,9 +29,10 @@ import { NzTagModule } from "ng-zorro-antd/tag";
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { ShowComponent } from "../pages/client/commandes/show/show.component";
 import { SecuriteComponent } from "../pages/client/securite/securite.component";
+import { DocumentationServicesComponent } from './component/documentation-services/documentation-services.component';
 
 @NgModule({
-  declarations: [ShowComponent, SecuriteComponent],
+  declarations: [ShowComponent, SecuriteComponent, DocumentationServicesComponent],
   imports: [
     CommonModule,
     NzLayoutModule,
@@ -93,7 +94,7 @@ import { SecuriteComponent } from "../pages/client/securite/securite.component";
     NzNotificationModule,
     NzStepsModule,
     NzRadioModule,
-    
+
   ],
   exports: [
     ShowComponent,
