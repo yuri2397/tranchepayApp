@@ -24,11 +24,11 @@ const routes: Routes = [
   //     },
   //   ],
   // },
-  {
-    path: 'page-documentation',
-    loadChildren: () =>
-      import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
-  },
+  // {
+  //   path: 'page-documentation',
+  //   loadChildren: () =>
+  //     import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
+  // },
 ];
 
 @NgModule({
