@@ -13,22 +13,6 @@ const routes: Routes = [
   { path: 'page-client', component: ClientComponent },
   { path: 'page-contact', component: ContactComponent },
   { path: 'page-documentation', component: DocumentationComponent },
-  // {
-  //   path: 'page-documentation',
-  //   component: ViewComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () =>
-  //         import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: 'page-documentation',
-  //   loadChildren: () =>
-  //     import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
-  // },
 ];
 
 @NgModule({
