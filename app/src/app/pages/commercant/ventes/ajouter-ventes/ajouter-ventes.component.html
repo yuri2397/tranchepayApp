@@ -1,156 +1,408 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-body shadow raduis-xm mb-5">
-                <div class="section-title mt-3">
-                    <h1>Nouvelle vente</h1>
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-body shadow raduis-xm mb-5">
+        <div class="section-title mt-3">
+          <nz-divider class="p-0 m-2" [nzText]="list_title"></nz-divider>
+          <ng-template #list_title>
+            <div style="display: inline-block">
+              <h3 class="text-dark-green bold">Liste des produits</h3>
+              <button
+                nz-button
+                class="btn submit-btn border my-2 shadow"
+                (click)="showModal()"
+              >
+                AJOUTER UN NOUVEAU PRODUIT
+              </button>
+
+              <div
+                class="modal fade"
+                id="newProductModalLabel"
+                tabindex="-1"
+                aria-labelledby="newProductModal"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="newProductModalLabel">
+                        Modal title
+                      </h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div nz-row>
-                    <div nz-col nzSpan="10">
-                        <nz-divider [nzText]="a_p"></nz-divider>
-                        <ng-template #a_p>
-                            <span class="text-dark-green bold">
-                                Ajouter les produits
-                            </span>
-                        </ng-template>
-                        <div class="card card-body raduis-sm m-2">
-                            <nz-form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm">
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="last_name">Nom du produit</nz-form-label>
-                                    <nz-form-control>
-                                        <input formControlName="nom_produit" nz-input name="nom_produit" type="text" id="nom_produit">
-                                    </nz-form-control>
-                                </nz-form-item>
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="quantite_produit">Quantité</nz-form-label>
-                                    <nz-form-control>
-                                        <input formControlName="quantite_produit" nz-input name="quantite_produit" type="number" min="1" id="quantite_produit">
-                                    </nz-form-control>
-                                </nz-form-item>
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="prix_unitaire_produit">Prix Unitaire
-                                    </nz-form-label>
-                                    <nz-form-control>
-                                        <input formControlName="prix_unitaire_produit" nz-input name="nom_produit" type="number" id="prix_unitaire_produit">
-                                    </nz-form-control>
-                                </nz-form-item>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button nz-button class="btn submit-btn border my-2 shadow" (click)="addToList()" [disabled]="!validateForm.valid">Ajouter</button>
-                                    </div>
-                                </div>
-                            </nz-form>
-                        </div>
-
-                    </div>
-
-                    <div nz-col nzSpan="14">
-                        <nz-divider [nzText]="p_a"></nz-divider>
-                        <ng-template #p_a>
-                            <span class="text-dark-green bold">
-                                Produits ajoutés
-                            </span>
-                        </ng-template>
-                        <div class="card card-body raduis-sm m-2">
-                            <nz-table #basicTable [nzPageSize]="5" [nzData]="produits">
-                                <thead>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <th>Quantité</th>
-                                        <th>PU</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of basicTable.data">
-                                        <td>{{data.nom}}</td>
-                                        <td>{{data.quantite}}</td>
-                                        <td>{{data.prix_unitaire}}</td>
-                                        <td>
-                                            <button mat-mini-fab (click)="removeProduit(data)">
-                                                <mat-icon class="mat-18">delete</mat-icon>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </nz-table>
-                        </div>
-                    </div>
-                </div>
-                <nz-divider></nz-divider>
-                <nz-form [nzLayout]="'vertical'" nz-form [formGroup]="validateFormClient">
-                    <div nz-row>
-                        <div nz-col nzSpan="10">
-                            <nz-divider [nzText]="i_c"></nz-divider>
-                            <ng-template #i_c>
-                                <span class="text-dark-green bold">
-                                    Informations du client
-                                </span>
-                            </ng-template>
-                            <div class="card card-body raduis-sm m-2">
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="telephone">N° du client</nz-form-label>
-                                    <nz-form-control>
-                                        <nz-select (ngModelChange)="clientChange($event)" [nzDisabled]="produits.length
-                                            == 0" (nzOnSearch)="onClientSearch($event)" [nzNotFoundContent]="add_client_tem" id="telephone" name="telephone" nzAllowClear="true" nzShowSearch nzServerSearch formControlName="telephone">
-                                            <ng-container *ngFor="let o of clients">
-                                                <nz-option *ngIf="!loadClient" [nzValue]="o.id" [nzLabel]="o.telephone + ' - ' +o.prenoms + ' ' +
-                                                    o.nom"></nz-option>
-                                            </ng-container>
-                                            <nz-option *ngIf="loadClient" nzDisabled nzCustomContent>
-                                                <i nz-icon nzType="loading" class="loading-icon"></i> Rechercher en cours...
-                                            </nz-option>
-                                            <ng-template #add_client_tem>
-                                                <button nz-button class="btn submit-btn border my-2 shadow" (click)="addClient()">Ajouter
-                                                    le nouveau client</button>
-                                            </ng-template>
-                                        </nz-select>
-                                    </nz-form-control>
-                                </nz-form-item>
-                            </div>
-                        </div>
-                        <div nz-col nzSpan="14">
-                            <nz-divider [nzText]="m_p"></nz-divider>
-                            <ng-template #m_p>
-                                <span class="text-dark-green bold">
-                                    Mode de paiement
-                                </span>
-                            </ng-template>
-
-                            <div class="card card-body raduis-sm m-2">
-                                <nz-radio-group nzRequired [nzDisabled]="produits.length == 0" formControlName="type" name="type" id="type">
-                                    <label nz-radio nzValue="0"><span class="text-dark-green">
-                                        Payement en ligne
-                                    </span></label> <br>
-                                    <label nz-radio class="mt-2" nzValue="1"><span class="text-dark-green">Payement en caise</span></label>
-                                </nz-radio-group>
-                                <br>
-                                <br>
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="mode_paiement">Méthode de paiement</nz-form-label>
-                                    <nz-form-control>
-                                        <nz-select [nzDisabled]="produits.length == 0" [nzLoading]="modeLoad" formControlName="mode_paiement" name="mode_paiement" id="mode_paiement">
-                                            <nz-option *ngFor="let o of modePaiements" [nzValue]="o.id" [nzLabel]="o.label"></nz-option>
-                                        </nz-select>
-                                    </nz-form-control>
-                                </nz-form-item>
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="first_part">Montant du premier versement</nz-form-label>
-                                    <nz-form-control>
-                                        <input [disabled]="produits.length
-                                            == 0" formControlName="first_part" nz-input name="first_part" type="text" id="first_part">
-                                    </nz-form-control>
-                                </nz-form-item>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button nz-button class="btn submit-btn border my-2 shadow" [nzLoading]="isLoad" (click)="saveVente()" [disabled]="!validateFormClient.valid">Valider la commande</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nz-form>
+              </div>
             </div>
+          </ng-template>
         </div>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <div class="card card-body raduis-sm m-0">
+              <nz-table
+                #basicTable
+                nzShowPagination="false"
+                [nzData]="produits"
+              >
+                <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Quantité</th>
+                    <th>PU</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of basicTable.data">
+                    <td>{{ data.nom }}</td>
+                    <td>{{ data.quantite }}</td>
+                    <td>{{ data.prix_unitaire }}</td>
+                    <td>
+                      <button
+                        class="btn btn-danger"
+                        title="supprimer le produit"
+                        (click)="removeProduit(data)"
+                      >
+                        <i nz-icon nzType="delete" nzTheme="outline"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="24" class="d-flex justify-content-center">
+            <!-- <nz-divider [nzText]="i_c"></nz-divider> -->
+
+            <button
+              [disabled]="!produits.length"
+              nz-button
+              class="btn submit-btn border my-2 shadow btn-block"
+              (click)="displayModal()"
+            >
+              AJOUTER LES INFORMATIONS DU CLIENT
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+<!--Ajout d'un nouveau produit-->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="undefined"
+  (nzOnCancel)="showModal()"
+>
+  <div *nzModalContent>
+    <div nz-col nzSpan="24">
+      <nz-divider [nzText]="a_p"></nz-divider>
+      <ng-template #a_p>
+        <span class="text-dark-green bold"> AJOUT D'UN NOUVEAU PRODUIT </span>
+      </ng-template>
+      <div class="m-2">
+        <nz-form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="last_name"
+              >Nom du produit</nz-form-label
+            >
+            <nz-form-control>
+              <input
+                formControlName="nom_produit"
+                nz-input
+                name="nom_produit"
+                type="text"
+                id="nom_produit"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="quantite_produit"
+              >Quantité</nz-form-label
+            >
+            <nz-form-control>
+              <input
+                formControlName="quantite_produit"
+                nz-input
+                name="quantite_produit"
+                type="number"
+                min="1"
+                id="quantite_produit"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="prix_unitaire_produit"
+              >Prix Unitaire
+            </nz-form-label>
+            <nz-form-control>
+              <input
+                formControlName="prix_unitaire_produit"
+                nz-input
+                name="nom_produit"
+                type="number"
+                id="prix_unitaire_produit"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <div class="row">
+            <div class="col-6"></div>
+          </div>
+        </nz-form>
+      </div>
+    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="showModal()">Annuler</button>
+    <button
+      class="shadow"
+      nz-button
+      nzType="primary"
+      (click)="addToList()"
+      [disabled]="!validateForm.valid"
+    >
+      Ajouter
+    </button>
+  </div>
+</nz-modal>
+<!--Information du client-->
+<nz-modal
+  [(nzVisible)]="isInvisible"
+  [nzTitle]="undefined"
+  (nzOnCancel)="displayModal()"
+>
+  <div *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-divider [nzText]="i_c"></nz-divider>
+        <ng-template #i_c>
+          <span class="text-dark-green bold"> Informations du client </span>
+        </ng-template>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="telephone"
+            >N° du client</nz-form-label
+          >
+          <nz-form-control>
+            <nz-select
+              (ngModelChange)="clientChange($event)"
+              [nzDisabled]="produits.length == 0"
+              (nzOnSearch)="onClientSearch($event)"
+              [nzNotFoundContent]="add_client_tem"
+              id="telephone"
+              name="telephone"
+              nzAllowClear="true"
+              nzShowSearch
+              nzServerSearch
+              formControlName="telephone"
+            >
+              <ng-container *ngFor="let o of clients">
+                <nz-option
+                  *ngIf="!loadClient"
+                  [nzValue]="o.id"
+                  [nzLabel]="o.telephone + ' - ' + o.prenoms + ' ' + o.nom"
+                ></nz-option>
+              </ng-container>
+              <nz-option *ngIf="loadClient" nzDisabled nzCustomContent>
+                <i nz-icon nzType="loading" class="loading-icon"></i>
+                Rechercher en cours...
+              </nz-option>
+              <ng-template #add_client_tem>
+                <button
+                  nz-button
+                  class="btn submit-btn border my-2 shadow"
+                  (click)="addClient()"
+                >
+                  Ajouter le nouveau client
+                </button>
+              </ng-template>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <nz-form [nzLayout]="'vertical'" nz-form [formGroup]="validateFormClient">
+        <div nz-col nzSpan="24">
+          <div nz-row nzGutter="48" class="my-4">
+            <div
+              nz-col
+              nzSpan="12"
+              style="display: flex; justify-content: center"
+            >
+              <div
+                class="card shadow raduis-sm"
+                style="cursor: pointer"
+                (click)="makeModalVisible()"
+              >
+                <img
+                  src="/assets/img/paycash.png"
+                  alt="Payer en ligne"
+                  title="Payer en ligne"
+                  style="width: 210px; padding: 25px"
+                />
+                <div class="card-body p-0">
+                  <h5 class="card-title text-center">Paiement en caisse</h5>
+                </div>
+              </div>
+            </div>
+            <div
+              nz-col
+              nzSpan="12"
+              style="display: flex; justify-content: center"
+            >
+              <div class="card shadow raduis-xm" style="cursor: pointer">
+                <img
+                  src="/assets/img/paymobile.png"
+                  alt="Payer en ligne"
+                  title="Payer en ligne"
+                  style="width: 210px; padding: 25px"
+                />
+                <div class="card-body p-0">
+                  <h5 class="card-title text-center">Paiement en ligne</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-form>
+    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="showModal()">Annuler</button>
+    <button
+      class="shadow"
+      nz-button
+      nzType="primary"
+      (click)="addToList()"
+      [disabled]="!validateForm.valid"
+    >
+      Ajouter
+    </button>
+  </div>
+</nz-modal>
+<!-- Finalisation-->
+<nz-modal
+  nzTitle="Choisir votre moyen de paiement"
+  [nzStyle]="{ width: '800px' }"
+  [(nzVisible)]="!makeVisible"
+  [nzTitle]="undefined"
+  (nzOnCancel)="makeModalInvisible()"
+>
+  <div *nzModalContent>
+    <div nz-row nzGutter="48" class="my-4">
+      <div nz-col nzSpan="24">
+        <div nz-row>
+          <div nz-col nzSpan="16" nzOffset="4">
+            <nz-form nz-form>
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nzBorderless="false"
+                    nzSize="default"
+                    #inputElement
+                    [ngStyle]="{ width: '100%' }"
+                    nz-input
+                    nzOverlayClassName="numeric-input"
+                    [ngModel]="undefined"
+                    placeholder="Montant total"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-form>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzSpan="24">
+        <h3 class="text-center mt-5">
+          <span class="text-dark-green"> Choisir votre moyen de paiement </span>
+        </h3>
+      </div>
+      <div nz-col nzSpan="8" style="display: flex; justify-content: center">
+        <div
+          class="card card-pay shadow raduis-sm"
+          style="cursor: pointer"
+          (click)="makeModalVisible()"
+        >
+          <img
+            src="/assets/img/nav-logo.png"
+            alt="Payer en ligne"
+            title="Payer en ligne"
+            style="width: 210px; padding: 25px"
+          />
+          <div class="card-body p-1">
+            <h5 class="card-title text-center">Payer avec wave</h5>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzSpan="8" style="display: flex; justify-content: center">
+        <div class="card card-pay shadow raduis-xm" style="cursor: pointer">
+          <img
+            src="/assets/img/orangemoney.png"
+            alt="Payer en ligne"
+            title="Payer en ligne"
+            style="width: 210px; padding: 25px"
+          />
+          <div class="card-body p-1">
+            <h5 class="card-title text-center mt-4">Payer avec orange Money</h5>
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div nz-col nzSpan="8" style="display: flex; justify-content: center">
+        <div
+          class="card card-pay shadow raduis-sm"
+          style="cursor: pointer"
+          (click)="makeModalVisible()"
+        >
+          <img
+            src="/assets/img/freemoney.png"
+            alt="Payer en ligne"
+            title="Payer en ligne"
+            style="width: 210px; padding: 25px"
+          />
+          <div class="card-body p-3">
+            <h5 class="card-title text-center mt-1">Payer avec Free Money</h5>
+          </div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="makeModalInvisible()">
+      Annuler
+    </button>
+    <button
+      class="shadow"
+      nz-button
+      nzType="primary"
+      (click)="addToList()"
+      [disabled]="!validateForm.valid"
+    >
+      Ajouter
+    </button>
+  </div>
+</nz-modal>

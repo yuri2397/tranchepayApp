@@ -20,7 +20,7 @@ use Paydunya\Checkout\CheckoutInvoice;
 
 trait Utils
 {
-    use Paydunya, OMPayement;
+    use Paydunya, OMPayement, WavePayement;
 
     protected $commercant_session_key = 'commercant';
     protected $client_session_ket = 'client';
@@ -34,7 +34,7 @@ trait Utils
     {
         if ($user->model_type == "Commercant" && $user->hasPermission('administrateur')) {
             return Commercant::with("boutique")->find($user->model);
-        }else if ($user->model_type == "Commercant"){
+        } else if ($user->model_type == "Commercant") {
             $commercant = Commercant::find($user->model);
             $commercant->boutique = BoutiqueHasUser::whereUserId($commercant->model)->first()->boutique;
             return $commercant;
@@ -107,12 +107,13 @@ trait Utils
 
         switch ($request->via) {
             case 'om':
-                $om = $this->requestOMPayement($request->first_part,$commande, $client);
+                $om = $this->requestOMPayement($request->first_part, $commande, $client);
 
                 break;
 
             case 'wave':
-
+                $wave = $this->createCheckoutSession($request->first_part, $client, $commande);
+                
                 break;
         }
 

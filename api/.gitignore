@@ -15,3 +15,6 @@ yarn-error.log
 /.env
 ./.env
 .env
+.env.prod
+/.env.prod
+./.env.prod

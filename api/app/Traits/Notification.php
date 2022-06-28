@@ -19,7 +19,7 @@ trait Notification
             ->first();
         if ($access_token == null) {
             $response = $this->demandeSMSToken();
-            if($response == null || !array_key_exists('access_token', $response))
+            if ($response == null || !array_key_exists('access_token', $response))
                 throw new ExpiredException(json_encode($response));
             $access_token = Param::whereCle("access_token")->first();
             $access_token->valeur = $response['access_token'];
@@ -53,8 +53,7 @@ trait Notification
 
         if ($rawResponse === false) {
             throw new Exception('Erreur Curl : ' . curl_error($ch));
-        }
-        else {
+        } else {
             $jsonResponse = json_decode($rawResponse, true);
             return $jsonResponse;
         }

@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'page-commercant', component: CommercantComponent },
   { path: 'page-client', component: ClientComponent },
   { path: 'page-contact', component: ContactComponent },
-  { path: 'page-documentation', component: DocumentationComponent },
+  { path: 'docs', component: DocumentationComponent },
+
 ];
 
 @NgModule({
@@ -20,3 +21,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ViewRoutingModule {}
+

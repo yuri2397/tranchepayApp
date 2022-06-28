@@ -10,6 +10,9 @@ import { Produit } from './../../../../models/produit';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client';
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-ajouter-ventes',
@@ -27,14 +30,28 @@ export class AjouterVentesComponent implements OnInit {
   loadClient = false;
   drawerVisible = false;
   modeLoad: boolean = false;
-  
+  isVisible = false;
+  isInvisible = false;
+  makeVisible = false;
+
   constructor(
+    private domSanitizer: DomSanitizer,
+    private matIconRegistry: MatIconRegistry,
     private fb: FormBuilder,
     private commercantService: CommercantService,
     private modalService: NzModalService,
     private notification: NzNotificationService,
     private sharedService: SharedService
-  ) {}
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      "paycash",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/paycash.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "payonline",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/payonline.svg")
+    );
+  }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -42,6 +59,7 @@ export class AjouterVentesComponent implements OnInit {
       quantite_produit: [null, [Validators.required, Validators.min(0)]],
       prix_unitaire_produit: [null, [Validators.required]],
     });
+    console.log("taille des produits", this.produits.length);
 
     this.validateFormClient = this.fb.group({
       telephone: [
@@ -71,6 +89,7 @@ export class AjouterVentesComponent implements OnInit {
     p.quantite = this.validateForm.value.quantite_produit;
     p.prix_unitaire = this.validateForm.value.prix_unitaire_produit;
     this.produits = [...this.produits, p];
+    this.showModal();
     this.validateForm.reset();
   }
 
@@ -125,7 +144,7 @@ export class AjouterVentesComponent implements OnInit {
 
   saveVente() {
     this.isLoad = true;
-   this.commercantService
+    this.commercantService
       .createCommande(
         this.produits,
         this.validateFormClient.value.telephone,
@@ -146,5 +165,21 @@ export class AjouterVentesComponent implements OnInit {
           console.error(errors);
         },
       });
+  }
+  showModal() {
+    this.isVisible = !this.isVisible;
+    this.validateForm.reset;
+  }
+  displayModal() {
+    this.isInvisible = !this.isInvisible;
+  }
+
+  makeModalVisible() {
+    this.makeVisible = !this.makeVisible;
+    this.isInvisible = !this.isInvisible;
+  }
+  makeModalInvisible() {
+    this.makeVisible = !this.makeVisible;
+
   }
 }
