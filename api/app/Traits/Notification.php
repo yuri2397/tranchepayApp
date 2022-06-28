@@ -12,52 +12,52 @@ trait Notification
     public function sendSMS($message, $phone_number)
     {
 
-        $dev_phone_number = env("DEV_PHONE_NUMBER");
+        // $dev_phone_number = env("DEV_PHONE_NUMBER");
 
-        $access_token = Param::whereCle("access_token")
-            ->where("updated_at", ">=", now()->subHours(1))
-            ->first();
-        if ($access_token == null) {
-            $response = $this->demandeSMSToken();
-            if($response == null || !array_key_exists('access_token', $response))
-                throw new ExpiredException(json_encode($response));
-            $access_token = Param::whereCle("access_token")->first();
-            $access_token->valeur = $response['access_token'];
-            $access_token->save();
-        }
+        // $access_token = Param::whereCle("access_token")
+        //     ->where("updated_at", ">=", now()->subHours(1))
+        //     ->first();
+        // if ($access_token == null) {
+        //     $response = $this->demandeSMSToken();
+        //     if($response == null || !array_key_exists('access_token', $response))
+        //         throw new ExpiredException(json_encode($response));
+        //     $access_token = Param::whereCle("access_token")->first();
+        //     $access_token->valeur = $response['access_token'];
+        //     $access_token->save();
+        // }
 
 
-        $data = [
-            "outboundSMSMessageRequest" => [
-                "address" => "tel:" . $phone_number,
-                "outboundSMSTextMessage" => [
-                    "message" => $message
-                ],
-                "senderAddress" => "tel:+" . $dev_phone_number,
-                "senderName" => "TranchePay"
-            ]
-        ];
+        // $data = [
+        //     "outboundSMSMessageRequest" => [
+        //         "address" => "tel:" . $phone_number,
+        //         "outboundSMSTextMessage" => [
+        //             "message" => $message
+        //         ],
+        //         "senderAddress" => "tel:+" . $dev_phone_number,
+        //         "senderName" => "TranchePay"
+        //     ]
+        // ];
 
-        $ch = curl_init("https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B$dev_phone_number/requests");
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-            "Authorization: Bearer " . $access_token->valeur,
-        ));
+        // $ch = curl_init("https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B$dev_phone_number/requests");
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        //     "Content-Type: application/json",
+        //     "Authorization: Bearer " . $access_token->valeur,
+        // ));
 
-        $rawResponse = curl_exec($ch);
+        // $rawResponse = curl_exec($ch);
 
-        if ($rawResponse === false) {
-            throw new Exception('Erreur Curl : ' . curl_error($ch));
-        }
-        else {
-            $jsonResponse = json_decode($rawResponse, true);
-            return $jsonResponse;
-        }
+        // if ($rawResponse === false) {
+        //     throw new Exception('Erreur Curl : ' . curl_error($ch));
+        // }
+        // else {
+        //     $jsonResponse = json_decode($rawResponse, true);
+        //     return $jsonResponse;
+        // }
     }
 
     public function demandeSMSToken()
