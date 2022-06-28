@@ -34,7 +34,7 @@ trait Utils
     {
         if ($user->model_type == "Commercant" && $user->hasPermission('administrateur')) {
             return Commercant::with("boutique")->find($user->model);
-        }else if ($user->model_type == "Commercant"){
+        } else if ($user->model_type == "Commercant") {
             $commercant = Commercant::find($user->model);
             $commercant->boutique = BoutiqueHasUser::whereUserId($commercant->model)->first()->boutique;
             return $commercant;
@@ -107,7 +107,7 @@ trait Utils
 
         switch ($request->via) {
             case 'om':
-                $om = $this->requestOMPayement($request->first_part,$commande, $client);
+                $om = $this->requestOMPayement($request->first_part, $commande, $client);
 
                 break;
 
