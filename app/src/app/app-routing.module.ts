@@ -49,6 +49,11 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
   {
+    path: 'docs',
+    loadChildren: () =>
+      import('./modules/docs/docs.module').then((m) => m.DocsModule),
+  },
+  {
     path: 'client',
     component: ClientComponent,
     children: [

@@ -7,11 +7,18 @@ use Illuminate\Support\Facades\Http;
 
 trait WavePayement
 {
+<<<<<<< HEAD
     protected $baseUrl = "https://api.wave.com";
     protected $errorUrl = "https://api.tranchepay.com/api/ipn/wave/error";
     protected $successUrl = "https://tranchepay.com/payement-sucess?type=c";
 
     public function requestWavePayement($amount, $client, $commande)
+=======
+    
+    protected $errorUrl = "https://tranchepay.com/payement-error?via=wave";
+    protected $successUrl = "https://tranchepay.com/payement-sucess?type=c";
+    public function createCheckoutSession($amount, $client, $commande)
+>>>>>>> 0b28418 (some change)
     {
 
         $data = array(
@@ -26,7 +33,11 @@ trait WavePayement
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
+<<<<<<< HEAD
         ])->post($this->baseUrl);
+=======
+        ])->post(env('WAVE_CHECKOUT_SESSION_URL'), $data);
+>>>>>>> 0b28418 (some change)
 
         $padding = new Padding();
         $padding->reference = $commande->reference;
@@ -35,5 +46,16 @@ trait WavePayement
         $padding->save();
         
         return json_decode($response);
+    }
+
+    public function getSession(WaveSession $session)
+    {
+        $url = "https://api.wave.com/v1/checkout/sessions/" . $session->getId();
+
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
+        ])->get($url);
+
+        return $response;
     }
 }

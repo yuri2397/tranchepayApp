@@ -6,10 +6,10 @@ import { DocumentationParticulierComponent } from 'src/app/shared/component/docu
 import { DocumentationServicesComponent } from 'src/app/shared/component/documentation-services/documentation-services.component';
 
 const routes: Routes = [
-  { path: 'page-documentation-services', component: DocumentationServicesComponent },
-  { path: 'page-documentation-api', component: DocumentationApiComponent },
-  { path: 'page-documentation-commercant', component: DocumentationCommercantComponent },
-  { path: 'page-documentation-particulier', component: DocumentationParticulierComponent },
+  { path: 'docs-services', component: DocumentationServicesComponent },
+  { path: 'docs-api', component: DocumentationApiComponent },
+  { path: 'docs-commercant', component: DocumentationCommercantComponent },
+  { path: 'docs-particulier', component: DocumentationParticulierComponent },
 ];
 
 @NgModule({
