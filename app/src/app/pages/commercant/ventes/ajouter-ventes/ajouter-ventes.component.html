@@ -307,7 +307,7 @@
 <nz-modal
   nzTitle="Choisir votre moyen de paiement"
   [nzStyle]="{ width: '800px' }"
-  [(nzVisible)]="!makeVisible"
+  [(nzVisible)]="makeVisible"
   [nzTitle]="undefined"
   (nzOnCancel)="makeModalInvisible()"
 >
@@ -393,7 +393,7 @@
   </div>
   <div *nzModalFooter>
     <button nz-button nzType="default" (click)="makeModalInvisible()">
-      Annuler
+      Annuler le paiement
     </button>
     <button
       class="shadow"
@@ -402,7 +402,7 @@
       (click)="addToList()"
       [disabled]="!validateForm.valid"
     >
-      Ajouter
+      Valider le paiement
     </button>
   </div>
 </nz-modal>

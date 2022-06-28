@@ -10,7 +10,7 @@ import { Commande } from 'src/app/models/commande';
 export class CommandesComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
-  constructor(private clientService: ClientService) {}
+  constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
     this.findAll();
@@ -40,7 +40,7 @@ export class CommandesComponent implements OnInit {
   }
 
   montantRestant(data: Commande): number {
-    return (+data.prix_total + +data.commission)  - this.montantVerser(data);
+    return (+data.prix_total + +data.commission) - this.montantVerser(data);
   }
 
   etatCommande(data: Commande): string {
@@ -58,7 +58,7 @@ export class CommandesComponent implements OnInit {
     return etat;
   }
 
-  etatColor(data: Commande){
+  etatColor(data: Commande) {
     let etat = 'green';
     switch (data.etat_commande.nom) {
       case 'append':
