@@ -19,7 +19,7 @@ class TestController extends Controller
         $commande  = new Commande();
         $commande->id = "1";
         $commande->reference = time();
-        return  $this->createCheckoutSession(1000, $client, $commande);
+        return  $this->createCheckoutSession(100, $client, $commande);
     }
 
     /**

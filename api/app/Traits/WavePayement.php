@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Http;
 
 trait WavePayement
 {
-    protected $waveBaseUrl = "https://api.wave.com";
-    protected $errorUrl = "https://api.tranchepay.com/api/ipn/wave/error";
+    
+    protected $errorUrl = "https://tranchepay.com/payement-error?via=wave";
     protected $successUrl = "https://tranchepay.com/payement-sucess?type=c";
-
     public function createCheckoutSession($amount, $client, $commande)
     {
 
@@ -25,7 +24,7 @@ trait WavePayement
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
-        ])->post($this->waveBaseUrl, $data);
+        ])->post(env('WAVE_CHECKOUT_SESSION_URL'), $data);
 
         $padding = new Padding();
         $padding->reference = $commande->reference;
@@ -33,6 +32,17 @@ trait WavePayement
         $padding->user_id = $client->id;
         $padding->save();
         
+        return $response;
+    }
+
+    public function getSession(WaveSession $session)
+    {
+        $url = "https://api.wave.com/v1/checkout/sessions/" . $session->getId();
+
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
+        ])->get($url);
+
         return $response;
     }
 }
