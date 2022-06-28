@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Commande;
 use App\Traits\OMPayement;
+use App\Traits\WavePayement;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    use OMPayement;
+    use OMPayement, WavePayement;
     public function index()
     {
         $client = new Client();
-        $client->telephone = '786175702';
+        $client->telephone = '781879981';
         $client->id = 1;
         $commande  = new Commande();
         $commande->id = "1";
         $commande->reference = time();
-        return $this->requestOMPayement(1000,$commande, $client);
+        return  $this->createCheckoutSession(100, $client, $commande);
     }
 
     /**
