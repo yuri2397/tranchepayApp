@@ -123,7 +123,7 @@
         <span class="text-dark-green bold"> AJOUT D'UN NOUVEAU PRODUIT </span>
       </ng-template>
       <div class="m-2">
-        <nz-form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm">
+        <div [nzLayout]="'vertical'" nz-form [formGroup]="validateForm">
           <nz-form-item>
             <nz-form-label nzRequired nzFor="last_name"
               >Nom du produit</nz-form-label
@@ -170,7 +170,7 @@
           <div class="row">
             <div class="col-6"></div>
           </div>
-        </nz-form>
+        </div>
       </div>
     </div>
   </div>
@@ -200,46 +200,48 @@
         <ng-template #i_c>
           <span class="text-dark-green bold"> Informations du client </span>
         </ng-template>
-        <nz-form-item>
-          <nz-form-label nzRequired nzFor="telephone"
-            >N° du client</nz-form-label
-          >
-          <nz-form-control>
-            <nz-select
-              (ngModelChange)="clientChange($event)"
-              [nzDisabled]="produits.length == 0"
-              (nzOnSearch)="onClientSearch($event)"
-              [nzNotFoundContent]="add_client_tem"
-              id="telephone"
-              name="telephone"
-              nzAllowClear="true"
-              nzShowSearch
-              nzServerSearch
-              formControlName="telephone"
+        <nz-form nz-form [formGroup]="validateFormClient">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="telephone"
+              >N° du client</nz-form-label
             >
-              <ng-container *ngFor="let o of clients">
-                <nz-option
-                  *ngIf="!loadClient"
-                  [nzValue]="o.id"
-                  [nzLabel]="o.telephone + ' - ' + o.prenoms + ' ' + o.nom"
-                ></nz-option>
-              </ng-container>
-              <nz-option *ngIf="loadClient" nzDisabled nzCustomContent>
-                <i nz-icon nzType="loading" class="loading-icon"></i>
-                Rechercher en cours...
-              </nz-option>
-              <ng-template #add_client_tem>
-                <button
-                  nz-button
-                  class="btn submit-btn border my-2 shadow"
-                  (click)="addClient()"
-                >
-                  Ajouter le nouveau client
-                </button>
-              </ng-template>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
+            <nz-form-control>
+              <nz-select
+                (ngModelChange)="clientChange($event)"
+                [nzDisabled]="produits.length == 0"
+                (nzOnSearch)="onClientSearch($event)"
+                [nzNotFoundContent]="add_client_tem"
+                id="telephone"
+                name="telephone"
+                nzAllowClear="true"
+                nzShowSearch
+                nzServerSearch
+                formControlName="telephone"
+              >
+                <ng-container *ngFor="let o of clients">
+                  <nz-option
+                    *ngIf="!loadClient"
+                    [nzValue]="o.telephone"
+                    [nzLabel]="o.telephone + ' - ' + o.prenoms + ' ' + o.nom"
+                  ></nz-option>
+                </ng-container>
+                <nz-option *ngIf="loadClient" nzDisabled nzCustomContent>
+                  <i nz-icon nzType="loading" class="loading-icon"></i>
+                  Rechercher en cours...
+                </nz-option>
+                <ng-template #add_client_tem>
+                  <button
+                    nz-button
+                    class="btn submit-btn border my-2 shadow"
+                    (click)="addClient()"
+                  >
+                    Ajouter le nouveau client
+                  </button>
+                </ng-template>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-form>
       </div>
     </div>
 
@@ -251,11 +253,36 @@
               nz-col
               nzSpan="12"
               style="display: flex; justify-content: center"
+              *ngFor="let item of modePaiement"
             >
               <div
                 class="card shadow raduis-sm"
                 style="cursor: pointer"
-                (click)="makeModalVisible()"
+                (click)="makeModalVisible(item.type_paiement)"
+              >
+                <img
+                  [src]="item.image_src"
+                  [alt]="item.type_paiement"
+                  [title]="item.type_paiement"
+                  [ngStyle]="{ width: mystyle.width, padding: mystyle.padding }"
+                />
+                <div class="card-body p-0">
+                  <h5 class="card-title text-center">
+                    {{ item.type_paiement }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <!--ancien-->
+            <!-- <div
+              nz-col
+              nzSpan="12"
+              style="display: flex; justify-content: center"
+            >
+              <div
+                class="card shadow raduis-sm"
+                style="cursor: pointer"
+                (click)="makeModalVisible($event)"
               >
                 <img
                   src="/assets/img/paycash.png"
@@ -284,7 +311,8 @@
                   <h5 class="card-title text-center">Paiement en ligne</h5>
                 </div>
               </div>
-            </div>
+            </div> -->
+            <!--ancien-->
           </div>
         </div>
       </nz-form>
@@ -341,11 +369,8 @@
         </h3>
       </div>
       <div nz-col nzSpan="8" style="display: flex; justify-content: center">
-        <div
-          class="card card-pay shadow raduis-sm"
-          style="cursor: pointer"
-          (click)="makeModalVisible()"
-        >
+        <div class="card card-pay shadow raduis-sm" style="cursor: pointer">
+          <!-- (click)="makeModalVisible()" -->
           <img
             src="/assets/img/nav-logo.png"
             alt="Payer en ligne"
@@ -372,11 +397,8 @@
       </div>
       <!---->
       <div nz-col nzSpan="8" style="display: flex; justify-content: center">
-        <div
-          class="card card-pay shadow raduis-sm"
-          style="cursor: pointer"
-          (click)="makeModalVisible()"
-        >
+        <div class="card card-pay shadow raduis-sm" style="cursor: pointer">
+          <!-- (click)="makeModalVisible()" -->
           <img
             src="/assets/img/freemoney.png"
             alt="Payer en ligne"

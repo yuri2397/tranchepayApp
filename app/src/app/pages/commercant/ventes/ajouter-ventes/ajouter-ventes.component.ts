@@ -12,8 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from '@angular/platform-browser';
-
-
+import { Base } from 'src/app/shared/http/base'
 @Component({
   selector: 'app-ajouter-ventes',
   templateUrl: './ajouter-ventes.component.html',
@@ -33,6 +32,8 @@ export class AjouterVentesComponent implements OnInit {
   isVisible = false;
   isInvisible = false;
   makeVisible = false;
+  mystyle = { width: "200px", padding: "25px" };
+  modePaiement = [{ type_paiement: "Paiement en ligne", image_src: "/assets/img/paycash.png" }, { type_paiement: "Paiement en caisse", image_src: "/assets/img/paymobile.png" }];
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -59,7 +60,6 @@ export class AjouterVentesComponent implements OnInit {
       quantite_produit: [null, [Validators.required, Validators.min(0)]],
       prix_unitaire_produit: [null, [Validators.required]],
     });
-    console.log("taille des produits", this.produits.length);
 
     this.validateFormClient = this.fb.group({
       telephone: [
@@ -174,9 +174,11 @@ export class AjouterVentesComponent implements OnInit {
     this.isInvisible = !this.isInvisible;
   }
 
-  makeModalVisible() {
+  makeModalVisible(event: string) {
     this.makeVisible = !this.makeVisible;
     this.isInvisible = !this.isInvisible;
+
+    console.log("type de paiement: ", event, " Utilisateur:", this.commercantService.getUser(), "numero: ", this.validateFormClient.get('telephone')?.value);
   }
   makeModalInvisible() {
     this.makeVisible = !this.makeVisible;
