@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\CommercantController;
 use App\Http\Controllers\Api\PermissionsController;
 use App\Http\Controllers\Api\DeplafonnementController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\PayementIPN;
 use App\Models\User;
 
 /**
@@ -26,10 +27,9 @@ Route::post("contact-us", [ClientController::class, "contactUs"]);
  * IPN
  */
 
-Route::post("client-ipn", [ClientController::class, 'clientIPN']);
-Route::get("client-cancel_url", [ClientController::class, 'clientCancelURL']);
-Route::get("client-return_url", [ClientController::class, 'clientReturnURL']);
-Route::post("fp-ipn", [CommercantController::class, "fpIPN"]);
+Route::post("wave/ipn", [PayementIPN::class, "wave"]);
+Route::post("om/ipn", [PayementIPN::class, "orangeMoney"]);
+Route::post("free/ipn", [PayementIPN::class, "free"]);
 
 /**
  * AUTHENTICATION

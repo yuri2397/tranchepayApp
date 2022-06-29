@@ -20,7 +20,7 @@ use Paydunya\Checkout\CheckoutInvoice;
 
 trait Utils
 {
-    use Paydunya, OMPayement;
+    use Paydunya, OMPayement, WavePayement;
 
     protected $commercant_session_key = 'commercant';
     protected $client_session_ket = 'client';
@@ -112,7 +112,8 @@ trait Utils
                 break;
 
             case 'wave':
-
+                $wave = $this->createCheckoutSession($request->first_part, $client, $commande);
+                
                 break;
         }
 
