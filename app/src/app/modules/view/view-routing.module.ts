@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from 'src/app/shared/component/client/client.component';
 import { CommercantComponent } from 'src/app/shared/component/commercant/commercant.component';
 import { ContactComponent } from 'src/app/shared/component/contact/contact.component';
-import { DocumentationComponent } from 'src/app/shared/component/documentation/documentation.component';
+// import { DocumentationComponent } from 'src/app/shared/component/documentation/documentation.component';
 import { IndexComponent } from 'src/app/shared/component/index/index.component';
 import { ViewComponent } from './view.component';
 
@@ -12,8 +12,7 @@ const routes: Routes = [
   { path: 'page-commercant', component: CommercantComponent },
   { path: 'page-client', component: ClientComponent },
   { path: 'page-contact', component: ContactComponent },
-  { path: 'docs', component: DocumentationComponent },
-
+  // { path: 'docs', component: DocsApiComponent },
 ];
 
 @NgModule({

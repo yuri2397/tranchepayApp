@@ -32,7 +32,7 @@ import { SecuriteComponent } from '../pages/client/securite/securite.component';
 @NgModule({
   declarations: [
     ShowComponent,
-    SecuriteComponent
+    SecuriteComponent,
   ],
   imports: [
     CommonModule,

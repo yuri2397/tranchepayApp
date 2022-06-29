@@ -23,7 +23,7 @@ import { RetraitComponent } from './pages/commercant/retrait/retrait.component';
 import { SetClientPinComponent } from './pages/auth/set-client-pin/set-client-pin.component';
 import { PartenairesComponent } from './shared/component/partenaires/partenaires.component';
 import { ServiceClientComponent } from './shared/component/service-client/service-client.component';
-import { DocsModule } from './modules/docs/docs.module';
+// import { DocsModule } from './modules/docs/docs.module';
 
 registerLocaleData(fr);
 
@@ -51,7 +51,7 @@ registerLocaleData(fr);
     ReactiveFormsModule,
     NzNotificationModule,
     NzSkeletonModule,
-    DocsModule
+    // DocsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: fr_FR }],
   bootstrap: [AppComponent],
