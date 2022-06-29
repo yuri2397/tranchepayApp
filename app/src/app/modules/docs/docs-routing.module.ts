@@ -8,10 +8,10 @@ import { DocsServicesComponent } from 'src/app/pages/docs/docs-services/docs-ser
 
 const routes: Routes = [
   { path: '', component: DocsPresentationComponent },
-  { path: 'docs-services', component: DocsServicesComponent },
-  { path: 'docs-api', component: DocsApiComponent },
-  { path: 'docs-commercant', component: DocsCommercantComponent },
-  { path: 'docs-particulier', component: DocsParticulierComponent },
+  { path: '/home/docs-services', component: DocsServicesComponent },
+  { path: '/home/docs-api', component: DocsApiComponent },
+  { path: '/home/docs-commercant', component: DocsCommercantComponent },
+  { path: '/home/docs-particulier', component: DocsParticulierComponent },
 ];
 
 @NgModule({
