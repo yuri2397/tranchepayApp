@@ -12,7 +12,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from '@angular/platform-browser';
-import { Base } from 'src/app/shared/http/base'
 @Component({
   selector: 'app-ajouter-ventes',
   templateUrl: './ajouter-ventes.component.html',
@@ -20,6 +19,7 @@ import { Base } from 'src/app/shared/http/base'
 })
 export class AjouterVentesComponent implements OnInit {
   validateForm!: FormGroup;
+  montantTotal!: number;
   validateFormClient!: FormGroup;
   isLoad: boolean = false;
   produits: Produit[] = [];
@@ -34,6 +34,10 @@ export class AjouterVentesComponent implements OnInit {
   makeVisible = false;
   mystyle = { width: "200px", padding: "25px" };
   modePaiement = [{ type_paiement: "Paiement en ligne", image_src: "/assets/img/paycash.png" }, { type_paiement: "Paiement en caisse", image_src: "/assets/img/paymobile.png" }];
+  choixModePaiement = [{ name: "Wave", choice_label: "Payer avec Wave", image_src: "/assets/img/nav-logo.png", padding: "p-3", margin_top: "0px" },
+  { name: "Orange Money", choice_label: "Payer avec Orange Money", image_src: "/assets/img/orangemoney.png", padding: "5px", margin_top: "0px" },
+  { name: "Free Money", choice_label: "Payer avec Free Money", image_src: "/assets/img/freemoney.png", padding: "5px", margin_top: "-6px" }
+  ]
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -183,5 +187,8 @@ export class AjouterVentesComponent implements OnInit {
   makeModalInvisible() {
     this.makeVisible = !this.makeVisible;
 
+  }
+  logData(montant: any, type: any) {
+    console.log("valeur entré: ", montant, "choix du paiement: ", type);
   }
 }
