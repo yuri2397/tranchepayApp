@@ -114,7 +114,7 @@
 <nz-modal
   [(nzVisible)]="isVisible"
   [nzTitle]="undefined"
-  (nzOnCancel)="showModal()"
+  (nzOnCancel)="handleCancel()"
 >
   <div *nzModalContent>
     <div nz-col nzSpan="24">
@@ -176,7 +176,7 @@
     </div>
   </div>
   <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="showModal()">Annuler</button>
+    <button nz-button nzType="default" (click)="handleCancel()">Annuler</button>
     <button
       class="shadow"
       nz-button
@@ -188,11 +188,12 @@
     </button>
   </div>
 </nz-modal>
+
 <!--Information du client-->
 <nz-modal
   [(nzVisible)]="isInvisible"
   [nzTitle]="undefined"
-  (nzOnCancel)="displayModal()"
+  (nzOnCancel)="handleCancel()"
 >
   <div *nzModalContent>
     <div nz-row>
@@ -265,7 +266,7 @@
                     ? 'none'
                     : 'auto'
                 }"
-                (click)="makeModalVisible(item.type_paiement)"
+                (click)="typePay = item.type_paiement; makeModalVisible()"
               >
                 <img
                   [src]="item.image_src"
@@ -286,33 +287,47 @@
     </div>
   </div>
   <div *nzModalFooter>
-    <button nz-button (click)="showModal()">Annuler</button>
+    <button nz-button (click)="handleCancel()">Annuler</button>
   </div>
 </nz-modal>
 <!-- Finalisation-->
 <nz-modal
   nzTitle="Choisir votre moyen de paiement"
   [nzStyle]="{ width: '730px' }"
-  [(nzVisible)]="!makeVisible"
+  [(nzVisible)]="makeVisible"
   [nzTitle]="undefined"
-  (nzOnCancel)="makeModalInvisible()"
+  (nzOnCancel)="handleCancel()"
 >
   <div *nzModalContent>
     <div nz-row nzGutter="48" class="my-4">
       <div nz-col nzSpan="24">
+        <nz-divider [nzText]="i_c"></nz-divider>
+        <ng-template #i_c>
+          <span class="text-dark-green bold"> Validation du paiement </span>
+        </ng-template>
         <div nz-row>
           <div nz-col nzSpan="16" nzOffset="4">
             <form nz-form>
-              <nz-form-label>Entrer le montant total du paiement</nz-form-label>
+              <nz-form-label
+                ><span class="text-danger">*</span>Entrer le montant total du
+                paiement</nz-form-label
+              >
               <nz-form-item>
-                <nz-form-control [nzSpan]="24">
+                <nz-form-control
+                  [nzValidateStatus]="
+                    montantTotal > montantActuelTotal ? 'error' : 'success'
+                  "
+                  [nzSpan]="24"
+                  nzErrorTip="Cette valeur est supérieur au montant total actuel"
+                >
                   <input
-                    class="form-control"
                     type="number"
-                    #inputElement
-                    [ngModelOptions]="{ standalone: true }"
+                    nz-input
+                    (keydown)="showing()"
+                    class="form-control"
                     [ngStyle]="{ width: '100%', height: '50px' }"
                     [(ngModel)]="montantTotal"
+                    name="montantTotal"
                     placeholder="Montant total"
                   />
                 </nz-form-control>
@@ -320,11 +335,6 @@
             </form>
           </div>
         </div>
-      </div>
-      <div nz-col nzSpan="24">
-        <h3 class="text-center mt-5">
-          <span class="text-dark-green"> Choisir votre moyen de paiement </span>
-        </h3>
       </div>
       <div
         nz-col
@@ -338,7 +348,12 @@
           [ngStyle]="{
             width: '240px !important',
             heigth: '140px !important',
-            pointerEvents: !montantTotal ? 'none' : 'auto'
+            pointerEvents:
+              !montantTotal ||
+              montantTotal == 0 ||
+              montantActuelTotal < montantTotal
+                ? 'none'
+                : 'auto'
           }"
           (click)="logData(montantTotal, item.name)"
         >
@@ -375,7 +390,7 @@
     </div>
   </div>
   <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="makeModalInvisible()">
+    <button nz-button nzType="default" (click)="handleCancel()">
       Annuler le paiement
     </button>
     <button
