@@ -7,7 +7,7 @@ import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { CommercantService } from './../../../../services/commercant.service';
 import { ClientService } from './../../../../services/client.service';
 import { Produit } from './../../../../models/produit';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client';
 import { MatIconRegistry } from "@angular/material/icon";
@@ -18,8 +18,10 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./ajouter-ventes.component.scss'],
 })
 export class AjouterVentesComponent implements OnInit {
+  typePay!: string;
   validateForm!: FormGroup;
-  montantTotal!: number;
+  montantTotal = 0;
+  montantActuelTotal = 0;
   validateFormClient!: FormGroup;
   isLoad: boolean = false;
   produits: Produit[] = [];
@@ -57,7 +59,10 @@ export class AjouterVentesComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/payonline.svg")
     );
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("something has changed", !this.validateForm.get('telephone')?.value);
 
+  }
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       nom_produit: [null, [Validators.required]],
@@ -88,12 +93,16 @@ export class AjouterVentesComponent implements OnInit {
   }
 
   addToList() {
+    this.montantActuelTotal = 0;
     let p = new Produit();
     p.nom = this.validateForm.value.nom_produit;
     p.quantite = this.validateForm.value.quantite_produit;
     p.prix_unitaire = this.validateForm.value.prix_unitaire_produit;
     this.produits = [...this.produits, p];
-    this.showModal();
+    this.produits.forEach(element => {
+      this.montantActuelTotal += element.prix_unitaire * element.quantite;
+    });
+    this.handleCancel();
     this.validateForm.reset();
   }
 
@@ -172,23 +181,44 @@ export class AjouterVentesComponent implements OnInit {
   }
   showModal() {
     this.isVisible = !this.isVisible;
-    this.validateForm.reset;
   }
   displayModal() {
     this.isInvisible = !this.isInvisible;
   }
 
-  makeModalVisible(event: string) {
+  makeModalVisible() {
     this.makeVisible = !this.makeVisible;
     this.isInvisible = !this.isInvisible;
-
-    console.log("type de paiement: ", event, " Utilisateur:", this.commercantService.getUser(), "numero: ", this.validateFormClient.get('telephone')?.value);
+    // console.log(" Utilisateur:", this.commercantService.getUser(), "numero: ", this.validateFormClient.get('telephone')?.value);
   }
-  makeModalInvisible() {
-    this.makeVisible = !this.makeVisible;
 
+  handleCancel() {
+    if (this.isVisible == true) {
+      this.isVisible = false;
+      this.validateForm.reset();
+    }
+    if (this.isInvisible == true) {
+      this.isInvisible = false;
+      this.validateFormClient.reset();
+    }
+    if (this.makeVisible == true) {
+      this.makeVisible = false;
+      this.montantTotal = 0;
+      this.validateFormClient.reset();
+    }
   }
   logData(montant: any, type: any) {
-    console.log("valeur entré: ", montant, "choix du paiement: ", type);
+    this.produits.forEach(element => {
+      this.montantActuelTotal += element.prix_unitaire * element.quantite;
+    });
+    console.log("------------------\nvaleur entré: ", montant,
+      "choix du paiement: ", type,
+      "montant total: ", this.montantActuelTotal,
+      "type du paiment: ", this.typePay, "\n------------------");
+    this.makeVisible = !this.makeVisible;
+  }
+  showing() {
+
+    console.log(this.montantActuelTotal);
   }
 }
