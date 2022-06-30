@@ -19,6 +19,7 @@ use App\Traits\Notification;
 use App\Models\Admin;
 use App\Models\BoutiqueHasUser;
 use Spatie\Permission\Models\Permission;
+use Throwable;
 
 class AuthController extends Controller
 {
@@ -263,7 +264,7 @@ class AuthController extends Controller
             $user->givePermissionTo($request->permissions);
 
             // SEND MESSAGE
-            $message = "BIENVENUE SUR TRANCHE PAY.\nLa boutique " . $proprietaire->boutique->nom . " a crée un compte utilisateur pour vous. Vos identifiants de connexion sont: \nTél: " . $user->username . "\nMot de passe: " . $password."\nhttps://tranchepay.com/auth/login";
+            $message = "BIENVENUE SUR TRANCHE PAY.\nLa boutique " . $proprietaire->boutique->nom . " a crée un compte utilisateur pour vous. Vos identifiants de connexion sont: \nTél: " . $user->username . "\nMot de passe: " . $password . "\nhttps://tranchepay.com/auth/login";
             $this->sendSMS($message, '+221' . $commercant->telephone);
             DB::commit();
             return Commercant::with('boutique')->find($commercant->id);
@@ -272,14 +273,24 @@ class AuthController extends Controller
             throw $th;
         }
     }
-    
-    
-    public function removeCommercantUsers(Commercant $commercant){
+
+
+    public function removeCommercantUsers(Commercant $commercant)
+    {
         return $commercant->delete();
+        // DB::beginTransaction();
+        // try {
+        //     $commercant->delete();
+        //     DB::commit();
+        // } catch (Throwable $th) {
+        //     DB::rollback();
+        //     throw $th;
+        // }
     }
 
 
-    public function updateCommercantUsers(Request $request, Commercant $commercant){
+    public function updateCommercantUsers(Request $request, Commercant $commercant)
+    {
         $request->validate([
             "telephone" => "required|exists:commercants,telephone",
             "telephone" => "required|exists:users,username",
@@ -308,6 +319,5 @@ class AuthController extends Controller
             DB::rollBack();
             throw $th;
         }
-        
     }
 }

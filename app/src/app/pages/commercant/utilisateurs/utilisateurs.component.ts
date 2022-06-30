@@ -46,9 +46,59 @@ export class UtilisateursComponent implements OnInit {
     });
   }
 
-  edit(i: Commercant) {}
+  edit(commercant: Commercant) {
+    // this.hasError = false;
+    // this.createLoad = true;
+    // this.comService
+    //   .edit(commercant, this.selectedPermissions)
+    //   .subscribe({
+    //     next: (response) => {
+    //       this.isVisible = false;
+    //       this.form.reset();
+    //       this.createLoad = false;
+    //       this.hasError = false;
+    //       this.notification.create(
+    //         'success',
+    //         'Message',
+    //         "L'utilisateur a été modifié avec succès."
+    //       );
+    //       this.getUsers();
+    //     },
+    //     error: (errors) => {
+    //       this.createLoad = false;
+    //       if (errors.status < 500) {
+    //         (this.errors = errors.error.errors), (this.hasError = true);
+    //       } else {
+    //         this.notification.error('Erreur', errors.error.message);
+    //       }
+    //     },
+    //   });
+  }
 
-  del(i: Commercant) {}
+  del(commercant: Commercant) {
+    this.hasError = false;
+    this.createLoad = true;
+    this.comService
+      .del(commercant)
+      .subscribe({
+        next: (response) => {
+          this.notification.create(
+            'success',
+            'Message',
+            "L'utilisateur a été supprimé avec succès."
+          );
+          this.getUsers();
+        },
+        error: (errors) => {
+          this.createLoad = false;
+          if (errors.status < 500) {
+            (this.errors = errors.error.errors), (this.hasError = true);
+          } else {
+            this.notification.error('Erreur', errors.error.message);
+          }
+        },
+      });
+  }
 
   addUser() {
     this.isVisible = true;
@@ -67,7 +117,6 @@ export class UtilisateursComponent implements OnInit {
       .addCommercantUsers(commercant, this.selectedPermissions)
       .subscribe({
         next: (response) => {
-          console.log(response);
           this.isVisible = false;
           this.form.reset();
           this.createLoad = false;
@@ -94,7 +143,6 @@ export class UtilisateursComponent implements OnInit {
     this.isLoad = true;
     this.comService.getUsers().subscribe({
       next: (response) => {
-        console.log(response);
         this.users = response;
         this.isLoad = false;
       },
