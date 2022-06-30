@@ -17,6 +17,8 @@ class CreateBoutiqueHasUsersTable extends Migration
             $table->uuid('id');
             $table->uuid('user_id');
             $table->foreign('user_id')->references("id")->on('users')->onDelete("cascade");
+            $table->uuid('commande_id');
+            $table->foreign('commande_id')->references("id")->on('commandes')->onDelete("cascade");
             $table->uuid('boutique_id');
             $table->foreign('boutique_id')->references("id")->on('boutiques')->onDelete("cascade");
             $table->timestamps();

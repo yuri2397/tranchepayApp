@@ -25,9 +25,11 @@ trait WavePayement
         ])->post(env('WAVE_CHECKOUT_SESSION_URL'), $data);
 
         $padding = new Padding();
-        $padding->reference = $commande->reference;
+        $padding->reference = $response['id'];
         $padding->type = "wave-payement";
         $padding->user_id = $client->id;
+        $padding->commande_id = $commande->id;
+        $padding->boutique_id = $commande->boutique->id;
         $padding->save();
 
         return $response;
