@@ -109,7 +109,7 @@ export class CommercantService extends Base {
   }
 
   del(i: Commercant) {
-    return this.http.put<any>(this.endPoint + 'remove-user/' + i.id, {
+    return this.http.delete<any>(this.endPoint + 'remove-user/' + i.id, {
       headers: this.authorizationHeaders,
       observe: 'body',
     });
