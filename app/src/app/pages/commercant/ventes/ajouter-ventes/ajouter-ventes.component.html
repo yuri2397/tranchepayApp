@@ -146,6 +146,7 @@
               <input
                 formControlName="quantite_produit"
                 nz-input
+                type="number"
                 name="quantite_produit"
                 type="number"
                 min="1"
@@ -201,10 +202,10 @@
           <span class="text-dark-green bold"> Informations du client </span>
         </ng-template>
         <nz-form nz-form [formGroup]="validateFormClient">
+          <nz-form-label nzRequired nzFor="telephone"
+            >N° du client</nz-form-label
+          >
           <nz-form-item>
-            <nz-form-label nzRequired nzFor="telephone"
-              >N° du client</nz-form-label
-            >
             <nz-form-control>
               <nz-select
                 (ngModelChange)="clientChange($event)"
@@ -257,8 +258,13 @@
               *ngFor="let item of modePaiement"
             >
               <div
-                class="card shadow raduis-sm"
+                class="card card-pay shadow raduis-sm"
                 style="cursor: pointer"
+                [ngStyle]="{
+                  pointerEvents: !validateFormClient.get('telephone')?.value
+                    ? 'none'
+                    : 'auto'
+                }"
                 (click)="makeModalVisible(item.type_paiement)"
               >
                 <img
@@ -280,23 +286,14 @@
     </div>
   </div>
   <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="showModal()">Annuler</button>
-    <button
-      class="shadow"
-      nz-button
-      nzType="primary"
-      (click)="addToList()"
-      [disabled]="!validateForm.valid"
-    >
-      Ajouter
-    </button>
+    <button nz-button (click)="showModal()">Annuler</button>
   </div>
 </nz-modal>
 <!-- Finalisation-->
 <nz-modal
   nzTitle="Choisir votre moyen de paiement"
-  [nzStyle]="{ width: '800px' }"
-  [(nzVisible)]="makeVisible"
+  [nzStyle]="{ width: '730px' }"
+  [(nzVisible)]="!makeVisible"
   [nzTitle]="undefined"
   (nzOnCancel)="makeModalInvisible()"
 >
@@ -305,22 +302,22 @@
       <div nz-col nzSpan="24">
         <div nz-row>
           <div nz-col nzSpan="16" nzOffset="4">
-            <nz-form nz-form>
+            <form nz-form>
+              <nz-form-label>Entrer le montant total du paiement</nz-form-label>
               <nz-form-item>
                 <nz-form-control [nzSpan]="24">
                   <input
-                    nzBorderless="false"
-                    nzSize="default"
+                    class="form-control"
+                    type="number"
                     #inputElement
-                    [ngStyle]="{ width: '100%' }"
-                    nz-input
-                    nzOverlayClassName="numeric-input"
-                    [ngModel]="undefined"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngStyle]="{ width: '100%', height: '50px' }"
+                    [(ngModel)]="montantTotal"
                     placeholder="Montant total"
                   />
                 </nz-form-control>
               </nz-form-item>
-            </nz-form>
+            </form>
           </div>
         </div>
       </div>
@@ -329,49 +326,52 @@
           <span class="text-dark-green"> Choisir votre moyen de paiement </span>
         </h3>
       </div>
-      <div nz-col nzSpan="8" style="display: flex; justify-content: center">
-        <div class="card card-pay shadow raduis-sm" style="cursor: pointer">
-          <!-- (click)="makeModalVisible()" -->
-          <img
-            src="/assets/img/nav-logo.png"
-            alt="Payer en ligne"
-            title="Payer en ligne"
-            style="width: 210px; padding: 25px"
-          />
-          <div class="card-body p-1">
-            <h5 class="card-title text-center">Payer avec wave</h5>
+      <div
+        nz-col
+        nzSpan="8"
+        style="display: flex; justify-content: center"
+        *ngFor="let item of choixModePaiement"
+      >
+        <div
+          class="card card-pay shadow raduis-sm"
+          style="cursor: pointer"
+          [ngStyle]="{
+            width: '240px !important',
+            heigth: '140px !important',
+            pointerEvents: !montantTotal ? 'none' : 'auto'
+          }"
+          (click)="logData(montantTotal, item.name)"
+        >
+          <div class="d-flex justify-content-center">
+            <div>
+              <img
+                [src]="item.image_src"
+                [alt]="item.choice_label"
+                [title]="item.choice_label"
+                style="
+                  width: 196px;
+                  padding: 10px;
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+                class="center-block"
+              />
+              <div class="card-body">
+                <h5
+                  [ngStyle]="{
+                    padding: item.padding,
+                    marginTop: item.margin_top
+                  }"
+                  class="card-title text-center"
+                >
+                  {{ item.choice_label }}
+                </h5>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div nz-col nzSpan="8" style="display: flex; justify-content: center">
-        <div class="card card-pay shadow raduis-xm" style="cursor: pointer">
-          <img
-            src="/assets/img/orangemoney.png"
-            alt="Payer en ligne"
-            title="Payer en ligne"
-            style="width: 210px; padding: 25px"
-          />
-          <div class="card-body p-1">
-            <h5 class="card-title text-center mt-4">Payer avec orange Money</h5>
-          </div>
-        </div>
-      </div>
-      <!---->
-      <div nz-col nzSpan="8" style="display: flex; justify-content: center">
-        <div class="card card-pay shadow raduis-sm" style="cursor: pointer">
-          <!-- (click)="makeModalVisible()" -->
-          <img
-            src="/assets/img/freemoney.png"
-            alt="Payer en ligne"
-            title="Payer en ligne"
-            style="width: 210px; padding: 25px"
-          />
-          <div class="card-body p-3">
-            <h5 class="card-title text-center mt-1">Payer avec Free Money</h5>
-          </div>
-        </div>
-      </div>
-      <!---->
     </div>
   </div>
   <div *nzModalFooter>
