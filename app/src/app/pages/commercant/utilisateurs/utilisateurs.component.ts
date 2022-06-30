@@ -55,7 +55,7 @@ export class UtilisateursComponent implements OnInit {
     });
   }
 
-  showUdateModal(commercant: Commercant){
+  showUpdateModal(commercant: Commercant){
     this.isUpdateModalVisible = true;
     this.user = commercant;
   }
@@ -64,33 +64,32 @@ export class UtilisateursComponent implements OnInit {
     commercant.prenoms = this.form.value.prenomUpdate;
     commercant.nom = this.form.value.nomUpdate;
     commercant.telephone = this.form.value.telephoneUpdate;
-    console.log(commercant);
-    // this.hasError = false;
-    // this.createLoad = true;
-    // this.comService
-    //   .edit(commercant, this.selectedPermissions)
-    //   .subscribe({
-    //     next: (response) => {
-    //       this.isVisible = false;
-    //       this.form.reset();
-    //       this.createLoad = false;
-    //       this.hasError = false;
-    //       this.notification.create(
-    //         'success',
-    //         'Message',
-    //         "L'utilisateur a été modifié avec succès."
-    //       );
-    //       this.getUsers();
-    //     },
-    //     error: (errors) => {
-    //       this.createLoad = false;
-    //       if (errors.status < 500) {
-    //         (this.errors = errors.error.errors), (this.hasError = true);
-    //       } else {
-    //         this.notification.error('Erreur', errors.error.message);
-    //       }
-    //     },
-    //   });
+    this.hasError = false;
+    this.createLoad = true;
+    this.comService
+      .edit(commercant, this.selectedPermissions)
+      .subscribe({
+        next: (response) => {
+          this.isVisible = false;
+          this.form.reset();
+          this.createLoad = false;
+          this.hasError = false;
+          this.notification.create(
+            'success',
+            'Message',
+            "L'utilisateur a été modifié avec succès."
+          );
+          this.getUsers();
+        },
+        error: (errors) => {
+          this.createLoad = false;
+          if (errors.status < 500) {
+            (this.errors = errors.error.errors), (this.hasError = true);
+          } else {
+            this.notification.error('Erreur', errors.error.message);
+          }
+        },
+      });
   }
 
   del(commercant: Commercant) {
