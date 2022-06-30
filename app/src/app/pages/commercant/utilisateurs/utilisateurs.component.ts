@@ -14,9 +14,11 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class UtilisateursComponent implements OnInit {
   users!: Commercant[];
+  user!: Commercant;
   form!: FormGroup;
   isLoad = true;
   isVisible: boolean = false;
+  isUpdateModalVisible: boolean = false;
   createLoad: boolean = false;
   permissions!: Permission[];
   hasError = false;
@@ -44,9 +46,25 @@ export class UtilisateursComponent implements OnInit {
       telephone: [null, [Validators.required]],
       permissions: [null, [Validators.required]],
     });
+
+    this.form = this.fb.group({
+      prenomUpdate: [null, [Validators.required]],
+      nomUpdate: [null, [Validators.required]],
+      telephoneUpdate: [null, [Validators.required]],
+      permissionsUpdate: [null, [Validators.required]],
+    });
   }
 
-  edit(commercant: Commercant) {
+  showUdateModal(commercant: Commercant){
+    this.isUpdateModalVisible = true;
+    this.user = commercant;
+  }
+  edit() {
+    let commercant = new Commercant();
+    commercant.prenoms = this.form.value.prenomUpdate;
+    commercant.nom = this.form.value.nomUpdate;
+    commercant.telephone = this.form.value.telephoneUpdate;
+    console.log(commercant);
     // this.hasError = false;
     // this.createLoad = true;
     // this.comService
@@ -109,7 +127,7 @@ export class UtilisateursComponent implements OnInit {
     this.createLoad = true;
     let commercant = new Commercant();
     commercant.prenoms = this.form.value.prenom;
-    commercant.nom = this.form.value.prenom;
+    commercant.nom = this.form.value.nom;
     commercant.adresse = this.form.value.adresse;
     commercant.telephone = this.form.value.telephone;
     console.log(commercant, this.selectedPermissions);

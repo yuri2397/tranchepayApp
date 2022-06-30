@@ -291,6 +291,7 @@ class AuthController extends Controller
 
     public function updateCommercantUsers(Request $request, Commercant $commercant)
     {
+        return 'hello';
         $request->validate([
             "telephone" => "required|exists:commercants,telephone",
             "telephone" => "required|exists:users,username",
