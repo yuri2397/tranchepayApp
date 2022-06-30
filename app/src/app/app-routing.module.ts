@@ -1,3 +1,4 @@
+import { DocsComponent } from './modules/docs/docs.component';
 import { ClientComponent } from './modules/client/client.component';
 import { SetClientPinComponent } from './pages/auth/set-client-pin/set-client-pin.component';
 import { NgModule } from '@angular/core';
@@ -50,8 +51,14 @@ const routes: Routes = [
   },
   {
     path: 'docs',
-    loadChildren: () =>
-      import('./modules/docs/docs.module').then((m) => m.DocsModule),
+    component: DocsComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/docs/docs.module').then((m) => m.DocsModule),
+      },
+    ],
   },
   {
     path: 'client',
