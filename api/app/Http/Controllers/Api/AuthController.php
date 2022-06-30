@@ -275,23 +275,15 @@ class AuthController extends Controller
     }
 
 
-    public function removeCommercantUsers(Commercant $commercant)
+    public function removeCommercantUsers($id)
     {
+        $commercant = Commercant::find($id);
         return $commercant->delete();
-        // DB::beginTransaction();
-        // try {
-        //     $commercant->delete();
-        //     DB::commit();
-        // } catch (Throwable $th) {
-        //     DB::rollback();
-        //     throw $th;
-        // }
     }
 
 
     public function updateCommercantUsers(Request $request, Commercant $commercant)
     {
-        return 'hello';
         $request->validate([
             "telephone" => "required|exists:commercants,telephone",
             "telephone" => "required|exists:users,username",
