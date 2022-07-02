@@ -106,7 +106,7 @@
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Prénom</nz-form-label>
             <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
-              <input nz-input id="prenomUpdate" formControlName="prenomUpdate" name="prenomUpdate" placeholder=" {{ user.prenoms }} " />
+              <input nz-input id="prenomUpdate" formControlName="prenomUpdate" name="prenomUpdate" [(ngModel)]="user.prenoms " />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -114,7 +114,7 @@
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Nom</nz-form-label>
             <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
-              <input nz-input id="nomUpdate" formControlName="nomUpdate" name="nomUpdate" placeholder=" {{ user.nom }} " />
+              <input nz-input id="nomUpdate" formControlName="nomUpdate" name="nomUpdate" [(ngModel)]="user.nom" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -124,7 +124,7 @@
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Téléphone</nz-form-label>
             <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
-              <input nz-input id="telephoneUpdate" formControlName="telephoneUpdate" name="telephoneUpdate" placeholder=" {{ user.telephone }} " />
+              <input nz-input id="telephoneUpdate" formControlName="telephoneUpdate" name="telephoneUpdate" [(ngModel)]="user.telephone" />
             </nz-form-control>
           </nz-form-item>
         </div>
