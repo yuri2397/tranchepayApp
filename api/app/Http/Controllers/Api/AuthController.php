@@ -21,6 +21,8 @@ use App\Models\BoutiqueHasUser;
 use Spatie\Permission\Models\Permission;
 use Throwable;
 
+use function PHPSTORM_META\type;
+
 class AuthController extends Controller
 {
     use Utils, Notification;
@@ -290,21 +292,22 @@ class AuthController extends Controller
             "permissions" => "required|array"
         ]);
 
+        $commercant = Commercant::find($request->id);
         try {
             DB::beginTransaction();
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->update();
+            $commercant->updateOrFail();
 
             $user = User::whereModelType("Commercant")->whereModel($request->id)->first();
             $user->username = $request->telephone;
             $user->email = $request->email;
-            $user->update();
+            $user->updateOrFail();
 
             $user->givePermissionTo($request->permissions);
             DB::commit();
-            return Commercant::find($commercant->id);
+            return Commercant::find($request->id);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
