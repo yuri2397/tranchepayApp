@@ -244,7 +244,6 @@ class AuthController extends Controller
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->adresse = $request->adresse;
             $commercant->save();
 
             $user = new User;
@@ -285,8 +284,7 @@ class AuthController extends Controller
     public function updateCommercantUsers(Request $request, Commercant $commercant)
     {
         $request->validate([
-            "telephone" => "required|exists:commercants,telephone",
-            "telephone" => "required|exists:users,username",
+            "telephone" => "required",
             "prenom" => "required",
             "nom" => "required",
             "permissions" => "required|array"
@@ -297,13 +295,12 @@ class AuthController extends Controller
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->adresse = $request->adresse;
-            $commercant->save();
+            $commercant->update();
 
-            $user = User::whereModelType("Commercant")->whereModel($commercant->id)->first();
+            $user = User::whereModelType("Commercant")->whereModel($request->id)->first();
             $user->username = $request->telephone;
             $user->email = $request->email;
-            $user->save();
+            $user->update();
 
             $user->givePermissionTo($request->permissions);
             DB::commit();
