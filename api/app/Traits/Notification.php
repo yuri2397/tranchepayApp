@@ -11,7 +11,7 @@ trait Notification
 
     public function sendSMS($message, $phone_number)
     {
-
+        return 'ok';
         $dev_phone_number = env("DEV_PHONE_NUMBER");
 
         $access_token = Param::whereCle("access_token")

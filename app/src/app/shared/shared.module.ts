@@ -29,15 +29,24 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ShowComponent } from '../pages/client/commandes/show/show.component';
 import { SecuriteComponent } from '../pages/client/securite/securite.component';
+import { PayementSuccessComponent } from './component/payement-success/payement-success.component';
+import { PayementErrorComponent } from './component/payement-error/payement-error.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { PayementPaddingComponent } from './component/payement-padding/payement-padding.component';
+
 @NgModule({
   declarations: [
     ShowComponent,
     SecuriteComponent,
+    PayementSuccessComponent,
+    PayementErrorComponent,
+    PayementPaddingComponent,
   ],
   imports: [
     CommonModule,
     NzLayoutModule,
     NzListModule,
+    NzResultModule,
     NzIconModule,
     MatIconModule,
     NzDropDownModule,
@@ -119,6 +128,7 @@ import { SecuriteComponent } from '../pages/client/securite/securite.component';
     NzAlertModule,
     NzSelectModule,
     NzTagModule,
+    NzResultModule,
     NzPageHeaderModule,
     NzModalModule,
     NzDrawerModule,

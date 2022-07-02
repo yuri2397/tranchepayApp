@@ -20,7 +20,7 @@ use Paydunya\Checkout\CheckoutInvoice;
 
 trait Utils
 {
-    use Paydunya, OMPayement, WavePayement;
+    use Paydunya, OMPayement, WavePayement, Notification;
 
     protected $commercant_session_key = 'commercant';
     protected $client_session_ket = 'client';
@@ -75,8 +75,6 @@ trait Utils
         $versement->reference = $commande->reference;
         $versement->montant = $request->first_part;
         $versement->commande_id = $commande->id;
-        // facture pour une autre version;
-        //echo $invoice->getReceiptUrl(); facture PDF
         $versement->save();
 
         $compte = Compte::find(Boutique::find($commande->boutique_id)->compte->id);
@@ -103,8 +101,6 @@ trait Utils
     public function paiementEnLigne(Request $request, Commande $commande, Client $client)
     {
 
-        $callBackUrl = URL::to("/") . "/api/fp-ipn";
-
         switch ($request->via) {
             case 'om':
                 $om = $this->requestOMPayement($request->first_part, $commande, $client);
@@ -112,8 +108,16 @@ trait Utils
                 break;
 
             case 'wave':
-                $wave = $this->createCheckoutSession($request->first_part, $client, $commande);
-                
+                $response = $this->createCheckoutSession($request->first_part, $client, $commande);
+                if (array_key_exists('id', json_decode($response, true))) {
+                    $sms = "Votre commande de chez " . $commande->boutique->name . " est en attente. Merci de payer les ". $request->first_part ."FCFA via wave." . $response['wave_launch_url'] . "\nTranche Pay";
+                    $this->sendSMS($sms, '+221' . $client->telephone);
+                    return [
+                        "error" => false,
+                        "code" => 201,
+                        "message" => "La commande est attends de paiement merci d'attendre la validation du client."
+                    ];
+                }
                 break;
         }
 
@@ -268,14 +272,12 @@ trait Utils
     {
         $result = [];
         $user = $this->currentUser();
-        $etat_commande = EtatCommande::whereNom("append")->first();
 
         $currentCommercant = Commercant::find($user->model);
 
         $result["tous"] = $currentCommercant
             ->boutique
             ->commandes()
-            ->where("etat_commande_id", "!=", $etat_commande->id)
             ->with(['produits', 'versements', 'client', 'etatCommande'])
             ->limit(100)
             ->orderBy('created_at', 'desc')

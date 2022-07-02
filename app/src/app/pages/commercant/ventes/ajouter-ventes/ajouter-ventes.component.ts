@@ -1,3 +1,4 @@
+import { PayementPaddingComponent } from './../../../../shared/component/payement-padding/payement-padding.component';
 import { ModePaiement } from './../../../../models/mode-paiement';
 import { SharedService } from './../../../../services/shared.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -10,7 +11,7 @@ import { Produit } from './../../../../models/produit';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client';
-import { MatIconRegistry } from "@angular/material/icon";
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-ajouter-ventes',
@@ -34,12 +35,43 @@ export class AjouterVentesComponent implements OnInit {
   isVisible = false;
   isInvisible = false;
   makeVisible = false;
-  mystyle = { width: "200px", padding: "25px" };
-  modePaiement = [{ type_paiement: "Paiement en ligne", image_src: "/assets/img/paycash.png" }, { type_paiement: "Paiement en caisse", image_src: "/assets/img/paymobile.png" }];
-  choixModePaiement = [{ name: "Wave", choice_label: "Payer avec Wave", image_src: "/assets/img/nav-logo.png", padding: "p-3", margin_top: "0px" },
-  { name: "Orange Money", choice_label: "Payer avec Orange Money", image_src: "/assets/img/orangemoney.png", padding: "5px", margin_top: "0px" },
-  { name: "Free Money", choice_label: "Payer avec Free Money", image_src: "/assets/img/freemoney.png", padding: "5px", margin_top: "-6px" }
-  ]
+  firstPart!: number;
+  mystyle = { width: '200px', padding: '0px' };
+  modePaiement = [
+    {
+      type_paiement: 'Paiement en caisse',
+      name: 'offline',
+      image_src: '/assets/img/paycash.png',
+    },
+    {
+      type_paiement: 'Paiement en ligne',
+      name: 'online',
+      image_src: '/assets/img/paymobile.png',
+    },
+  ];
+  mobilePayements = [
+    {
+      name: 'wave',
+      choice_label: 'Payer avec Wave',
+      image_src: '/assets/img/nav-logo.png',
+      padding: 'p-3',
+      margin_top: '0px',
+    },
+    {
+      name: 'om',
+      choice_label: 'Payer avec Orange Money',
+      image_src: '/assets/img/orangemoney.png',
+      padding: '5px',
+      margin_top: '0px',
+    },
+    {
+      name: 'free',
+      choice_label: 'Payer avec Free Money',
+      image_src: '/assets/img/freemoney.png',
+      padding: '5px',
+      margin_top: '-6px',
+    },
+  ];
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -51,17 +83,23 @@ export class AjouterVentesComponent implements OnInit {
     private sharedService: SharedService
   ) {
     this.matIconRegistry.addSvgIcon(
-      "paycash",
-      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/paycash.svg")
+      'paycash',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/img/paycash.svg'
+      )
     );
     this.matIconRegistry.addSvgIcon(
-      "payonline",
-      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/payonline.svg")
+      'payonline',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/img/payonline.svg'
+      )
     );
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("something has changed", !this.validateForm.get('telephone')?.value);
-
+    console.log(
+      'something has changed',
+      !this.validateForm.get('telephone')?.value
+    );
   }
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -75,21 +113,18 @@ export class AjouterVentesComponent implements OnInit {
         null,
         [Validators.required, Validators.minLength(9), Validators.minLength(9)],
       ],
-      type: ['0', [Validators.required]],
       mode_paiement: [null, [Validators.required]],
-      first_part: [
-        null,
-        [Validators.required, Validators.min(this.firstPart())],
-      ],
     });
+
+    
   }
 
-  firstPart(): number {
+  aPayer(): number {
     let amount = 0;
     this.produits.forEach((p) => {
       amount += p.prix_unitaire * p.quantite;
     });
-    return amount;
+    return amount - amount * (2 / 3);
   }
 
   addToList() {
@@ -99,16 +134,22 @@ export class AjouterVentesComponent implements OnInit {
     p.quantite = this.validateForm.value.quantite_produit;
     p.prix_unitaire = this.validateForm.value.prix_unitaire_produit;
     this.produits = [...this.produits, p];
-    this.produits.forEach(element => {
+    this.produits.forEach((element) => {
       this.montantActuelTotal += element.prix_unitaire * element.quantite;
     });
-    this.handleCancel();
     this.validateForm.reset();
   }
 
   removeProduit(data: Produit) {
     this.produits.splice(this.produits.indexOf(data), 1);
+    
     this.produits = [...this.produits];
+  }
+
+  total(){
+    let amount = 0;
+    this.produits?.forEach(p => amount += p.prix_unitaire * p.quantite)
+    return amount;
   }
 
   addClient() {
@@ -127,6 +168,7 @@ export class AjouterVentesComponent implements OnInit {
 
   clientChange(client: any) {
     if (client == null) return;
+    this.selectedClient = client;
     this.modeLoad = true;
     this.sharedService.modePaiement(client).subscribe({
       next: (response) => {
@@ -155,21 +197,40 @@ export class AjouterVentesComponent implements OnInit {
     }
   }
 
-  saveVente() {
+  saveVente(mode: 'online' | 'offline', type: 'om'|'wave'|'free'|'local' = 'local') {
     this.isLoad = true;
+    console.log(this.produits,
+      this.validateFormClient.value.telephone,
+      mode,
+      this.firstPart,
+      this.validateFormClient.value.type,
+      type);
+    
     this.commercantService
       .createCommande(
         this.produits,
         this.validateFormClient.value.telephone,
-        this.validateFormClient.value.mode_paiement,
-        this.validateFormClient.value.first_part,
-        this.validateFormClient.value.type
+        mode,
+        this.firstPart,
+        this.validateFormClient.value.type,
+        type
       )
       .subscribe({
         next: (response) => {
-          this.notification.create('success', 'Message', response.message);
-          this.produits = [...[]];
+          this.modalService.create({
+            nzTitle: undefined,
+            nzFooter: null,
+            nzContent: PayementPaddingComponent,
+            nzCentered: true,
+            nzMaskClosable: false,
+            nzClosable: false,
+            nzComponentParams: {
+              text: response.message
+            }
+          })
+          this.produits = [];
           this.validateFormClient.reset();
+          this.validateForm.reset();
           this.isLoad = false;
         },
         error: (errors) => {
@@ -186,39 +247,37 @@ export class AjouterVentesComponent implements OnInit {
     this.isInvisible = !this.isInvisible;
   }
 
-  makeModalVisible() {
+  toggleMobilePayementModal() {
     this.makeVisible = !this.makeVisible;
-    this.isInvisible = !this.isInvisible;
-    // console.log(" Utilisateur:", this.commercantService.getUser(), "numero: ", this.validateFormClient.get('telephone')?.value);
   }
 
-  handleCancel() {
-    if (this.isVisible == true) {
-      this.isVisible = false;
-      this.validateForm.reset();
-    }
-    if (this.isInvisible == true) {
-      this.isInvisible = false;
-      this.validateFormClient.reset();
-    }
-    if (this.makeVisible == true) {
-      this.makeVisible = false;
-      this.montantTotal = 0;
-      this.validateFormClient.reset();
-    }
+  closePayementModal() {
+    this.makeVisible = false;
   }
-  logData(montant: any, type: any) {
-    this.produits.forEach(element => {
-      this.montantActuelTotal += element.prix_unitaire * element.quantite;
+  onMobilePayementSelected(type: any) {
+   
+    this.closePayementModal();
+    this.modalService.confirm({
+      nzTitle: '<h3 class="text-danger">Attention!!!</h3>',
+      nzContent: '<i>Vous etes sûr de vouloir continuer?</i>',
+      nzCentered: true,
+      nzOnOk: () => this.saveVente(this.validateFormClient.value.mode_paiement, type)
     });
-    console.log("------------------\nvaleur entré: ", montant,
-      "choix du paiement: ", type,
-      "montant total: ", this.montantActuelTotal,
-      "type du paiment: ", this.typePay, "\n------------------");
-    this.makeVisible = !this.makeVisible;
   }
-  showing() {
 
+  showing() {
     console.log(this.montantActuelTotal);
+  }
+
+  onPayementTypeSelected(name: string) {
+    this.validateFormClient.value.type = name;
+    console.log(this.validateFormClient.value);
+
+    if (this.selectedClient) {
+      if (name == 'offline') {
+      } else if (name == 'online') {
+        this.toggleMobilePayementModal();
+      }
+    }
   }
 }

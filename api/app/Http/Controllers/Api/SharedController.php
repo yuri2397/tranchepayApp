@@ -14,7 +14,7 @@ class SharedController extends Controller
     public function modePaiement($id)
     {
         $client = Client::find($id);
-        if($client->deplafonner == true){
+        if($client && $client->deplafonner == true){
             return ModePayement::where('nb_mois', "<=", 4)->get();
         }
         return ModePayement::all();

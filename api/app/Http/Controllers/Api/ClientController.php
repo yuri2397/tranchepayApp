@@ -245,7 +245,6 @@ class ClientController extends Controller
     }
 
 
-
     public function deplafonner(Request $request)
     {
         $request->validate([
@@ -262,6 +261,4 @@ class ClientController extends Controller
     {
         return "ok";
     }
-
-
 }

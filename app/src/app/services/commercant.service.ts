@@ -30,9 +30,10 @@ export class CommercantService extends Base {
   createCommande(
     produits: Produit[],
     client_id: number,
-    mode_paiement: number,
-    p_tranche: number,
-    type: string
+    mode_paiement: string,
+    first_part: number,
+    type: string,
+    via: string
   ) {
     return this.http.post<any>(
       this.endPoint + 'new-commande',
@@ -40,8 +41,9 @@ export class CommercantService extends Base {
         produits: produits,
         client_id: client_id,
         mode_paiement: mode_paiement,
-        first_part: p_tranche,
+        first_part: first_part,
         type: type,
+        via: via
       },
       {
         headers: this.authorizationHeaders,

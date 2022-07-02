@@ -2459,3 +2459,16 @@ btn-dark-green {
 .ant-menu-sub.ant-menu-inline {
     background-color: #85ffc2;
 }
+
+.pointer{
+    cursor: pointer;
+}
+
+.white-btn {
+    color: #010246;
+    background-color: #fff;
+    font-family: "Poppins";
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 5px;
+}

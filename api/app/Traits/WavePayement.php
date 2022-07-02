@@ -7,15 +7,16 @@ use Illuminate\Support\Facades\Http;
 
 trait WavePayement
 {
-    protected $errorUrl = "https://tranchepay.com/payement-error?via=wave";
-    protected $successUrl = "https://tranchepay.com/payement-sucess?type=c";
+    protected $errorUrl = "";
+    protected $successUrl = "https://tranchepay.com/payement_success?";
+
     public function createCheckoutSession($amount, $client, $commande)
     {
         $data = array(
             'amount' => $amount,
             'currency' => 'XOF',
-            'error_url' => $this->errorUrl,
-            'success_url' => $this->successUrl,
+            'error_url' => "https://tranchepay.com/payement-error?via=wave&ci=".$client->id."&cdi=".$commande->id,
+            'success_url' => "https://tranchepay.com/payement_success?via=wave&ci=".$client->id."&cdi=".$commande->id,
             'client_reference' => $commande->reference
         );
 
@@ -29,7 +30,6 @@ trait WavePayement
         $padding->type = "wave-payement";
         $padding->user_id = $client->id;
         $padding->commande_id = $commande->id;
-        $padding->boutique_id = $commande->boutique->id;
         $padding->save();
 
         return $response;
