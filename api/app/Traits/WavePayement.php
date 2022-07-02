@@ -10,7 +10,7 @@ trait WavePayement
     protected $errorUrl = "";
     protected $successUrl = "https://tranchepay.com/payement_success?";
 
-    public function createCheckoutSession($amount, $client, $commande)
+    public function createCheckoutSession($amount, $client, $commande, $type)
     {
         $data = array(
             'amount' => $amount,
@@ -27,9 +27,10 @@ trait WavePayement
 
         $padding = new Padding();
         $padding->reference = $response['id'];
-        $padding->type = "wave-payement";
+        $padding->type = $type;
         $padding->user_id = $client->id;
-        $padding->commande_id = $commande->id;
+        $padding->via = "Wave";
+        $padding->amount = $amount;
         $padding->save();
 
         return $response;

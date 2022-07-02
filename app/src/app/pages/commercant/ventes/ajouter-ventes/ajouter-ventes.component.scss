@@ -1,23 +1,5 @@
-.card-pay {
-    &{
-        min-height: 20%;
-    }
-    &:hover {
-        transform: scale(1.05);
-        transition: all 0.2s linear;
-    }
-    &>img{
-        height: 150px;
-        object-fit: contain;
-        padding: 25px;
-    }
-}
 
-.total {
-    font-size: 30px;
-    font-weight: 900;
-    color: #000b26;
-}
+
 
 :host ::ng-deep input{
     font-size: 20px;

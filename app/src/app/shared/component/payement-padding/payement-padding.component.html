@@ -1,6 +1,12 @@
-<nz-result nzStatus="warning" nzTitle="{{ text }}">
+<nz-result nzStatus="info" nzTitle="{{ text }}" [nzSubTitle]="s_t">
+  <ng-template #s_t>
+    <div *ngIf="url"  class="text-center">
+
+    <a class="url" target="_blank" href="{{ url }}">Continuer votre paiement en cliquant 👈</a>
+    </div>
+  </ng-template>
+
   <div nz-result-extra>
-    <i nz-icon style="font-size: 50px" nzType="loading" nzTheme="outline"></i> <br><br>
     <button nz-button class="btn shadow-sm submit-btn align-items-center" (click)="close()">
       Fermer le message</button>
   </div>

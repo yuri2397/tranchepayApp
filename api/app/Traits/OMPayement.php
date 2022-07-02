@@ -44,7 +44,7 @@ trait OMPayement
         return $jsonResponse['access_token'];
     }
 
-    public function requestOMPayement(int $amount, Commande $commande, Client $client)
+    public function requestOMPayement(int $amount, Commande $commande, Client $client, $type)
     {
         $data = [
             'method' => 'CLASSIC',
@@ -79,8 +79,10 @@ trait OMPayement
 
         $padding = new Padding();
         $padding->reference = $response['transactionId'];
-        $padding->type = "om-payement";
+        $padding->type = $type;
         $padding->user_id = $client->id;
+        $padding->via = "Orange Money";
+        $padding->amount = $amount;
         $padding->save();
 
         return $response;

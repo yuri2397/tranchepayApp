@@ -103,12 +103,12 @@ trait Utils
 
         switch ($request->via) {
             case 'om':
-                $om = $this->requestOMPayement($request->first_part, $commande, $client);
+                $om = $this->requestOMPayement($request->first_part, $commande, $client, "fp");
 
                 break;
 
             case 'wave':
-                $response = $this->createCheckoutSession($request->first_part, $client, $commande);
+                $response = $this->createCheckoutSession($request->first_part, $client, $commande, "fp");
                 if (array_key_exists('id', json_decode($response, true))) {
                     $sms = "Votre commande de chez " . $commande->boutique->name . " est en attente. Merci de payer les ". $request->first_part ."FCFA via wave." . $response['wave_launch_url'] . "\nTranche Pay";
                     $this->sendSMS($sms, '+221' . $client->telephone);
