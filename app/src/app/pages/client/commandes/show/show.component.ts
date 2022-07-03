@@ -107,8 +107,9 @@ export class ShowComponent implements OnInit {
         }
       });
   }
+  
   successModal(message: string) {
-    let m = this.modal.create({
+    this.modal.create({
       nzTitle: undefined,
       nzFooter: null,
       nzContent: PayementPaddingComponent,
