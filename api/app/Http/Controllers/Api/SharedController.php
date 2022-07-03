@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Partenaire;
 use App\Models\ModePayement;
 use App\Http\Controllers\Controller;
+use App\Models\Padding;
 
 class SharedController extends Controller
 {
@@ -23,5 +24,10 @@ class SharedController extends Controller
     public function partenaires()
     {
         return Partenaire::all();
+    }
+
+    public function checkPadding($reference)
+    {
+        return Padding::find($reference);
     }
 }

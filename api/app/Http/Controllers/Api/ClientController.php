@@ -166,7 +166,7 @@ class ClientController extends Controller
                     if ($response && $response['id']) {
                         return response()->json([
                             "message" => "Votre verssement est en attente de confirmation.",
-                            "data" => json_decode($response)
+                            "data" => json_decode($response['response'])
                         ]);
                     }
                     return response()->json([

@@ -1,6 +1,9 @@
 <nz-modal nzTitle="Choisir votre moyen de paiement" nzCentered nzWidth="40%" [(nzVisible)]="makeVisible" [nzFooter]="null" [nzTitle]="'Choissir un moyen de paiement'"
   (nzOnCancel)="closePayementModal()">
   <div *nzModalContent>
+    <div *ngIf="amountError" class="alert alert-danger">
+      {{ amountErrorMessage }}
+    </div>
     <div class="row ">
       <div class="col-12">
         <nz-form-item>
@@ -8,7 +11,7 @@
           <nz-form-control [nzValidateStatus]="
               montantTotal > montantActuelTotal ? 'error' : 'success'
             " [nzSpan]="24" nzErrorTip="Cette valeur est supérieur au montant total actuel">
-            <input nzSize="large" type="number" nz-input (keydown)="showing()" class=" total form-control"
+            <input nzSize="large" type="number" nz-input  class=" total form-control"
               [(ngModel)]="firstPart" name="first_part" placeholder="Prémier versement" />
           </nz-form-control>
         </nz-form-item>
@@ -25,6 +28,44 @@
   </div>
 </nz-modal>
 
+<nz-modal nzTitle="Choisir votre moyen de paiement" nzCentered nzWidth="40%" [(nzVisible)]="localPayementVisible"  [nzTitle]="'Choissir un moyen de paiement'"
+  (nzOnCancel)="localPayementVisible">
+
+<div *nzModalContent>
+  <div *ngIf="amountError" class="alert alert-danger">
+    {{ amountErrorMessage }}
+  </div>
+  <div class="row ">
+    <div class="col-12">
+      <nz-form-item>
+        <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement</nz-form-label>
+        <nz-form-control [nzValidateStatus]="
+            montantTotal > montantActuelTotal ? 'error' : 'success'
+          " [nzSpan]="24" nzErrorTip="Cette valeur est supérieur au montant total actuel">
+          <input nzSize="large" type="number" nz-input  class=" total form-control"
+            [(ngModel)]="firstPart" name="first_part" placeholder="Prémier versement" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</div>
+<div *nzModalFooter>
+  <div class="d-flex justify-content-between">
+    <div>
+      <button class="shadow" nz-button class="btn white-btn" (click)="localPayementVisible = false"
+      >
+      Annuler
+    </button>
+    </div>
+    <div>
+      <button class="shadow" nz-button class="btn submit-btn" (click)="localPayementVisible = false; onMobilePayementSelected('offline')"
+      [disabled]="!amountIsValide()">
+      Valider la vente
+    </button>
+    </div>
+  </div>
+</div>
+</nz-modal>
 
 <div class="container-fluid">
   <div class="row">
@@ -122,21 +163,21 @@
           </ng-template>
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h4 class="text-dark-green m-0 p-0">Total</h4>
+              <h6 class="text-dark-green m-0 p-0">Total</h6>
             </div>
             <div>
               <span class="total text-dark-green">
-                {{ total() | currency:'FCFA':'symbol':'4.0':'fr' }}
+                {{ total() | currency:'FCFA':'symbol':'1.0':'fr' }}
               </span>
             </div>
           </div>
           <div class="d-flex py-1 justify-content-between align-items-center">
             <div>
-              <h4 class="text-dark-green m-0 p-0">Premier versement</h4>
+              <h6 class="text-dark-green m-0 p-0">Premier versement</h6>
             </div>
             <div>
               <span class="total text-dark-green">
-                {{ aPayer() | currency:'FCFA':'symbol':'4.0':'fr' }}
+                {{ aPayer() | currency:'FCFA':'symbol':'1.0':'fr' }}
               </span>
             </div>
           </div>

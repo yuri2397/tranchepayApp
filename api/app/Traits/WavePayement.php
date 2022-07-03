@@ -33,7 +33,10 @@ trait WavePayement
         $padding->amount = $amount;
         $padding->save();
 
-        return $response;
+        return [
+            "padding" => $padding->id,
+            "response" => $response
+        ];
     }
 
     public function getSession(WaveSession $session)

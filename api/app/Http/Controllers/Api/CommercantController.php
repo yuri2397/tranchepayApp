@@ -117,20 +117,23 @@ class CommercantController extends Controller
              * Proceder au paiement du premier tranche
              */
             if ($request->type == 'online') {
+
                 $response = $this->paiementEnLigne($request, $commande, $client);
                 if ($response['error']) {
                     $this->sendSMS($response['sms'], '+221' . $client->telephone);
                 }
                 DB::commit();
                 return response()->json([
-                    "message" => $response['message']
+                    "message" => $response['message'],
+                    "padding" => $response['padding']
                 ], $response['code']);
             } else if ($request->type === 'offline') {
                 $response = $this->paiementEnCaise($request, $commande, $client);
                 $this->sendSMS($response['sms'], '+221' . $client->telephone);
                 DB::commit();
                 return response()->json([
-                    "message" => $response['message']
+                    "message" => $response['message'],
+                    "data" => $response['data']
                 ], $response['code']);
             } else {
                 DB::rollBack();

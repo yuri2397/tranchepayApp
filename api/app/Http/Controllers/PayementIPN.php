@@ -39,11 +39,17 @@ class PayementIPN extends Controller
 
             switch ($webhook_event) {
                 case 'checkout.session.completed':
-                    $padding = Padding::whereReference($body['id'])->whereType("wave-payement")->first();
-                    $padding->extra = json_encode($body);
-                    $padding->save();
+                    $padding = Padding::whereReference($body['id'])->whereStatus(false)->first();
+
                     if ($padding) {
+
+                        $padding->extra = json_encode($body);
+                        $padding->status = true;
+                        $padding->save();
+
                         $commande = Commande::find($padding->commande_id);
+                        $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
+                        $commande->save();
 
                         $versement = new Versement();
                         $versement->date_time = now();
@@ -54,30 +60,18 @@ class PayementIPN extends Controller
                         $versement->save();
 
                         $res = $this->restant($commande);
-                        
-
                         if ($padding->type == "fp") {
                             $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
                             $compte->solde += $commande->prix_total;
                             $compte->save();
-                            
-                            $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
-                            $commande->save();
                         }
                         if ($res == 0) {
                             $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                             $commande->save();
                         }
-
+                        $padding->save();
                         return response()->json([], 200);
                     }
-                    break;
-                case 'checkout.session.expired':
-
-                    break;
-
-                case 'checkout.session.payment_failed':
-
                     break;
             }
             return response()->json(["message" => "Request success"], 200);

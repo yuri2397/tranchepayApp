@@ -22,6 +22,7 @@ export class AjouterVentesComponent implements OnInit {
   typePay!: string;
   validateForm!: FormGroup;
   montantTotal = 0;
+  localPayementVisible = false;
   montantActuelTotal = 0;
   validateFormClient!: FormGroup;
   isLoad: boolean = false;
@@ -72,6 +73,8 @@ export class AjouterVentesComponent implements OnInit {
       margin_top: '-6px',
     },
   ];
+  amountError: boolean = false;
+  amountErrorMessage!: string;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -115,8 +118,6 @@ export class AjouterVentesComponent implements OnInit {
       ],
       mode_paiement: [null, [Validators.required]],
     });
-
-    
   }
 
   aPayer(): number {
@@ -142,13 +143,13 @@ export class AjouterVentesComponent implements OnInit {
 
   removeProduit(data: Produit) {
     this.produits.splice(this.produits.indexOf(data), 1);
-    
+
     this.produits = [...this.produits];
   }
 
-  total(){
+  total() {
     let amount = 0;
-    this.produits?.forEach(p => amount += p.prix_unitaire * p.quantite)
+    this.produits?.forEach((p) => (amount += p.prix_unitaire * p.quantite));
     return amount;
   }
 
@@ -169,6 +170,7 @@ export class AjouterVentesComponent implements OnInit {
   clientChange(client: any) {
     if (client == null) return;
     this.selectedClient = client;
+
     this.modeLoad = true;
     this.sharedService.modePaiement(client).subscribe({
       next: (response) => {
@@ -197,15 +199,20 @@ export class AjouterVentesComponent implements OnInit {
     }
   }
 
-  saveVente(mode: 'online' | 'offline', type: 'om'|'wave'|'free'|'local' = 'local') {
+  saveVente(
+    mode: 'online' | 'offline',
+    type: 'om' | 'wave' | 'free' | 'local' = 'local'
+  ) {
     this.isLoad = true;
-    console.log(this.produits,
+    console.log(
+      this.produits,
       this.validateFormClient.value.telephone,
       mode,
       this.firstPart,
       this.validateFormClient.value.type,
-      type);
-    
+      type
+    );
+
     this.commercantService
       .createCommande(
         this.produits,
@@ -217,17 +224,47 @@ export class AjouterVentesComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          this.modalService.create({
-            nzTitle: undefined,
-            nzFooter: null,
-            nzContent: PayementPaddingComponent,
-            nzCentered: true,
-            nzMaskClosable: false,
-            nzClosable: false,
-            nzComponentParams: {
-              text: response.message
+          console.log(response);
+
+          if (mode == 'online') {
+            let m = this.modalService.create({
+              nzTitle: undefined,
+              nzFooter: null,
+              nzContent: PayementPaddingComponent,
+              nzCentered: true,
+              nzMaskClosable: false,
+              nzClosable: false,
+              nzComponentParams: {
+                text: response.message,
+              },
+            });
+            let call = true;
+            while (call) {
+              setTimeout(() => {
+                this.sharedService.checkPadding(response.padding).subscribe({
+                  next: (check) => {
+                    if (check.status) {
+                      call = false;
+                      m.destroy();
+                      this.notification.success(
+                        'Notification',
+                        'Le paiment est validé avec succès.',
+                        {
+                          nzDuration: 5000,
+                        }
+                      );
+                    }
+                  },
+                });
+              }, 500);
             }
-          })
+          } else {
+            this.notification.success(
+              'Notification',
+              'Commande est validé avec succès'
+            );
+          }
+
           this.produits = [];
           this.validateFormClient.reset();
           this.validateForm.reset();
@@ -240,6 +277,7 @@ export class AjouterVentesComponent implements OnInit {
         },
       });
   }
+
   showModal() {
     this.isVisible = !this.isVisible;
   }
@@ -255,26 +293,34 @@ export class AjouterVentesComponent implements OnInit {
     this.makeVisible = false;
   }
   onMobilePayementSelected(type: any) {
-   
+    if (this.firstPart < this.aPayer()) {
+      this.amountError = true;
+      this.amountErrorMessage =
+        'Montant minimum est de ' + this.aPayer() + ' FCFA';
+      return;
+    }
     this.closePayementModal();
     this.modalService.confirm({
       nzTitle: '<h3 class="text-danger">Attention!!!</h3>',
       nzContent: '<i>Vous etes sûr de vouloir continuer?</i>',
       nzCentered: true,
-      nzOnOk: () => this.saveVente(this.validateFormClient.value.mode_paiement, type)
+      nzOnOk: () =>
+        this.saveVente(this.validateFormClient.value.mode_paiement, type),
     });
   }
 
-  showing() {
-    console.log(this.montantActuelTotal);
+  amountIsValide() {
+    if (this.firstPart < this.aPayer()) return false;
+
+    return true;
   }
 
   onPayementTypeSelected(name: string) {
     this.validateFormClient.value.type = name;
-    console.log(this.validateFormClient.value);
 
     if (this.selectedClient) {
       if (name == 'offline') {
+        this.localPayementVisible = true;
       } else if (name == 'online') {
         this.toggleMobilePayementModal();
       }
