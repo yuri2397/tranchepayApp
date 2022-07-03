@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Commande;
+use App\Models\Log;
 use App\Traits\OMPayement;
 use App\Traits\WavePayement;
 use Illuminate\Http\Request;
@@ -11,15 +12,24 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     use OMPayement, WavePayement;
-    public function index()
+    public function index(Request $request)
     {
-        $client = new Client();
-        $client->telephone = '781879981';
-        $client->id = 1;
-        $commande  = new Commande();
-        $commande->id = "1";
-        $commande->reference = time();
-        return  $this->createCheckoutSession(100, $client, $commande, "test");
+        $log = new Log();
+        $log->log = json_encode($request->all());
+        $log->save();
+
+        return $log;
+
+    }
+
+
+    public function allLogs()
+    {
+        $logs = Log::all();
+
+        return array_map(function($a){
+            return json_decode($a['log']);
+        }, $logs->toArray());
     }
 
     /**

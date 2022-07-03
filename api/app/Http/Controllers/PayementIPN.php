@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Commande;
 use App\Models\Compte;
 use App\Models\EtatCommande;
+use App\Models\Log;
 use App\Models\Padding;
 use App\Models\Versement;
 use App\Traits\Utils;
@@ -17,9 +18,12 @@ class PayementIPN extends Controller
 
     public function wave(Request $request)
     {
+        $log = new Log();
+        $log->log = $request->all();
+        $log->save();
         $wave_webhook_secret = env("WAVE_WEB_HOOK");
 
-        $wave_signature = $_SERVER['HTTP_WAVE_SIGNATURE'];
+        $wave_signature = $request->header('WAVE_SIGNATURE');
 
         $parts = explode(",", $wave_signature);
         $timestamp = explode("=", $parts[0])[1];
