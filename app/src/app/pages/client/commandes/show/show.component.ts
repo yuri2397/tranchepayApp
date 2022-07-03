@@ -69,7 +69,7 @@ export class ShowComponent implements OnInit {
             nzContent: PayementPaddingComponent,
             nzCentered: true,
             nzMaskClosable: false,
-            nzClosable: true,
+            nzClosable: false,
             nzComponentParams: {
               text: data.message,
               url: data.data.wave_launch_url,
@@ -85,13 +85,20 @@ export class ShowComponent implements OnInit {
                     next: (check) => {
                       console.log(check);
                       resolve(!check.status)
+                      if(check.status){
+                        type = "success";
+                        data.message = "Le client a confirmer la vente. ✅"
+                        setTimeout(() => {
+                          m.destroy()
+                        }, 1000);
+                      }
                     },
                     error: error => {
                       console.log(error);
                       resolve(false)
                     }
                   });
-                }, 500);
+                }, 1000);
               })
             ) {
               console.log('Wait for check');
