@@ -1,8 +1,6 @@
 <ng-container *ngIf="haveData; else haveData">
   <div class="card card-body shadow raduis-sm">
-    <h3 class="my-3 text-dark-green bold">
-      Mes paiements en attentes de confirmation
-    </h3>
+    <h3 class="my-3 text-dark-green bold">LISTE DE MES PAYEMENTS</h3>
     <nz-tabset [nzSize]="'large'">
       <nz-tab [nzTitle]="all_payments_title">
         <nz-table #nzTable [nzData]="data" [nzPageSize]="10">

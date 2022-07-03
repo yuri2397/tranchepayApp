@@ -36,14 +36,6 @@ export class AjouterVentesComponent implements OnInit {
   isVisible = false;
   isInvisible = false;
   makeVisible = false;
-<<<<<<< HEAD
-  mystyle = { width: "200px", padding: "25px" };
-  modePaiement = [{ type_paiement: "Paiement en ligne", image_src: "/assets/img/paycash.png" }, { type_paiement: "Paiement en caisse", image_src: "/assets/img/paymobile.png" }];
-  choixModePaiement = [{ name: "wave", choice_label: "Payer avec Wave", image_src: "/assets/img/nav-logo.png", padding: "p-3", margin_top: "0px" },
-  { name: "om", choice_label: "Payer avec Orange Money", image_src: "/assets/img/orangemoney.png", padding: "5px", margin_top: "0px" },
-  { name: "free", choice_label: "Payer avec Free Money", image_src: "/assets/img/freemoney.png", padding: "5px", margin_top: "-6px" }
-  ]
-=======
   firstPart!: number;
   mystyle = { width: '200px', padding: '0px' };
   modePaiement = [
@@ -83,7 +75,6 @@ export class AjouterVentesComponent implements OnInit {
   ];
   amountError: boolean = false;
   amountErrorMessage!: string;
->>>>>>> 4880ba96f3480b636596c8cd52229b0a3f720f22
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -177,19 +168,6 @@ export class AjouterVentesComponent implements OnInit {
   }
 
   clientChange(client: any) {
-<<<<<<< HEAD
-    // if (client == null) return;
-    // this.modeLoad = true;
-    // this.sharedService.modePaiement(client).subscribe({
-    //   next: (response) => {
-    //     this.modePaiements = response;
-    //     this.modeLoad = false;
-    //   },
-    //   error: (errors) => {
-    //     console.log(errors);
-    //   },
-    // });
-=======
     if (client == null) return;
     this.selectedClient = client;
 
@@ -203,7 +181,6 @@ export class AjouterVentesComponent implements OnInit {
         console.log(errors);
       },
     });
->>>>>>> 4880ba96f3480b636596c8cd52229b0a3f720f22
   }
 
   onClientSearch(data: string) {
@@ -332,9 +309,6 @@ export class AjouterVentesComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-}
-=======
   amountIsValide() {
     if (this.firstPart < this.aPayer()) return false;
 
@@ -353,4 +327,3 @@ export class AjouterVentesComponent implements OnInit {
     }
   }
 }
->>>>>>> 4880ba96f3480b636596c8cd52229b0a3f720f22
