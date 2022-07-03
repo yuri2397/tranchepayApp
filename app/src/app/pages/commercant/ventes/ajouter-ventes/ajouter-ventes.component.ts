@@ -249,7 +249,7 @@ export class AjouterVentesComponent implements OnInit {
                         console.log(check);
                         resolve(!check.status)
                         if(check.status){
-                          this.successModal("Votre transaction c'est bien terminée.")
+                          this.successModal("Le client a confirmer la vente. ✅")
                           setTimeout(() => {
                             m.destroy()
                           }, 1000);
@@ -294,10 +294,10 @@ export class AjouterVentesComponent implements OnInit {
       nzContent: PayementPaddingComponent,
       nzCentered: true,
       nzMaskClosable: false,
-      nzClosable: false,
       nzComponentParams: {
         text: message,
         type: "success",
+        load: false
       },
     });
   }

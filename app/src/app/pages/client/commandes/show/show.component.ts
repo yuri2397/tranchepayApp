@@ -88,7 +88,8 @@ export class ShowComponent implements OnInit {
                       if(check.status){
                         setTimeout(() => {
                           m.destroy()
-                          this.successModal("Le client a confirmer la vente. ✅")
+                          this.successModal("Le paiement est validé avec succès.")
+                          this.findCommande(this.commande.id as any)
                         }, 1000);
                       }
                     },
@@ -113,10 +114,11 @@ export class ShowComponent implements OnInit {
       nzContent: PayementPaddingComponent,
       nzCentered: true,
       nzMaskClosable: false,
-      nzClosable: false,
+      nzClosable: true,
       nzComponentParams: {
         text: message,
         type: "success",
+        load: false
       },
     });
   }

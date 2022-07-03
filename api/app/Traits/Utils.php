@@ -165,7 +165,7 @@ trait Utils
             return [
                 "error" => true,
                 "sms" => $message,
-                "message" => $commandes
+                "message" => "Le client ne peut pas faire une nouvelle commande."
             ];
         }
 
