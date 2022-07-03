@@ -375,17 +375,19 @@
                     (click)="onPayementTypeSelected(item.name)"
                     *ngFor="let item of modePaiement"
                   >
-                    <div class="card card-body raduis-sm cards">
-                      <img
-                        [src]="item.image_src"
-                        [alt]="item.type_paiement"
-                        [title]="item.type_paiement"
-                        class="type-pay"
-                      />
-                      <br />
-                      <h5 class="card-title cardt text-center">
-                        {{ item.type_paiement }}
-                      </h5>
+                    <div>
+                      <div class="card card-body raduis-sm">
+                        <img
+                          [src]="item.image_src"
+                          [alt]="item.type_paiement"
+                          [title]="item.type_paiement"
+                          class="card-img-top"
+                        />
+                        <br />
+                        <h5 class="card-title text-center">
+                          {{ item.type_paiement }}
+                        </h5>
+                      </div>
                     </div>
                   </div>
                 </div>
