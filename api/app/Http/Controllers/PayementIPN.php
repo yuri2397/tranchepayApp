@@ -20,6 +20,7 @@ class PayementIPN extends Controller
     {
         $log = new Log();
         $log->log = json_encode($request->all());
+        $log->text = $request->header('WAVE_SIGNATURE');
         $log->save();
         $wave_webhook_secret = env("WAVE_WEB_HOOK");
 
@@ -36,7 +37,7 @@ class PayementIPN extends Controller
         $computed_hmac = hash_hmac("sha256", $timestamp . json_encode($body), $wave_webhook_secret);
         $valid = in_array($computed_hmac, $signatures);
 
-        if ($valid) {
+        if ($valid) { 
 
             $webhook_event = $body['type'];
             $data = $body['data'];
