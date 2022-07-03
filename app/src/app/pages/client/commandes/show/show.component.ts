@@ -69,7 +69,7 @@ export class ShowComponent implements OnInit {
             nzContent: PayementPaddingComponent,
             nzCentered: true,
             nzMaskClosable: false,
-            nzClosable: false,
+            nzClosable: true,
             nzComponentParams: {
               text: data.message,
               url: data.data.wave_launch_url,

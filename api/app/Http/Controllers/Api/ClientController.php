@@ -163,7 +163,7 @@ class ClientController extends Controller
                     break;
                 case 'wave':
                     $response  = $this->createCheckoutSession($request->montant, $this->authClient(), $commande, "vm");
-                    if ($response && $response['id']) {
+                    if ($response && $response['response']['id']) {
                         return response()->json([
                             "message" => "Votre verssement est en attente de confirmation.",
                             "data" => json_decode($response['response'])

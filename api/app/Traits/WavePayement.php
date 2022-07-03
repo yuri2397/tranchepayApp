@@ -31,6 +31,7 @@ trait WavePayement
         $padding->user_id = $client->id;
         $padding->via = "Wave";
         $padding->amount = $amount;
+        $padding->commande_id = $commande->id;
         $padding->save();
 
         return [

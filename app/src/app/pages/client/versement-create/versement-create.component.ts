@@ -50,7 +50,7 @@ export class VersementCreateComponent implements OnInit {
         null,
         [
           Validators.required,
-          Validators.min(1000),
+          Validators.min(100),
           Validators.max(this.commandeService.montantRestant(this.commande)),
         ],
       ],

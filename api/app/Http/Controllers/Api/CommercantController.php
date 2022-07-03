@@ -74,7 +74,7 @@ class CommercantController extends Controller
         try {
             DB::beginTransaction();
 
-            $client = Client::find($request->client_id);
+            $client = Client::with("commandes")->find($request->client_id);
             $user = User::whereModel($client->id)->first();
             $commercant = $this->authCommercantWithBoutique();
             $mode = ModePayement::find($request->mode_paiement);
@@ -133,7 +133,6 @@ class CommercantController extends Controller
                 DB::commit();
                 return response()->json([
                     "message" => $response['message'],
-                    "data" => $response['data']
                 ], $response['code']);
             } else {
                 DB::rollBack();
