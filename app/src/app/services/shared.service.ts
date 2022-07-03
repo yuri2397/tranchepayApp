@@ -28,6 +28,8 @@ export class SharedService extends Base {
   }
 
   checkPadding(padding: any) {
-    return this.http.get<any>(this.endPoint + "check-padding/" + padding);
+    return this.http.get<any>(this.endPoint + "check-padding/" + padding, {
+      headers: this.authorizationHeaders,
+    });
   }
 }
