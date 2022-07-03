@@ -118,6 +118,7 @@ export class AjouterVentesComponent implements OnInit {
       ],
       mode_paiement: [null, [Validators.required]],
     });
+
   }
 
   aPayer(): number {
@@ -225,7 +226,7 @@ export class AjouterVentesComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-
+          let type:any = "info";
           if (mode == 'online') {
             let m = this.modalService.create({
               nzTitle: undefined,
@@ -236,28 +237,34 @@ export class AjouterVentesComponent implements OnInit {
               nzClosable: false,
               nzComponentParams: {
                 text: response.message,
+                type: type
               },
             });
-            let call = true;
-            while (call) {
-              setTimeout(() => {
-                this.sharedService.checkPadding(response.padding).subscribe({
-                  next: (check) => {
-                    if (check.status) {
-                      call = false;
-                      m.destroy();
-                      this.notification.success(
-                        'Notification',
-                        'Le paiment est validé avec succès.',
-                        {
-                          nzDuration: 5000,
+
+            (async () => {
+              while (
+                await new Promise<boolean>((resolve) => {
+                  setTimeout(() => {
+                    this.sharedService.checkPadding(response.padding).subscribe({
+                      next: (check) => {
+                        resolve(!check.status)
+                        if(check.status){
+                          this.successModal("Le client a confirmer la vente. ✅")
+                          m.destroy()
                         }
-                      );
-                    }
-                  },
-                });
-              }, 500);
-            }
+                      },
+                      error: error => {
+                        console.log(error);
+                        resolve(false)
+                      }
+                    });
+                  }, 500);
+                })
+              ) {
+                console.log('Wait for check');
+              }
+            })()
+
           } else {
             this.notification.success(
               'Notification',
@@ -276,6 +283,21 @@ export class AjouterVentesComponent implements OnInit {
           console.error(errors);
         },
       });
+  }
+
+  successModal(message: string) {
+   this.modalService.create({
+      nzTitle: undefined,
+      nzFooter: null,
+      nzContent: PayementPaddingComponent,
+      nzCentered: true,
+      nzMaskClosable: false,
+      nzComponentParams: {
+        text: message,
+        type: "success",
+        load: false
+      },
+    });
   }
 
   showModal() {

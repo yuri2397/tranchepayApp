@@ -165,7 +165,7 @@ trait Utils
             return [
                 "error" => true,
                 "sms" => $message,
-                "message" => $commandes
+                "message" => "Le client ne peut pas faire une nouvelle commande."
             ];
         }
 
@@ -197,7 +197,7 @@ trait Utils
     {
         $prix_total = 0;
         foreach ($produits as $value) {
-            $prix_total += $value["prix_unitaire"] * $value["quantite"];
+            $prix_total += ($value["prix_unitaire"] * $value["quantite"]);
         }
         return $prix_total;
     }

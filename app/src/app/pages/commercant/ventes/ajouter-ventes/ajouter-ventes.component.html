@@ -1,12 +1,5 @@
-<nz-modal
-  nzTitle="Choisir votre moyen de paiement"
-  nzCentered
-  nzWidth="40%"
-  [(nzVisible)]="makeVisible"
-  [nzFooter]="null"
-  [nzTitle]="'Choissir un moyen de paiement'"
-  (nzOnCancel)="closePayementModal()"
->
+<nz-modal nzTitle="Choisir votre moyen de paiement" nzCentered nzWidth="40%" [(nzVisible)]="makeVisible"
+  [nzFooter]="null" [nzTitle]="'Choissir un moyen de paiement'" (nzOnCancel)="closePayementModal()">
   <div *nzModalContent>
     <div *ngIf="amountError" class="alert alert-danger">
       {{ amountErrorMessage }}
@@ -14,56 +7,28 @@
     <div class="row">
       <div class="col-12">
         <nz-form-item>
-          <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired
-            >Prémier versement</nz-form-label
-          >
-          <nz-form-control
-            [nzValidateStatus]="
+          <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement</nz-form-label>
+          <nz-form-control [nzValidateStatus]="
               montantTotal > montantActuelTotal ? 'error' : 'success'
-            "
-            [nzSpan]="24"
-            nzErrorTip="Cette valeur est supérieur au montant total actuel"
-          >
-            <input
-              nzSize="large"
-              type="number"
-              nz-input
-              class="total form-control"
-              [(ngModel)]="firstPart"
-              name="first_part"
-              placeholder="Prémier versement"
-            />
+            " [nzSpan]="24" nzErrorTip="Cette valeur est supérieur au montant total actuel">
+            <input nzSize="large" type="number" nz-input class="total form-control" [(ngModel)]="firstPart"
+              name="first_part" placeholder="Prémier versement" />
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
     <div class="row">
-      <div
-        class="col-md-4"
-        *ngFor="let item of mobilePayements"
-        (click)="onMobilePayementSelected(item.name)"
-      >
+      <div class="col-md-4" *ngFor="let item of mobilePayements" (click)="onMobilePayementSelected(item.name)">
         <div class="card body shadow-sm raduis-sm pointer card-pay">
-          <img
-            [src]="item.image_src"
-            [alt]="item.choice_label"
-            [title]="item.choice_label"
-            class="card-img-top"
-          />
+          <img [src]="item.image_src" [alt]="item.choice_label" [title]="item.choice_label" class="card-img-top" />
         </div>
       </div>
     </div>
   </div>
 </nz-modal>
 
-<nz-modal
-  nzTitle="Choisir votre moyen de paiement"
-  nzCentered
-  nzWidth="40%"
-  [(nzVisible)]="localPayementVisible"
-  [nzTitle]="'Choissir un moyen de paiement'"
-  (nzOnCancel)="(localPayementVisible)"
->
+<nz-modal nzTitle="Choisir votre moyen de paiement" nzCentered nzWidth="40%" [(nzVisible)]="localPayementVisible"
+  [nzTitle]="'Choissir un moyen de paiement'" (nzOnCancel)="(localPayementVisible)">
   <div *nzModalContent>
     <div *ngIf="amountError" class="alert alert-danger">
       {{ amountErrorMessage }}
@@ -71,25 +36,12 @@
     <div class="row">
       <div class="col-12">
         <nz-form-item>
-          <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired
-            >Prémier versement</nz-form-label
-          >
-          <nz-form-control
-            [nzValidateStatus]="
+          <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement</nz-form-label>
+          <nz-form-control [nzValidateStatus]="
               montantTotal > montantActuelTotal ? 'error' : 'success'
-            "
-            [nzSpan]="24"
-            nzErrorTip="Cette valeur est supérieur au montant total actuel"
-          >
-            <input
-              nzSize="large"
-              type="number"
-              nz-input
-              class="total form-control"
-              [(ngModel)]="firstPart"
-              name="first_part"
-              placeholder="Prémier versement"
-            />
+            " [nzSpan]="24" nzErrorTip="Cette valeur est supérieur au montant total actuel">
+            <input nzSize="large" type="number" nz-input class="total form-control" [(ngModel)]="firstPart"
+              name="first_part" placeholder="Prémier versement" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -98,25 +50,14 @@
   <div *nzModalFooter>
     <div class="d-flex justify-content-between">
       <div>
-        <button
-          class="shadow"
-          nz-button
-          class="btn white-btn"
-          (click)="localPayementVisible = false"
-        >
+        <button class="shadow" nz-button class="btn white-btn" (click)="localPayementVisible = false">
           Annuler
         </button>
       </div>
       <div>
-        <button
-          class="shadow"
-          nz-button
-          class="btn submit-btn"
-          (click)="
+        <button class="shadow" nz-button class="btn submit-btn" (click)="
             localPayementVisible = false; onMobilePayementSelected('offline')
-          "
-          [disabled]="!amountIsValide()"
-        >
+          " [disabled]="!amountIsValide()">
           Valider la vente
         </button>
       </div>
@@ -128,82 +69,44 @@
   <div class="row">
     <div class="col-md-8">
       <div>
-        <form
-          [nzLayout]="'vertical'"
-          class="card card-body shadow p-3 border raduis-sm"
-          nz-form
-          [formGroup]="validateForm"
-        >
-          <nz-divider
-            nzDashed
-            [nzOrientation]="'left'"
-            [nzText]="i_t"
-          ></nz-divider>
+        <form [nzLayout]="'vertical'" class="card card-body shadow p-3 border raduis-sm" nz-form
+          [formGroup]="validateForm">
+          <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_t"></nz-divider>
           <ng-template #i_t>
             <span class="text-dark-green bold"> Ajouter un produit </span>
           </ng-template>
           <div class="row align-items-center">
             <div class="col-md-4">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="last_name"
-                  >Nom du produit</nz-form-label
-                >
+                <nz-form-label nzRequired nzFor="last_name">Nom du produit</nz-form-label>
                 <nz-form-control>
-                  <input
-                    nzSize="large"
-                    formControlName="nom_produit"
-                    nz-input
-                    name="nom_produit"
-                    type="text"
-                    id="nom_produit"
-                  />
+                  <input nzSize="large" formControlName="nom_produit" nz-input name="nom_produit" type="text"
+                    id="nom_produit" />
                 </nz-form-control>
               </nz-form-item>
             </div>
             <div class="col-md-3">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="quantite_produit"
-                  >Quantité</nz-form-label
-                >
+                <nz-form-label nzRequired nzFor="quantite_produit">Quantité</nz-form-label>
                 <nz-form-control>
-                  <input
-                    nzSize="large"
-                    formControlName="quantite_produit"
-                    nz-input
-                    type="number"
-                    name="quantite_produit"
-                    type="number"
-                    min="1"
-                    id="quantite_produit"
-                  />
+                  <input nzSize="large" formControlName="quantite_produit" nz-input type="number"
+                    name="quantite_produit" type="number" min="1" id="quantite_produit" />
                 </nz-form-control>
               </nz-form-item>
             </div>
             <div class="col-md-3">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="prix_unitaire_produit"
-                  >Prix Unitaire
+                <nz-form-label nzRequired nzFor="prix_unitaire_produit">Prix Unitaire
                 </nz-form-label>
                 <nz-form-control>
-                  <input
-                    nzSize="large"
-                    formControlName="prix_unitaire_produit"
-                    nz-input
-                    name="nom_produit"
-                    type="number"
-                    id="prix_unitaire_produit"
-                  />
+                  <input nzSize="large" formControlName="prix_unitaire_produit" nz-input name="nom_produit"
+                    type="number" id="prix_unitaire_produit" />
                 </nz-form-control>
               </nz-form-item>
             </div>
             <div class="col-md-2">
-              <button
-                class="shadow"
-                nz-button
-                class="btn submit-btn"
-                (click)="addToList()"
-                [disabled]="!validateForm.valid"
-              >
+              <button class="shadow" nz-button class="btn submit-btn" (click)="addToList()"
+                [disabled]="!validateForm.valid">
                 Ajouter
               </button>
             </div>
@@ -214,13 +117,8 @@
           </div>
         </form>
         <br />
-        <nz-table
-          #basicTable
-          nzShowPagination="false"
-          class="card card-body shadow p-2 border raduis-sm mb-3"
-          [nzTitle]="t_title"
-          [nzData]="produits"
-        >
+        <nz-table #basicTable nzShowPagination="false" class="card card-body shadow p-2 border raduis-sm mb-3"
+          [nzTitle]="t_title" [nzData]="produits" [nzLoading]="isLoad">
           <thead>
             <tr>
               <th>Nom</th>
@@ -230,11 +128,7 @@
             </tr>
           </thead>
           <ng-template #t_title>
-            <nz-divider
-              nzDashed
-              nzOrientation="left"
-              [nzText]="t_text"
-            ></nz-divider>
+            <nz-divider nzDashed nzOrientation="left" [nzText]="t_text"></nz-divider>
             <ng-template #t_text>
               <span class="text-dark-green bold"> Informations du client </span>
             </ng-template>
@@ -246,11 +140,7 @@
               <td>{{ data.quantite }}</td>
               <td>{{ data.prix_unitaire }}</td>
               <td>
-                <button
-                  class="btn btn-danger"
-                  title="supprimer le produit"
-                  (click)="removeProduit(data)"
-                >
+                <button class="btn btn-danger" title="supprimer le produit" (click)="removeProduit(data)">
                   <i nz-icon nzType="delete" nzTheme="outline"></i>
                 </button>
               </td>
@@ -262,11 +152,7 @@
     <div class="col">
       <div class="card shadow raduis-sm">
         <div class="card-body">
-          <nz-divider
-            nzDashed
-            [nzOrientation]="'left'"
-            [nzText]="i_v"
-          ></nz-divider>
+          <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_v"></nz-divider>
           <ng-template #i_v>
             <span class="text-dark-green bold">Nouvelle vente</span>
           </ng-template>
@@ -297,43 +183,23 @@
         <div class="card-body">
           <div nz-row>
             <div nz-col nzSpan="24">
-              <nz-divider
-                nzDashed
-                [nzOrientation]="'left'"
-                [nzText]="i_c"
-              ></nz-divider>
+              <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_c"></nz-divider>
               <ng-template #i_c>
                 <span class="text-dark-green bold">
                   Informations du client
                 </span>
               </ng-template>
               <nz-form nz-form [formGroup]="validateFormClient">
-                <nz-form-label nzRequired nzFor="telephone"
-                  >Téléphone du client</nz-form-label
-                >
+                <nz-form-label nzRequired nzFor="telephone">Téléphone du client</nz-form-label>
                 <nz-form-item>
                   <nz-form-control>
-                    <nz-select
-                      nzSize="large"
-                      (ngModelChange)="clientChange($event)"
-                      [nzDisabled]="produits.length == 0"
-                      (nzOnSearch)="onClientSearch($event)"
-                      [nzNotFoundContent]="add_client_tem"
-                      id="telephone"
-                      name="telephone"
-                      nzAllowClear="true"
-                      nzShowSearch
-                      nzServerSearch
-                      formControlName="telephone"
-                    >
+                    <nz-select nzSize="large" (ngModelChange)="clientChange($event)" [nzDisabled]="produits.length == 0"
+                      (nzOnSearch)="onClientSearch($event)" [nzNotFoundContent]="add_client_tem" id="telephone"
+                      name="telephone" nzAllowClear="true" nzShowSearch nzServerSearch formControlName="telephone">
                       <ng-container *ngFor="let o of clients">
-                        <nz-option
-                          *ngIf="!loadClient"
-                          [nzValue]="o.id"
-                          [nzLabel]="
+                        <nz-option *ngIf="!loadClient" [nzValue]="o.id" [nzLabel]="
                             o.telephone + ' - ' + o.prenoms + ' ' + o.nom
-                          "
-                        ></nz-option>
+                          "></nz-option>
                       </ng-container>
                       <nz-option *ngIf="loadClient" nzDisabled nzCustomContent>
                         <i nz-icon nzType="loading" class="loading-icon"></i>
@@ -345,43 +211,25 @@
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
-                <nz-form-label nzRequired nzFor="type_paiement"
-                  >Mode de paiement</nz-form-label
-                >
+                <nz-form-label nzRequired nzFor="type_paiement">Mode de paiement</nz-form-label>
                 <nz-form-item>
                   <nz-form-control>
-                    <nz-select
-                      [nzLoading]="modeLoad"
-                      nzSize="large"
-                      [nzDisabled]="produits.length == 0"
-                      id="mode_paiement"
-                      name="mode_paiement"
-                      formControlName="mode_paiement"
-                    >
+                    <nz-select [nzLoading]="modeLoad" nzSize="large" [nzDisabled]="produits.length == 0"
+                      id="mode_paiement" name="mode_paiement" formControlName="mode_paiement">
                       <ng-container *ngFor="let o of modePaiements">
-                        <nz-option
-                          [nzValue]="o.id"
-                          [nzLabel]="o.label"
-                        ></nz-option>
+                        <nz-option [nzValue]="o.id" [nzLabel]="o.label"></nz-option>
                       </ng-container>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
                 <br />
                 <div class="row">
-                  <div
-                    class="col-6 pointer"
-                    (click)="onPayementTypeSelected(item.name)"
-                    *ngFor="let item of modePaiement"
-                  >
+                  <div class="col-6 pointer" (click)="onPayementTypeSelected(item.name)"
+                    *ngFor="let item of modePaiement">
                     <div>
                       <div class="card card-body raduis-sm">
-                        <img
-                          [src]="item.image_src"
-                          [alt]="item.type_paiement"
-                          [title]="item.type_paiement"
-                          class="card-img-top"
-                        />
+                        <img [src]="item.image_src" [alt]="item.type_paiement" [title]="item.type_paiement"
+                          class="card-img-top" />
                         <br />
                         <h5 class="card-title text-center">
                           {{ item.type_paiement }}
