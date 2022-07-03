@@ -14,6 +14,7 @@ import fr from '@angular/common/locales/fr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
 import { PageNotFoundComponent } from './shared/component/page-not-found/page-not-found.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { UnauthorizationComponent } from './shared/component/unauthorization/unauthorization.component';
@@ -44,6 +45,7 @@ registerLocaleData(fr);
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    SharedModule,
     BrowserAnimationsModule,
     NzDropDownModule,
     NzResultModule,
@@ -56,4 +58,4 @@ registerLocaleData(fr);
   providers: [{ provide: NZ_I18N, useValue: fr_FR }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

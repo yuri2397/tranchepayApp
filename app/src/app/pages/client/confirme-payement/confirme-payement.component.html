@@ -1,21 +1,121 @@
-<div>
-    <h3 class="my-3 text-dark-green bold">Mes paiements en attentes de confirmation</h3>
-    <nz-table #nzTable [nzData]="data" [nzPageSize]="10">
-      <thead>
-        <tr>
-          <th>Réference</th>
-          <th>Type</th>
-          <th>Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let i of nzTable.data">
-            <td>{{ i.reference }}</td>
-            <td>{{ i.type }}</td>
-            <td>{{ i.date }}</td>
-            <td><button nz-button (click)="confirme(i)">Confirmer</button></td>
-        </tr>
-      </tbody>
-    </nz-table>
-</div>
+<ng-container *ngIf="haveData; else haveData">
+  <div class="card card-body shadow raduis-sm">
+    <h3 class="my-3 text-dark-green bold">
+      Mes paiements en attentes de confirmation
+    </h3>
+    <nz-tabset [nzSize]="'large'">
+      <nz-tab [nzTitle]="all_payments_title">
+        <nz-table #nzTable [nzData]="data" [nzPageSize]="10">
+          <thead>
+            <tr>
+              <th>Réference</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of nzTable.data">
+              <td>{{ i.reference }}</td>
+              <td>{{ i.type }}</td>
+              <td>{{ i.created_at | date }}</td>
+              <td>
+                <nz-tag
+                  [nzColor]="i.status == 'TERMINÉ' ? '#00FFC4' : 'error'"
+                  class="text-black"
+                  >{{ i.status }}</nz-tag
+                >
+              </td>
+              <td>
+                <button
+                  nz-button
+                  (click)="confirme(i)"
+                  [disabled]="i.status == 'TERMINÉ' ? 'true' : 'false'"
+                >
+                  Confirmer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+      <nz-tab [nzTitle]="en_cours_payments_title">
+        <nz-table #nzTable [nzData]="data" [nzPageSize]="10">
+          <thead>
+            <tr>
+              <th>Réference</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of nzTable.data">
+              <ng-container *ngIf="i.status == 'EN ATTENTE'">
+                <td>{{ i.reference }}</td>
+                <td>{{ i.type }}</td>
+                <td>{{ i.created_at | date }}</td>
+                <td>
+                  <nz-tag [nzColor]="'error'" class="text-black">{{
+                    i.status
+                  }}</nz-tag>
+                </td>
+                <td>
+                  <button nz-button (click)="confirme(i)">Confirmer</button>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+      <nz-tab [nzTitle]="terminer_payments_title">
+        <nz-table #nzTable [nzData]="data" [nzPageSize]="10">
+          <thead>
+            <tr>
+              <th>Réference</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of nzTable.data">
+              <ng-container *ngIf="i.status == 'TERMINÉ'">
+                <td>{{ i.reference }}</td>
+                <td>{{ i.type }}</td>
+                <td>{{ i.created_at | date }}</td>
+                <td>
+                  <nz-tag [nzColor]="'#00FFC4'" class="text-black">{{
+                    i.status
+                  }}</nz-tag>
+                </td>
+                <td>
+                  <button nz-button (click)="confirme(i)" disabled>
+                    Confirmer
+                  </button>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+  <ng-template #all_payments_title>
+    <h5 class="bold text-primary">Tous</h5>
+  </ng-template>
+  <ng-template #en_cours_payments_title>
+    <h5 class="bold text-warning">En attente</h5>
+  </ng-template>
+  <ng-template #terminer_payments_title>
+    <h5 class="bold text-success">Terminés</h5>
+  </ng-template>
+</ng-container>
+<ng-template #haveData>
+  <div>
+    <app-spinner></app-spinner>
+  </div>
+</ng-template>

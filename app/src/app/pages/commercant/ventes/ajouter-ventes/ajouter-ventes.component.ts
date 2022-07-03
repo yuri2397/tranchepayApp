@@ -36,9 +36,9 @@ export class AjouterVentesComponent implements OnInit {
   makeVisible = false;
   mystyle = { width: "200px", padding: "25px" };
   modePaiement = [{ type_paiement: "Paiement en ligne", image_src: "/assets/img/paycash.png" }, { type_paiement: "Paiement en caisse", image_src: "/assets/img/paymobile.png" }];
-  choixModePaiement = [{ name: "Wave", choice_label: "Payer avec Wave", image_src: "/assets/img/nav-logo.png", padding: "p-3", margin_top: "0px" },
-  { name: "Orange Money", choice_label: "Payer avec Orange Money", image_src: "/assets/img/orangemoney.png", padding: "5px", margin_top: "0px" },
-  { name: "Free Money", choice_label: "Payer avec Free Money", image_src: "/assets/img/freemoney.png", padding: "5px", margin_top: "-6px" }
+  choixModePaiement = [{ name: "wave", choice_label: "Payer avec Wave", image_src: "/assets/img/nav-logo.png", padding: "p-3", margin_top: "0px" },
+  { name: "om", choice_label: "Payer avec Orange Money", image_src: "/assets/img/orangemoney.png", padding: "5px", margin_top: "0px" },
+  { name: "free", choice_label: "Payer avec Free Money", image_src: "/assets/img/freemoney.png", padding: "5px", margin_top: "-6px" }
   ]
 
   constructor(
@@ -126,17 +126,17 @@ export class AjouterVentesComponent implements OnInit {
   }
 
   clientChange(client: any) {
-    if (client == null) return;
-    this.modeLoad = true;
-    this.sharedService.modePaiement(client).subscribe({
-      next: (response) => {
-        this.modePaiements = response;
-        this.modeLoad = false;
-      },
-      error: (errors) => {
-        console.log(errors);
-      },
-    });
+    // if (client == null) return;
+    // this.modeLoad = true;
+    // this.sharedService.modePaiement(client).subscribe({
+    //   next: (response) => {
+    //     this.modePaiements = response;
+    //     this.modeLoad = false;
+    //   },
+    //   error: (errors) => {
+    //     console.log(errors);
+    //   },
+    // });
   }
 
   onClientSearch(data: string) {
@@ -217,8 +217,5 @@ export class AjouterVentesComponent implements OnInit {
       "type du paiment: ", this.typePay, "\n------------------");
     this.makeVisible = !this.makeVisible;
   }
-  showing() {
 
-    console.log(this.montantActuelTotal);
-  }
 }

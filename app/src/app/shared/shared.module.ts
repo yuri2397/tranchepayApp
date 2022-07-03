@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from './component/spinner/spinner.component';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +34,7 @@ import { SecuriteComponent } from '../pages/client/securite/securite.component';
   declarations: [
     ShowComponent,
     SecuriteComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -97,6 +99,7 @@ import { SecuriteComponent } from '../pages/client/securite/securite.component';
     NzRadioModule,
   ],
   exports: [
+    SpinnerComponent,
     ShowComponent,
     CommonModule,
     NzLayoutModule,
@@ -159,5 +162,6 @@ import { SecuriteComponent } from '../pages/client/securite/securite.component';
     SecuriteComponent,
     NzRadioModule,
   ],
+
 })
-export class SharedModule {}
+export class SharedModule { }

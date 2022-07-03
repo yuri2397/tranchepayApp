@@ -41,15 +41,14 @@ class ClientController extends Controller
     public function commandes()
     {
         return Commande::whereClientId($this->authClient()->id)
-        ->where("etat_commande_id", "!=", EtatCommande::whereNom("append")->first()->id)
-        ->get();
+            ->where("etat_commande_id", "!=", EtatCommande::whereNom("append")->first()->id)
+            ->get();
     }
 
     public function versementsClient()
     {
         $commandes = Commande::whereClientId($this->authClient()->id)->get()->pluck('id');
         return Versement::with("commande")->whereIn('commande_id', $commandes)->get();
-
     }
 
     public function search($data)
@@ -115,12 +114,10 @@ class ClientController extends Controller
                     }
                     return response()->json([], 200);
                 }
-            }
-            else {
+            } else {
                 die("Cette requête n'a pas été émise par PayDunya");
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             die();
         }
     }
@@ -182,12 +179,10 @@ class ClientController extends Controller
 
             if ($invoice->create()) {
                 return response()->json($invoice->getInvoiceUrl(), 200);
-            }
-            else {
+            } else {
                 return response()->json($invoice->response_text, 400);
             }
-        }
-        else {
+        } else {
             return response()->json([
                 "message" => "Commande introuvable",
             ], 404);
@@ -196,7 +191,6 @@ class ClientController extends Controller
 
     public function clientCancelURL()
     {
-
     }
 
     public function clientReturnURL($token)
@@ -219,8 +213,7 @@ class ClientController extends Controller
                 return response()->json([], 200);
             }
             return response()->json();
-        }
-        else {
+        } else {
             return response()->json([
                 $invoice->getStatus(),
                 $invoice->response_text,
@@ -255,13 +248,11 @@ class ClientController extends Controller
 
     public function paddings()
     {
-        return Padding::whereUserId($this->authClient()->id)->get();
+        return Padding::whereUserId($this->authClient()->id)->limit(5)->get();
     }
 
-    public function confirmePaddings(Request $request,Padding $padding)
+    public function confirmePaddings(Request $request, Padding $padding)
     {
         return "ok";
     }
-
-
 }

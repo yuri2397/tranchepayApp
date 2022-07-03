@@ -3,7 +3,6 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { RetraitComponent } from './../../pages/commercant/retrait/retrait.component';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { AppModule } from './../../app.module';
-import { SpinnerComponent } from './../../shared/component/spinner/spinner.component';
 import { AideComponent } from './../../pages/commercant/aide/aide.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './../../pages/commercant/dashboard/dashboard.component';
@@ -11,7 +10,7 @@ import { ParrainagesComponent } from './../../pages/commercant/parrainages/parra
 import { ConditionsComponent } from './../../pages/commercant/conditions/conditions.component';
 import { ApiComponent } from './../../pages/commercant/api/api.component';
 import { UtilisateursComponent } from './../../pages/commercant/utilisateurs/utilisateurs.component';
-import { ParametresComponent } from './../../pages/commercant/parametres/parametres.component';
+// import { ParametresComponent } from './../../pages/commercant/parametres/parametres.component';
 import { ComptabiliteComponent } from './../../pages/commercant/comptabilite/comptabilite.component';
 import { SoldesComponent } from './../../pages/commercant/soldes/soldes.component';
 import { VentesComponent } from './../../pages/commercant/ventes/ventes.component';
@@ -51,21 +50,19 @@ import { ProfileComponent } from '../../pages/commercant/profile/profile.compone
     DashboardComponent,
     VentesComponent,
     SoldesComponent,
-    ParametresComponent,
     UtilisateursComponent,
     ApiComponent,
     ConditionsComponent,
     ParrainagesComponent,
     AideComponent,
-    SpinnerComponent,
     AjouterVentesComponent,
     RetraitComponent,
     ProfileComponent,
-    
+
   ],
   imports: [
     CommercantRoutingModule,
     SharedModule,
   ],
 })
-export class CommercantModule {}
+export class CommercantModule { }

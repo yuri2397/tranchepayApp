@@ -38,7 +38,7 @@ export const ROUTES: RouteInfo[] = [
     permissions: ['administrateur'],
 
   },
-  
+
   {
     path: 'utilisateurs',
     title: 'Utilisateurs',
@@ -84,14 +84,6 @@ export const ROUTES: RouteInfo[] = [
     permissions: ['*'],
 
   },
-  {
-    path: 'parametres',
-    title: 'Paramétres',
-    icon: 'setting',
-    class: '',
-    roles: ['super admin'],
-    permissions: ['*'],
-  },
 ];
 
 @Component({
@@ -104,7 +96,7 @@ export class CommercantComponent implements OnInit {
   menuItems!: RouteInfo[];
   isLoad = false;
   title = 'TRANCHEPAY';
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
@@ -123,7 +115,7 @@ export class CommercantComponent implements OnInit {
     return this.router.url.indexOf(item.path) !== -1 ? true : false;
   }
 
-  can(item: RouteInfo){
+  can(item: RouteInfo) {
 
     let r = false;
     this.authService.getUser().permissions?.forEach((e) => {
@@ -134,7 +126,7 @@ export class CommercantComponent implements OnInit {
     return r;
   }
 
-  goto(value: string){
+  goto(value: string) {
     this.router.navigate(['/commercant/' + value]);
   }
 }
