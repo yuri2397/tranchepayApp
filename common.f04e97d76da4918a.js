@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkapp=self.webpackChunkapp||[]).push([[592],{1125:(a,e,s)=>{s.d(e,{K:()=>u});class u{}},6166:(a,e,s)=>{s.d(e,{r:()=>c});class u{}class c{constructor(){this.boutique=new u}}}}]);
