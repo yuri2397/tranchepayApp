@@ -83,31 +83,30 @@ export class ShowComponent implements OnInit {
                 setTimeout(() => {
                   this.sharedService.checkPadding(data.padding).subscribe({
                     next: (check) => {
-                      console.log(check);
-                      resolve(!check.status)
-                      if(check.status){
-                        setTimeout(() => {
-                          m.destroy()
-                          this.successModal("Le paiement est validé avec succès.")
-                          this.findCommande(this.commande.id as any)
-                        }, 1000);
+                      resolve(!check.status);
+                      if (check.status) {
+                        m.destroy();
+                        this.successModal(
+                          'Le paiement est validé avec succès.'
+                        );
+                        this.findCommande(this.commande.id as any);
                       }
                     },
-                    error: error => {
+                    error: (error) => {
                       console.log(error);
-                      resolve(false)
-                    }
+                      resolve(false);
+                    },
                   });
                 }, 1000);
               })
             ) {
               console.log('Wait for check');
             }
-          })()
+          })();
         }
       });
   }
-  
+
   successModal(message: string) {
     this.modal.create({
       nzTitle: undefined,
@@ -118,12 +117,11 @@ export class ShowComponent implements OnInit {
       nzClosable: true,
       nzComponentParams: {
         text: message,
-        type: "success",
-        load: false
+        type: 'success',
+        load: false,
       },
     });
   }
-
 
   etatCommande(data: Commande): string {
     let etat = '';
