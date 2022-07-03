@@ -1,3 +1,4 @@
+import { SharedService } from './../../../../services/shared.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { VersementCreateComponent } from './../../versement-create/versement-create.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -17,16 +18,14 @@ export class ShowComponent implements OnInit {
   commande!: Commande;
   isLoad = true;
 
-  
-
   constructor(
     private route: ActivatedRoute,
     public commandeService: CommandesService,
     private location: Location,
     private modal: NzModalService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private sharedService: SharedService
   ) {}
-
 
   ngOnInit(): void {
     this.route.params.subscribe((param) => {
@@ -57,13 +56,14 @@ export class ShowComponent implements OnInit {
         },
         nzCentered: true,
         nzClosable: false,
-        nzWidth: "40%",
+        nzWidth: '40%',
         nzMaskClosable: false,
-        nzFooter: null
-      })  
+        nzFooter: null,
+      })
       .afterClose.subscribe((data: any | null) => {
         if (data) {
-          this.modal.create({
+          let type: any = 'info';
+          let m = this.modal.create({
             nzTitle: undefined,
             nzFooter: null,
             nzContent: PayementPaddingComponent,
@@ -73,12 +73,34 @@ export class ShowComponent implements OnInit {
             nzComponentParams: {
               text: data.message,
               url: data.data.wave_launch_url,
-              load: false
+              load: true,
+              type: type,
+            },
+          });
+          (async () => {
+            while (
+              await new Promise<boolean>((resolve) => {
+                setTimeout(() => {
+                  this.sharedService.checkPadding(data.padding).subscribe({
+                    next: (check) => {
+                      console.log(check);
+                      resolve(!check.status)
+                    },
+                    error: error => {
+                      console.log(error);
+                      resolve(false)
+                    }
+                  });
+                }, 500);
+              })
+            ) {
+              console.log('Wait for check');
             }
-          })
+          })()
         }
       });
   }
+
 
   etatCommande(data: Commande): string {
     let etat = '';

@@ -164,6 +164,7 @@ class ClientController extends Controller
                     $response  = $this->createCheckoutSession($request->montant, $this->authClient(), $commande, "vm");
                     if ($response && $response['response']['id']) {
                         return response()->json([
+                            "padding" => $response["padding"],
                             "message" => "Votre verssement est en attente de confirmation.",
                             "data" => json_decode($response['response'])
                         ]);
