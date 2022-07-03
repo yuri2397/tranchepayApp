@@ -51,10 +51,19 @@ class User extends Authenticatable
     public function hasPermission($permission)
     {
         foreach ($this->permissions as $value) {
-            if($value->name === $permission){
+            if ($value->name === $permission) {
                 return true;
             }
         }
         return false;
+    }
+    /**
+     * Get all of the appNotification for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function appNotifications()
+    {
+        return $this->hasMany(AppNotification::class);
     }
 }
