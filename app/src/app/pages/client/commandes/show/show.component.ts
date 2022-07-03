@@ -25,7 +25,7 @@ export class ShowComponent implements OnInit {
     private modal: NzModalService,
     private notification: NzNotificationService,
     private sharedService: SharedService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param) => {
@@ -55,7 +55,7 @@ export class ShowComponent implements OnInit {
           commande: this.commande,
         },
         nzCentered: true,
-        nzClosable: false,
+        nzClosable: true,
         nzWidth: '40%',
         nzMaskClosable: false,
         nzFooter: null,
