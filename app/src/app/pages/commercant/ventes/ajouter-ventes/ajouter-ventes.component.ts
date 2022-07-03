@@ -118,6 +118,7 @@ export class AjouterVentesComponent implements OnInit {
       ],
       mode_paiement: [null, [Validators.required]],
     });
+
   }
 
   aPayer(): number {

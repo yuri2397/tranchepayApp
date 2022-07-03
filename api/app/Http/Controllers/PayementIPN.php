@@ -50,11 +50,8 @@ class PayementIPN extends Controller
 
                         $padding->extra = json_encode($body);
                         $padding->status = true;
-                        $padding->save();
 
-                        $commande = Commande::find($padding->commande_id);
-                        $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
-                        $commande->save();
+                        $commande = Commande::with("versements")->find($padding->commande_id);
 
                         $versement = new Versement();
                         $versement->date_time = now();
@@ -70,11 +67,15 @@ class PayementIPN extends Controller
                             $compte->solde += $commande->prix_total;
                             $compte->save();
                         }
+
+                        $padding->save();
+                        $log->text = $res;
+                        $log->save();
+                        
                         if ($res == 0) {
                             $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                             $commande->save();
                         }
-                        $padding->save();
                         return response()->json([], 200);
                     }
                     break;
