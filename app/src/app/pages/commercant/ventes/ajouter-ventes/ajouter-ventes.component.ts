@@ -247,13 +247,10 @@ export class AjouterVentesComponent implements OnInit {
                   setTimeout(() => {
                     this.sharedService.checkPadding(response.padding).subscribe({
                       next: (check) => {
-                        console.log(check);
                         resolve(!check.status)
                         if(check.status){
                           this.successModal("Le client a confirmer la vente. ✅")
-                          setTimeout(() => {
-                            m.destroy()
-                          }, 1000);
+                          m.destroy()
                         }
                       },
                       error: error => {

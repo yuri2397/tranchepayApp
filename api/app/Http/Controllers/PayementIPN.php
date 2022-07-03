@@ -56,22 +56,22 @@ class PayementIPN extends Controller
                         $versement = new Versement();
                         $versement->date_time = now();
                         $versement->via = 'Wave';
-                        $versement->reference = $body['id'];
+                        $versement->reference = $data['id'];
                         $versement->montant = $data['amount'];
                         $versement->commande_id = $commande->id;
                         $versement->save();
 
-                        $res = $this->restant($commande);
                         if ($padding->type == "fp") {
                             $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
                             $compte->solde += $commande->prix_total;
                             $compte->save();
                         }
 
+                        $res = $this->restant($commande);
                         $padding->save();
                         $log->text = $res;
                         $log->save();
-                        
+
                         if ($res == 0) {
                             $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                             $commande->save();
