@@ -20,7 +20,7 @@ use Paydunya\Checkout\CheckoutInvoice;
 
 trait Utils
 {
-    use Paydunya, OMPayement, WavePayement;
+    use Paydunya, OMPayement, WavePayement, Notification;
 
     protected $commercant_session_key = 'commercant';
     protected $client_session_ket = 'client';
@@ -75,15 +75,13 @@ trait Utils
         $versement->reference = $commande->reference;
         $versement->montant = $request->first_part;
         $versement->commande_id = $commande->id;
-        // facture pour une autre version;
-        //echo $invoice->getReceiptUrl(); facture PDF
         $versement->save();
 
         $compte = Compte::find(Boutique::find($commande->boutique_id)->compte->id);
-        $compte->solde += ($this->totalCommande($request->produits) - $request->first_part);
+        $compte->solde += $this->totalCommande($request->produits);
         $compte->save();
 
-        $message = "Salut " . $client->prenoms . "\nVotre commande de  " . ($commande->prix_total - $commande->commission) . " FCFA chez " . $this->authCommercantWithBoutique()->boutique->nom . " est validé.Vous paierez une commission de " . $commande->commission . " FCFA. Le montant total à payer est: " . $commande->prix_total . " FCFA.\nRetrouver nous sur https://tranchepay.com pour plus de détails.";
+        $message = "Salut " . $client->prenoms . "\nVotre commande de  " . ($commande->prix_total - $commande->commission) . " FCFA chez " . $this->authCommercantWithBoutique()->boutique->nom . " est validé.Vous paierez une commission de " . $commande->commission . " FCFA.\nRetrouver nous sur https://tranchepay.com pour plus de détails.";
         return [
             "error" => false,
             "code" => 201,
@@ -102,18 +100,24 @@ trait Utils
      */
     public function paiementEnLigne(Request $request, Commande $commande, Client $client)
     {
-
-        $callBackUrl = URL::to("/") . "/api/fp-ipn";
-
         switch ($request->via) {
             case 'om':
-                $om = $this->requestOMPayement($request->first_part, $commande, $client);
+                $om = $this->requestOMPayement($request->first_part, $commande, $client, "fp");
 
                 break;
 
             case 'wave':
-                $wave = $this->createCheckoutSession($request->first_part, $client, $commande);
-                
+                $response = $this->createCheckoutSession($request->first_part, $client, $commande, "fp");
+                if (array_key_exists('id', json_decode($response['response'], true))) {
+                    $sms = "Votre commande de chez " . $commande->boutique->name . " est en attente. Merci de payer les " . $request->first_part . "FCFA via wave." . $response['wave_launch_url'] . "\nTranche Pay";
+                    $this->sendSMS($sms, '+221' . $client->telephone);
+                    return [
+                        "error" => false,
+                        "code" => 201,
+                        "padding" => $response['padding'],
+                        "message" => "La commande est attends de paiement merci d'attendre la validation du client."
+                    ];
+                }
                 break;
         }
 
@@ -137,7 +141,6 @@ trait Utils
      */
     public function isPossibleForClient(Request $request, Client $client, User $user, Commercant $commercant)
     {
-
         //SI LE COMPTE CLIENT EST ACTIVÉ
         if ($user->email_verify_at == null) {
             $message = "Bonjour " . $client->prenoms . "\nVotre commande chez " . $commercant->boutique->nom . " est annulé car votre compte tranchePay n'est pas active. Merci de l'activer en utiliser le lien sur le SMS d'inscription.\n\nTRANCHEPAY";
@@ -150,17 +153,19 @@ trait Utils
         }
 
         // VERIFIER SI LE CLIENT A LA POSSIBILITE DE FAIRE CETTE COMMANDE
-        $commandes = $client->commandes()
-            ->whereEtatCommandeId(EtatCommande::whereNom("load")->first()->id)
-            ->orWhere("etat_commande_id", EtatCommande::whereNom("append")->first()->id)
-            ->get();
+        $commandes = Commande::where(function ($query) {
+            $query->where('etat_commande_id', '=', EtatCommande::whereNom("append")->first()->id)
+                ->orWhere('etat_commande_id', '=', EtatCommande::whereNom("load")->first()->id);
+        })->where(function ($query)  use ($client) {
+            $query->where('client_id', '=', $client->id);
+        })->get();
+
         if (count($commandes) != 0) {
             $message = "Bonjour " . $client->prenoms . "\nVotre commande chez " . $commercant->boutique->nom . " est annulé. Merci de payer vos commandes en cours.\n\nTRANCHEPAY";
-
             return [
                 "error" => true,
                 "sms" => $message,
-                "message" => "Le client a des commandes en cours."
+                "message" => $commandes
             ];
         }
 
@@ -268,14 +273,12 @@ trait Utils
     {
         $result = [];
         $user = $this->currentUser();
-        $etat_commande = EtatCommande::whereNom("append")->first();
 
         $currentCommercant = Commercant::find($user->model);
 
         $result["tous"] = $currentCommercant
             ->boutique
             ->commandes()
-            ->where("etat_commande_id", "!=", $etat_commande->id)
             ->with(['produits', 'versements', 'client', 'etatCommande'])
             ->limit(100)
             ->orderBy('created_at', 'desc')

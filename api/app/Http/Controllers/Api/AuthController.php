@@ -21,6 +21,8 @@ use App\Models\BoutiqueHasUser;
 use Spatie\Permission\Models\Permission;
 use Throwable;
 
+use function PHPSTORM_META\type;
+
 class AuthController extends Controller
 {
     use Utils, Notification;
@@ -244,7 +246,6 @@ class AuthController extends Controller
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->adresse = $request->adresse;
             $commercant->save();
 
             $user = new User;
@@ -275,47 +276,38 @@ class AuthController extends Controller
     }
 
 
-    public function removeCommercantUsers(Commercant $commercant)
+    public function removeCommercantUsers($id)
     {
+        $commercant = Commercant::find($id);
         return $commercant->delete();
-        // DB::beginTransaction();
-        // try {
-        //     $commercant->delete();
-        //     DB::commit();
-        // } catch (Throwable $th) {
-        //     DB::rollback();
-        //     throw $th;
-        // }
     }
 
 
     public function updateCommercantUsers(Request $request, Commercant $commercant)
     {
-        return 'hello';
         $request->validate([
-            "telephone" => "required|exists:commercants,telephone",
-            "telephone" => "required|exists:users,username",
+            "telephone" => "required",
             "prenom" => "required",
             "nom" => "required",
             "permissions" => "required|array"
         ]);
 
+        $commercant = Commercant::find($request->id);
         try {
             DB::beginTransaction();
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->adresse = $request->adresse;
-            $commercant->save();
+            $commercant->updateOrFail();
 
-            $user = User::whereModelType("Commercant")->whereModel($commercant->id)->first();
+            $user = User::whereModelType("Commercant")->whereModel($request->id)->first();
             $user->username = $request->telephone;
             $user->email = $request->email;
-            $user->save();
+            $user->updateOrFail();
 
             $user->givePermissionTo($request->permissions);
             DB::commit();
-            return Commercant::find($commercant->id);
+            return Commercant::find($request->id);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;

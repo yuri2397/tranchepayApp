@@ -47,14 +47,13 @@ export class ClientService extends Base {
     );
   }
 
-  doVersement(selectedCommande: Commande, montant: string) {
-    return this.http.post<string>(
+  doVersement(selectedCommande: Commande, montant: string, via: string) {
+    return this.http.post<any>(
       this.endPoint + 'do-versement',
       {
         montant: montant,
         commande_id: selectedCommande.id,
-        cancel_url: this._cancelUrl + 'cancel_payment',
-        return_url: this._returnUrl + 'return_payment',
+        via: via
       },
       {
         headers: this.authorizationHeaders,

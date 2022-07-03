@@ -1,7 +1,17 @@
-.card-pay {
-    &:hover{
 
-        transform: scale(1.05);
-        transition: all 0.3s linear;
-    }
+
+
+:host ::ng-deep input{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+:host ::ng-deep td{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+:host ::ng-deep .ant-col-24.ant-form-item-label>label{
+    font-size: 20px;
+    font-weight: 700;
 }

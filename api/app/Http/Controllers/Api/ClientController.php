@@ -20,12 +20,13 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendHelpMail;
 use App\Models\Padding;
 use App\Traits\Notification;
+use App\Traits\WavePayement;
 
 class ClientController extends Controller
 {
     use Utils;
     use Paydunya;
-    use Notification;
+    use Notification, WavePayement;
 
 
     public function profile()
@@ -40,9 +41,7 @@ class ClientController extends Controller
      */
     public function commandes()
     {
-        return Commande::whereClientId($this->authClient()->id)
-            ->where("etat_commande_id", "!=", EtatCommande::whereNom("append")->first()->id)
-            ->get();
+        return Commande::whereClientId($this->authClient()->id)->get();
     }
 
     public function versementsClient()
@@ -141,8 +140,7 @@ class ClientController extends Controller
         $this->validate($request, [
             "commande_id" => "required|exists:commandes,id",
             "montant" => "required|numeric",
-            "cancel_url" => "required",
-            "return_url" => "required"
+            "via" => "string|required"
         ]);
 
         $commande = Commande::with(["produits", "versements", "boutique"])
@@ -158,29 +156,29 @@ class ClientController extends Controller
                 ], 422);
             }
 
-            $this->initPayement();
-            $this->setReturnUrl($request->return_url);
-            $this->setCancelUrl($request->cancel_url);
-            $invoice = new CheckoutInvoice();
+            switch ($request->via) {
+                case 'om':
+                    # code...
+                    break;
+                case 'wave':
+                    $response  = $this->createCheckoutSession($request->montant, $this->authClient(), $commande, "vm");
+                    if ($response && $response['response']['id']) {
+                        return response()->json([
+                            "message" => "Votre verssement est en attente de confirmation.",
+                            "data" => json_decode($response['response'])
+                        ]);
+                    }
+                    return response()->json([
+                        "message" => "Une erreur est survenu lors que votre opération. Merci de reessayer plus tard."
+                    ], 503);
+                    break;
+                case 'free':
+                    # code...
+                    break;
 
-            foreach ($commande->produits as $value) {
-                $invoice->addItem($value->nom, $value->quantite, $value->prix_unitaire, $value->quantite * $value->prix_unitaire);
-            }
-            $invoice->setDescription("Nouveau versement pour la commande #" . $commande->reference);
-            $invoice->setTotalAmount($request->montant);
-
-            // set custom data
-            $client = $this->authClient();
-            $invoice->addCustomData('client_phone', $client->telephone);
-            $invoice->addCustomData('client_id', $client->id);
-            $invoice->addCustomData('boutique_id', $commande->boutique->id);
-            $invoice->addCustomData('commande_id', $commande->id);
-
-
-            if ($invoice->create()) {
-                return response()->json($invoice->getInvoiceUrl(), 200);
-            } else {
-                return response()->json($invoice->response_text, 400);
+                default:
+                    # code...
+                    break;
             }
         } else {
             return response()->json([
@@ -236,7 +234,6 @@ class ClientController extends Controller
             return Mail::to(env('SERVICE_CLIENT_MAIL'))->send(new SendClientHelpMail($request->email, $request->full_name, $request->message, $request->telephone, $request->site, $request->entreprise));
         return Mail::to(env('SERVICE_COMMERCANT_MAIL'))->send(new SendHelpMail($request->email, $request->full_name, $request->message, $request->telephone, $request->site, $request->entreprise));
     }
-
 
 
     public function deplafonner(Request $request)

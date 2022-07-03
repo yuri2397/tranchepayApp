@@ -1,3 +1,6 @@
+import { PayementErrorComponent } from './shared/component/payement-error/payement-error.component';
+import { PayementSuccessComponent } from './shared/component/payement-success/payement-success.component';
+import { DocsComponent } from './modules/docs/docs.component';
 import { ClientComponent } from './modules/client/client.component';
 import { SetClientPinComponent } from './pages/auth/set-client-pin/set-client-pin.component';
 import { NgModule } from '@angular/core';
@@ -50,8 +53,14 @@ const routes: Routes = [
   },
   {
     path: 'docs',
-    loadChildren: () =>
-      import('./modules/docs/docs.module').then((m) => m.DocsModule),
+    component: DocsComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/docs/docs.module').then((m) => m.DocsModule),
+      },
+    ],
   },
   {
     path: 'client',
@@ -68,6 +77,8 @@ const routes: Routes = [
   { path: 'unauthorization', component: UnauthorizationComponent },
   { path: 'cancel_payment', component: CancelPaymentComponent },
   { path: 'return_payment', component: ReturnPaymentComponent },
+  { path: 'payement_success', component: PayementSuccessComponent },
+  { path: 'payement_error', component: PayementErrorComponent },
   {
     path: '**',
     component: PageNotFoundComponent,

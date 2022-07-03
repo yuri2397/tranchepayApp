@@ -7,11 +7,12 @@ import { DocsPresentationComponent } from 'src/app/pages/docs/docs-presentation/
 import { DocsServicesComponent } from 'src/app/pages/docs/docs-services/docs-services.component';
 
 const routes: Routes = [
-  { path: '', component: DocsPresentationComponent },
-  { path: '/home/docs-services', component: DocsServicesComponent },
-  { path: '/home/docs-api', component: DocsApiComponent },
-  { path: '/home/docs-commercant', component: DocsCommercantComponent },
-  { path: '/home/docs-particulier', component: DocsParticulierComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'presentation' },
+  { path: 'presentation', component: DocsPresentationComponent },
+  { path: 'services', component: DocsServicesComponent },
+  { path: 'api', component: DocsApiComponent },
+  { path: 'commercant', component: DocsCommercantComponent },
+  { path: 'particulier', component: DocsParticulierComponent },
 ];
 
 @NgModule({

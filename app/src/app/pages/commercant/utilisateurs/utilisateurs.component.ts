@@ -16,6 +16,7 @@ export class UtilisateursComponent implements OnInit {
   users!: Commercant[];
   user!: Commercant;
   form!: FormGroup;
+  formUpdate!: FormGroup;
   isLoad = true;
   isVisible: boolean = false;
   isUpdateModalVisible: boolean = false;
@@ -24,6 +25,7 @@ export class UtilisateursComponent implements OnInit {
   hasError = false;
   errors: any;
   selectedPermissions!: string[];
+  selectedUpdatePermissions!: string[];
   constructor(
     private comService: CommercantService,
     private fb: FormBuilder,
@@ -47,7 +49,7 @@ export class UtilisateursComponent implements OnInit {
       permissions: [null, [Validators.required]],
     });
 
-    this.form = this.fb.group({
+    this.formUpdate = this.fb.group({
       prenomUpdate: [null, [Validators.required]],
       nomUpdate: [null, [Validators.required]],
       telephoneUpdate: [null, [Validators.required]],
@@ -55,42 +57,43 @@ export class UtilisateursComponent implements OnInit {
     });
   }
 
-  showUdateModal(commercant: Commercant){
+  showUpdateModal(commercant: Commercant){
     this.isUpdateModalVisible = true;
     this.user = commercant;
+
   }
   edit() {
+    this.hasError = false;
+    this.createLoad = true;
     let commercant = new Commercant();
-    commercant.prenoms = this.form.value.prenomUpdate;
-    commercant.nom = this.form.value.nomUpdate;
-    commercant.telephone = this.form.value.telephoneUpdate;
-    console.log(commercant);
-    // this.hasError = false;
-    // this.createLoad = true;
-    // this.comService
-    //   .edit(commercant, this.selectedPermissions)
-    //   .subscribe({
-    //     next: (response) => {
-    //       this.isVisible = false;
-    //       this.form.reset();
-    //       this.createLoad = false;
-    //       this.hasError = false;
-    //       this.notification.create(
-    //         'success',
-    //         'Message',
-    //         "L'utilisateur a été modifié avec succès."
-    //       );
-    //       this.getUsers();
-    //     },
-    //     error: (errors) => {
-    //       this.createLoad = false;
-    //       if (errors.status < 500) {
-    //         (this.errors = errors.error.errors), (this.hasError = true);
-    //       } else {
-    //         this.notification.error('Erreur', errors.error.message);
-    //       }
-    //     },
-    //   });
+    commercant.id = this.user.id;
+    commercant.prenoms = this.formUpdate.value.prenomUpdate;
+    commercant.nom = this.formUpdate.value.nomUpdate;
+    commercant.telephone = this.formUpdate.value.telephoneUpdate;
+    this.comService
+      .edit(commercant, this.selectedUpdatePermissions)
+      .subscribe({
+        next: (response) => {
+          this.isUpdateModalVisible = false;
+          this.formUpdate.reset();
+          this.createLoad = false;
+          this.hasError = false;
+          this.notification.create(
+            'success',
+            'Message',
+            "L'utilisateur a été modifié avec succès."
+          );
+          this.getUsers();
+        },
+        error: (errors) => {
+          this.createLoad = false;
+          if (errors.status < 500) {
+            (this.errors = errors.error.errors), (this.hasError = true);
+          } else {
+            this.notification.error('Erreur', errors.error.message);
+          }
+        },
+      });
   }
 
   del(commercant: Commercant) {

@@ -7,15 +7,16 @@ use Illuminate\Support\Facades\Http;
 
 trait WavePayement
 {
-    protected $errorUrl = "https://tranchepay.com/payement-error?via=wave";
-    protected $successUrl = "https://tranchepay.com/payement-sucess?type=c";
-    public function createCheckoutSession($amount, $client, $commande)
+    protected $errorUrl = "";
+    protected $successUrl = "https://tranchepay.com/payement_success?";
+
+    public function createCheckoutSession($amount, $client, $commande, $type)
     {
         $data = array(
             'amount' => $amount,
             'currency' => 'XOF',
-            'error_url' => $this->errorUrl,
-            'success_url' => $this->successUrl,
+            'error_url' => "https://tranchepay.com/payement-error?via=wave&ci=".$client->id."&cdi=".$commande->id,
+            'success_url' => "https://tranchepay.com/payement_success?via=wave&ci=".$client->id."&cdi=".$commande->id,
             'client_reference' => $commande->reference
         );
 
@@ -25,12 +26,18 @@ trait WavePayement
         ])->post(env('WAVE_CHECKOUT_SESSION_URL'), $data);
 
         $padding = new Padding();
-        $padding->reference = $commande->reference;
-        $padding->type = "wave-payement";
+        $padding->reference = $response['id'];
+        $padding->type = $type;
         $padding->user_id = $client->id;
+        $padding->via = "Wave";
+        $padding->amount = $amount;
+        $padding->commande_id = $commande->id;
         $padding->save();
 
-        return $response;
+        return [
+            "padding" => $padding->id,
+            "response" => $response
+        ];
     }
 
     public function getSession(WaveSession $session)
