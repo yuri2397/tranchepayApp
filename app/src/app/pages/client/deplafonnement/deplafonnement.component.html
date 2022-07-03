@@ -1,68 +1,120 @@
 <ng-container *ngIf="!isLoad; else elseTemplate">
-    <nz-divider [nzText]="p_n"></nz-divider>
-    <ng-template #p_n>
-        <h3 class="text-dark-green">
-            {{ client.prenoms }} {{ client.nom }}
-        </h3>
-        <span><nz-tag [nzColor]="'default'">
-            {{ etatCompte() }}
-        </nz-tag></span>
-    </ng-template>
-    <ng-container *ngIf="client.deplafonner == 0; else deplafonner">
-        <div class="row  text-center">
-            <p class="alert text-dark-green h3">
-                Déplofonner votre compte pour plus d'avantage.
-            </p>
-            <br>
-            <br>
-            <div class="m-auto col-5">
-                <form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm" class="border raduis-sm p-4">
-                    <nz-form-item class="form-group my-3">
-                        <nz-form-label [nzSpan]="12" nzRequired>Numéro CNI</nz-form-label>
-                        <nz-form-control [nzSpan]="24" nzValidateStatus="" nzHasFeedback nzErrorTip="Donner un CNI valide!">
-                            <input autocomplete="false" [maxLength]="13" maxlength="13" type="text" class="form-control shadow-sm" nz-input formControlName="cni" id="cni" name="cni">
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item class="form-group my-3">
-                        <nz-form-label [nzSpan]="12" nzRequired>CNI Recto</nz-form-label>
-                        <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="Donner un CNI valide!">
-                            <input type="file" (change)="recto($event)" class="form-control shadow-sm" id="recto">
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item class="form-group my-3">
-                        <nz-form-label [nzSpan]="12" nzRequired>CNI Verso</nz-form-label>
-                        <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="Donner un CNI valide!">
-                            <input type="file" (change)="verso($event)" class="form-control shadow-sm" id="verso">
-                        </nz-form-control>
-                    </nz-form-item>
+  <nz-divider [nzText]="p_n"></nz-divider>
+  <ng-template #p_n>
+    <h3 class="text-dark-green">{{ client.prenoms }} {{ client.nom }}</h3>
+    <span
+      ><nz-tag [nzColor]="'default'">
+        {{ etatCompte() }}
+      </nz-tag></span
+    >
+  </ng-template>
+  <ng-container *ngIf="client.deplafonner == 0; else deplafonner">
+    <div class="row text-center">
+      <p class="alert text-dark-green h3">
+        Déplofonner votre compte pour plus d'avantage.
+      </p>
+      <br />
+      <br />
+      <div class="m-auto col-5">
+        <form
+          [nzLayout]="'vertical'"
+          nz-form
+          [formGroup]="validateForm"
+          class="border raduis-sm p-4 card shadow"
+        >
+          <nz-form-item class="form-group my-3">
+            <nz-form-label [nzSpan]="12" nzRequired>Numéro CNI</nz-form-label>
+            <nz-form-control
+              [nzSpan]="24"
+              nzValidateStatus=""
+              nzHasFeedback
+              nzErrorTip="Donner un CNI valide!"
+            >
+              <input
+                autocomplete="false"
+                [maxLength]="13"
+                maxlength="13"
+                type="text"
+                class="form-control shadow-sm"
+                nz-input
+                formControlName="cni"
+                id="cni"
+                name="cni"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-group my-3">
+            <nz-form-label [nzSpan]="12" nzRequired>CNI Recto</nz-form-label>
+            <nz-form-control
+              [nzSpan]="24"
+              nzHasFeedback
+              nzErrorTip="Donner un CNI valide!"
+            >
+              <input
+                type="file"
+                (change)="recto($event)"
+                class="form-control shadow-sm"
+                id="recto"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-group my-3">
+            <nz-form-label [nzSpan]="12" nzRequired>CNI Verso</nz-form-label>
+            <nz-form-control
+              [nzSpan]="24"
+              nzHasFeedback
+              nzErrorTip="Donner un CNI valide!"
+            >
+              <input
+                type="file"
+                (change)="verso($event)"
+                class="form-control shadow-sm"
+                id="verso"
+              />
+            </nz-form-control>
+          </nz-form-item>
 
-                    <button (click)="save()" [disabled]="!validateForm.valid || cniRecto == null || cniVerso == null" nz-button [nzLoading]="isBtnLoad" class="btn submit-btn">Valider</button>
-                </form>
-                <br><br><br>
-            </div>
-        </div>
-    </ng-container>
-    <ng-template #deplafonner>
-        <nz-alert [nzType]="'info'" [nzMessage]="'Votre compte est déplafonné. Vous pouvez faire des commandes de plus de 200.000FCFA.'"></nz-alert>
-    </ng-template>
-
+          <button
+            (click)="save()"
+            [disabled]="
+              !validateForm.valid || cniRecto == null || cniVerso == null
+            "
+            nz-button
+            [nzLoading]="isBtnLoad"
+            class="btn submit-btn"
+          >
+            Valider
+          </button>
+        </form>
+        <br /><br /><br />
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #deplafonner>
+    <nz-alert
+      [nzType]="'info'"
+      [nzMessage]="
+        'Votre compte est déplafonné. Vous pouvez faire des commandes de plus de 200.000FCFA.'
+      "
+    ></nz-alert>
+  </ng-template>
 </ng-container>
 <ng-template #elseTemplate>
-    <div class="row">
-        <div class="col">
-            <nz-skeleton [nzActive]="true"></nz-skeleton>
-        </div>
-        <div class="col">
-            <nz-skeleton [nzActive]="true"></nz-skeleton>
-        </div>
+  <div class="row">
+    <div class="col">
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
     </div>
-    <br>
-    <div class="row">
-        <div class="col">
-            <nz-skeleton [nzActive]="true"></nz-skeleton>
-        </div>
-        <div class="col">
-            <nz-skeleton [nzActive]="true"></nz-skeleton>
-        </div>
+    <div class="col">
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
     </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col">
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+    </div>
+    <div class="col">
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+    </div>
+  </div>
 </ng-template>

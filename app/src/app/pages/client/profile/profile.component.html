@@ -1,15 +1,31 @@
-<div class="col-md-6 m-auto my-4 shadow-sm">
-  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+<div class="col-md-6 m-auto my-4 p-4">
+  <div
+    class="row g-0 border rounded overflow-hidden card flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+  >
     <div class="col p-4 d-flex flex-column position-static">
-      <strong class="d-inline-block mb-2 text-primary">Bienvenue sur tranchepay</strong>
+      <strong class="d-inline-block mb-2 text-primary"
+        >Bienvenue sur tranchepay</strong
+      >
       <h3 class="mb-0">{{ client.prenoms }} {{ client.nom }}</h3>
       <div class="mb-1 text-muted">+222 {{ client.telephone }}</div>
-      <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional
-        content.</p>
-      <a (click)="logout()" class="stretched-link shadow-sm border py-2 text-center raduis-sm lead">Se déconnecter</a>
+      <p class="card-text mb-auto">
+        This is a wider card with supporting text below as a natural lead-in to
+        additional content.
+      </p>
+      <a
+        (click)="logout()"
+        class="stretched-link shadow-sm border py-2 text-center raduis-sm lead"
+        >Se déconnecter</a
+      >
     </div>
     <div class="col-auto d-none d-lg-block">
-      <img class="bd-placeholder-img" width="200" height="200" src="/assets/img/logo.png" alt="LOGO">
+      <img
+        class="bd-placeholder-img"
+        width="200"
+        height="200"
+        src="/assets/img/logo.png"
+        alt="LOGO"
+      />
     </div>
   </div>
 </div>
