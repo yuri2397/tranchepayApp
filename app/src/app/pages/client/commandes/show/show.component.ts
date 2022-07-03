@@ -86,10 +86,9 @@ export class ShowComponent implements OnInit {
                       console.log(check);
                       resolve(!check.status)
                       if(check.status){
-                        type = "success";
-                        data.message = "Le client a confirmer la vente. ✅"
                         setTimeout(() => {
                           m.destroy()
+                          this.successModal("Le client a confirmer la vente. ✅")
                         }, 1000);
                       }
                     },
@@ -106,6 +105,20 @@ export class ShowComponent implements OnInit {
           })()
         }
       });
+  }
+  successModal(message: string) {
+    let m = this.modal.create({
+      nzTitle: undefined,
+      nzFooter: null,
+      nzContent: PayementPaddingComponent,
+      nzCentered: true,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzComponentParams: {
+        text: message,
+        type: "success",
+      },
+    });
   }
 
 
