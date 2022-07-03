@@ -19,7 +19,7 @@ class PayementIPN extends Controller
     public function wave(Request $request)
     {
         $log = new Log();
-        $log->log = $request->all();
+        $log->log = json_encode($request->all());
         $log->save();
         $wave_webhook_secret = env("WAVE_WEB_HOOK");
 
