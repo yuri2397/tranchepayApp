@@ -44,7 +44,7 @@ class PayementIPN extends Controller
 
             switch ($webhook_event) {
                 case 'checkout.session.completed':
-                    $padding = Padding::whereReference($body['id'])->whereStatus(false)->first();
+                    $padding = Padding::whereReference($data['id'])->whereStatus(false)->first();
 
                     if ($padding) {
 
