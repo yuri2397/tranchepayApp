@@ -150,54 +150,6 @@ class CommercantController extends Controller
     }
 
 
-    public function fpIPN(Request $request)
-    {
-        try {
-            //Prenez votre MasterKey, hashez la et comparez le résultat au hash reçu par IPN
-            if ($request->data['hash'] === hash('sha512', env("PAYDUNYA_MASTER_KEY"))) {
-                if ($request->data['status'] == "completed") {
-                    DB::beginTransaction();
-
-                    $invoice = $request->data['invoice'];
-                    $amount = $invoice["total_amount"];
-                    $token = $invoice["token"];
-
-                    $customData = $request->data["custom_data"];
-
-                    $commande = Commande::find($customData["commande_id"]);
-                    $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
-                    $commande->save();
-
-                    $compte = Compte::find($customData["compte_id"]);
-                    $compte->solde += $commande->prix_total;
-                    $compte->save();
-
-                    $versement = new Versement;
-                    $versement->date_time = now();
-                    $versement->via = 'Paiement en Ligne';
-                    $versement->reference = $token;
-                    $versement->montant = $amount;
-                    $versement->commande_id = $commande->id;
-                    // facture pour une autre version;
-                    //echo $invoice->getReceiptUrl(); facture PDF
-                    $versement->save();
-
-                    $client = Client::find($customData["client_id"]);
-                    $message = "Bonjour " . $client->prenoms . "\nVotre commande est maintenant en cours. Vous avez payé la première trachepay. Retrouvez tous les détails sur https://tranchepay.com\n\nTRANCHEPAY, merci pour votre confiance.";
-                    $this->sendSMS($message, '+221' . $client->telephone);
-
-
-                    DB::commit();
-                    return response()->json([], 200);
-                }
-            } else {
-                die("Cette requête n'a pas été émise par PayDunya");
-            }
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
     public function users()
     {
         $users = BoutiqueHasUser::whereBoutiqueId($this->authCommercant()->boutique->id)->get();
