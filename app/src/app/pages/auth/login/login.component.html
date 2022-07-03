@@ -47,11 +47,19 @@
                     name="password"
                   />
                 </div>
+                <button
+                  nz-button
+                  (click)="login()"
+                  [nzLoading]="isLoad"
+                  class="bg"
+                  [disabled]="!validateForm.valid"
+                  class="btn btn-3 shadow btn-block col-12 my-3"
+                  type="submit"
+                >
+                  CONNEXION
+                </button>
 
-                <!-- <button nz-button (click)="login()" [nzLoading]="isLoad" class="bg" [disabled]="!validateForm.valid" class="btn btn-3 shadow btn-block
-                                col-12 my-3" type="submit">CONNEXION</button> -->
-
-                <!-- <div class="text-center mt-3">
+                <div class="text-center mt-3">
                   <span class="text- text-center"
                     ><a
                       [routerLink]="['/auth/register']"
@@ -59,7 +67,7 @@
                       >Crée votre compte</a
                     >
                   </span>
-                </div> -->
+                </div>
               </form>
             </div>
           </div>
