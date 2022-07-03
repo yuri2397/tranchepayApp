@@ -1,144 +1,195 @@
 <ng-container *ngIf="!isLoad; else loadData">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-body shadow raduis-sm">
-                    <nz-divider class="p-0 m-2" [nzText]="list_title"></nz-divider>
-                    <ng-template #list_title>
-                        <div style="display: inline-block;">
-                            <h3 class="text-dark-green bold">Liste de ventes</h3>
-                            <button (click)="openCreateVenteModal()" nz-button class="btn submit-btn border my-2 shadow">
-                                AJOUTER UNE VENTER
-                                </button>
-                        </div>
-                    </ng-template>
-
-                    <nz-tabset [nzSize]="'large'">
-                        <nz-tab [nzTitle]="all_ventes_title">
-                            <nz-table #nzTableAll [nzData]="data.tous" nzTableLayout="fixed">
-                                <thead>
-                                    <tr>
-                                        <th>REFERENCE
-                                        </th>
-                                        <th>MONTANT</th>
-                                        <th>ETAT</th>
-
-                                        <th>CLIENT</th>
-                                        <th>TELEPHONE</th>
-                                        <th>DATE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of nzTableAll.data">
-                                        <td class="text-dark-green bold">{{ data.reference }}</td>
-                                        <td>{{ data.prix_total}} FCFA</td>
-                                        <td>
-                                            <nz-tag [nzColor]="etatColor(data)">
-                                                {{ etatCommande(data) }}
-                                            </nz-tag>
-                                        </td>
-                                        <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
-                                        <td>{{ data.client.telephone }}</td>
-                                        <td>{{ data.created_at | date }}</td>
-                                    </tr>
-                                </tbody>
-                            </nz-table>
-                            <nz-dropdown-menu #menu="nzDropdownMenu">
-                                <div class="ant-table-filter-dropdown">
-                                    <div class="search-box">
-                                        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-                                        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
-                                        <button nz-button nzSize="small" (click)="reset()">Reset</button>
-                                    </div>
-                                </div>
-                            </nz-dropdown-menu>
-                        </nz-tab>
-                        <nz-tab [nzTitle]="en_cours_ventes_title">
-                            <nz-table #nzTableLoad [nzData]="data.en_cours" nzTableLayout="fixed">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            REFERENCE
-                                        </th>
-                                        <th>MONTANT</th>
-                                        <th>CLIENT</th>
-                                        <th>TELEPHONE</th>
-                                        <th>DATE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of nzTableLoad.data">
-                                        <td class="text-dark-green bold">{{ data.reference }}</td>
-                                        <td>{{ data.prix_total}} FCFA</td>
-
-                                        <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
-                                        <td>{{ data.client.telephone }}</td>
-                                        <td>{{ data.created_at | date }}</td>
-                                    </tr>
-                                </tbody>
-                            </nz-table>
-                            <nz-dropdown-menu #menu="nzDropdownMenu">
-                                <div class="ant-table-filter-dropdown">
-                                    <div class="search-box">
-                                        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-                                        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
-                                        <button nz-button nzSize="small" (click)="reset()">Reset</button>
-                                    </div>
-                                </div>
-                            </nz-dropdown-menu>
-                        </nz-tab>
-                        <nz-tab [nzTitle]="terminer_ventes_title">
-                            <nz-table #nzTableFinish [nzData]="data.terminer" nzTableLayout="fixed">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            REFERENCE
-                                        </th>
-                                        <th>MONTANT</th>
-                                        <th>CLIENT</th>
-                                        <th>TELEPHONE</th>
-                                        <th>DATE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of nzTableFinish.data">
-                                        <td class="text-dark-green bold">{{ data.reference }}</td>
-                                        <td>{{ data.prix_total}} FCFA</td>
-
-                                        <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
-                                        <td>{{ data.client.telephone }}</td>
-                                        <td>{{ data.created_at | date }}</td>
-                                    </tr>
-                                </tbody>
-                            </nz-table>
-                            <nz-dropdown-menu #menu="nzDropdownMenu">
-                                <div class="ant-table-filter-dropdown">
-                                    <div class="search-box">
-                                        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-                                        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
-                                        <button nz-button nzSize="small" (click)="reset()">Reset</button>
-                                    </div>
-                                </div>
-                            </nz-dropdown-menu>
-                        </nz-tab>
-                    </nz-tabset>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-body shadow raduis-sm">
+          <nz-divider class="p-0 m-2" [nzText]="list_title"></nz-divider>
+          <ng-template #list_title>
+            <div style="display: inline-block">
+              <h3 class="text-dark-green bold">Liste de ventes</h3>
+              <button
+                (click)="openCreateVenteModal()"
+                nz-button
+                class="btn submit-btn border my-2 shadow"
+              >
+                AJOUTER UNE VENTER
+              </button>
             </div>
-        </div>
-    </div>
+          </ng-template>
+          <nz-tabset [nzSize]="'large'">
+            <nz-tab [nzTitle]="all_ventes_title">
+              <nz-table #nzTableAll [nzData]="data.tous" nzTableLayout="fixed">
+                <thead>
+                  <tr>
+                    <th>REFERENCE</th>
+                    <th>MONTANT</th>
+                    <th>ETAT</th>
 
-    <ng-template #all_ventes_title>
-        <h5 class="bold text-primary">Tous</h5>
-    </ng-template>
-    <ng-template #en_cours_ventes_title>
-        <h5 class="bold text-warning">En cours</h5>
-    </ng-template>
-    <ng-template #terminer_ventes_title>
-        <h5 class="bold text-success">Terminée</h5>
-    </ng-template>
+                    <th>CLIENT</th>
+                    <th>TELEPHONE</th>
+                    <th>DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of nzTableAll.data">
+                    <td class="text-dark-green bold">{{ data.reference }}</td>
+                    <td>{{ data.prix_total }} FCFA</td>
+                    <td>
+                      <nz-tag [nzColor]="etatColor(data)">
+                        {{ etatCommande(data) }}
+                      </nz-tag>
+                    </td>
+                    <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
+                    <td>{{ data.client.telephone }}</td>
+                    <td>{{ data.created_at | date }}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                  <div class="search-box">
+                    <input
+                      type="text"
+                      nz-input
+                      placeholder="Search name"
+                      [(ngModel)]="searchValue"
+                    />
+                    <button
+                      nz-button
+                      nzSize="small"
+                      nzType="primary"
+                      (click)="search()"
+                      class="search-button"
+                    >
+                      Search
+                    </button>
+                    <button nz-button nzSize="small" (click)="reset()">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </nz-dropdown-menu>
+            </nz-tab>
+            <nz-tab [nzTitle]="en_cours_ventes_title">
+              <nz-table
+                #nzTableLoad
+                [nzData]="data.en_cours"
+                nzTableLayout="fixed"
+              >
+                <thead>
+                  <tr>
+                    <th>REFERENCE</th>
+                    <th>MONTANT</th>
+                    <th>CLIENT</th>
+                    <th>TELEPHONE</th>
+                    <th>DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of nzTableLoad.data">
+                    <td class="text-dark-green bold">{{ data.reference }}</td>
+                    <td>{{ data.prix_total }} FCFA</td>
+
+                    <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
+                    <td>{{ data.client.telephone }}</td>
+                    <td>{{ data.created_at | date }}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                  <div class="search-box">
+                    <input
+                      type="text"
+                      nz-input
+                      placeholder="Search name"
+                      [(ngModel)]="searchValue"
+                    />
+                    <button
+                      nz-button
+                      nzSize="small"
+                      nzType="primary"
+                      (click)="search()"
+                      class="search-button"
+                    >
+                      Search
+                    </button>
+                    <button nz-button nzSize="small" (click)="reset()">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </nz-dropdown-menu>
+            </nz-tab>
+            <nz-tab [nzTitle]="terminer_ventes_title">
+              <nz-table
+                #nzTableFinish
+                [nzData]="data.terminer"
+                nzTableLayout="fixed"
+              >
+                <thead>
+                  <tr>
+                    <th>REFERENCE</th>
+                    <th>MONTANT</th>
+                    <th>CLIENT</th>
+                    <th>TELEPHONE</th>
+                    <th>DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of nzTableFinish.data">
+                    <td class="text-dark-green bold">{{ data.reference }}</td>
+                    <td>{{ data.prix_total }} FCFA</td>
+
+                    <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
+                    <td>{{ data.client.telephone }}</td>
+                    <td>{{ data.created_at | date }}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                  <div class="search-box">
+                    <input
+                      type="text"
+                      nz-input
+                      placeholder="Search name"
+                      [(ngModel)]="searchValue"
+                    />
+                    <button
+                      nz-button
+                      nzSize="small"
+                      nzType="primary"
+                      (click)="search()"
+                      class="search-button"
+                    >
+                      Search
+                    </button>
+                    <button nz-button nzSize="small" (click)="reset()">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </nz-dropdown-menu>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #all_ventes_title>
+    <h5 class="bold text-primary">Tous</h5>
+  </ng-template>
+  <ng-template #en_cours_ventes_title>
+    <h5 class="bold text-warning">En cours</h5>
+  </ng-template>
+  <ng-template #terminer_ventes_title>
+    <h5 class="bold text-success">Terminée</h5>
+  </ng-template>
 </ng-container>
 <ng-template #loadData>
-    <div>
-        <app-spinner></app-spinner>
-    </div>
+  <div>
+    <app-spinner></app-spinner>
+  </div>
 </ng-template>

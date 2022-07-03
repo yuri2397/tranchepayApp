@@ -39,10 +39,10 @@ import { PayementPaddingComponent } from './component/payement-padding/payement-
   declarations: [
     ShowComponent,
     SecuriteComponent,
-    SpinnerComponent,
-    PayementSuccessComponent,
     PayementErrorComponent,
+    PayementSuccessComponent,
     PayementPaddingComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
