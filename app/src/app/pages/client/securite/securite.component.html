@@ -1,44 +1,88 @@
 <div class="container">
-    <h3 class="text-dark-green bold my-2">Connexion & Sécurité</h3>
-    <nz-divider></nz-divider>
-    <div class="row justify-content-center">
-        <div class="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-xs-12">
-            <h3 class="text-dark-green text-center">Changer votre code pin</h3> <br>
-            <nz-steps [nzCurrent]="currentSteps">
-                <nz-step nzTitle="Code pin actuel" [nzPercentage]="1">
-                </nz-step>
-                <nz-step nzTitle="Choissir un nouveau code pin" [nzPercentage]="2"></nz-step>
-            </nz-steps>
-            <br>
-            <form nz-form [formGroup]="validateForm">
+  <h3 class="text-dark-green bold my-2">Connexion & Sécurité</h3>
+  <nz-divider></nz-divider>
+  <div class="row justify-content-center">
+    <div
+      class="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-xs-12 card raduis-sm shadow p-4"
+    >
+      <h3 class="text-dark-green text-center">Changer votre code pin</h3>
+      <br />
+      <nz-steps [nzCurrent]="currentSteps">
+        <nz-step nzTitle="Code pin actuel" [nzPercentage]="1"> </nz-step>
+        <nz-step
+          nzTitle="Choissir un nouveau code pin"
+          [nzPercentage]="2"
+        ></nz-step>
+      </nz-steps>
+      <br />
+      <form nz-form [formGroup]="validateForm">
+        <ng-container *ngIf="currentSteps == 0; else elseTemplate">
+          <div class="row my-2">
+            <div class="col form-group-client">
+              <label for="current_pin">Code courrant *</label>
+              <input
+                type="password"
+                minlength="4"
+                maxlength="4"
+                required
+                formControlName="current_pin"
+                aria-label="current_pin"
+                aria-describedby="current_pin"
+                class="form-control shadow-sm"
+                id="current_pin"
+                name="current_pin"
+              />
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="row my-2">
+            <div class="col form-group-client">
+              <label for="pin">Nouveau Code Pin *</label>
+              <input
+                type="password"
+                minlength="4"
+                maxlength="4"
+                required
+                formControlName="pin"
+                aria-label="pin"
+                aria-describedby="pin"
+                class="form-control shadow-sm"
+                id="pin"
+                name="pin"
+              />
+            </div>
+          </div>
+          <div class="row my-2">
+            <div class="col form-group-client">
+              <label for="pin_conf">Confirmer votre code pin *</label>
+              <input
+                type="password"
+                class="form-control shadow-sm"
+                minlength="4"
+                maxlength="4"
+                formControlName="pin_conf"
+                required
+                id="pin_conf"
+                name="pin_conf"
+              />
+            </div>
+          </div>
+        </ng-template>
 
-                <ng-container *ngIf="currentSteps == 0; else elseTemplate">
-                    <div class="row my-2">
-                        <div class="col form-group-client">
-                            <label for="current_pin">Code courrant *</label>
-                            <input type="password" minlength="4" maxlength="4" required formControlName="current_pin" aria-label="current_pin" aria-describedby="current_pin" class="form-control shadow-sm" id="current_pin" name="current_pin">
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-template #elseTemplate>
-                    <div class="row  my-2">
-                        <div class="col form-group-client">
-                            <label for="pin">Nouveau Code Pin *</label>
-                            <input type="password" minlength="4" maxlength="4" required formControlName="pin" aria-label="pin" aria-describedby="pin" class="form-control shadow-sm" id="pin" name="pin">
-                        </div>
-                    </div>
-                    <div class="row  my-2">
-                        <div class="col form-group-client">
-                            <label for="pin_conf">Confirmer votre code pin *</label>
-                            <input type="password" class="form-control shadow-sm" minlength="4" maxlength="4" formControlName="pin_conf" required id="pin_conf" name="pin_conf">
-                        </div>
-                    </div>
-                </ng-template>
-
-                <div>
-                    <button (click)="save()" [disabled]="!validateForm.valid" nz-button [nzLoading]="isLoad" class="btn submit-btn border my-2 shadow" type="submit">CONFIRMER</button>
-                </div>
-            </form>
+        <div>
+          <button
+            (click)="save()"
+            [disabled]="!validateForm.valid"
+            nz-button
+            [nzLoading]="isLoad"
+            class="btn submit-btn border my-2 shadow"
+            type="submit"
+          >
+            CONFIRMER
+          </button>
         </div>
+      </form>
     </div>
+  </div>
 </div>
