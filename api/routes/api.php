@@ -137,3 +137,4 @@ Route::get("/artisan", function () {
 
 
 Route::any("/test", [TestController::class, "index"]);
+Route::any("/logs", [TestController::class, "allLogs"]);
