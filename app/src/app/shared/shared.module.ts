@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from './component/spinner/spinner.component';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,9 +39,13 @@ import { PayementPaddingComponent } from './component/payement-padding/payement-
   declarations: [
     ShowComponent,
     SecuriteComponent,
+<<<<<<< HEAD
+    SpinnerComponent
+=======
     PayementSuccessComponent,
     PayementErrorComponent,
     PayementPaddingComponent,
+>>>>>>> 4880ba96f3480b636596c8cd52229b0a3f720f22
   ],
   imports: [
     CommonModule,
@@ -106,6 +111,7 @@ import { PayementPaddingComponent } from './component/payement-padding/payement-
     NzRadioModule,
   ],
   exports: [
+    SpinnerComponent,
     ShowComponent,
     CommonModule,
     NzLayoutModule,
@@ -169,5 +175,6 @@ import { PayementPaddingComponent } from './component/payement-padding/payement-
     SecuriteComponent,
     NzRadioModule,
   ],
+
 })
-export class SharedModule {}
+export class SharedModule { }
