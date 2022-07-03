@@ -225,7 +225,7 @@ export class AjouterVentesComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-
+          let type:any = "info";
           if (mode == 'online') {
             let m = this.modalService.create({
               nzTitle: undefined,
@@ -236,6 +236,7 @@ export class AjouterVentesComponent implements OnInit {
               nzClosable: false,
               nzComponentParams: {
                 text: response.message,
+                type: type
               },
             });
 
@@ -247,6 +248,13 @@ export class AjouterVentesComponent implements OnInit {
                       next: (check) => {
                         console.log(check);
                         resolve(!check.status)
+                        if(check.status){
+                          type = "success";
+                          response.message = "Le client a confirmer la vente. ✅"
+                          setTimeout(() => {
+                            m.destroy()
+                          }, 1000);
+                        }
                       },
                       error: error => {
                         console.log(error);
