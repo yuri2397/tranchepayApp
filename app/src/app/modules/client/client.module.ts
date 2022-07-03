@@ -54,4 +54,4 @@ import { ConfirmePayementComponent } from '../../pages/client/confirme-payement/
   ],
   imports: [ClientRoutingModule, SharedModule],
 })
-export class ClientModule {}
+export class ClientModule { }

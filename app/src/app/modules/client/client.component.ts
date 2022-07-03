@@ -49,7 +49,7 @@ export class ClientComponent implements OnInit {
     private router: Router,
     private clientService: ClientService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   logout() {
     this.authService.logout();
@@ -66,7 +66,7 @@ export class ClientComponent implements OnInit {
     this.isLoad = true;
     this.clientService.findClient().subscribe({
       next: (response) => {
-        console.log(response);
+        console.log("client: \n", response);
         this.client = response;
         this.clientService.setClient(this.client);
         this.isLoad = false;
@@ -86,7 +86,7 @@ export class ClientComponent implements OnInit {
     this.isCollapse = !this.isCollapse;
   }
 
-  goto(url: string){
+  goto(url: string) {
     this.router.navigate(['/client/' + url]);
   }
 }
