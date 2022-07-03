@@ -1,32 +1,31 @@
-    <h3 class="my-3 text-dark-green bold">Mes commandes</h3>
-    <br>
-    <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
-      <thead>
-        <tr>
-          <th class="bold text-dark-green">REFERENCE</th>
-          <th class="bold text-dark-green">PRIX TOTAL</th>
-          <th class="bold text-dark-green">MONTANT RESTANT</th>
-          <th class="bold text-dark-green">COMMISSION</th>
-          <th class="bold text-dark-green">BOUTIQUE</th>
-          <th class="bold text-dark-green">ETAT</th>
-          <th class="bold text-dark-green">DATE LIMITE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <td class="text-dark-green">
-            <a routerLink="show/{{ data.id }}" class="text-dark-green bold">{{ data.reference }}</a>
-          </td>
-          <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
-          <td class="text-dark-green">{{ montantRestant(data) }} FCFA</td>
-          <td class="text-dark-green">{{ data.commission }} FCFA</td>
-          <td class="text-dark-green">{{ data.boutique.nom }}</td>
-          <td class="text-dark-green">
-            <nz-tag [nzColor]="etatColor(data)">
-              {{ etatCommande(data) }}
-            </nz-tag>
-          </td>
-          <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
-        </tr>
-      </tbody>
-    </nz-table>
+<h3 class="my-3 text-dark-green bold">Mes commandes</h3>
+<br />
+<nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad" nzShowPagination nzShowSizeChanger [nzPageSize]="5">
+  <thead>
+    <tr>
+      <th class="bold text-dark-green">REFERENCE</th>
+      <th class="bold text-dark-green">PRIX TOTAL</th>
+      <th class="bold text-dark-green">MONTANT RESTANT</th>
+      <th class="bold text-dark-green">COMMISSION</th>
+      <th class="bold text-dark-green">BOUTIQUE</th>
+      <th class="bold text-dark-green">ETAT</th>
+      <th class="bold text-dark-green">DATE LIMITE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="pointer" (click)="show(data)" *ngFor="let data of basicTable.data">
+      <td class="text-dark-green">{{ data.reference }}
+      </td>
+      <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
+      <td class="text-dark-green">{{ montantRestant(data) }} FCFA</td>
+      <td class="text-dark-green">{{ data.commission }} FCFA</td>
+      <td class="text-dark-green">{{ data.boutique.nom }}</td>
+      <td class="text-dark-green">
+        <nz-tag [nzColor]="etatColor(data)">
+          {{ etatCommande(data) }}
+        </nz-tag>
+      </td>
+      <td class="text-dark-green">{{ data.date_limite | date: "d MMMM y" }}</td>
+    </tr>
+  </tbody>
+</nz-table>

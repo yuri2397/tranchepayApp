@@ -14,6 +14,7 @@
             </div>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
             <div class="card card-body raduis-sm border">
@@ -73,7 +74,7 @@
     </nz-divider>
     <div class="row">
         <div class="col">
-            <nz-table #versements [nzData]="commande.versements">
+            <nz-table [nzScroll]="{x:'100px'}" #versements [nzData]="commande.versements">
                 <thead>
                     <tr>
                         <th class="bold text-dark-green">REFERENCE</th>

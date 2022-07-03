@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from 'src/app/shared/component/client/client.component';
 import { CommercantComponent } from 'src/app/shared/component/commercant/commercant.component';
 import { ContactComponent } from 'src/app/shared/component/contact/contact.component';
-import { DocumentationComponent } from 'src/app/shared/component/documentation/documentation.component';
 import { IndexComponent } from 'src/app/shared/component/index/index.component';
 import { ViewComponent } from './view.component';
 
@@ -12,23 +11,6 @@ const routes: Routes = [
   { path: 'page-commercant', component: CommercantComponent },
   { path: 'page-client', component: ClientComponent },
   { path: 'page-contact', component: ContactComponent },
-  { path: 'page-documentation', component: DocumentationComponent },
-  // {
-  //   path: 'page-documentation',
-  //   component: ViewComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () =>
-  //         import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: 'page-documentation',
-  //   loadChildren: () =>
-  //     import('src/app/shared/component/documentation/documentation.module').then((m) => m.DocumentationModule),
-  // },
 ];
 
 @NgModule({
@@ -36,3 +18,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ViewRoutingModule {}
+

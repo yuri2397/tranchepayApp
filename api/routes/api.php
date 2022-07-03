@@ -88,6 +88,7 @@ Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
  */
 Route::prefix('shared')->middleware(['auth:api', 'cors'])->group(function () {
     Route::get('partenaires', [SharedController::class, 'partenaires']);
+    Route::get('check-padding/{id}', [SharedController::class, 'checkPadding']);
     Route::get('mode-paiement/{client}', [SharedController::class, 'modePaiement']);
 });
 

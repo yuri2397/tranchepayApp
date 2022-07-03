@@ -7,32 +7,47 @@ use Illuminate\Support\Facades\Http;
 
 trait WavePayement
 {
-    protected $waveBaseUrl = "https://api.wave.com";
-    protected $errorUrl = "https://api.tranchepay.com/api/ipn/wave/error";
-    protected $successUrl = "https://tranchepay.com/payement-sucess?type=c";
+    protected $errorUrl = "";
+    protected $successUrl = "https://tranchepay.com/payement_success?";
 
-    public function createCheckoutSession($amount, $client, $commande)
+    public function createCheckoutSession($amount, $client, $commande, $type)
     {
-
         $data = array(
             'amount' => $amount,
             'currency' => 'XOF',
-            'error_url' => $this->errorUrl,
-            'success_url' => $this->successUrl,
+            'error_url' => "https://tranchepay.com/payement-error?via=wave&ci=".$client->id."&cdi=".$commande->id,
+            'success_url' => "https://tranchepay.com/payement_success?via=wave&ci=".$client->id."&cdi=".$commande->id,
             'client_reference' => $commande->reference
         );
-        
+
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
-        ])->post($this->waveBaseUrl, $data);
+        ])->post(env('WAVE_CHECKOUT_SESSION_URL'), $data);
 
         $padding = new Padding();
-        $padding->reference = $commande->reference;
-        $padding->type = "wave-payement";
+        $padding->reference = $response['id'];
+        $padding->type = $type;
         $padding->user_id = $client->id;
+        $padding->via = "Wave";
+        $padding->amount = $amount;
+        $padding->commande_id = $commande->id;
         $padding->save();
-        
+
+        return [
+            "padding" => $padding->id,
+            "response" => $response
+        ];
+    }
+
+    public function getSession(WaveSession $session)
+    {
+        $url = "https://api.wave.com/v1/checkout/sessions/" . $session->getId();
+
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
+        ])->get($url);
+
         return $response;
     }
 }

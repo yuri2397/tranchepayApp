@@ -24,7 +24,7 @@
         <td>{{ i.nom }}</td>
         <td>{{ i.telephone }}</td>
         <td class="d-flex">
-          <a class="btn border btn-sm text-dark-green" (click)="edit(i)">Modifier</a>
+          <a class="btn border btn-sm text-dark-green" (click)="showUpdateModal(i)">Modifier</a>
           <a class="btn border btn-sm mx-2 text-danger" (click)="del(i)">Supprimer</a>
         </td>
       </tr>
@@ -32,9 +32,7 @@
   </nz-table>
 </div>
 
-
-
-<nz-modal [(nzVisible)]="isVisible" [nzMaskClosable]="false" nzWidth="40%" nzCentered nzTitle="Ajouter un nouveau utilisateurs" (nzOnCancel)="isVisible = false">
+<nz-modal [(nzVisible)]="isVisible" [nzMaskClosable]="false" nzWidth="40%" nzCentered nzTitle="Ajouter un nouveau utilisateur" (nzOnCancel)="isVisible = false">
   <div *nzModalContent>
     <form nzLayout="vertical" nz-form [formGroup]="form">
       <div class="alert alert-danger" *ngIf="hasError">
@@ -48,8 +46,7 @@
         <div class="col">
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Prénom</nz-form-label>
-            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
-                  E-mail!">
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
               <input nz-input id="prenom" formControlName="prenom" name="prenom" />
             </nz-form-control>
           </nz-form-item>
@@ -57,8 +54,7 @@
         <div class="col">
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Nom</nz-form-label>
-            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
-                  E-mail!">
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
               <input nz-input id="nom" formControlName="nom" name="nom" />
             </nz-form-control>
           </nz-form-item>
@@ -69,8 +65,7 @@
         <div class="col">
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Téléphone</nz-form-label>
-            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
-                  E-mail!">
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
               <input nz-input id="telephone" formControlName="telephone" name="telephone" />
             </nz-form-control>
           </nz-form-item>
@@ -78,8 +73,7 @@
         <div class="col">
           <nz-form-item>
             <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Permissions</nz-form-label>
-            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="The input is not valid
-                  E-mail!">
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
               <nz-select id="permissions" formControlName="permissions" name="permissions" nzMode="tags" nzPlaceHolder="Tag Mode" [(ngModel)]="selectedPermissions">
                 <nz-option *ngFor="let option of permissions" [nzLabel]="option.name.toLocaleLowerCase()" [nzValue]="option.name"></nz-option>
               </nz-select>
@@ -93,6 +87,64 @@
     <button nz-button nzType="default" [disabled]="createLoad" class="btn raduis-xs border my-2 shadow" (click)="isVisible = false">Annuler</button>
     <button nz-button (click)="save()" [disabled]="!form.valid"  [nzLoading]="createLoad" class="btn submit-btn  border my-2 shadow">
       Enregistrer
+    </button>
+  </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isUpdateModalVisible" [nzMaskClosable]="false" nzWidth="40%" nzCentered nzTitle="Modifier un utilisateur" (nzOnCancel)="isUpdateModalVisible = false">
+  <div *nzModalContent>
+    <form nzLayout="vertical" nz-form [formGroup]="formUpdate">
+      <div class="alert alert-danger" *ngIf="hasError">
+        <ul>
+            <li *ngIf="errors?.telephoneUpdate">{{ errors.telephoneUpdate[0] }}</li>
+            <!-- <li *ngIf="errors?.email">{{ errors.email[0] }}</li>
+            <li *ngIf="errors?.boutique">{{ errors.boutique[0] }}</li> -->
+        </ul>
+    </div>
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Prénom</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
+              <input nz-input id="prenomUpdate" formControlName="prenomUpdate" name="prenomUpdate" [(ngModel)]="user.prenoms " />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Nom</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
+              <input nz-input id="nomUpdate" formControlName="nomUpdate" name="nomUpdate" [(ngModel)]="user.nom" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Téléphone</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
+              <input nz-input id="telephoneUpdate" formControlName="telephoneUpdate" name="telephoneUpdate" [(ngModel)]="user.telephone" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="iban">Permissions</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24" nzErrorTip="Champ obligatoire!">
+              <nz-select id="permissionsUpdate" formControlName="permissionsUpdate" name="permissionsUpdate" nzMode="tags" nzPlaceHolder="Tag Mode" [(ngModel)]="selectedUpdatePermissions">
+                <nz-option *ngFor="let option of permissions" [nzLabel]="option.name.toLocaleLowerCase()" [nzValue]="option.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" [disabled]="createLoad" class="btn raduis-xs border my-2 shadow" (click)="isUpdateModalVisible = false">Annuler</button>
+    <button nz-button (click)="edit()" [disabled]="!formUpdate.valid"  [nzLoading]="createLoad" class="btn submit-btn  border my-2 shadow">
+      Mettre à jour
     </button>
   </div>
 </nz-modal>

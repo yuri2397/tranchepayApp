@@ -19,6 +19,9 @@ use App\Traits\Notification;
 use App\Models\Admin;
 use App\Models\BoutiqueHasUser;
 use Spatie\Permission\Models\Permission;
+use Throwable;
+
+use function PHPSTORM_META\type;
 
 class AuthController extends Controller
 {
@@ -243,7 +246,6 @@ class AuthController extends Controller
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->adresse = $request->adresse;
             $commercant->save();
 
             $user = new User;
@@ -263,7 +265,7 @@ class AuthController extends Controller
             $user->givePermissionTo($request->permissions);
 
             // SEND MESSAGE
-            $message = "BIENVENUE SUR TRANCHE PAY.\nLa boutique " . $proprietaire->boutique->nom . " a crée un compte utilisateur pour vous. Vos identifiants de connexion sont: \nTél: " . $user->username . "\nMot de passe: " . $password."\nhttps://tranchepay.com/auth/login";
+            $message = "BIENVENUE SUR TRANCHE PAY.\nLa boutique " . $proprietaire->boutique->nom . " a crée un compte utilisateur pour vous. Vos identifiants de connexion sont: \nTél: " . $user->username . "\nMot de passe: " . $password . "\nhttps://tranchepay.com/auth/login";
             $this->sendSMS($message, '+221' . $commercant->telephone);
             DB::commit();
             return Commercant::with('boutique')->find($commercant->id);
@@ -272,42 +274,43 @@ class AuthController extends Controller
             throw $th;
         }
     }
-    
-    
-    public function removeCommercantUsers(Commercant $commercant){
+
+
+    public function removeCommercantUsers($id)
+    {
+        $commercant = Commercant::find($id);
         return $commercant->delete();
     }
 
 
-    public function updateCommercantUsers(Request $request, Commercant $commercant){
+    public function updateCommercantUsers(Request $request, Commercant $commercant)
+    {
         $request->validate([
-            "telephone" => "required|exists:commercants,telephone",
-            "telephone" => "required|exists:users,username",
+            "telephone" => "required",
             "prenom" => "required",
             "nom" => "required",
             "permissions" => "required|array"
         ]);
 
+        $commercant = Commercant::find($request->id);
         try {
             DB::beginTransaction();
             $commercant->prenoms = $request->prenom;
             $commercant->nom = $request->nom;
             $commercant->telephone = $request->telephone;
-            $commercant->adresse = $request->adresse;
-            $commercant->save();
+            $commercant->updateOrFail();
 
-            $user = User::whereModelType("Commercant")->whereModel($commercant->id)->first();
+            $user = User::whereModelType("Commercant")->whereModel($request->id)->first();
             $user->username = $request->telephone;
             $user->email = $request->email;
-            $user->save();
+            $user->updateOrFail();
 
             $user->givePermissionTo($request->permissions);
             DB::commit();
-            return Commercant::find($commercant->id);
+            return Commercant::find($request->id);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
-        
     }
 }

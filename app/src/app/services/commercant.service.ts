@@ -14,6 +14,7 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class CommercantService extends Base {
+  
   protected override _baseUrl: string = 'commercant/';
   constructor(private h: HttpClient) {
     super();
@@ -30,9 +31,10 @@ export class CommercantService extends Base {
   createCommande(
     produits: Produit[],
     client_id: number,
-    mode_paiement: number,
-    p_tranche: number,
-    type: string
+    mode_paiement: string,
+    first_part: number,
+    type: string,
+    via: string
   ) {
     return this.http.post<any>(
       this.endPoint + 'new-commande',
@@ -40,8 +42,9 @@ export class CommercantService extends Base {
         produits: produits,
         client_id: client_id,
         mode_paiement: mode_paiement,
-        first_part: p_tranche,
+        first_part: first_part,
         type: type,
+        via: via
       },
       {
         headers: this.authorizationHeaders,
@@ -109,7 +112,7 @@ export class CommercantService extends Base {
   }
 
   del(i: Commercant) {
-    return this.http.put<any>(this.endPoint + 'remove-user/' + i.id, {
+    return this.http.delete<any>(this.endPoint + 'remove-user/' + i.id, {
       headers: this.authorizationHeaders,
       observe: 'body',
     });

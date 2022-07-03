@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { CommandesService } from 'src/app/services/commandes.service';
+import { PayementPaddingComponent } from 'src/app/shared/component/payement-padding/payement-padding.component';
 
 @Component({
   selector: 'app-show',
@@ -15,6 +16,9 @@ import { CommandesService } from 'src/app/services/commandes.service';
 export class ShowComponent implements OnInit {
   commande!: Commande;
   isLoad = true;
+
+  
+
   constructor(
     private route: ActivatedRoute,
     public commandeService: CommandesService,
@@ -22,6 +26,7 @@ export class ShowComponent implements OnInit {
     private modal: NzModalService,
     private notification: NzNotificationService
   ) {}
+
 
   ngOnInit(): void {
     this.route.params.subscribe((param) => {
@@ -52,12 +57,25 @@ export class ShowComponent implements OnInit {
         },
         nzCentered: true,
         nzClosable: false,
+        nzWidth: "40%",
         nzMaskClosable: false,
-      })
-      .afterClose.subscribe((data: string | null) => {
+        nzFooter: null
+      })  
+      .afterClose.subscribe((data: any | null) => {
         if (data) {
-          this.notification.success('Notification', 'Votre versement est en préparation, vous serez rediriger d\'ici peu');
-          window.location.href = data;
+          this.modal.create({
+            nzTitle: undefined,
+            nzFooter: null,
+            nzContent: PayementPaddingComponent,
+            nzCentered: true,
+            nzMaskClosable: false,
+            nzClosable: true,
+            nzComponentParams: {
+              text: data.message,
+              url: data.data.wave_launch_url,
+              load: false
+            }
+          })
         }
       });
   }

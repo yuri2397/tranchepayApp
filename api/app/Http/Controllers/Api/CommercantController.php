@@ -23,7 +23,7 @@ use App\Traits\Notification;
 
 class CommercantController extends Controller
 {
-    use Utils, Paydunya, Notification;
+    use Utils, Paydunya;
     public function profile()
     {
         return $this->authCommercant();
@@ -68,65 +68,84 @@ class CommercantController extends Controller
             "client_id" => "required|exists:clients,id",
             "mode_paiement" => "required|exists:mode_payement,id",
             "first_part" => "required",
-            "type" => "required|boolean"
+            "type" => "required|string"
         ]);
 
-        $client = Client::find($request->client_id);
-        $user = User::whereModel($client->id)->first();
-        $commercant = $this->authCommercantWithBoutique();
-        $mode = ModePayement::find($request->mode_paiement);
+        try {
+            DB::beginTransaction();
 
-        $check = $this->isPossibleForClient($request, $client, $user, $commercant);
-        if ($check["error"] == true) {
-            if (array_key_exists("sms", $check))
-                $this->sendSMS($check['sms'], '+221' . $client->telephone);
-            return response()->json([
-                "message" => $check['message']
-            ], Response::HTTP_CONFLICT);
-        }
-        $prix_total = $check["prix_total"];
+            $client = Client::with("commandes")->find($request->client_id);
+            $user = User::whereModel($client->id)->first();
+            $commercant = $this->authCommercantWithBoutique();
+            $mode = ModePayement::find($request->mode_paiement);
 
-        $commande = new Commande;
-        $commande->reference = now()->timestamp;
-        $commande->nb_produits = count($request->produits);
-        $commande->nb_tranche = $mode->nb_mois;
-        $commande->date_time = now();
-        $commande->date_limite = now()->addMonth($mode->nb_mois);
-        $commande->boutique_id = $commercant->boutique->id;
-        $commande->client_id = $request->client_id;
-        $commande->etat_commande_id = EtatCommande::whereNom("append")->first()->id;
-        $commande->interet = $mode->interet;
-        $commande->client_id = $request->client_id;
-        $commande->prix_total = $prix_total;
-        $commande->commission = $prix_total * $mode->interet;
-        $commande->save();
-
-        // foreach ($request->produits as $value) {
-        //     $p = new Produit;
-        //     $p->nom = $value['nom'];
-        //     $p->quantite = $value['quantite'];
-        //     $p->commande_id = $commande->id;
-        //     $p->prix_unitaire = $value['prix_unitaire'];
-        //     $p->save();
-        // }
-
-        /**
-         * Proceder au paiement du premier tranche
-         */
-        if ($request->type == false) {
-            $response = $this->paiementEnLigne($request, $commande, $client);
-            if (!$response['error']) {
-                $this->sendSMS($response['sms'], '+221' . $client->telephone);
+            $check = $this->isPossibleForClient($request, $client, $user, $commercant);
+            if ($check["error"] == true) {
+                if (array_key_exists("sms", $check))
+                    $this->sendSMS($check['sms'], '+221' . $client->telephone);
+                return response()->json([
+                    "message" => $check['message']
+                ], Response::HTTP_CONFLICT);
             }
+            $prix_total = $check["prix_total"];
+
+            $commande = new Commande;
+            $commande->reference = now()->timestamp;
+            $commande->nb_produits = count($request->produits);
+            $commande->nb_tranche = $mode->nb_mois;
+            $commande->date_time = now();
+            $commande->date_limite = now()->addMonth($mode->nb_mois);
+            $commande->boutique_id = $commercant->boutique->id;
+            $commande->client_id = $request->client_id;
+            $commande->etat_commande_id = EtatCommande::whereNom("append")->first()->id;
+            $commande->interet = $mode->interet;
+            $commande->client_id = $request->client_id;
+            $commande->prix_total = $prix_total;
+            $commande->commission = $prix_total * ($mode->interet / 100);
+            $commande->save();
+
+            foreach ($request->produits as $value) {
+                $p = new Produit;
+                $p->nom = $value['nom'];
+                $p->quantite = $value['quantite'];
+                $p->commande_id = $commande->id;
+                $p->prix_unitaire = $value['prix_unitaire'];
+                $p->save();
+            }
+
+            /**
+             * Proceder au paiement du premier tranche
+             */
+            if ($request->type == 'online') {
+
+                $response = $this->paiementEnLigne($request, $commande, $client);
+                if ($response['error']) {
+                    $this->sendSMS($response['sms'], '+221' . $client->telephone);
+                }
+                DB::commit();
+                return response()->json([
+                    "message" => $response['message'],
+                    "padding" => $response['padding']
+                ], $response['code']);
+            } else if ($request->type === 'offline') {
+                $response = $this->paiementEnCaise($request, $commande, $client);
+                $this->sendSMS($response['sms'], '+221' . $client->telephone);
+                DB::commit();
+                return response()->json([
+                    "message" => $response['message'],
+                ], $response['code']);
+            } else {
+                DB::rollBack();
+                return response()->json([
+                    "message" => "Une erreur s'est produite. Merci de reessayer plus tard."
+                ], 409);
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json([
-                "message" => $response['message']
-            ], $response['code']);
-        } else {
-            $response = $this->paiementEnCaise($request, $commande, $client);
-            $this->sendSMS($response['sms'], '+221' . $client->telephone);
-            return response()->json([
-                "message" => $response['message']
-            ], $response['code']);
+                "message" => "Une erreur s'est produite, merci de contacter le service client.",
+                "error" => $th->getMessage()
+            ], 503);
         }
     }
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ClientService } from './../../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { Commande } from 'src/app/models/commande';
@@ -10,7 +11,7 @@ import { Commande } from 'src/app/models/commande';
 export class CommandesComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
-  constructor(private clientService: ClientService) {}
+  constructor(private clientService: ClientService, private router: Router) { }
 
   ngOnInit(): void {
     this.findAll();
@@ -40,7 +41,7 @@ export class CommandesComponent implements OnInit {
   }
 
   montantRestant(data: Commande): number {
-    return (+data.prix_total + +data.commission)  - this.montantVerser(data);
+    return (+data.prix_total + +data.commission) - this.montantVerser(data);
   }
 
   etatCommande(data: Commande): string {
@@ -58,7 +59,7 @@ export class CommandesComponent implements OnInit {
     return etat;
   }
 
-  etatColor(data: Commande){
+  etatColor(data: Commande) {
     let etat = 'green';
     switch (data.etat_commande.nom) {
       case 'append':
@@ -69,5 +70,9 @@ export class CommandesComponent implements OnInit {
         break;
     }
     return etat;
+  }
+
+  show(item: Commande){
+    this.router.navigate(['/client/commandes/show/'+item.id])
   }
 }

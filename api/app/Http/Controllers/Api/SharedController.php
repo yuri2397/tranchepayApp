@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Partenaire;
 use App\Models\ModePayement;
 use App\Http\Controllers\Controller;
+use App\Models\Padding;
 
 class SharedController extends Controller
 {
@@ -14,7 +15,7 @@ class SharedController extends Controller
     public function modePaiement($id)
     {
         $client = Client::find($id);
-        if($client->deplafonner == true){
+        if($client && $client->deplafonner == true){
             return ModePayement::where('nb_mois', "<=", 4)->get();
         }
         return ModePayement::all();
@@ -23,5 +24,10 @@ class SharedController extends Controller
     public function partenaires()
     {
         return Partenaire::all();
+    }
+
+    public function checkPadding($reference)
+    {
+        return Padding::find($reference);
     }
 }
