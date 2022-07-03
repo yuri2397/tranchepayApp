@@ -38,6 +38,9 @@ export class SoldesComponent implements OnInit {
     let modal = this.modalService.create({
       nzTitle: "Faire un retrait",
       nzContent: RetraitComponent,
+      nzFooter: null,
+      nzWidth: "40%",
+      nzCentered: true,
       nzComponentParams: {
         boutique: this.boutique
       },

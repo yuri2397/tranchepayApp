@@ -1,20 +1,22 @@
 <div class="container">
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-        <div class="section-title p-1 m-2">
-            <h1>FAIRE UN VIREMENT</h1>
-        </div>
-        <div class="form-group">
-            <label for="montant">MONTANT (FCFA)</label>
-            <input nz-input type="number" formControlName="montant" class="form-control shadow-sm" id="montant" name="montant">
-        </div>
-        <div class="form-group mt-3">
-            <label for="telephone">TELEPHONE (ORANGE MONEY)</label>
-            <input nz-input type="number" formControlName="telephone" class="form-control shadow-sm" id="telephone" name="telephone">
-        </div>
+    <form nz-form [formGroup]="validateForm" nzLayout="vertical" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-label class=""total nzRequired>MONTANT À VERSER</nz-form-label>
+            <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="amountErrorTpl">
+                <input class="tatol form-control shadow-sm" nzSize="large" nz-input type="number" min="0" formControlName="amount" placeholder="Montant à verser" />
+                <ng-template #amountErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('max')">Le solde de votre compte ne vous permet pas de faire cet retrait.
+                    </ng-container>
+                </ng-template>
+            </nz-form-control>
+        </nz-form-item>
+        <div class="row mt-4">
+            <div class="col-md-4 " *ngFor="let item of mobilePayements"
+              (click)="handleOk(item.name)">
+              <div class="card body shadow-sm raduis-sm pointer card-pay">
+                <img [src]="item.image_src" [alt]="item.choice_label" [title]="item.choice_label" class="card-img-top " />
+              </div>
+            </div>
+          </div>
     </form>
-</div>
-
-<div *nzModalFooter>
-    <button nz-button nzType="default" (click)="handleCancel()">ANNULER</button>
-    <button nz-button nzType="primary" (click)="handleOk()" [disabled]="!validateForm.valid" [nzLoading]="isLoad">CONTINUER</button>
 </div>
