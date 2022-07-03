@@ -249,8 +249,7 @@ export class AjouterVentesComponent implements OnInit {
                         console.log(check);
                         resolve(!check.status)
                         if(check.status){
-                          type = "success";
-                          response.message = "Le client a confirmer la vente. ✅"
+                          this.successModal("Votre transaction c'est bien terminée.")
                           setTimeout(() => {
                             m.destroy()
                           }, 1000);
@@ -286,6 +285,21 @@ export class AjouterVentesComponent implements OnInit {
           console.error(errors);
         },
       });
+  }
+
+  successModal(message: string) {
+   this.modalService.create({
+      nzTitle: undefined,
+      nzFooter: null,
+      nzContent: PayementPaddingComponent,
+      nzCentered: true,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzComponentParams: {
+        text: message,
+        type: "success",
+      },
+    });
   }
 
   showModal() {
