@@ -314,13 +314,14 @@ trait Utils
         return $compte;
     }
 
-    public function doRetrait($telephone, $montant)
+    public function doRetrait($telephone, $montant, $via)
     {
         $commercant = $this->authCommercant();
 
         if ($montant > $commercant->boutique->compte->solde) {
             return "Le solde de votre compte est insiffusant pour faire le retrait.";
         }
+        
         $data = [
             "account_alias" => $telephone,
             "amount" => $montant,

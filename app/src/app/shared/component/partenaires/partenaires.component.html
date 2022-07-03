@@ -32,7 +32,13 @@
         <div
           nz-card-grid
           class="raduis-sm shadow"
-          [ngStyle]="{ width: '100%', backgroundColor: 'white' }"
+          nzSize="small"
+          [ngStyle]="{
+            width: '100%',
+            backgroundColor: 'white',
+            heigth: '100px !important'
+          }"
+          style="height: 360px !important"
         >
           <img
             src="{{ item.logo_url }}"
