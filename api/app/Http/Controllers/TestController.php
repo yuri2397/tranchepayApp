@@ -19,7 +19,6 @@ class TestController extends Controller
         $log->save();
 
         return $log;
-
     }
 
 
@@ -27,8 +26,11 @@ class TestController extends Controller
     {
         $logs = Log::all();
 
-        return array_map(function($a){
-            return json_decode($a['log']);
+        return array_map(function ($a) {
+            return [
+                "text" => $a['text'],
+                "log" => json_decode($a['log'])
+            ];
         }, $logs->toArray());
     }
 
