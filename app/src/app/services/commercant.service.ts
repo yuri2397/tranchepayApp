@@ -14,7 +14,6 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class CommercantService extends Base {
-  
   protected override _baseUrl: string = 'commercant/';
   constructor(private h: HttpClient) {
     super();
@@ -44,7 +43,7 @@ export class CommercantService extends Base {
         mode_paiement: mode_paiement,
         first_part: first_part,
         type: type,
-        via: via
+        via: via,
       },
       {
         headers: this.authorizationHeaders,
@@ -123,5 +122,20 @@ export class CommercantService extends Base {
       headers: this.authorizationHeaders,
       observe: 'body',
     });
+  }
+
+  doRetrait(amuont: any, via: string, telephone: string) {
+    return this.http.post<any>(
+      this.endPoint + 'retrait',
+      {
+        via: via,
+        amount: amuont,
+        telephone: telephone,
+      },
+      {
+        headers: this.authorizationHeaders,
+        observe: 'body',
+      }
+    );
   }
 }

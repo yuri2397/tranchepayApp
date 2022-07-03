@@ -48,10 +48,11 @@ class CommercantController extends Controller
     {
         $this->validate($request, [
             "montant" => "required",
-            "telephone" => "required"
+            "telephone" => "required",
+            "via" => "required"
         ]);
 
-        return $this->doRetrait($request->telephone, $request->number);
+        return $this->doRetrait($request->telephone, $request->number, $request->via);
     }
 
 
