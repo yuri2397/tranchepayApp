@@ -121,6 +121,9 @@ export class UtilisateursComponent implements OnInit {
       });
   }
 
+  cancel(): void {
+  }
+
   addUser() {
     this.isVisible = true;
   }
