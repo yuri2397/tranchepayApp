@@ -126,7 +126,7 @@ export class AjouterVentesComponent implements OnInit {
     this.produits.forEach((p) => {
       amount += p.prix_unitaire * p.quantite;
     });
-    return amount - amount * (2 / 3);
+    return Math.round(amount * (1 / 4));
   }
 
   addToList() {
@@ -202,16 +202,17 @@ export class AjouterVentesComponent implements OnInit {
 
   saveVente(
     mode: 'online' | 'offline',
-    type: 'om' | 'wave' | 'free' | 'local' = 'local'
+    via: 'om' | 'wave' | 'free' | 'local' = 'local'
   ) {
     this.isLoad = true;
+  
     console.log(
       this.produits,
       this.validateFormClient.value.telephone,
       mode,
       this.firstPart,
       this.validateFormClient.value.type,
-      type
+      via
     );
 
     this.commercantService
@@ -221,7 +222,7 @@ export class AjouterVentesComponent implements OnInit {
         mode,
         this.firstPart,
         this.validateFormClient.value.type,
-        type
+        via
       )
       .subscribe({
         next: (response) => {
@@ -275,6 +276,7 @@ export class AjouterVentesComponent implements OnInit {
           this.produits = [];
           this.validateFormClient.reset();
           this.validateForm.reset();
+          this.firstPart = 0;
           this.isLoad = false;
         },
         error: (errors) => {

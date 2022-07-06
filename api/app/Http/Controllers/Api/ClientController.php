@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Mail\SendClientHelpMail;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Traits\Utils;
 use App\Models\Client;
-use App\Models\User;
-use App\Traits\Paydunya;
-use PHPUnit\TextUI\Exception;
-use Paydunya\Checkout\CheckoutInvoice;
-use App\Models\Commande;
-use App\Models\Boutique;
-use App\Models\Versement;
-use App\Models\EtatCommande;
 use App\Models\Compte;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SendHelpMail;
 use App\Models\Padding;
+use App\Models\Boutique;
+use App\Models\Commande;
+use App\Traits\Paydunya;
+use App\Models\Versement;
+use App\Mail\SendHelpMail;
+use App\Models\EtatCommande;
+use App\Traits\FreePayement;
 use App\Traits\Notification;
 use App\Traits\WavePayement;
+use Illuminate\Http\Request;
+use PHPUnit\TextUI\Exception;
+use App\Mail\SendClientHelpMail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Paydunya\Checkout\CheckoutInvoice;
 
 class ClientController extends Controller
 {
     use Utils;
     use Paydunya;
-    use Notification, WavePayement;
+    use Notification, WavePayement, FreePayement;
 
 
     public function profile()
@@ -174,11 +175,17 @@ class ClientController extends Controller
                     ], 503);
                     break;
                 case 'free':
-                    # code...
-                    break;
-
-                default:
-                    # code...
+                    $response = $this->requestFreePayement($request->montant, $this->authClient(), $commande, 'vm');
+                    if ($response && $response['response']['status'] == 'PENDING') {
+                        return response()->json([
+                            "padding" => $response["padding"],
+                            "message" => "Votre verssement est en attente de confirmation.",
+                            "data" => json_decode($response['response'])
+                        ]);
+                    }
+                    return response()->json([
+                        "message" => "Une erreur est survenu lors que votre opération. Merci de reessayer plus tard."
+                    ], 503);
                     break;
             }
         } else {

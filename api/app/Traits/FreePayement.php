@@ -8,9 +8,9 @@ use App\Models\Commande;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 
-class FreePayement
+trait FreePayement
 {
-    public function requestPayement($amount, Client $client, Commande $commande, $type)
+    public function requestFreePayement($amount, Client $client, Commande $commande, $type)
     {
         $data = [
             "amount" => $amount,
@@ -36,6 +36,9 @@ class FreePayement
         $padding->commande_id = $commande->id;
         $padding->save();
 
-        return json_decode($response);
+        return [
+            "response" => $response,
+            "padding" => $padding->id
+        ];
     }
 }

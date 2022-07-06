@@ -68,6 +68,8 @@ export class VersementCreateComponent implements OnInit {
         .doVersement(this.commande, this.form.value.amount, via)
         .subscribe({
           next: (success) => {
+            console.log(success);
+            
             this.destroy(success);
           },
           error: (errors) => {
