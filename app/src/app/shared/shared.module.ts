@@ -34,6 +34,7 @@ import { PayementSuccessComponent } from './component/payement-success/payement-
 import { PayementErrorComponent } from './component/payement-error/payement-error.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { PayementPaddingComponent } from './component/payement-padding/payement-padding.component';
+import { MobileMoneyModalComponent } from './component/mobile-money-modal/mobile-money-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PayementPaddingComponent } from './component/payement-padding/payement-
     PayementErrorComponent,
     PayementSuccessComponent,
     PayementPaddingComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MobileMoneyModalComponent
   ],
   imports: [
     CommonModule,
