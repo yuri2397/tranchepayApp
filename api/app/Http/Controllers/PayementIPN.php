@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use App\Models\Commande;
 use App\Models\Compte;
 use App\Models\EtatCommande;
@@ -49,8 +48,6 @@ class PayementIPN extends Controller
 
                     $res = $this->restant($commande);
                     $padding->save();
-                    $log->text = $res;
-                    $log->save();
 
                     if ($res == 0) {
                         $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
@@ -77,16 +74,15 @@ class PayementIPN extends Controller
 
         $body = $request->all();
         $padding = Padding::whereReference($body['externalId'])->whereStatus(false)->first();
-        if($padding)
-        {
+        if ($padding) {
             switch ($body['status']) {
                 case 'APPROVED':
                     if ($padding) {
                         $padding->extra = json_encode($body);
                         $padding->status = true;
-    
+
                         $commande = Commande::with("versements")->find($padding->commande_id);
-    
+
                         $versement = new Versement();
                         $versement->date_time = now();
                         $versement->via = 'Free Money';
@@ -94,18 +90,18 @@ class PayementIPN extends Controller
                         $versement->montant = $body['amount'];
                         $versement->commande_id = $commande->id;
                         $versement->save();
-    
+
                         if ($padding->type == "fp") {
                             $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
                             $compte->solde += $commande->prix_total;
                             $compte->save();
                         }
-    
+
                         $res = $this->restant($commande);
                         $padding->save();
                         $log->text = $res;
                         $log->save();
-    
+
                         if ($res == 0) {
                             $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                             $commande->save();
@@ -115,7 +111,7 @@ class PayementIPN extends Controller
                     break;
                 case 'REJECTED':
                     $padding->delete();
-                break;
+                    break;
             }
         }
         return response()->json(["message" => "Request success"], 200);
