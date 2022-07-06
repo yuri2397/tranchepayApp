@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Http;
 
 class FreePayement
 {
-    public function requestPayement($amount, Client $client, Commande $commande)
+    public function requestPayement($amount, Client $client, Commande $commande, $type)
     {
         $data = [
             "amount" => $amount,
             "currency" => "XOF",
-            "agentmsisdn" => "",
+            "agentmsisdn" => env("FREE_AGENT_USERNAME"),
             "customermsisdn" => "221" . $client->telephone,
             "password" => env("FREE_AGENT_PIN"),
             "externaltransactionid" => $commande->reference,
@@ -28,8 +28,11 @@ class FreePayement
 
         $padding = new Padding();
         $padding->reference = $response['transactionid'];
-        $padding->type = "free-payement";
+        $padding->type = $type;
         $padding->user_id = $client->id;
+        $padding->via = "Free Money";
+        $padding->amount = $amount;
+        $padding->commande_id = $commande->id;
         $padding->save();
 
         return json_decode($response);

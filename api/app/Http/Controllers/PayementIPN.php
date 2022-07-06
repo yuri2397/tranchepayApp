@@ -92,6 +92,9 @@ class PayementIPN extends Controller
 
     public function free(Request $request)
     {
+        $log = new Log();
+        $log->log = json_encode($request->all());
+        $log->save();
         return response()->json(["message" => "Request success"], 200);
     }
 }
