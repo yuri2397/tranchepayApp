@@ -18,73 +18,52 @@ class PayementIPN extends Controller
 
     public function wave(Request $request)
     {
-        $log = new Log();
-        $log->log = json_encode($request->all());
-        $log->text = $request->header('WAVE_SIGNATURE');
-        $log->save();
-        $wave_webhook_secret = env("WAVE_WEB_HOOK");
-
-        $wave_signature = $request->header('WAVE_SIGNATURE');
-
-        $parts = explode(",", $wave_signature);
-        $timestamp = explode("=", $parts[0])[1];
-
-        $signatures = array();
-        foreach (array_slice($parts, 1) as $signature) {
-            $signatures[] = explode("=", $signature)[1];
-        }
         $body = $request->all();
-        $computed_hmac = hash_hmac("sha256", $timestamp . json_encode($body), $wave_webhook_secret);
-        $valid = in_array($computed_hmac, $signatures);
+        $webhook_event = $body['type'];
+        $data = $body['data'];
 
-        if (true) { 
+        switch ($webhook_event) {
+            case 'checkout.session.completed':
+                $padding = Padding::whereReference($data['id'])->whereStatus(false)->first();
 
-            $webhook_event = $body['type'];
-            $data = $body['data'];
+                if ($padding) {
 
-            switch ($webhook_event) {
-                case 'checkout.session.completed':
-                    $padding = Padding::whereReference($data['id'])->whereStatus(false)->first();
+                    $padding->extra = json_encode($body);
+                    $padding->status = true;
 
-                    if ($padding) {
+                    $commande = Commande::with("versements")->find($padding->commande_id);
 
-                        $padding->extra = json_encode($body);
-                        $padding->status = true;
+                    $versement = new Versement();
+                    $versement->date_time = now();
+                    $versement->via = 'Wave';
+                    $versement->reference = $data['id'];
+                    $versement->montant = $data['amount'];
+                    $versement->commande_id = $commande->id;
+                    $versement->save();
 
-                        $commande = Commande::with("versements")->find($padding->commande_id);
-
-                        $versement = new Versement();
-                        $versement->date_time = now();
-                        $versement->via = 'Wave';
-                        $versement->reference = $data['id'];
-                        $versement->montant = $data['amount'];
-                        $versement->commande_id = $commande->id;
-                        $versement->save();
-
-                        if ($padding->type == "fp") {
-                            $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
-                            $compte->solde += $commande->prix_total;
-                            $compte->save();
-                        }
-
-                        $res = $this->restant($commande);
-                        $padding->save();
-                        $log->text = $res;
-                        $log->save();
-
-                        if ($res == 0) {
-                            $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
-                            $commande->save();
-                        }
-                        return response()->json([], 200);
+                    if ($padding->type == "fp") {
+                        $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
+                        $compte->solde += $commande->prix_total;
+                        $compte->save();
                     }
-                    break;
-            }
-            return response()->json(["message" => "Request success"], 200);
-        } else {
-            die("Unable to verify webhook signature.");
+
+                    $res = $this->restant($commande);
+                    $padding->save();
+                    $log->text = $res;
+                    $log->save();
+
+                    if ($res == 0) {
+                        $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
+                        $commande->save();
+                    }
+                    return response()->json([], 200);
+                }
+                break;
         }
+        return response()->json(["message" => "Request success"], 200);
     }
+
+
     public function orangeMoney(Request $request)
     {
         return response()->json(["message" => "Request success"], 200);
@@ -95,6 +74,50 @@ class PayementIPN extends Controller
         $log = new Log();
         $log->log = json_encode($request->all());
         $log->save();
+
+        $body = $request->all();
+        $padding = Padding::whereReference($body['externalId'])->whereStatus(false)->first();
+        if($padding)
+        {
+            switch ($body['status']) {
+                case 'APPROVED':
+                    if ($padding) {
+                        $padding->extra = json_encode($body);
+                        $padding->status = true;
+    
+                        $commande = Commande::with("versements")->find($padding->commande_id);
+    
+                        $versement = new Versement();
+                        $versement->date_time = now();
+                        $versement->via = 'Free Money';
+                        $versement->reference = $body['externalId'];
+                        $versement->montant = $body['amount'];
+                        $versement->commande_id = $commande->id;
+                        $versement->save();
+    
+                        if ($padding->type == "fp") {
+                            $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
+                            $compte->solde += $commande->prix_total;
+                            $compte->save();
+                        }
+    
+                        $res = $this->restant($commande);
+                        $padding->save();
+                        $log->text = $res;
+                        $log->save();
+    
+                        if ($res == 0) {
+                            $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
+                            $commande->save();
+                        }
+                        return response()->json([], 200);
+                    }
+                    break;
+                case 'REJECTED':
+                    $padding->delete();
+                break;
+            }
+        }
         return response()->json(["message" => "Request success"], 200);
     }
 }

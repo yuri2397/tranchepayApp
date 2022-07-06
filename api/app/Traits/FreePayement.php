@@ -3,8 +3,9 @@
 namespace App\Traits;
 
 use App\Models\Client;
-use App\Models\Commande;
 use App\Models\Padding;
+use App\Models\Commande;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 
 class FreePayement
@@ -27,7 +28,7 @@ class FreePayement
         ])->post("https://gateway.free.sn/Live/paiementmarchand", $data);
 
         $padding = new Padding();
-        $padding->reference = $response['transactionid'];
+        $padding->reference = "free_" . Str::random();
         $padding->type = $type;
         $padding->user_id = $client->id;
         $padding->via = "Free Money";
