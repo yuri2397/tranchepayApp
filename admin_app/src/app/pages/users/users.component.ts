@@ -82,7 +82,6 @@ export class UsersComponent implements OnInit {
     this.Authsrv.findAdmins().subscribe({
       next: (response) => {
         this.admins = response;
-        console.log('list admin' + JSON.stringify(this.admins));
         this.isLoad = false;
       },
 

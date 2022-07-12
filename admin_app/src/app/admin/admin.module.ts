@@ -20,7 +20,6 @@ import { CommercantComponent } from '../pages/commercant/commercant.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { ParametreComponent } from '../pages/parametre/parametre.component';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ProfileComponent } from '../pages/profile/profile.component';
@@ -37,6 +36,8 @@ import { PartenaireListComponent } from '../pages/partenaire/partenaire-list/par
 import { PartenaireCreateComponent } from '../pages/partenaire/partenaire-create/partenaire-create.component';
 import { PartenaireEditComponent } from '../pages/partenaire/partenaire-edit/partenaire-edit.component';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { ParametresListComponent } from '../pages/parametre/parametres-list/parametres-list.component';
+import { ParametresEditComponent } from '../pages/parametre/parametres-edit/parametres-edit.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,6 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
     ClientComponent,
     CommercantComponent,
     UsersComponent,
-    ParametreComponent,
     CommandesComponent,
     CommandesLivresComponent,
     CommandesEncoursComponent,
@@ -57,6 +57,8 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
     PartenaireListComponent,
     PartenaireCreateComponent,
     PartenaireEditComponent,
+    ParametresListComponent,
+    ParametresEditComponent,
   ],
   imports: [
     CommonModule,

@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Http\Controllers\Controller;
 use App\Models\EtatCommande;
+use App\Models\ModePayement;
+use App\Models\Param;
 use App\Models\Partenaire;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -270,5 +272,17 @@ class AdminController extends Controller
         } else {
             return response()->json(["message" => "Partenaire with id $id not found"], 404);
         }
+    }
+
+
+    public function parametre()
+    {
+        return Param::all();
+    }
+
+    public function modePayements()
+    {
+        
+        return ModePayement::all();
     }
 }

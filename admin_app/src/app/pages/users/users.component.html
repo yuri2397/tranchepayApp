@@ -1,46 +1,47 @@
-<div class="row justify-content-between responsive">
-  <div class="col-sm-6">
-    <!-- Top search START -->
-    <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
-      <div class="col-sm-7">
-        <div class="search-box">
-          <input type="text" class="form-control" placeholder="Rechercher">
+<div class="card card-body shadow-sm border raduis-sm">
+  <div class="row justify-content-between responsive">
+    <div class="col-sm-6">
+      <!-- Top search START -->
+      <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
+        <div class="col-sm-7">
+          <div class="search-box">
+            <input type="text" class="form-control" placeholder="Rechercher">
+          </div>
         </div>
       </div>
+      <!-- Top search END -->
     </div>
-    <!-- Top search END -->
-  </div>
-  <div class="col-sm-6 text-end">
-    <button *ngIf="Authsrv.can('creer utilisateur')" class="btn submit-btn border my-2 shadow-sm" nz-button
-      (click)="showModal()">
-      <span>Create Admin</span>
-    </button>
-  </div>
+    <div class="col-sm-6 text-end">
+      <button *ngIf="Authsrv.can('creer utilisateur')" class="btn submit-btn border my-2 shadow-sm" nz-button
+        (click)="showModal()">
+        <span>Create Admin</span>
+      </button>
+    </div>
 
-</div><br><br>
+  </div><br><br>
 
-<nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad">
-  <thead>
-    <tr>
+  <nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad">
+    <thead>
+      <tr>
 
-      <th>Name</th>
-      <th>Email</th>
-      <th *ngIf="Authsrv.can('voir utilisateur')">Voir détails</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of middleTable.data">
-      <td>{{ data.full_name }}</td>
-      <td>{{ data.email }}</td>
-      <td class="text-dark-green" *ngIf="Authsrv.can('voir utilisateur')">
-        <button (click)="show(data)" class="btn submit-btn my-2 shadow-sm" nz-button nzShape="circle">
-          <i nz-icon nzType="eye" nzTheme="outline"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
-
+        <th>Name</th>
+        <th>Email</th>
+        <th *ngIf="Authsrv.can('voir utilisateur')">Voir détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of middleTable.data">
+        <td>{{ data.full_name }}</td>
+        <td>{{ data.email }}</td>
+        <td class="text-dark-green" *ngIf="Authsrv.can('voir utilisateur')">
+          <button (click)="show(data)" class="btn submit-btn my-2 shadow-sm" nz-button nzShape="circle">
+            <i nz-icon nzType="eye" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
 
 <div>
 

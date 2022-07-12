@@ -1,0 +1,45 @@
+<div class="card card-body shadow-sm border raduis-sm">
+
+  <nz-table #nzTable [nzData]="data" [nzPageSize]="10" [nzLoading]="isLoad">
+    <thead>
+      <tr>
+        <th>Cle</th>
+        <th>Valeur</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.cle }}</td>
+        <td>{{ i.valeur }}</td>
+        <td>
+          <a class="btn btn-warning" (click)="edit(i)">Modifier</a>
+          <nz-divider nzType="vertical"></nz-divider>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+
+  <nz-table #nzTable1 [nzData]="modePayements" [nzPageSize]="10" [nzLoading]="isLoad">
+    <thead>
+      <tr>
+        <th>Interet (%)</th>
+        <th>Label</th>
+        <th>Nombre de mois</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable1.data">
+        <td>{{ i.interet }} (%)</td>
+        <td>{{ i.label }}</td>
+        <td>{{ i.nb_mois }}</td>
+        <td>
+          <a class="btn btn-warning" (click)="editMode(i)">Modifier</a>
+          <nz-divider nzType="vertical"></nz-divider>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
