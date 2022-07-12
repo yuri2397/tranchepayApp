@@ -48,7 +48,6 @@ export class ProfileComponent implements OnInit {
       const width = event.target.naturalWidth;
       const height = event.target.naturalHeight;
       const portrait = height > width ? true : false;
-      console.log(width, height, 'portrait: ', portrait);
     }
   }
 
@@ -65,8 +64,6 @@ export class ProfileComponent implements OnInit {
   logout() {
     this.logoutLoad = true;
     this.userService.logout().subscribe((response) => {
-      console.log(response);
-
       // this.userService.clearSession();
       // this.router.navigate(['/login']);
     });

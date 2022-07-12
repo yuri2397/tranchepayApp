@@ -13,7 +13,7 @@ export class CommercantComponent implements OnInit {
   commercants!:Commercant[];
   expandSet = new Set<number>();
   titre:any;
-  constructor(private Authsrv:AuthService,private route:Router) { }
+  constructor(private Authsrv:AuthService,private router:Router) { }
 
   ngOnInit(): void {
     this.findAll();
@@ -32,7 +32,6 @@ export class CommercantComponent implements OnInit {
     this.Authsrv.findCommercants().subscribe({
       next: (response) => {
         this.commercants = response;
-        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.commercants) );
         this.isLoad = false;
       },
 
@@ -57,5 +56,8 @@ export class CommercantComponent implements OnInit {
 
   }
 
+  show(data: Commercant){
+    this.router.navigate(["/admin/commercant/show/" + data.id]);
+  }
 
 }

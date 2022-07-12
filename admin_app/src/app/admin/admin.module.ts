@@ -33,6 +33,10 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { DetailsCommandeComponent } from '../pages/details-commande/details-commande.component';
 import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
+import { PartenaireListComponent } from '../pages/partenaire/partenaire-list/partenaire-list.component';
+import { PartenaireCreateComponent } from '../pages/partenaire/partenaire-create/partenaire-create.component';
+import { PartenaireEditComponent } from '../pages/partenaire/partenaire-edit/partenaire-edit.component';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,10 @@ import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
     DetailsClientsComponent,
     DetailsCommercantComponent,
     DetailsCommandeComponent,
-    ShowAdminComponent
+    ShowAdminComponent,
+    PartenaireListComponent,
+    PartenaireCreateComponent,
+    PartenaireEditComponent,
   ],
   imports: [
     CommonModule,
@@ -70,9 +77,7 @@ import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
     NzInputModule,
     NzSelectModule,
     NzLayoutModule,
-    NzPopconfirmModule,
-
-
+    NzPopconfirmModule,NzPageHeaderModule
   ]
 })
 export class AdminModule { }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Client } from './../../models/client';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,7 +13,7 @@ export class ClientComponent implements OnInit {
   isLoad = true;
   titre:any;
   expandSet = new Set<number>();
-  constructor(private Authsrv: AuthService) {}
+  constructor(private Authsrv: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.findAll();
@@ -23,7 +24,6 @@ export class ClientComponent implements OnInit {
     this.Authsrv.findClients().subscribe({
       next: (response) => {
         this.clients = response;
-        console.log("list Clients"+JSON.stringify(this.clients) );
         this.isLoad = false;
       },
 
@@ -55,5 +55,9 @@ export class ClientComponent implements OnInit {
       })
     }
 
+  }
+
+  show(data: any){
+    this.router.navigate(['/admin/clients/show/' + data.id]);
   }
 }

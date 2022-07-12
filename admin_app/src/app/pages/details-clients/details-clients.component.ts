@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { Commande } from 'src/app/models/commande';
 import { AuthService } from 'src/app/services/auth.service';
@@ -7,25 +8,26 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-details-clients',
   templateUrl: './details-clients.component.html',
-  styleUrls: ['./details-clients.component.scss']
+  styleUrls: ['./details-clients.component.scss'],
 })
 export class DetailsClientsComponent implements OnInit {
-
   isLoad = true;
-  client!:Client;
-  commandes!:Commande[];
+  client!: Client;
+  commandes!: Commande[];
   id: any;
-  constructor(private route:ActivatedRoute,private AuthSrv:AuthService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private AuthSrv: AuthService,
+    private location: Location,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-
-    this.id=this.route.snapshot.paramMap.get('id');
-    console.log("je suis id :"+this.id);
+    this.id = this.route.snapshot.paramMap.get('id');
     this.isLoad = true;
     this.AuthSrv.findClient(this.id).subscribe({
       next: (response) => {
         this.client = response;
-        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.client) );
         this.isLoad = false;
       },
 
@@ -37,15 +39,19 @@ export class DetailsClientsComponent implements OnInit {
     this.AuthSrv.findCommandeByClient(this.id).subscribe({
       next: (response) => {
         this.commandes = response;
-        console.log("AZIZ sy Ndiaye"+JSON.stringify(this.commandes) );
         this.isLoad = false;
       },
-
       error: (errors) => {
         console.error(errors);
       },
     });
-
   }
 
+  onBack() {
+    this.location.back();
+  }
+
+  goto(data: any) {
+    this.router.navigate(['/admin/commandes/show/' + data.id])
+  }
 }

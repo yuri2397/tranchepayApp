@@ -2459,3 +2459,8 @@ btn-dark-green {
 .ant-menu-sub.ant-menu-inline {
     background-color: #85ffc2;
 }
+
+
+.pointer{
+    cursor: pointer !important;
+}

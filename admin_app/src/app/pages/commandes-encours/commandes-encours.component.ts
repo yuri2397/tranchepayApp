@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Commande } from 'src/app/models/commande';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,7 +13,8 @@ export class CommandesEncoursComponent implements OnInit {
   commandes!: Commande[];
   isLoad = true;
   titre:any;
-  constructor(private Authsrv: AuthService) {}
+  displayCommandes!: Commande[];
+  constructor(public Authsrv: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.findAll();
@@ -23,7 +25,7 @@ export class CommandesEncoursComponent implements OnInit {
     this.Authsrv.findProgressCommandes().subscribe({
       next: (response) => {
         this.commandes = response;
-        console.log("Lamine"+JSON.stringify(this.commandes));
+        this.displayCommandes = response;
         this.isLoad = false;
       },
 
@@ -32,20 +34,34 @@ export class CommandesEncoursComponent implements OnInit {
       },
     });
   }
-  serarchcommande()
+  search(data: string)
   {
-    if(this.titre=="")
-    {
-      this.ngOnInit();
-    }
-    else
-    {
-      this.commandes=this.commandes.filter((result: Commande)=>{
-        return result.reference.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
-      })
-    }
+    if (data?.length >= 2)
+      this.displayCommandes = this.commandes.filter((result: Commande) => {
+        return (
+          result.reference
+            .toLocaleLowerCase()
+            .indexOf(data.toLocaleLowerCase()) != -1 ||
+          result.boutique.nom
+            .toLocaleLowerCase()
+            .indexOf(data.toLocaleLowerCase()) != -1 ||
+          result.client.nom
+            .toLocaleLowerCase()
+            .indexOf(data.toLocaleLowerCase()) != -1 ||
+          result.client.prenoms
+            .toLocaleLowerCase()
+            .indexOf(data.toLocaleLowerCase()) != -1
+        );
+      });
+    else this.displayCommandes = this.commandes;
 
   }
 
+  total(data: Commande){
+    return Number(data.prix_total) + Number(data.commission);
+  }
 
+  show(data: any){
+    this.router.navigate(["/admin/commandes/show/" + data.id])
+  }
 }

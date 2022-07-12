@@ -1,0 +1,48 @@
+<div class="card card-body shadow-sm border raduis-sm">
+  <div class="d-flex justify-content-between">
+    <div>
+      <h3>Liste des partenaires</h3>
+    </div>
+    <div>
+      <button (click)="add()" nz-button class="submit-btn">Créer un partenaire</button>
+    </div>
+  </div>
+
+  <br>
+  <nz-table #nzTable [nzData]="data" [nzPageSize]="10" [nzLoading]="isload">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Logo</th>
+        <th>Site web</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.nom }}</td>
+        <td>
+          <img width="100px" src="{{ i.logo_url }}" alt="LOGO">
+        </td>
+        <td>
+          <ng-container *ngIf="i.site_web; else elseTemplate">
+            <a href="{{ i.site_web }}">{{ i.site_web }}</a>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <span class="alert alert-danger">Non défini</span>
+          </ng-template>
+
+        </td>
+        <td>
+          <a class="btn btn-warning" (click)="edit(i)">Modifier</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm nzPopconfirmTitle="Vous voulez vraiment continuer?" nzPopconfirmPlacement="top"
+            (nzOnConfirm)="del(i)" class="btn btn-danger">Supprimer</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+
+</div>

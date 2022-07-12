@@ -10,4 +10,6 @@ class Partenaire extends Model
 {
     use Uuids;
     use HasFactory;
+
+    protected $fillable =["nom", "logo_url", "site_web"];
 }

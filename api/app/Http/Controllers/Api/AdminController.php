@@ -14,6 +14,8 @@ use App\Traits\Notification;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Http\Controllers\Controller;
+use App\Models\EtatCommande;
+use App\Models\Partenaire;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -56,7 +58,7 @@ class AdminController extends Controller
 
     public function getCommercants()
     {
-        return Commercant::with(['boutique', 'boutique.commandes'])->get();
+        return Commercant::with(['boutique'])->get();
     }
 
     public function showCommercantById($id)
@@ -85,12 +87,12 @@ class AdminController extends Controller
 
     public function progressCommandes()
     {
-        return Commande::limit(20)->where("etat_commande_id", 2)->get();
+        return Commande::limit(20)->where("etat_commande_id", EtatCommande::whereNom("load")->first()->id)->get();
     }
 
     public function finalCommandes()
     {
-        return Commande::limit(20)->where("etat_commande_id", 3)->get();
+        return Commande::where("etat_commande_id", EtatCommande::whereNom("finish")->first()->id)->get();
     }
 
     public function getCommandeByBoutiqueId(string $id)
@@ -133,39 +135,35 @@ class AdminController extends Controller
             $admin->givePermissionTo($request->permissions);
             $admin->save();
             return Mail::to($request->email)->send(new SendPasswordMail($request->email, $request->full_name, $password));
-        //return response()->json($password, 201);
-        }
-        catch (\Throwable $th) {
+            //return response()->json($password, 201);
+        } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th
             ], 500);
         }
-
     }
 
 
     public function ShowAdminById($id)
     {
-        return Admin::Where('id',$id)->first();
+        return Admin::Where('id', $id)->first();
     }
 
     public function ShowMissingPermission(Request $request)
     {
 
-       $permissions= (array)$request->permissions;
+        $permissions = (array)$request->permissions;
 
-        $permission=Permission::all();
+        $permission = Permission::all();
 
         foreach ($permission as $p) {
 
-            return Permission::Where($p->name,'!=',$permissions[0]->name)->get();
-
-
-            }
+            return Permission::Where($p->name, '!=', $permissions[0]->name)->get();
+        }
     }
 
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -177,7 +175,7 @@ class AdminController extends Controller
     }
 
 
-     /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -187,7 +185,7 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
 
-        $admin=$request->all();
+        $admin = $request->all();
         Admin::find($id)->update($admin);
     }
 
@@ -202,10 +200,9 @@ class AdminController extends Controller
     public function DesactiveCompte(Request $request, $id)
     {
 
-        $commercant=Commercant::find($id);
-        if($commercant->created_at!=null)
-        {
-            $commercant->created_at=null;
+        $commercant = Commercant::find($id);
+        if ($commercant->created_at != null) {
+            $commercant->created_at = null;
         }
 
         $commercant->update();
@@ -220,14 +217,58 @@ class AdminController extends Controller
     public function ActiveCompte(Request $request, $id)
     {
 
-        $commercant=Commercant::find($id);
-        if($commercant->created_at==null)
-        {
-            $commercant->created_at=Carbon::today();
+        $commercant = Commercant::find($id);
+        if ($commercant->created_at == null) {
+            $commercant->created_at = Carbon::today();
         }
 
         $commercant->update();
     }
 
 
+    public function partanaires()
+    {
+        return Partenaire::all();
+    }
+
+    public function createPartenaire(Request $request)
+    {
+        $request->validate([
+            "nom" => "required",
+            "logo_url" => "required"
+        ]);
+
+        $p = new Partenaire();
+        $p->nom = $request->nom;
+        $p->logo_url = $request->logo_url;
+        $p->site_web = $request->site_web;
+        $p->save();
+
+        return $p;
+    }
+
+    public function removePartenaire($id)
+    {
+        $partenaire = Partenaire::find($id);
+        $partenaire->delete();
+        return $partenaire;
+    }
+
+    public function updatePartenaire(Request $request, $id)
+    {
+        $request->validate([
+            "nom" => "required",
+            "logo_url" => "required"
+        ]);
+        $p = Partenaire::find($id);
+        if ($p) {
+            $p->nom = $request->nom;
+            $p->logo_url = $request->logo_url;
+            $p->site_web = $request->site_web ?? $p->site_web;
+            $p->save();
+            return $p;
+        } else {
+            return response()->json(["message" => "Partenaire with id $id not found"], 404);
+        }
+    }
 }
