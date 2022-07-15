@@ -24,7 +24,6 @@
                     <th>REFERENCE</th>
                     <th>MONTANT</th>
                     <th>ETAT</th>
-
                     <th>CLIENT</th>
                     <th>TELEPHONE</th>
                     <th>DATE</th>
@@ -80,6 +79,7 @@
                   <tr>
                     <th>REFERENCE</th>
                     <th>MONTANT</th>
+                    <th>Montant Restant</th>
                     <th>CLIENT</th>
                     <th>TELEPHONE</th>
                     <th>DATE</th>
@@ -89,6 +89,7 @@
                   <tr *ngFor="let data of nzTableLoad.data">
                     <td class="text-dark-green bold">{{ data.reference }}</td>
                     <td>{{ data.prix_total }} FCFA</td>
+                    <td>{{ data.prix_total }}r</td>
 
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
