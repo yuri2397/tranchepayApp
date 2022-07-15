@@ -1,3 +1,4 @@
+import { PartenaireCreateComponent } from './../pages/partenaire/partenaire-create/partenaire-create.component';
 import { ShowAdminComponent } from './../pages/show-admin/show-admin.component';
 import { DetailsCommandeComponent } from './../pages/details-commande/details-commande.component';
 import { DetailsCommercantComponent } from './../pages/details-commercant/details-commercant.component';
@@ -14,6 +15,8 @@ import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../guard/auth.guard';
 import { ProfileComponent } from '../pages/profile/profile.component';
+import { PartenaireListComponent } from '../pages/partenaire/partenaire-list/partenaire-list.component';
+import { ParametresListComponent } from '../pages/parametre/parametres-list/parametres-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -38,16 +41,16 @@ const routes: Routes = [
     path: 'commandes-encours',
     component: CommandesEncoursComponent,
   },
-  { path: 'user',
-    component: UsersComponent
-   },
-   { path: 'user/show/:id',
-   component: ShowAdminComponent
-  },
-
+  { path: 'user', component: UsersComponent },
+  { path: 'user/show/:id', component: ShowAdminComponent },
+  { path: 'parametres', component: ParametresListComponent },
   {
     path: 'detailclient/:id',
     component: DetailsClientsComponent,
+  },
+  {
+    path: 'partenaires',
+    component: PartenaireListComponent,
   },
   {
     path: 'commercant/show/:id',

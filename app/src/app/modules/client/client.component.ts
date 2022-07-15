@@ -43,7 +43,7 @@ export class ClientComponent implements OnInit {
   };
   isCollapse!: boolean;
 
-  isCollapsed = true;
+  isCollapsed = false;
   title = 'TRANCHEPAY';
   constructor(
     private router: Router,
@@ -57,7 +57,7 @@ export class ClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isCollapse = true;
+    this.isCollapse = false;
     this.menuState = this.collapse;
     this.getClient();
   }

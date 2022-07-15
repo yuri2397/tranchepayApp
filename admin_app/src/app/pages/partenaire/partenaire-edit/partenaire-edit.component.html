@@ -1,0 +1,36 @@
+<div>
+    <form nz-form [formGroup]="form"  nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzRequired>Nom</nz-form-label>
+        <nz-form-control zHasFeedback [nzSpan]="24" [nzErrorTip]="nomVal">
+          <input nz-input nzSize="large" formControlName="nom" placeholder="Nom du partenaire" />
+          <ng-template #nomVal let-control>
+            <ng-container *ngIf="control.hasError('required')">Le nom est obligatoire</ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzRequired>Logo</nz-form-label>
+        <nz-form-control zHasFeedback [nzSpan]="24" [nzErrorTip]="logoVal">
+          <input nz-input nzSize="large" type="text" formControlName="logo_url" placeholder="Lien logo" />
+          <ng-template #logoVal let-control>
+              <ng-container *ngIf="control.hasError('required')">Le logo est obligatoire</ng-container>
+            </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" >Site web</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input nzSize="large" formControlName="site_web" placeholder="Lien site web" type="text" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  
+  
+  <div *nzModalFooter>
+    <div class="d-flex justify-content-between">
+      <div><button nz-button class="white-btn" (click)="destroy(null)">Annuler</button></div>
+      <div><button nz-button class="submit-btn" (click)="_submitForm(form.value)" [nzLoading]="createLoad" type="submit" [disabled]="!form.valid">Modifier</button></div>
+    </div>
+  </div>

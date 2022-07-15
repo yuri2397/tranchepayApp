@@ -17,7 +17,7 @@ export class PayementSuccessComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth']);
   }
 
   commande() {

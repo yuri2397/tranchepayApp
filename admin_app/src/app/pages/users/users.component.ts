@@ -55,7 +55,6 @@ export class UsersComponent implements OnInit {
     this.Authsrv.createAdmn(this.user).subscribe({
       next: (response) => {
         this.user = response;
-        console.log(response);
       },
 
       error: (errors) => {
@@ -69,7 +68,6 @@ export class UsersComponent implements OnInit {
     this.Authsrv.allPermissions().subscribe({
       next: (response) => {
         this.listOfOption = response;
-        console.log('les Permissions' + JSON.stringify(this.listOfOption));
         this.isLoad = false;
       },
 
@@ -84,7 +82,6 @@ export class UsersComponent implements OnInit {
     this.Authsrv.findAdmins().subscribe({
       next: (response) => {
         this.admins = response;
-        console.log('list admin' + JSON.stringify(this.admins));
         this.isLoad = false;
       },
 

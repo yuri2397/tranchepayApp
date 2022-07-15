@@ -28,7 +28,6 @@ export class ShowAdminComponent implements OnInit {
       this.AuthSrv.findAdminById(this.id).subscribe({
         next: (response) => {
           this.admin = response;
-          console.log('cheikh bi'+JSON.stringify(this.admin))
           this.Permissions=this.admin.permissions;
           this.isLoad = false;
         },
@@ -48,7 +47,6 @@ export class ShowAdminComponent implements OnInit {
 
       this.AuthSrv.deleteAdmin(this.admin.id).subscribe({
         next: (response) => {
-    console.log(response);
           this.isLoad = false;
           this.router.navigate(['/admin/user'])
         },
@@ -69,7 +67,6 @@ export class ShowAdminComponent implements OnInit {
       this.admin.permissions=this.listOfSelectedValue
       this.AuthSrv.EditAdmin(this.admin.id,this.admin).subscribe({
         next: (response) => {
-          console.log(response);
           this.isLoad = false;
           this.router.navigate(['/admin/user'])
         },
@@ -104,7 +101,6 @@ export class ShowAdminComponent implements OnInit {
       this.AuthSrv.allPermissions().subscribe({
         next: (response) => {
           this.listOfOption = response;
-          console.log('les Permissions aziz' + JSON.stringify(this.listOfOption));
           this.isLoad = false;
         },
 

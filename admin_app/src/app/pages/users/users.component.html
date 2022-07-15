@@ -1,86 +1,78 @@
-<div class="row responsive">
-    <div class="col-sm-6 responsive">
-        <h4 style=" margin-bottom: 16px;">Liste Des Administrateurs</h4>
-    </div>
-
-
-    <br>
-</div>
-<div class="row justify-content-between responsive">
+<div class="card card-body shadow-sm border raduis-sm">
+  <div class="row justify-content-between responsive">
     <div class="col-sm-6">
-        <!-- Top search START -->
-        <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
-            <div class="col-sm-7">
-
-                <div class="search-box">
-                    <input type="text" class="form-control" placeholder="Email&hellip;">
-                </div>
-
-                <!-- Top search END -->
-            </div>
+      <!-- Top search START -->
+      <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
+        <div class="col-sm-7">
+          <div class="search-box">
+            <input type="text" class="form-control" placeholder="Rechercher">
+          </div>
         </div>
-        <!-- Top search END -->
+      </div>
+      <!-- Top search END -->
     </div>
     <div class="col-sm-6 text-end">
-        <button *ngIf="Authsrv.can('creer utilisateur')" class="btn submit-btn border my-2 shadow-sm" nz-button (click)="showModal()">
-            <span>Create Admin</span>
-        </button>
+      <button *ngIf="Authsrv.can('creer utilisateur')" class="btn submit-btn border my-2 shadow-sm" nz-button
+        (click)="showModal()">
+        <span>Create Admin</span>
+      </button>
     </div>
 
-</div><br><br>
+  </div><br><br>
 
-<nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad" [nzScroll]="{ y: '240px' }">
+  <nz-table #middleTable nzSize="middle" [nzData]="admins" [nzLoading]="isLoad">
     <thead>
-        <tr>
+      <tr>
 
-            <th>Name</th>
-            <th>Email</th>
-            <th *ngIf="Authsrv.can('voir utilisateur')">Voir détails</th>
-        </tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th *ngIf="Authsrv.can('voir utilisateur')">Voir détails</th>
+      </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let data of middleTable.data">
-            <td>{{ data.full_name }}</td>
-            <td>{{ data.email }}</td>
-            <td class="text-dark-green" *ngIf="Authsrv.can('voir utilisateur')">
-                <button (click)="show(data)" class="btn submit-btn my-2 shadow-sm" nz-button nzShape="circle">
-                    <i nz-icon nzType="eye" nzTheme="outline"></i>
-                </button>
-            </td>
-        </tr>
+      <tr *ngFor="let data of middleTable.data">
+        <td>{{ data.full_name }}</td>
+        <td>{{ data.email }}</td>
+        <td class="text-dark-green" *ngIf="Authsrv.can('voir utilisateur')">
+          <button (click)="show(data)" class="btn submit-btn my-2 shadow-sm" nz-button nzShape="circle">
+            <i nz-icon nzType="eye" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
     </tbody>
-</nz-table>
-
+  </nz-table>
+</div>
 
 <div>
 
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Enregistrer Admin" nzOkText="Enregistrer" nzCancelText="Cancel" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
-        <ng-container *nzModalContent>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Enregistrer Admin" nzOkText="Enregistrer" nzCancelText="Cancel"
+    (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
 
-            <nz-input-group nzSize="large">
-                <label for="">NOM</label>
-                <input [(ngModel)]="user.full_name" type="text" nz-input placeholder="Enter  fullname" />
-            </nz-input-group>
-            <ng-template #prefixTemplateUser><i nz-icon nzType="user"></i></ng-template>
-            <ng-template #suffixTemplateInfo>
-                <i nz-icon nz-tooltip nzTooltipTitle="Extra information" nzType="info-circle"></i>
-            </ng-template>
-            <br />
-            <br />
-            <label for="">EMAIL</label>
-            <input [(ngModel)]="user.email" class="form-control w-100" placeholder="Email" />
-            <br />
-            <br />
-            <label for="">PERMISSIONS</label>
-            <nz-select nzMode="multiple" class="form-control w-100" [(ngModel)]="listOfSelectedValue">
-                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name">
-                </nz-option>
-            </nz-select>
-            <br />
+      <nz-input-group nzSize="large">
+        <label for="">NOM</label>
+        <input [(ngModel)]="user.full_name" type="text" nz-input placeholder="Enter  fullname" />
+      </nz-input-group>
+      <ng-template #prefixTemplateUser><i nz-icon nzType="user"></i></ng-template>
+      <ng-template #suffixTemplateInfo>
+        <i nz-icon nz-tooltip nzTooltipTitle="Extra information" nzType="info-circle"></i>
+      </ng-template>
+      <br />
+      <br />
+      <label for="">EMAIL</label>
+      <input [(ngModel)]="user.email" class="form-control w-100" type="email" placeholder="Email" />
+      <br />
+      <br />
+      <label for="">PERMISSIONS</label>
+      <nz-select nzMode="multiple" class="form-control w-100" [(ngModel)]="listOfSelectedValue">
+        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.name">
+        </nz-option>
+      </nz-select>
+      <br />
 
 
-        </ng-container>
-    </nz-modal>
+    </ng-container>
+  </nz-modal>
 
 </div>
 <br />

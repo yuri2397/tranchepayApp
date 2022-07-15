@@ -1,121 +1,43 @@
-<div class="container card-body radius-sm">
+<div class="card card-body shadow-sm border raduis-sm">
 
-    <h3 class="breadcrumbs-title">Details sur le Client</h3>
-    <br>
+  <nz-page-header class="site-page-header" (nzBack)="onBack()" nzBackIcon
+    nzTitle="{{ client?.prenoms }} {{ client?.nom }}" nzSubtitle="Téléphone: {{ client?.telephone }}"></nz-page-header>
+  <br>
+  <nz-divider nzText="Liste des commandes"></nz-divider>
+  <nz-table #basicTable [nzData]="commandes" nzTableLayout="fixed" [nzLoading]="isLoad">
+    <thead>
+      <tr>
+        <th class="bold text-dark-green">REFERENCE</th>
+        <th class="bold text-dark-green">PRIX TOTAL</th>
+        <th class="bold text-dark-green">NOMBRE PRODUITS</th>
+        <th class="bold text-dark-green">COMMISSION</th>
+        <th class="bold text-dark-green">DATE LIMITE</th>
+        <th class="bold text-dark-green">CLIENT</th>
+        <th class="bold text-dark-green">ETAT</th>
 
-
-
-
-
-    <div class="row">
-
-
-        <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
-            <div class="collapsible-header active">
-                <h6>Identifiant</h6>
-            </div>
-            <div class="card card-body raduis-sm border">
-                <nz-list>
-                    <nz-list-item class="text-dark-green">
-                        <span nz-typography><b>PRENOM</b></span> {{client?.prenoms}}
-                        <span *ngIf="client?.prenoms==null">
-                          <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                        </span>
-                    </nz-list-item>
-                    <nz-list-item class="text-dark-green">
-                        <span nz-typography><b>NOM</b></span>{{client?.nom}}
-                        <span *ngIf="client?.nom==null">
-                          <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                        </span>
-                    </nz-list-item>
-                    <nz-list-item class="text-dark-green">
-                        <span nz-typography><b>ADRESSE</b></span> {{client?.adresse}}
-                        <span *ngIf="client?.adresse==null">
-                          <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                        </span>
-                    </nz-list-item>
-                    <nz-list-item class="text-dark-green">
-                        <span nz-typography><b>TELEPHONE</b></span> {{client?.telephone}}
-                        <span *ngIf="client?.telephone==null">
-                          <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                        </span>
-                    </nz-list-item>
-
-                </nz-list>
-            </div>
-        </div>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data" class="pointer" (click)="goto(data)">
+        <td class="text-dark-green">{{ data.reference }}
+        </td>
+        <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
+        <td class="text-dark-green">{{ data.nb_produits }}</td>
+        <td class="text-dark-green">{{ data.commission }} FCFA</td>
+        <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
+        <td class="text-dark-green">{{ data.client.prenoms+" " }} {{ data.client.nom }}</td>
 
 
+        <td class="text-dark-green">
+          <ng-container *ngIf="data.etat_commande.nom=='load'; else elseTemplate">
+            <nz-tag nzColor="processing">Encours</nz-tag>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <nz-tag nzColor="success">Finish</nz-tag>
+          </ng-template>
+        </td>
 
-
-    </div>
-
-
-
-
-
-    <hr>
-    <div class="col s12 m12">
-
-        <div class="card">
-            <div class="container">
-                <h5 class="my-3 text-dark-green bold">Les commandes</h5>
-                <br>
-                <div class="col-sm-7">
-                    <!-- Top search START -->
-                    <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
-                        <div class="col-sm-7">
-
-                            <div class="search-box">
-                                <input type="text" class="form-control" placeholder="REFERENCE&hellip;">
-                            </div>
-
-                            <!-- Top search END -->
-                        </div>
-                    </div>
-                    <!-- Top search END -->
-                </div>
-                <br>
-                <nz-table #basicTable [nzData]="commandes" nzTableLayout="fixed" [nzLoading]="isLoad">
-                    <thead>
-                        <tr>
-                            <th class="bold text-dark-green">REFERENCE</th>
-                            <th class="bold text-dark-green">PRIX TOTAL</th>
-                            <th class="bold text-dark-green">NOMBRE PRODUITS</th>
-                            <th class="bold text-dark-green">COMMISSION</th>
-                            <th class="bold text-dark-green">DATE LIMITE</th>
-                            <th class="bold text-dark-green">CLIENT</th>
-                            <th class="bold text-dark-green">ETAT</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of basicTable.data">
-                            <td class="text-dark-green">{{ data.reference }}
-                            </td>
-                            <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
-                            <td class="text-dark-green">{{data.nb_produits}}</td>
-                            <td class="text-dark-green">{{ data.commission }} FCFA</td>
-                            <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
-                            <td class="text-dark-green">{{ data.client.prenoms+" "}} {{ data.client.nom}}</td>
-
-
-                            <td class="text-dark-green">
-                                <ng-container *ngIf="data.etat_commande.nom=='load'; else elseTemplate">
-                                    <nz-tag nzColor="processing">Encours</nz-tag>
-                                </ng-container>
-                                <ng-template #elseTemplate>
-                                    <nz-tag nzColor="success">Finish</nz-tag>
-                                </ng-template>
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </nz-table>
-            </div>
-
-        </div>
-
-    </div>
-
+      </tr>
+    </tbody>
+  </nz-table>
 </div>

@@ -108,6 +108,18 @@ Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
 Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function () {
     Route::post("login", [AdminController::class, "login"])->withoutMiddleware("auth:admin");
     Route::get("logout", [AdminController::class, "logout"]);
+
+    // PARTENAIRES
+    Route::get("partenaire", [AdminController::class, "partanaires"]);
+    Route::post("partenaire/create", [AdminController::class, "createPartenaire"]);
+    Route::post("partenaire/remove/{id}", [AdminController::class, "removePartenaire"]);
+    Route::post("partenaire/update/{id}", [AdminController::class, "updatePartenaire"]);
+
+    // Parametres
+    Route::get("parametres", [AdminController::class, "parametre"]);
+    Route::get("/parametres/payements", [AdminController::class, "modePayements"]);
+
+
     Route::get('last-commandes', [AdminController::class, "lastCommandes"])->middleware('can:lister commande');
     Route::get('commercants', [AdminController::class, "getCommercants"])->middleware('can:lister commercant');
     Route::get('commercants/{id}', [AdminController::class, "showCommercantById"])->middleware('can:voir commercant');

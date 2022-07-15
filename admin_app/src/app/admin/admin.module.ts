@@ -20,7 +20,6 @@ import { CommercantComponent } from '../pages/commercant/commercant.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { ParametreComponent } from '../pages/parametre/parametre.component';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ProfileComponent } from '../pages/profile/profile.component';
@@ -33,6 +32,12 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { DetailsCommandeComponent } from '../pages/details-commande/details-commande.component';
 import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
+import { PartenaireListComponent } from '../pages/partenaire/partenaire-list/partenaire-list.component';
+import { PartenaireCreateComponent } from '../pages/partenaire/partenaire-create/partenaire-create.component';
+import { PartenaireEditComponent } from '../pages/partenaire/partenaire-edit/partenaire-edit.component';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { ParametresListComponent } from '../pages/parametre/parametres-list/parametres-list.component';
+import { ParametresEditComponent } from '../pages/parametre/parametres-edit/parametres-edit.component';
 
 @NgModule({
   declarations: [
@@ -42,14 +47,18 @@ import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
     ClientComponent,
     CommercantComponent,
     UsersComponent,
-    ParametreComponent,
     CommandesComponent,
     CommandesLivresComponent,
     CommandesEncoursComponent,
     DetailsClientsComponent,
     DetailsCommercantComponent,
     DetailsCommandeComponent,
-    ShowAdminComponent
+    ShowAdminComponent,
+    PartenaireListComponent,
+    PartenaireCreateComponent,
+    PartenaireEditComponent,
+    ParametresListComponent,
+    ParametresEditComponent,
   ],
   imports: [
     CommonModule,
@@ -70,9 +79,7 @@ import { ShowAdminComponent } from '../pages/show-admin/show-admin.component';
     NzInputModule,
     NzSelectModule,
     NzLayoutModule,
-    NzPopconfirmModule,
-
-
+    NzPopconfirmModule,NzPageHeaderModule
   ]
 })
 export class AdminModule { }

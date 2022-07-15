@@ -25,7 +25,11 @@
         <td>{{ i.telephone }}</td>
         <td class="d-flex">
           <a class="btn border btn-sm text-dark-green" (click)="showUpdateModal(i)">Modifier</a>
-          <a class="btn border btn-sm mx-2 text-danger" (click)="del(i)">Supprimer</a>
+          <a class="btn border btn-sm mx-2 text-danger"  nz-popconfirm
+              nzPopconfirmTitle="Êtes-vous sure?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="del(i)"
+              (nzOnCancel)="cancel()">Supprimer</a>
         </td>
       </tr>
     </tbody>

@@ -44,6 +44,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ProfileComponent } from '../../pages/commercant/profile/profile.component';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 @NgModule({
   declarations: [
     CommercantComponent,
@@ -58,11 +59,11 @@ import { ProfileComponent } from '../../pages/commercant/profile/profile.compone
     AjouterVentesComponent,
     RetraitComponent,
     ProfileComponent,
-
   ],
   imports: [
     CommercantRoutingModule,
     SharedModule,
+    NzPopconfirmModule
   ],
 })
 export class CommercantModule { }

@@ -3,18 +3,19 @@
 namespace App\Traits;
 
 use App\Models\Client;
-use App\Models\Commande;
 use App\Models\Padding;
+use App\Models\Commande;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 
-class FreePayement
+trait FreePayement
 {
-    public function requestPayement($amount, Client $client, Commande $commande)
+    public function requestFreePayement($amount, Client $client, Commande $commande, $type)
     {
         $data = [
             "amount" => $amount,
             "currency" => "XOF",
-            "agentmsisdn" => "",
+            "agentmsisdn" => env("FREE_AGENT_USERNAME"),
             "customermsisdn" => "221" . $client->telephone,
             "password" => env("FREE_AGENT_PIN"),
             "externaltransactionid" => $commande->reference,
@@ -27,11 +28,17 @@ class FreePayement
         ])->post("https://gateway.free.sn/Live/paiementmarchand", $data);
 
         $padding = new Padding();
-        $padding->reference = $response['transactionid'];
-        $padding->type = "free-payement";
+        $padding->reference = "free_" . Str::random();
+        $padding->type = $type;
         $padding->user_id = $client->id;
+        $padding->via = "Free Money";
+        $padding->amount = $amount;
+        $padding->commande_id = $commande->id;
         $padding->save();
 
-        return json_decode($response);
+        return [
+            "response" => $response,
+            "padding" => $padding->id
+        ];
     }
 }

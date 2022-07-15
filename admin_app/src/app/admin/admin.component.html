@@ -1,78 +1,81 @@
 <nz-layout class="layout">
-    <nz-sider nzCollapsible class="bg" [(nzCollapsed)]="isCollapsed" [nzWidth]="280">
-        <div class="logo">
-            <img src="assets/img/logo2.png" alt="logo">
-            <h1>TranchePay</h1>
-        </div>
-        <ul nz-menu class="bg mt-3" nzMode="inline">
-            <li *ngIf="Authsrv.can('voir dashboard')" nzSelected="true" nz-menu-item (click)="goto('dashboard')">
-                <i nz-icon nzType="dot-chart" class="icon" nzTheme="outline"></i>
-                <span class="text-dark-green bold">Dashboard</span>
-            </li>
-            <li *ngIf="Authsrv.can('lister commande')" nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'" [nzTitle]="activite">
-                <ng-template #activite>
-                    <i nz-icon nzType="shopping" class="icon" nzTheme="outline"></i>
-                    <span class="text-dark-green bold">
-                        Commandes
-                    </span>
-                </ng-template>
+  <nz-sider nzCollapsible class="bg" [(nzCollapsed)]="isCollapsed" [nzWidth]="280">
+    <div class="logo">
+      <img src="assets/img/logo2.png" alt="logo">
+      <h1>TranchePay</h1>
+    </div>
+    <ul nz-menu class="bg mt-3" nzMode="inline">
+      <li *ngIf="Authsrv.can('voir dashboard')" nzSelected="true" nz-menu-item (click)="goto('dashboard')">
+        <i nz-icon nzType="dot-chart" class="icon" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Dashboard</span>
+      </li>
+      <li *ngIf="Authsrv.can('lister commande')" nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'"
+        [nzTitle]="activite">
+        <ng-template #activite>
+          <i nz-icon nzType="shopping" class="icon" nzTheme="outline"></i>
+          <span class="text-dark-green bold">
+            Commandes
+          </span>
+        </ng-template>
 
-                <ul>
-                    <li nz-menu-item (click)="goto('commandes')">
-                        <i nz-icon nzType="hourglass" class="icon" nzTheme="outline"></i>
-                        <span class="text-dark-green bold">Dernières Commandes</span>
-                    </li>
-                    <li nz-menu-item (click)="goto('commandes-livres')">
-                        <i nz-icon nzType="check-circle" class="icon" nzTheme="outline"></i>
-                        <span class="text-dark-green bold">Commandes Livrées</span>
-                    </li>
-                    <li nz-menu-item (click)="goto('commandes-encours')">
-                        <i nz-icon nzType="field-time" class="icon" nzTheme="outline"></i>
-                        <span class="text-dark-green bold">Commandes En-Cours</span>
-                    </li>
-                </ul>
-            </li>
-            <li nz-menu-item *ngIf="Authsrv.can('lister commercant')" (click)="goto('commercant')">
-                <i nz-icon nzType="fire" class="icon" nzTheme="outline"></i>
-                <span class="text-dark-green bold">Commerçants</span>
-            </li>
-            <li *ngIf="Authsrv.can('lister client')" nz-menu-item (click)="goto('clients')">
-                <i nz-icon nzType="solution" class="icon" nzTheme="outline"></i>
-                <span class="text-dark-green bold">Nos clients</span>
-            </li>
-            <li *ngIf="Authsrv.can('lister partenaire')" nz-menu-item (click)="goto('users')">
-                <i nz-icon nzType="link" class="icon" nzTheme="outline"></i>
-                <span class="text-dark-green bold">Partenaire</span>
-            </li>
-            <li nz-menu-item (click)="goto('profile')">
-                <i nz-icon nzType="user" class="icon" nzTheme="outline"></i>
-                <span class="text-dark-green bold">Profile</span>
-            </li>
-            <li *ngIf="Authsrv.can('lister utilisateur')" nz-menu-item (click)="goto('user')">
-                <i nz-icon nzType="safety" class="icon" nzTheme="outline"></i>
-                <span class="text-dark-green bold">Administrateurs</span>
-            </li>
-
-
+        <ul>
+          <li nz-menu-item (click)="goto('commandes')">
+            <i nz-icon nzType="hourglass" class="icon" nzTheme="outline"></i>
+            <span class="text-dark-green bold">Dernières Commandes</span>
+          </li>
+          <li nz-menu-item (click)="goto('commandes-encours')">
+            <i nz-icon nzType="check-circle" class="icon" nzTheme="outline"></i>
+            <span class="text-dark-green bold">Commandes En-Cours</span>
+          </li>
+          <li nz-menu-item (click)="goto('commandes-livres')">
+            <i nz-icon nzType="field-time" class="icon" nzTheme="outline"></i>
+            <span class="text-dark-green bold">Commandes Livrées</span>
+          </li>
         </ul>
+      </li>
+      <li nz-menu-item *ngIf="Authsrv.can('lister commercant')" (click)="goto('commercant')">
+        <i nz-icon nzType="fire" class="icon" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Commerçants</span>
+      </li>
+      <li *ngIf="Authsrv.can('lister client')" nz-menu-item (click)="goto('clients')">
+        <i nz-icon nzType="solution" class="icon" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Nos clients</span>
+      </li>
+      <li nz-menu-item (click)="goto('partenaires')">
+        <i nz-icon nzType="link" class="icon" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Partenaire</span>
+      </li>
+      <li nz-menu-item (click)="goto('profile')">
+        <i nz-icon nzType="user" class="icon" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Profile</span>
+      </li>
+      <li *ngIf="Authsrv.can('lister utilisateur')" nz-menu-item (click)="goto('user')">
+        <i nz-icon nzType="safety" class="icon" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Administrateurs</span>
+      </li>
+      <li nz-menu-item (click)="goto('parametres')">
+        <i nz-icon nzType="setting" nzTheme="outline"></i>
+        <span class="text-dark-green bold">Parametres</span>
+      </li>
+
+
+    </ul>
 
 
 
-    </nz-sider>
-    <nz-layout>
-        <nz-header>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
 
-
-        </nz-header>
-        <nz-content>
-            <div class="inner-content ">
-                <div class="card card-body raduis-sm shadow responsive">
-                    <router-outlet></router-outlet>
-                </div>
-            </div>
-        </nz-content>
-        <nz-footer>
-            <h6 class="text-dark-green text-center">&copy; 2022 tous droits reservé, <a href="tranchepay.com">TRANCHPAY</a></h6>
-        </nz-footer>
-    </nz-layout>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content ">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>
+      <h6 class="text-dark-green text-center">&copy; 2022 tous droits reservé, <a href="tranchepay.com">TRANCHPAY</a>
+      </h6>
+    </nz-footer>
+  </nz-layout>
 </nz-layout>

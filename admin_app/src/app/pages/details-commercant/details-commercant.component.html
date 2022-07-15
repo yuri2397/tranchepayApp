@@ -1,160 +1,154 @@
-<div class="container responsive">
 
-    <h3 class="breadcrumbs-title">Details sur le Commerçant</h3>
+
+<div class="card card-body shadow-sm border raduis-sm">
+  <div>
+    <nz-page-header class="site-page-header" (nzBack)="onBack()" nzBackIcon nzTitle="Précedent"></nz-page-header>
     <br>
-
     <div class="row">
-
-
-        <div class="row">
-            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
-                <div class="collapsible-header active">
-                    <h6> Identifiant</h6>
-                </div>
-                <div class="card card-body raduis-sm border responsive">
-                    <nz-list>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>PRENOM</b></span> {{commercant?.prenoms}}
-                            <span *ngIf="commercant?.prenoms==null">
-                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                            </span>
-                        </nz-list-item>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>NOM</b></span> {{commercant?.nom}}
-                            <span *ngIf="commercant?.nom==null">
-                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                            </span>
-                        </nz-list-item>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>ADRESSE</b></span> {{commercant?.adresse}}
-                            <span *ngIf="commercant?.adresse==null">
-                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                            </span>
-                        </nz-list-item>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>TELEPHONE</b></span> {{commercant?.telephone}}
-                            <span *ngIf="commercant?.telephone==null">
-                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                            </span>
-                        </nz-list-item>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>ETAT COMPTE</b></span>
-                            <ng-container *ngIf="commercant?.created_at; else elseTemplate">
-                                <nz-tag nzColor="success">Actif</nz-tag>
-                            </ng-container>
-                            <ng-template #elseTemplate>
-                                <nz-tag nzColor="processing">Non Actif</nz-tag>
-                            </ng-template>
-
-                        </nz-list-item><br>
-                        <div class="col-sm-6 ">
-                            <button (click)="showDesactiveConfirm()" *ngIf="commercant?.created_at" nz-button nzType="default">
-                             <span>Desactivé Compte</span>
-                       </button>
-
-                        </div>
-                        <div class="col-sm-6 ">
-                            <button (click)="showActiveConfirm()" *ngIf="!commercant?.created_at" nz-button nzType="default">
-                           <span>Activé Compte</span>
-                     </button>
-
-                        </div>
-                    </nz-list>
-                </div>
-                <br>
-
+      <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+        <div class="card card-body raduis-sm border responsive">
+          <nz-list>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>PRENOM</b></span> {{ commercant?.prenoms }}
+              <span *ngIf="commercant?.prenoms==null">
+                <span class="alert alert-danger p-1">Indéfinie</span>
+              </span>
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>NOM</b></span> {{ commercant?.nom }}
+              <span *ngIf="commercant?.nom==null">
+                <span class="alert alert-danger p-1">Indéfinie</span>
+              </span>
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>ADRESSE</b></span> {{ commercant?.adresse }}
+              <span *ngIf="commercant?.adresse==null">
+                <span class="alert alert-danger p-1">Indéfinie</span>
+              </span>
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>TELEPHONE</b></span> {{ commercant?.telephone }}
+              <span *ngIf="commercant?.telephone==null">
+                <span class="alert alert-danger p-1">Indéfinie</span>
+              </span>
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>ETAT COMPTE</b></span>
+              <ng-container *ngIf="commercant?.created_at; else elseTemplate">
+                <nz-tag nzColor="success">Actif</nz-tag>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <nz-tag nzColor="processing">Non Actif</nz-tag>
+              </ng-template>
+  
+            </nz-list-item><br>
+            <div class="col-sm-6 ">
+              <button (click)="showDesactiveConfirm()" *ngIf="commercant?.created_at" nz-button nzType="default">
+                <span>Desactivé Compte</span>
+              </button>
+  
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
-                <div class="collapsible-header active">
-                    <h6> Informations relatives à la boutique</h6>
-                </div>
-                <div class="card card-body raduis-sm border">
-                    <nz-list>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>BOUTIQUE</b></span>{{commercant?.boutique?.nom}}
-                            <span *ngIf="commercant?.boutique?.nom==null">
-                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                            </span>
-                        </nz-list-item>
-                        <nz-list-item class="text-dark-green">
-                            <span nz-typography><b>ADRESSE</b></span>{{commercant?.boutique?.addresse}}
-                            <span *ngIf="commercant?.boutique?.addresse==null">
-                              <span style="color: rgb(248, 11, 11);">Indéfinie</span>
-                            </span>
-                        </nz-list-item>
-
-                    </nz-list>
-
-                </div>
-
+            <div class="col-sm-6 ">
+              <button (click)="showActiveConfirm()" *ngIf="!commercant?.created_at" nz-button nzType="default">
+                <span>Activé Compte</span>
+              </button>
+  
             </div>
-
+          </nz-list>
         </div>
-
-
-    </div>
-    <hr>
-    <div class="col s12 m12">
-
-        <div class="card ">
-            <div class="container responsive">
-                <h5 class="my-3 text-dark-green bold">Les commandes</h5>
-                <br>
-                <div class="col-sm-7">
-                    <!-- Top search START -->
-                    <div class="nav my-3 my-xl-0 flex-nowrap align-items-center">
-                        <div class="col-sm-7">
-
-                            <div class="search-box">
-                                <input [(ngModel)]="titre" (ngModelChange)="serarchcommande()" type="text" class="form-control" placeholder="REFERENCE&hellip;">
-                            </div>
-
-                            <!-- Top search END -->
-                        </div>
-                    </div>
-                    <!-- Top search END -->
-                </div>
-                <br>
-                <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad">
-                    <thead>
-                        <tr>
-                            <th class="bold text-dark-green">REFERENCE</th>
-                            <th class="bold text-dark-green">PRIX TOTAL</th>
-                            <th class="bold text-dark-green">NOMBRE PRODUITS</th>
-                            <th class="bold text-dark-green">COMMISSION</th>
-                            <th class="bold text-dark-green">DATE LIMITE</th>
-                            <th class="bold text-dark-green">CLIENT</th>
-                            <th class="bold text-dark-green">ETAT</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of basicTable.data">
-                            <td class="text-dark-green">{{ data.reference }}
-                            </td>
-                            <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
-                            <td class="text-dark-green">{{data.nb_produits}}</td>
-                            <td class="text-dark-green">{{ data.commission }} FCFA</td>
-                            <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
-                            <td class="text-dark-green">{{ data.client.prenoms+" "}} {{ data.client.nom}}</td>
-
-
-                            <td class="text-dark-green">
-                                <ng-container *ngIf="data.etat_commande.nom=='load'; else elseTemplate">
-                                    <nz-tag nzColor="processing">Encours</nz-tag>
-                                </ng-container>
-                                <ng-template #elseTemplate>
-                                    <nz-tag nzColor="success">Finish</nz-tag>
-                                </ng-template>
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </nz-table>
-            </div>
-
+        <br>
+      </div>
+      <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 ">
+        <div class="card card-body raduis-sm border">
+          <nz-list>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>BOUTIQUE</b></span>{{ commercant?.boutique?.nom }}
+              <span *ngIf="commercant?.boutique?.nom==null">
+                <span class="alert alert-danger p-1">Indéfinie</span>
+              </span>
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>ADRESSE</b></span>{{ commercant?.boutique?.addresse }}
+              <span *ngIf="commercant?.boutique?.addresse==null">
+                <span class="alert alert-danger p-1">Indéfinie</span>
+              </span>
+            </nz-list-item>
+  
+          </nz-list>
+  
         </div>
-
+      </div>
     </div>
-
+    <nz-divider></nz-divider>
+    <div class="d-flex justify-content-between">
+      <div>
+          <h3>Commandes livrées</h3>
+        </div>
+        <div>
+          <input [(ngModel)]="titre" (ngModelChange)="search($event)" type="text" class="form-control"
+            placeholder="Rechercher">
+        </div>
+    </div>
+    <nz-table #basicTable [nzData]="displayCommandes" [nzLoading]="isLoad">
+      <thead>
+        <tr>
+          <th class="bold text-dark-green">REFERENCE</th>
+          <th class="bold text-dark-green">PRIX TOTAL</th>
+          <th class="bold text-dark-green">COMMISSION</th>
+          <th class="bold text-dark-green">DATE LIMITE</th>
+          <th class="bold text-dark-green">CLIENT</th>
+          <th class="bold text-dark-green">ETAT</th>
+  
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data" class="pointer" (click)="showCommande(data)"> 
+          <td class="text-dark-green">{{ data.reference }}
+          </td>
+          <td class="text-dark-green">{{ total(data)}} FCFA</td>
+          <td class="text-dark-green">{{ data.commission }} FCFA</td>
+          <td class="text-dark-green">{{ data.date_limite | date:'d MMMM y' }}</td>
+          <td class="text-dark-green">{{ data.client.prenoms+" " }} {{ data.client.nom }}</td>
+  
+  
+          <td class="text-dark-green">
+            <ng-container *ngIf="data.etat_commande.nom=='load'; else elseTemplate">
+              <nz-tag nzColor="processing">Encours</nz-tag>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <nz-tag nzColor="success">Finish</nz-tag>
+            </ng-template>
+          </td>
+  
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  
+  <ng-template #elseTemplate>
+    <div class="center">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid">
+        <defs>
+          <mask id="ldio-tg21wto3pc-mask">
+            <circle cx="50" cy="50" r="45" fill="#fff"></circle>
+          </mask>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="#85ffc2"></circle>
+        <path
+          d="M32.32233047033631 67.67766952966369 L39.39339828220179 60.60660171779821 A15 15 0 0 1 60.60660171779821 39.39339828220179 L67.67766952966369 32.32233047033631 L167.6776695296637 132.3223304703363 L132.3223304703363 167.6776695296637 Z"
+          fill="#11ff88" mask="url(#ldio-tg21wto3pc-mask)"></path>
+        <g transform="translate(50 50)">
+          <g>
+            <animateTransform attributeName="transform" type="rotate" values="0;360" keyTimes="0;1"
+              dur="2.6315789473684212s" repeatCount="indefinite"></animateTransform>
+            <path
+              d="M37.43995192304605 -6.5 L47.43995192304605 -6.5 L47.43995192304605 6.5 L37.43995192304605 6.5 A38 38 0 0 1 35.67394948182593 13.090810836924174 L35.67394948182593 13.090810836924174 L44.33420351967032 18.090810836924174 L37.83420351967032 29.34914108612188 L29.17394948182593 24.34914108612188 A38 38 0 0 1 24.34914108612188 29.17394948182593 L24.34914108612188 29.17394948182593 L29.34914108612188 37.83420351967032 L18.090810836924184 44.33420351967032 L13.090810836924183 35.67394948182593 A38 38 0 0 1 6.5 37.43995192304605 L6.5 37.43995192304605 L6.500000000000001 47.43995192304605 L-6.499999999999995 47.43995192304606 L-6.499999999999996 37.43995192304606 A38 38 0 0 1 -13.09081083692417 35.67394948182593 L-13.09081083692417 35.67394948182593 L-18.09081083692417 44.33420351967032 L-29.34914108612187 37.834203519670325 L-24.349141086121872 29.173949481825936 A38 38 0 0 1 -29.17394948182592 24.34914108612189 L-29.17394948182592 24.34914108612189 L-37.83420351967031 29.349141086121893 L-44.33420351967031 18.0908108369242 L-35.67394948182592 13.090810836924193 A38 38 0 0 1 -37.43995192304605 6.5000000000000036 L-37.43995192304605 6.5000000000000036 L-47.43995192304605 6.500000000000004 L-47.43995192304606 -6.499999999999993 L-37.43995192304606 -6.499999999999994 A38 38 0 0 1 -35.67394948182593 -13.090810836924167 L-35.67394948182593 -13.090810836924167 L-44.33420351967032 -18.090810836924163 L-37.834203519670325 -29.34914108612187 L-29.173949481825936 -24.34914108612187 A38 38 0 0 1 -24.349141086121893 -29.17394948182592 L-24.349141086121893 -29.17394948182592 L-29.349141086121897 -37.834203519670304 L-18.0908108369242 -44.334203519670304 L-13.090810836924195 -35.67394948182592 A38 38 0 0 1 -6.500000000000005 -37.43995192304605 L-6.500000000000005 -37.43995192304605 L-6.500000000000007 -47.43995192304605 L6.49999999999999 -47.43995192304606 L6.499999999999992 -37.43995192304606 A38 38 0 0 1 13.090810836924149 -35.67394948182594 L13.090810836924149 -35.67394948182594 L18.090810836924142 -44.33420351967033 L29.349141086121847 -37.83420351967034 L24.349141086121854 -29.17394948182595 A38 38 0 0 1 29.17394948182592 -24.349141086121893 L29.17394948182592 -24.349141086121893 L37.834203519670304 -29.349141086121897 L44.334203519670304 -18.0908108369242 L35.67394948182592 -13.090810836924197 A38 38 0 0 1 37.43995192304605 -6.500000000000007 M0 -20A20 20 0 1 0 0 20 A20 20 0 1 0 0 -20"
+              fill="#010246" transform="scale(0.65)"></path>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </ng-template>
 </div>

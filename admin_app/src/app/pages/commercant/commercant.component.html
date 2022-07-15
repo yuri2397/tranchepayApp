@@ -1,39 +1,41 @@
-<div class="container card-body radius-sm">
-    <h3 class="my-3 text-dark-green bold">Liste Des Commerçants</h3>
-    <br>
-    <div class="col-sm-7">
+<div class="card card-body shadow-sm border raduis-sm">
 
-        <div class="search-box">
-            <input [(ngModel)]="titre" (ngModelChange)="serarchcommercant()" type="text" class="form-control" placeholder="Prénom&hellip;">
-        </div>
-
-        <!-- Top search END -->
+  <div class="d-flex justify-content-between">
+    <div>
+      <h3>Liste des commerçants</h3>
     </div>
-    <br>
-    <nz-table #nzTable [nzData]="commercants" nzTableLayout="fixed" [nzLoading]="isLoad" [nzScroll]="{ y: '240px' }">
-        <thead>
-            <tr>
+    <div>
+      <input [(ngModel)]="titre" (ngModelChange)="serarchcommercant()" type="text" class="form-control"
+        placeholder="Prénom&hellip;">
+    </div>
+  </div>
+  <br>
+  <nz-table #nzTable [nzData]="commercants" [nzLoading]="isLoad">
+    <thead>
+      <tr>
+        <th>PRENOM</th>
+        <th>NOM</th>
+        <th>BOUTIQUE</th>
+        <th>TELEPHONE</th>
+        <th>ADRESSE</th>
+        <th class="bold text-dark-green">DETAILS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of nzTable.data">
+        <tr>
 
-                <th>PRENOM</th>
-                <th>NOM</th>
-                <th>TELEPHONE</th>
-                <th>ADRESSE</th>
-                <th class="bold text-dark-green">DETAILS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-container *ngFor="let data of nzTable.data">
-                <tr>
+          <td>{{ data.prenoms }}</td>
+          <td>{{ data.nom }}</td>
+          <td>{{ data.boutique.nom }}</td>
+          <td>{{ data.telephone }}</td>
+          <td>{{ data.adresse }}</td>
+          <td>
+            <button (click)="show(data)" class="btn btn-sm btn-primary">Voir détails</button>
+          </td>
+        </tr>
 
-                    <td>{{ data.prenoms }}</td>
-                    <td>{{ data.nom }}</td>
-                    <td>{{ data.telephone }}</td>
-                    <td>{{ data.adresse }}</td>
-                    <td class="text-dark-green"><i routerLink="show/{{ data.id}}" nz-icon nzType="eye" nzTheme="outline" style="color: #08c;"></i>
-                    </td>
-                </tr>
-
-            </ng-container>
-        </tbody>
-    </nz-table>
+      </ng-container>
+    </tbody>
+  </nz-table>
 </div>
