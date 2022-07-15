@@ -126,7 +126,7 @@ export class AjouterVentesComponent implements OnInit {
     this.produits.forEach((p) => {
       amount += p.prix_unitaire * p.quantite;
     });
-    return Math.round(amount * (1 / 4));
+    return Math.round(amount * (1 / 3));
   }
 
   addToList() {
@@ -324,13 +324,7 @@ export class AjouterVentesComponent implements OnInit {
       return;
     }
     this.closePayementModal();
-    this.modalService.confirm({
-      nzTitle: '<h3 class="text-danger">Attention!!!</h3>',
-      nzContent: '<i>Vous etes sûr de vouloir continuer?</i>',
-      nzCentered: true,
-      nzOnOk: () =>
-        this.saveVente(this.validateFormClient.value.mode_paiement, type),
-    });
+    this.saveVente(this.validateFormClient.value.mode_paiement, type)
   }
 
   amountIsValide() {

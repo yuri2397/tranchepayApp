@@ -53,6 +53,7 @@ export class SetClientPinComponent implements OnInit {
             Validators.required,
             Validators.minLength(4),
             Validators.maxLength(4),
+            Validators.pattern('^([0-9]{4}$'),
           ],
         ],
         pin_conf: [
