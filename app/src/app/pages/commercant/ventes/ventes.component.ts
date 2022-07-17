@@ -5,7 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { Commande } from 'src/app/models/commande';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { CommandesComponent } from '../../client/commandes/commandes.component';
 import { AjouterVentesComponent } from './ajouter-ventes/ajouter-ventes.component';
+import { Versement } from 'src/app/models/versement';
 
 @Component({
   selector: 'app-ventes',
@@ -14,6 +16,7 @@ import { AjouterVentesComponent } from './ajouter-ventes/ajouter-ventes.componen
 })
 export class VentesComponent implements OnInit {
   visible = false;
+  montantRestant!: number;
   listOfDisplayData: any[] = [];
   listOfData: any[] = [];
   searchValue = '';
@@ -24,10 +27,13 @@ export class VentesComponent implements OnInit {
     private modalService: NzModalService,
     private drawerService: NzDrawerService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getData();
+  }
+  addition(a: any, b: any) {
+    return parseInt(a) + parseInt(b);
   }
 
   getData() {
@@ -42,6 +48,13 @@ export class VentesComponent implements OnInit {
         console.log(errors);
       },
     });
+  }
+  montantR(versement: Versement[]) {
+    this.montantRestant = 0
+    versement.forEach(e => {
+      this.montantRestant += e.montant;
+    })
+    return this.montantRestant;
   }
 
   etatColor(data: Commande) {
@@ -100,4 +113,15 @@ export class VentesComponent implements OnInit {
   goto(route: string) {
     this.router.navigate([route]);
   }
+
+  // montantRestant(data: Commande): number {
+  //   return (+data.prix_total + +data.commission) - this.montantVerser(data);
+  // }
+  // montantVerser(data: Commande) {
+  //   let res = 0;
+  //   data.versements.forEach((e) => {
+  //     res += e.montant;
+  //   });
+  //   return res;
+  // }
 }
