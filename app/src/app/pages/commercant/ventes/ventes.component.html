@@ -23,7 +23,6 @@
                   <tr>
                     <th>REFERENCE</th>
                     <th>MONTANT</th>
-                    <th>MONTANT RESTANT</th>
                     <th>ETAT</th>
                     <th>CLIENT</th>
                     <th>TELEPHONE</th>
@@ -34,12 +33,6 @@
                   <tr *ngFor="let data of nzTableAll.data">
                     <td class="text-dark-green bold">{{ data.reference }}</td>
                     <td>{{ data.prix_total }} FCFA</td>
-                    <td>
-                      {{
-                        addition(data.prix_total, data.commission) -
-                          montantR(data.versements)
-                      }}
-                    </td>
                     <td>
                       <nz-tag [nzColor]="etatColor(data)">
                         {{ etatCommande(data) }}
@@ -96,8 +89,7 @@
                   <tr *ngFor="let data of nzTableLoad.data">
                     <td class="text-dark-green bold">{{ data.reference }}</td>
                     <td>{{ data.prix_total }} FCFA</td>
-                    <td>{{ 55 }}</td>
-
+                    <td>{{ montantR(data) }}</td>
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
                     <td>{{ data.created_at | date }}</td>

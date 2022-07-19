@@ -49,12 +49,12 @@ export class VentesComponent implements OnInit {
       },
     });
   }
-  montantR(versement: Versement[]) {
+  montantR(data: Commande) {
     this.montantRestant = 0
-    versement.forEach(e => {
+    data.versements.forEach(e => {
       this.montantRestant += e.montant;
     })
-    return this.montantRestant;
+    return parseInt(data.prix_total.toString()) + parseInt(data.commission.toString()) - this.montantRestant;
   }
 
   etatColor(data: Commande) {
