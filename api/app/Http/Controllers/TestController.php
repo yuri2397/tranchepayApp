@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Commande;
 use App\Models\Log;
+use App\Traits\FreePayement;
 use App\Traits\OMPayement;
 use App\Traits\Utils;
 use App\Traits\WavePayement;
@@ -12,12 +13,11 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    use OMPayement, WavePayement, Utils;
+    use OMPayement, WavePayement, Utils, FreePayement;
     public function index(Request $request)
     {
-        return $this->restant(Commande::all()[0]);
+        return $this->requestFreePayement($request->amount, $request->client, Commande::all()[0], 'vs');
     }
-
 
     public function allLogs()
     {

@@ -50,8 +50,8 @@ trait OMPayement
             'method' => 'CLASSIC',
             'partner' => [
                 'idType' => 'MSISDN',
-                'id' => env('MARCHAND_PONE'),
-                'encryptedPinCode' => env('MARCHAND_HASH_CODE')
+                'id' => env('OM_MARCHAND_PONE'),
+                'encryptedPinCode' => env('OM_MARCHAND_HASH_CODE')
             ],
             'customer' => [
                 'idType' => 'MSISDN',
