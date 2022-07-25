@@ -186,6 +186,7 @@ class ClientController extends Controller
                             "message" => "Pour payer avec FreeMoney, veuillez mettre un numéro free."
                         ], 422);
                     }
+                    
                     $response = $this->requestFreePayement($request->montant, $telephone, $client, $commande, 'vm');
                     if ($response && $response['response']['status'] == 'PENDING') {
                         return response()->json([
