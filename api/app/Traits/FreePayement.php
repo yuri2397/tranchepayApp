@@ -28,7 +28,7 @@ trait FreePayement
         ])->post("https://gateway.free.sn/Live/paiementmarchand", $data);
 
         $log = new Log();
-        $log->text = $client->telephone;
+        $log->text = "TESTE";
         $log->log = json_encode($response);
         $log->save();
         
