@@ -29,7 +29,7 @@ trait FreePayement
 
         $log = new Log();
         $log->text = "TESTE";
-        $log->log = json_encode($response);
+        $log->log = json_encode($data);
         $log->save();
         
         // $padding = new Padding();
