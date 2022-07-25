@@ -283,11 +283,11 @@
           </div>
           <div class="d-flex py-1 justify-content-between align-items-center">
             <div>
-              <h6 class="text-dark-green m-0 p-0">Premier versement</h6>
+              <h6 class="text-dark-green m-0 p-0">Commission </h6>
             </div>
             <div>
               <span class="total text-dark-green">
-                {{ aPayer() | currency: "FCFA":"symbol":"1.0":"fr" }}
+                {{ commission () | currency: "FCFA":"symbol":"1.0":"fr" }}
               </span>
             </div>
           </div>
@@ -376,7 +376,7 @@
                     *ngFor="let item of modePaiement"
                   >
                     <div>
-                      <div class="card card-body raduis-sm">
+                      <div class="card card-body shadow border-1 raduis-sm">
                         <img
                           [src]="item.image_src"
                           [alt]="item.type_paiement"

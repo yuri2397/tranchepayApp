@@ -333,6 +333,10 @@ export class AjouterVentesComponent implements OnInit {
     return true;
   }
 
+  commission(){
+    return 0; 
+  }
+
   onPayementTypeSelected(name: string) {
     this.validateFormClient.value.type = name;
 
