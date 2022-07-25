@@ -27,9 +27,9 @@
         *ngFor="let data of basicTable.data"
       >
         <td class="text-dark-green">{{ data.reference }}</td>
-        <td class="text-dark-green">{{ data.prix_total }} FCFA</td>
-        <td class="text-dark-green">{{ montantRestant(data) }} FCFA</td>
-        <td class="text-dark-green">{{ data.commission }} FCFA</td>
+        <td class="text-dark-green">{{ total(data)| currency: "FCFA":"symbol":"1.0":"fr" }}</td>
+        <td class="text-dark-green">{{ montantRestant(data)| currency: "FCFA":"symbol":"1.0":"fr" }}</td>
+        <td class="text-dark-green">{{ data.commission | currency: "FCFA":"symbol":"1.0":"fr"}}</td>
         <td class="text-dark-green">{{ data.boutique.nom }}</td>
         <td class="text-dark-green">
           <nz-tag [nzColor]="etatColor(data)">

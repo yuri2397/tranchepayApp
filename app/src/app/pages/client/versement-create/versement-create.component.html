@@ -1,48 +1,61 @@
 <div>
-    <ng-container *ngIf="!load; else elseTemplate">
-        <div class="card border border-radius-sm p-3">
-            <nz-list>
-                <nz-list-item class="text-dark-green">
-                    <span nz-typography><b>REFERENCE</b></span> {{ commande.reference }}
-                </nz-list-item>
-                <nz-list-item class="text-dark-green">
-                    <span nz-typography><b>TOTAL VERSEMENT</b></span> {{ commandeService.montantVerser(commande) }} FCFA
-                </nz-list-item>
-                <nz-list-item class="text-dark-green">
-                    <span nz-typography><b>MONTANT RESTANT</b></span> {{ commandeService.montantRestant(commande) }} FCFA
-                </nz-list-item>
-            </nz-list>
+  <ng-container *ngIf="!load; else elseTemplate">
+    <div class="card border border-radius-sm p-3">
+      <nz-list>
+        <nz-list-item class="text-dark-green">
+          <span nz-typography><b>REFERENCE</b></span> {{ commande.reference }}
+        </nz-list-item>
+        <nz-list-item class="text-dark-green">
+          <span nz-typography><b>TOTAL VERSEMENT</b></span>
+          {{ commandeService.montantVerser(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
+        </nz-list-item>
+        <nz-list-item class="text-dark-green">
+          <span nz-typography><b>MONTANT RESTANT</b></span>
+          {{ commandeService.montantRestant(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
+        </nz-list-item>
+      </nz-list>
+    </div>
+    <form nz-form nzLayout="vertical" class="my-4" [formGroup]="form">
+      <nz-form-item>
+        <nz-form-label class="" total nzRequired>MONTANT À VERSER</nz-form-label>
+        <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="amountErrorTpl">
+          <input class=" form-control shadow-sm" nzSize="large" nz-input type="number" min="0" formControlName="amount"
+            placeholder="Montant à verser" />
+          <ng-template #amountErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">Donner le montant à verser</ng-container>
+            <ng-container *ngIf="control.hasError('max')">Montant restant {{ commandeService.montantRestant(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
+            </ng-container>
+            <ng-container *ngIf="control.hasError('min')">Le montant minimum est de 100 FCFA
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label class="" total nzRequired>TÉLÉPHONE</nz-form-label>
+        <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="telephoneErrorTpl">
+          <input class=" form-control shadow-sm" nzSize="large" nz-input  formControlName="telephone"
+            placeholder="Montant à verser" />
+          <ng-template #telephoneErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('pattern')">Donner un numéro valide.
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <div class="row mt-4" *ngIf="form.valid">
+        <div class="col-md-4 " *ngFor="let item of mobilePayements" (click)="save(item.name)">
+          <div class="card body shadow-sm raduis-sm pointer card-pay">
+            <img [src]="item.image_src" [alt]="item.choice_label" [title]="item.choice_label" class="card-img-top " />
+          </div>
         </div>
-        <form nz-form nzLayout="vertical" class="my-4" [formGroup]="form">
-            <nz-form-item>
-                <nz-form-label class=""total nzRequired>MONTANT À VERSER</nz-form-label>
-                <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="amountErrorTpl">
-                    <input class=" form-control shadow-sm" nzSize="large" nz-input type="number" min="0" formControlName="amount" placeholder="Montant à verser" />
-                    <ng-template #amountErrorTpl let-control>
-                        <ng-container *ngIf="control.hasError('required')">Donner le montant à verser</ng-container>
-                        <ng-container *ngIf="control.hasError('max')">Montant restant {{ commandeService.montantRestant(commande) }} FCFA
-                        </ng-container>
-                        <ng-container *ngIf="control.hasError('min')">Le montant minimum est de 1.000 FCFA
-                        </ng-container>
-                    </ng-template>
-                </nz-form-control>
-            </nz-form-item>
-            <div class="row mt-4">
-                <div class="col-md-4 " *ngFor="let item of mobilePayements"
-                  (click)="save(item.name)">
-                  <div class="card body shadow-sm raduis-sm pointer card-pay">
-                    <img [src]="item.image_src" [alt]="item.choice_label" [title]="item.choice_label" class="card-img-top " />
-                  </div>
-                </div>
-              </div>
-        </form>
-    </ng-container>
-    <ng-template #elseTemplate>
-        <div class="text-center py-5">
-            <i style="font-size: 50px;" nz-icon nzType="loading" nzTheme="outline"></i> <br><br>
-            <h4>Traitement en cours...</h4>
-        </div>
-    </ng-template>
-    
+      </div>
+    </form>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div class="text-center py-5">
+      <i style="font-size: 50px;" nz-icon nzType="loading" nzTheme="outline"></i> <br><br>
+      <h4>Traitement en cours...</h4>
+    </div>
+  </ng-template>
+
 
 </div>

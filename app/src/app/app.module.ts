@@ -20,7 +20,6 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { UnauthorizationComponent } from './shared/component/unauthorization/unauthorization.component';
 import { CancelPaymentComponent } from './pages/client/cancel-payment/cancel-payment.component';
 import { ReturnPaymentComponent } from './pages/client/return-payment/return-payment.component';
-import { RetraitComponent } from './pages/commercant/retrait/retrait.component';
 import { SetClientPinComponent } from './pages/auth/set-client-pin/set-client-pin.component';
 import { PartenairesComponent } from './shared/component/partenaires/partenaires.component';
 import { ServiceClientComponent } from './shared/component/service-client/service-client.component';

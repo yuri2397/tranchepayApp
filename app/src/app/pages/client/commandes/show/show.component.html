@@ -37,11 +37,11 @@
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>MONTANT</b></span>
-              {{ commande.prix_total }} FCFA
+              {{ total(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>COMMISSION</b></span>
-              {{ commande.commission }} FCFA
+              {{ commande.commission| currency: "FCFA":"symbol":"1.0":"fr" }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>État commande</b></span>
@@ -61,21 +61,18 @@
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography
-                ><b>PRODUITS</b>
-                <div class="d-inline-block">
-                  <ng-container *ngFor="let item of commande.produits">
-                    <nz-tag>{{ item.nom }}</nz-tag>
-                  </ng-container>
-                </div>
+                ><b>DATE LIMITE</b>
               </span>
+              {{ commande.date_limite|date:"dd/MM/yyy" }}
+
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>TOTAL VERSEMENT</b></span>
-              {{ commandeService.montantVerser(commande) }} FCFA
+              {{ commandeService.montantVerser(commande)| currency: "FCFA":"symbol":"1.0":"fr" }} 
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>MONTANT RESTANT</b></span>
-              {{ commandeService.montantRestant(commande) }} FCFA
+              {{ commandeService.montantRestant(commande) | currency: "FCFA":"symbol":"1.0":"fr"}}
             </nz-list-item>
           </nz-list>
         </div>
@@ -108,8 +105,8 @@
             <tr *ngFor="let data of versements.data">
               <td class="bold text-dark-green">{{ data.reference }}</td>
               <td class="bold text-dark-green">{{ data.via }}</td>
-              <td class="text-dark-green">{{ data.montant }} FCFA</td>
-              <td class="text-dark-green">
+              <td class="bold text-dark-green">{{ data.montant| currency: "FCFA":"symbol":"1.0":"fr" }} </td>
+              <td class="bold text-dark-green">
                 {{ data.date_time | date: "d MMMM y" }}
               </td>
             </tr>

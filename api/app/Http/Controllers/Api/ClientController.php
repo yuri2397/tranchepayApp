@@ -149,6 +149,12 @@ class ClientController extends Controller
             ->whereId($request->commande_id)
             ->first();
 
+        $client = $this->authClient();
+        $telephone = $request->telephone;
+        if (!$telephone) {
+            $telephone = $client->telephone;
+        }
+
         if ($commande) {
             $restant = $this->restant($commande);
             if ($restant < $request->montant) {
@@ -162,7 +168,7 @@ class ClientController extends Controller
                     # code...
                     break;
                 case 'wave':
-                    $response  = $this->createCheckoutSession($request->montant, $this->authClient(), $commande, "vm");
+                    $response  = $this->createCheckoutSession($request->montant, $client, $commande, "vm");
                     if ($response && $response['response']['id']) {
                         return response()->json([
                             "padding" => $response["padding"],
@@ -175,7 +181,12 @@ class ClientController extends Controller
                     ], 503);
                     break;
                 case 'free':
-                    $response = $this->requestFreePayement($request->montant, $this->authClient(), $commande, 'vm');
+                    if(!$this->isValideFreeNumber($telephone)){
+                        return response()->json([
+                            "message" => "Pour payer avec FreeMoney, veuillez mettre un numéro free."
+                        ], 422);
+                    }
+                    $response = $this->requestFreePayement($request->montant, $telephone, $client, $commande, 'vm');
                     if ($response && $response['response']['status'] == 'PENDING') {
                         return response()->json([
                             "padding" => $response["padding"],

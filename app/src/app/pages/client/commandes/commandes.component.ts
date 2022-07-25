@@ -75,4 +75,8 @@ export class CommandesComponent implements OnInit {
   show(item: Commande){
     this.router.navigate(['/client/commandes/show/'+item.id])
   }
+
+  total(commande: Commande){
+    return (+commande.prix_total + +commande.commission);
+  }
 }

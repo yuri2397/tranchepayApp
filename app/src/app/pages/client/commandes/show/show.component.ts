@@ -56,7 +56,7 @@ export class ShowComponent implements OnInit {
         },
         nzCentered: true,
         nzClosable: true,
-        nzWidth: '40%',
+        nzWidth: '50%',
         nzMaskClosable: false,
         nzFooter: null,
       })
@@ -103,6 +103,8 @@ export class ShowComponent implements OnInit {
               console.log('Wait for check');
             }
           })();
+        }else if(data == "error"){
+          
         }
       });
   }
@@ -153,5 +155,9 @@ export class ShowComponent implements OnInit {
 
   onBack() {
     this.location.back();
+  }
+
+  total(commande: Commande){
+    return (+commande.prix_total + +commande.commission);
   }
 }

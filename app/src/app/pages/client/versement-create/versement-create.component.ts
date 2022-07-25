@@ -1,3 +1,4 @@
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ClientService } from './../../../services/client.service';
 import { Commande } from 'src/app/models/commande';
 import { CommandesService } from './../../../services/commandes.service';
@@ -41,7 +42,8 @@ export class VersementCreateComponent implements OnInit {
     private modal: NzModalRef,
     private fb: FormBuilder,
     public commandeService: CommandesService,
-    public clientService: ClientService
+    public clientService: ClientService,
+    private notification: NzNotificationService
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +56,10 @@ export class VersementCreateComponent implements OnInit {
           Validators.max(this.commandeService.montantRestant(this.commande)),
         ],
       ],
+      telephone: [
+        this.commande.client.telephone,
+        [Validators.required, Validators.pattern('^(77|78|75|70|76)[0-9]{7}$')],
+      ],
     });
   }
 
@@ -65,15 +71,24 @@ export class VersementCreateComponent implements OnInit {
     if (this.form.valid) {
       this.load = true;
       this.clientService
-        .doVersement(this.commande, this.form.value.amount, via)
+        .doVersement(
+          this.commande,
+          this.form.value.amount,
+          via,
+          this.form.value.telephone
+        )
         .subscribe({
           next: (success) => {
             console.log(success);
-            
+
             this.destroy(success);
           },
           error: (errors) => {
             console.log(errors);
+            this.notification.error('Notification', errors.error.message, {
+              nzDuration: 5000,
+            });
+            this.destroy(null);
           },
         });
     }

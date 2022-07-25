@@ -47,13 +47,19 @@ export class ClientService extends Base {
     );
   }
 
-  doVersement(selectedCommande: Commande, montant: string, via: string) {
+  doVersement(
+    selectedCommande: Commande,
+    montant: string,
+    via: string,
+    telephone?: string
+  ) {
     return this.http.post<any>(
       this.endPoint + 'do-versement',
       {
         montant: montant,
         commande_id: selectedCommande.id,
-        via: via
+        via: via,
+        telephone: telephone ?? null,
       },
       {
         headers: this.authorizationHeaders,
@@ -100,7 +106,7 @@ export class ClientService extends Base {
     });
   }
 
-  confirmePayement(i: any){
+  confirmePayement(i: any) {
     return this.http.post<any>(this.endPoint + 'paddings/confirme/' + i.id, {
       headers: this.authorizationHeaders,
     });
@@ -119,6 +125,4 @@ export class ClientService extends Base {
       },
     });
   }
-
-
 }
