@@ -17,7 +17,7 @@ trait FreePayement
             "amount" => $amount,
             "currency" => "XOF",
             "agentmsisdn" => env("FREE_AGENT_USERNAME"),
-            "customermsisdn" => "221763978322",
+            "customermsisdn" => "221763052658",
             "password" => env("FREE_AGENT_PIN"),
             "externaltransactionid" => $commande->reference,
             "username" => env("FREE_AGENT_USERNAME")
