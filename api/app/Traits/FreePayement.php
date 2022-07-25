@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 trait FreePayement
 {
-    public function requestFreePayement($amount, Client $client, Commande $commande, $type)
+    public function requestFreePayement($amount, $client, $commande, $type)
     {
         $data = [
             "amount" => $amount,
