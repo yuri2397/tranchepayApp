@@ -91,7 +91,7 @@ class CommercantController extends Controller
             $prix_total = $check["prix_total"];
 
             $commande = new Commande;
-            $commande->reference = now()->timestamp;
+            $commande->reference = uniqid();
             $commande->nb_produits = count($request->produits);
             $commande->nb_tranche = $mode->nb_mois;
             $commande->date_time = now();
@@ -114,20 +114,18 @@ class CommercantController extends Controller
                 $p->save();
             }
 
+            $telephone = $request->telephone;
+            if (!$telephone) {
+                $telephone = $client->telephone;
+            }
+
             /**
              * Proceder au paiement du premier tranche
              */
             if ($request->type == 'online') {
-
-                $response = $this->paiementEnLigne($request, $commande, $client);
-                if ($response['error']) {
-                    $this->sendSMS($response['sms'], '+221' . $client->telephone);
-                }
+                $response = $this->paiementEnLigne($request, $commande, $client, $telephone);
                 DB::commit();
-                return response()->json([
-                    "message" => $response['message'],
-                    "padding" => $response['padding']
-                ], $response['code']);
+                return $response;
             } else if ($request->type === 'offline') {
                 $response = $this->paiementEnCaise($request, $commande, $client);
                 $this->sendSMS($response['sms'], '+221' . $client->telephone);

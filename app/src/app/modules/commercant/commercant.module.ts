@@ -45,6 +45,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ProfileComponent } from '../../pages/commercant/profile/profile.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { SearchClientComponent } from '../../pages/commercant/ventes/search-client/search-client.component';
 @NgModule({
   declarations: [
     CommercantComponent,
@@ -59,6 +60,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     AjouterVentesComponent,
     RetraitComponent,
     ProfileComponent,
+    SearchClientComponent,
   ],
   imports: [
     CommercantRoutingModule,

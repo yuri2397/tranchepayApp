@@ -51,9 +51,10 @@ class ClientController extends Controller
         return Versement::with("commande")->whereIn('commande_id', $commandes)->get();
     }
 
-    public function search($data)
+    public function search(Request $request)
     {
-        return Client::where("telephone", 'like', '%' . $data . '%')->get();
+        return Client::where("telephone", 'like', '%' . $request->data . '%')
+            ->get();
     }
 
     public function create(Request $request)
@@ -164,13 +165,22 @@ class ClientController extends Controller
             }
             switch ($request->via) {
                 case 'om':
-                    if(!$this->isValideOrangeNumber($telephone)){
+                    if (!$this->isValideOrangeNumber($telephone)) {
                         return response()->json([
                             "message" => "Pour payer avec Orange Money, veuillez mettre un numéro orange valide."
                         ], 422);
                     }
-                    $response = $this->requestOMPayement($request->amount,$telephone, $client, $commande, "vm");
+                    $response = $this->requestOMPayement($request->amount, $telephone, $client, $commande, "vm");
+                    if ($response['response']['status'] === 'INITIATED') {
+                        return response()->json([
+                            "padding" => $response["padding"],
+                            "message" => "Votre verssement est en attente de confirmation.",
+                            "data" => json_decode($response['response'])
+                        ]);
+                    }
+                    else {
                     return $response;
+                    }
                     break;
                 case 'wave':
                     $response  = $this->createCheckoutSession($request->montant, $client, $commande, "vm");
@@ -186,7 +196,7 @@ class ClientController extends Controller
                     ], 503);
                     break;
                 case 'free':
-                    if(!$this->isValideFreeNumber($telephone)){
+                    if (!$this->isValideFreeNumber($telephone)) {
                         return response()->json([
                             "message" => "Pour payer avec FreeMoney, veuillez mettre un numéro free."
                         ], 422);
@@ -211,40 +221,6 @@ class ClientController extends Controller
             ], 404);
         }
     }
-
-    public function clientCancelURL()
-    {
-    }
-
-    public function clientReturnURL($token)
-    {
-        $invoice = new CheckoutInvoice();
-        if ($invoice->confirm($token)) {
-
-            if ($invoice->getStatus() === "completed") {
-                $commande = Commande::find($invoice->getCustomData("commande_id"));
-                $amount = $invoice->getTotalAmount();
-                $versement = new Versement;
-                $versement->date_time = now();
-                $versement->via = 'INCONNUE';
-                $versement->reference = $token;
-                $versement->montant = $amount;
-                $versement->commande_id = $commande->id;
-                // facture pour une autre version;
-                //echo $invoice->getReceiptUrl(); facture PDF
-                $versement->save();
-                return response()->json([], 200);
-            }
-            return response()->json();
-        } else {
-            return response()->json([
-                $invoice->getStatus(),
-                $invoice->response_text,
-                $invoice->response_code
-            ], 422);
-        }
-    }
-
 
     public function contactUs(Request $request)
     {

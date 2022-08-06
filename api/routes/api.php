@@ -79,6 +79,7 @@ Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
     Route::post('do-versement', [ClientController::class, "effectuerVersement"]);
     Route::post('deplafonnement', [DeplafonnementController::class, 'store']);
     Route::get('paddings', [ClientController::class, 'paddings']);
+    Route::get('search', [ClientController::class, 'search']);
     Route::post('paddings/confirme/{id}', [ClientController::class, 'confirmePaddings']);
 });
 

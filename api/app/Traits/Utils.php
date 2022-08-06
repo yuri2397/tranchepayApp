@@ -98,20 +98,45 @@ trait Utils
      * @param Client $client
      * @return mixed
      */
-    public function paiementEnLigne(Request $request, Commande $commande, Client $client)
+    public function paiementEnLigne(Request $request, Commande $commande, Client $client, $telephone)
     {
         switch ($request->via) {
+            case 'om':
+                if (!$this->isValideOrangeNumber($telephone)) {
+                    return response()->json([
+                        "message" => "Pour payer avec Orange Money, veuillez mettre un numéro orange valide."
+                    ], 422);
+                }
+                $om = $this->requestOMPayement($request->first_part, $telephone, $client, $commande, "fp");
+                if ($om['response']['status'] === 'INITIATED') {
+                    return response()->json([
+                        "padding" => $om["padding"],
+                        "code" => 201,
+                        "message" => "Votre verssement est en attente de confirmation.",
+                        "data" => json_decode($om['response'])
+                    ]);
+                } else if ($om['response']['status'] >= 400 && $om['response']['status'] < 500) {
+                    return response()->json([
+                        "message" => $om['response']["detail"]
+                    ], 422);
+                }
+                break;
             case 'free':
-                $free = $this->requestFreePayement($request->first_part,  $client, $commande, "fp");
+                if (!$this->isValideFreeNumber($telephone)) {
+                    return response()->json([
+                        "message" => "Pour payer avec FreeMoney, veuillez mettre un numéro free."
+                    ], 422);
+                }
+                $free = $this->requestFreePayement($request->first_part, $telephone,  $client, $commande, "fp");
                 if (array_key_exists('status', json_decode($free['response'], true)) && $free['response']['status'] == 'PENDING') {
                     $sms = "Votre commande chez " . $commande->boutique->name . " est en attente. Merci de payer les " . $request->first_part . "FCFA via Free Money.\nTranche Pay";
                     $this->sendSMS($sms, '+221' . $client->telephone);
-                    return [
+                    return response()->json([
                         "error" => false,
                         "code" => 201,
                         "padding" => $free['padding'],
                         "message" => "La commande est attends de paiement merci d'attendre la validation du client."
-                    ];
+                    ]);
                 }
                 break;
 
@@ -169,14 +194,14 @@ trait Utils
             $query->where('client_id', '=', $client->id);
         })->get();
 
-        if (count($commandes) != 0) {
-            $message = "Bonjour " . $client->prenoms . "\nVotre commande chez " . $commercant->boutique->nom . " est annulé. Merci de payer vos commandes en cours.\n\nTRANCHEPAY";
-            return [
-                "error" => true,
-                "sms" => $message,
-                "message" => "Le client ne peut pas faire une nouvelle commande."
-            ];
-        }
+        // if (count($commandes) != 0) {
+        //     $message = "Bonjour " . $client->prenoms . "\nVotre commande chez " . $commercant->boutique->nom . " est annulé. Merci de payer vos commandes en cours.\n\nTRANCHEPAY";
+        //     return [
+        //         "error" => true,
+        //         "sms" => $message,
+        //         "message" => "Le client ne peut pas faire une nouvelle commande."
+        //     ];
+        // }
 
         $prix_total = $this->totalCommande($request->produits);
 

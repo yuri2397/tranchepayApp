@@ -125,4 +125,10 @@ export class ClientService extends Base {
       },
     });
   }
+
+  search(data: string) {
+    return this.http.get<Client[]>(this.endPoint + `search?data=${data}`, {
+      headers: this.authorizationHeaders,
+    });
+  }
 }

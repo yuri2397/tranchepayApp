@@ -107,7 +107,7 @@ export class VentesComponent implements OnInit {
   }
 
   openCreateVenteModal() {
-    this.router.navigate(['/commercant/add-vente']);
+    this.router.navigate(['/commercant/search-client-vente']);
   }
 
   goto(route: string) {

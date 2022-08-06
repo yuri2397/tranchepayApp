@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { PayementPaddingComponent } from './../../../../shared/component/payement-padding/payement-padding.component';
 import { ModePaiement } from './../../../../models/mode-paiement';
 import { SharedService } from './../../../../services/shared.service';
@@ -9,10 +10,18 @@ import { CommercantService } from './../../../../services/commercant.service';
 import { ClientService } from './../../../../services/client.service';
 import { Produit } from './../../../../models/produit';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupName,
+  Validators,
+} from '@angular/forms';
 import { Client } from 'src/app/models/client';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NotificationService } from 'src/app/shared/notification.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-ajouter-ventes',
   templateUrl: './ajouter-ventes.component.html',
@@ -21,10 +30,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AjouterVentesComponent implements OnInit {
   typePay!: string;
   validateForm!: FormGroup;
+  payementType!: any;
+  payementFormGroup!: FormGroup;
   montantTotal = 0;
   localPayementVisible = false;
   montantActuelTotal = 0;
-  validateFormClient!: FormGroup;
+
   isLoad: boolean = false;
   produits: Produit[] = [];
   clients: Client[] = [];
@@ -36,7 +47,7 @@ export class AjouterVentesComponent implements OnInit {
   isVisible = false;
   isInvisible = false;
   makeVisible = false;
-  firstPart!: number;
+
   mystyle = { width: '200px', padding: '0px' };
   modePaiement = [
     {
@@ -75,6 +86,8 @@ export class AjouterVentesComponent implements OnInit {
   ];
   amountError: boolean = false;
   amountErrorMessage!: string;
+  selectedInteret!: any;
+  commission: any = 0;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -83,7 +96,10 @@ export class AjouterVentesComponent implements OnInit {
     private commercantService: CommercantService,
     private modalService: NzModalService,
     private notification: NzNotificationService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private route: ActivatedRoute,
+    private notificatoinService: NotificationService,
+    private location: Location
   ) {
     this.matIconRegistry.addSvgIcon(
       'paycash',
@@ -98,27 +114,18 @@ export class AjouterVentesComponent implements OnInit {
       )
     );
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(
-      'something has changed',
-      !this.validateForm.get('telephone')?.value
-    );
-  }
+
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.selectedClient = JSON.parse(params['customer']) as Client;
+      this.getModePayement(this.selectedClient.id);
+    });
+
     this.validateForm = this.fb.group({
       nom_produit: [null, [Validators.required]],
       quantite_produit: [null, [Validators.required, Validators.min(0)]],
       prix_unitaire_produit: [null, [Validators.required]],
     });
-
-    this.validateFormClient = this.fb.group({
-      telephone: [
-        null,
-        [Validators.required, Validators.minLength(9), Validators.minLength(9)],
-      ],
-      mode_paiement: [null, [Validators.required]],
-    });
-
   }
 
   aPayer(): number {
@@ -154,27 +161,12 @@ export class AjouterVentesComponent implements OnInit {
     return amount;
   }
 
-  addClient() {
-    let modal = this.modalService.create({
-      nzTitle: 'Ajouter le client',
-      nzContent: CreateClientComponent,
-      nzFooter: null,
-    });
-    modal.afterClose.subscribe((data: Client | null) => {
-      if (data) {
-        this.validateFormClient.reset();
-        this.validateForm.value.telephone = data.telephone;
-      }
-    });
-  }
-
-  clientChange(client: any) {
+  getModePayement(client: any) {
     if (client == null) return;
-    this.selectedClient = client;
-
     this.modeLoad = true;
     this.sharedService.modePaiement(client).subscribe({
       next: (response) => {
+        console.log(response);
         this.modePaiements = response;
         this.modeLoad = false;
       },
@@ -205,29 +197,21 @@ export class AjouterVentesComponent implements OnInit {
     via: 'om' | 'wave' | 'free' | 'local' = 'local'
   ) {
     this.isLoad = true;
-  
-    console.log(
-      this.produits,
-      this.validateFormClient.value.telephone,
-      mode,
-      this.firstPart,
-      this.validateFormClient.value.type,
-      via
-    );
 
     this.commercantService
       .createCommande(
         this.produits,
-        this.validateFormClient.value.telephone,
-        mode,
-        this.firstPart,
-        this.validateFormClient.value.type,
+        this.selectedClient.id,
+        this.payementFormGroup.value.interet,
+        this.payementFormGroup.value.firstPart,
+        this.payementFormGroup.value.telephone,
+        this.payementType,
         via
       )
       .subscribe({
         next: (response) => {
           console.log(response);
-          let type:any = "info";
+          let type: any = 'info';
           if (mode == 'online') {
             let m = this.modalService.create({
               nzTitle: undefined,
@@ -238,7 +222,7 @@ export class AjouterVentesComponent implements OnInit {
               nzClosable: false,
               nzComponentParams: {
                 text: response.message,
-                type: type
+                type: type,
               },
             });
 
@@ -246,41 +230,44 @@ export class AjouterVentesComponent implements OnInit {
               while (
                 await new Promise<boolean>((resolve) => {
                   setTimeout(() => {
-                    this.sharedService.checkPadding(response.padding).subscribe({
-                      next: (check) => {
-                        resolve(!check.status)
-                        if(check.status){
-                          this.successModal("Le client a confirmer la vente. ✅")
-                          m.destroy()
-                        }
-                      },
-                      error: error => {
-                        console.log(error);
-                        resolve(false)
-                      }
-                    });
+                    this.sharedService
+                      .checkPadding(response.padding)
+                      .subscribe({
+                        next: (check) => {
+                          resolve(!check.status);
+                          if (check.status) {
+                            this.successModal(
+                              'Le client a confirmer la vente. ✅'
+                            );
+                            m.destroy();
+                          }
+                        },
+                        error: (error) => {
+                          console.log(error);
+                          resolve(false);
+                        },
+                      });
                   }, 500);
                 })
               ) {
                 console.log('Wait for check');
               }
-            })()
-
+            })();
           } else {
             this.notification.success(
               'Notification',
               'Commande est validé avec succès'
             );
           }
-
-          this.produits = [];
-          this.validateFormClient.reset();
-          this.validateForm.reset();
-          this.firstPart = 0;
+          this.location.back()
           this.isLoad = false;
         },
         error: (errors) => {
-          this.notification.create('error', 'Message', errors.error.message);
+          this.notificatoinService.emitChange({
+            title: 'Paiement annullé',
+            message: errors.error.message,
+            type: 'error',
+          });
           this.isLoad = false;
           console.error(errors);
         },
@@ -288,7 +275,7 @@ export class AjouterVentesComponent implements OnInit {
   }
 
   successModal(message: string) {
-   this.modalService.create({
+    this.modalService.create({
       nzTitle: undefined,
       nzFooter: null,
       nzContent: PayementPaddingComponent,
@@ -296,8 +283,8 @@ export class AjouterVentesComponent implements OnInit {
       nzMaskClosable: false,
       nzComponentParams: {
         text: message,
-        type: "success",
-        load: false
+        type: 'success',
+        load: false,
       },
     });
   }
@@ -310,36 +297,35 @@ export class AjouterVentesComponent implements OnInit {
   }
 
   toggleMobilePayementModal() {
+    this.payementFormGroup.addControl(
+      'telephone',
+      new FormControl(this.selectedClient.telephone, [
+        Validators.required,
+        Validators.pattern('^(77|78|75|70|76)[0-9]{7}$'),
+      ])
+    );
     this.makeVisible = !this.makeVisible;
+  }
+
+  selectCommission(data: any) {
+    console.log('commission');
   }
 
   closePayementModal() {
     this.makeVisible = false;
   }
   onMobilePayementSelected(type: any) {
-    if (this.firstPart < this.aPayer()) {
-      this.amountError = true;
-      this.amountErrorMessage =
-        'Montant minimum est de ' + this.aPayer() + ' FCFA';
-      return;
-    }
     this.closePayementModal();
-    this.saveVente(this.validateFormClient.value.mode_paiement, type)
-  }
-
-  amountIsValide() {
-    if (this.firstPart < this.aPayer()) return false;
-
-    return true;
-  }
-
-  commission(){
-    return 0; 
+    this.saveVente(this.payementType, type);
   }
 
   onPayementTypeSelected(name: string) {
-    this.validateFormClient.value.type = name;
+    this.payementFormGroup = this.fb.group({
+      firstPart: [null, [Validators.required, Validators.min(this.aPayer())]],
+      interet: [null, [Validators.required]],
+    });
 
+    this.payementType = name;
     if (this.selectedClient) {
       if (name == 'offline') {
         this.localPayementVisible = true;

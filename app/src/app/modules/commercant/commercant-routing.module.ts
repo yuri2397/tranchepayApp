@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AjouterVentesComponent } from 'src/app/pages/commercant/ventes/ajouter-ventes/ajouter-ventes.component';
 import { ShowComponent } from 'src/app/pages/client/commandes/show/show.component';
 import { ProfileComponent } from 'src/app/pages/commercant/profile/profile.component';
+import { SearchClientComponent } from 'src/app/pages/commercant/ventes/search-client/search-client.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'accueil' },
@@ -29,7 +30,9 @@ const routes: Routes = [
   { path: 'parrainages', component: ParrainagesComponent },
   { path: 'aide', component: ServiceClientComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'add-vente', component: AjouterVentesComponent },
+  { path: 'finaliser-vente', component: AjouterVentesComponent },
+  { path: 'search-client-vente', component: SearchClientComponent },
+  
 
 ];
 

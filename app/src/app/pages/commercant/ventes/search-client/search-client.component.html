@@ -1,0 +1,33 @@
+<div class="card card-body shadow raduis-xm">
+  <div class="d-flex align-items-center">
+    <button nz-tooltip [nzTooltipTitle]="'Revenir en arrièr'" class="mx-2" (click)="back()" mat-mini-fab
+      color="default">
+      <i nz-icon nzType="arrow-left"></i>
+    </button>
+    <span class="h4 text-dark-green mx-2">Précedant</span>
+  </div>
+  <br>
+  <br>
+  <span class="h6">Rechercher un client</span>
+  <input nz-input nzSize="large" class="total" (ngModelChange)="search($event)" [(ngModel)]="searchValue" placeholder="Rechercher le client par numéro de téléphone">
+  <br>
+  <nz-table #nzTable [nzData]="clients" [nzPageSize]="10" [nzLoading]="load">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Téléphone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="pointer" (click)="goto(i)" *ngFor="let i of nzTable.data" >
+        <td>    <nz-avatar nzText="{{ i.prenoms[0].toUpperCase() }}"></nz-avatar>
+        </td>
+        <td>{{i.prenoms}}</td>
+        <td>{{i.nom}}</td>
+        <td>{{i.telephone}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

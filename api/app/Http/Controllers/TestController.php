@@ -16,8 +16,8 @@ class TestController extends Controller
     use OMPayement, WavePayement, Utils, FreePayement;
     public function index(Request $request)
     {
-        return $this->changePin();
-        // return $this->requestOMPayement($request->amount,"781879981", Client::first(), Commande::all()[0], 'vs');
+        // return $this->changePin();
+        return $this->requestOMPayement($request->amount,"781879981", Client::first(), Commande::all()[0], 'vs');
     }
 
     public function allLogs()

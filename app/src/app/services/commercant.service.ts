@@ -32,6 +32,7 @@ export class CommercantService extends Base {
     client_id: number,
     mode_paiement: string,
     first_part: number,
+    telephone: number,
     type: string,
     via: string
   ) {
@@ -43,6 +44,7 @@ export class CommercantService extends Base {
         mode_paiement: mode_paiement,
         first_part: first_part,
         type: type,
+        telephone: telephone,
         via: via,
       },
       {

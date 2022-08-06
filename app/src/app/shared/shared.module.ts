@@ -35,6 +35,8 @@ import { PayementErrorComponent } from './component/payement-error/payement-erro
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { PayementPaddingComponent } from './component/payement-padding/payement-padding.component';
 import { MobileMoneyModalComponent } from './component/mobile-money-modal/mobile-money-modal.component';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { AlertModalComponent } from './alert-modal/alert-modal.component';
 
 @NgModule({
   declarations: [
@@ -44,12 +46,13 @@ import { MobileMoneyModalComponent } from './component/mobile-money-modal/mobile
     PayementSuccessComponent,
     PayementPaddingComponent,
     SpinnerComponent,
-    MobileMoneyModalComponent
+    MobileMoneyModalComponent,
+    AlertModalComponent,
   ],
   imports: [
     CommonModule,
     NzLayoutModule,
-    NzListModule,
+    NzListModule,NzAvatarModule,
     NzResultModule,
     NzIconModule,
     MatIconModule,
@@ -137,7 +140,7 @@ import { MobileMoneyModalComponent } from './component/mobile-money-modal/mobile
     NzPageHeaderModule,
     NzModalModule,
     NzDrawerModule,
-    NzGridModule,
+    NzGridModule,NzAvatarModule,
     NzNotificationModule,
     NzImageModule,
     NzDividerModule,

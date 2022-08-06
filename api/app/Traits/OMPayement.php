@@ -45,8 +45,6 @@ trait OMPayement
 
     public function requestOMPayement(int $amount, $telephone, $client, Commande $commande, $type)
     {
-        $ref = uniqid("om_");
-
         $data = [
             'method' => 'CLASSIC',
             'partner' => [
@@ -85,7 +83,7 @@ trait OMPayement
 
         return [
             "response" => $response,
-            "padding" => $padding
+            "padding" => $padding->id
         ];
     }
 
@@ -183,20 +181,21 @@ trait OMPayement
         return $response;
     }
 
-    public function changePin()
-    {
-        $data = [
-            "encryptedNewPinCode" => "VJ7tQ+b6MOyjM2lffU5plIjh808m1HrfqjEpvUaeRUqjswNowvybxCSSBAM6Nol5cU35ZK3E7nrH8pMF9dH22YJ4HWqA2qysU88jHJ+CgpTESgunWxHGO8sVflBl/oALsGpk7ja4uj/KaksZs5lhyhDWkS9fVVASJhVl/YBE7wpASaJEeKzBT1seCpCnCBaJrxhCYmeJDV8oFb3zowrn2rKCAMzq1cce4QsowqVnT12j6cU1yJJ3GqVeSLFmORLPxKJ60D8EOHoR6DoZ2/u+7Hu2ftAcKaqkMY4d+GjDfM4de7sei3AWBR+6kfrdDx3gdYbV5TcAcrLwuAgehEeyPw==",
-            "encryptedPinCode" => env('OM_MARCHAND_HASH_CODE')
-        ];
+    // public function changePin()
+    // {
+    //     // new pin 1234
+    //     $data = [
+    //         "encryptedPinCode" => "OievTqWOt08nZ/XmBVqmtk1nj93/gcpEERKg7+Ag8ZuQQBDDG2bjdp7MO7Q0oKw9kZERHt9ahmYt8cE0R1vVKUp0CenneU0H4J8lfgbZBvPrQyaJY3XA3yaK91RB4YcXn8LTmcIMRv0HegAYth70o69QesMOfQYbSzdYWqw/LuVJMBxz3et8RyeB9XGByV90gMtyb5kMTN8czU6TeUG+21UAN/0+09rjr5suB48ZlBocufHpmP5cR2zs5DdSBPplHaC+fl7aah/VfXsNqDZnG50IHG1fr7AsubPKvAsJHoTIiKRcnkrReY0Y74Lgjeu7ryzVOf7asGDo+mQNPRKzMQ==",
+    //         "encryptedNewPinCode" => "atR3wd3Stl/xFoPGuJy35A9+rsLcfRnor6a4W1KLEybUXxlhryHZCVHR44/vivd2jRR9TQ5Mpgz4gMvj3H29aZ1LuMQEcDL3i4+xbA8BTWJrJPrtNHQMI50JxNz4Ar6UFFfMgPuRFlrdARySV9qG6+P7KpEkhdUQRXKx5ak1evQ0dHJptC6EBxWBfKjijPvYcnvOO1Fu/Kxwrulwq4TrvZmdK+1TZ8EPL1x9bidjJ6bEjodtV9HCIV29W5e8mSJp3OV7eesSVZlDX5jyoXyj8M9qtOz1e8lZgG0TAUizC2JL4trIebva6avvNCSsDQW88/sN+CJpOvf9IVhylWf/ng=="
+    //     ];
 
-        $token = $this->requestOMToken();
-        $tel = env('OM_MARCHAND_PONE');
-        $response = Http::withHeaders([
-            'Authorization' => "Bearer " . $token
-        ])->patch("https://api.orange-sonatel.com/api/eWallet/v1/account?msisdn=". $tel, $data);
+    //     $token = $this->requestOMToken();
+    //     $tel = env('OM_MARCHAND_PONE');
+    //     $response = Http::withHeaders([
+    //         'Authorization' => "Bearer " . $token
+    //     ])->patch("https://api.orange-sonatel.com/api/eWallet/v1/account?msisdn=" . $tel, $data);
 
 
-        return $response;
-    }
+    //     return $response;
+    // }
 }
