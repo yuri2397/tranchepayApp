@@ -7,24 +7,23 @@ use App\Models\Commande;
 use App\Models\Padding;
 use App\Models\Param;
 use Illuminate\Support\Facades\Http;
-use Dirape\Token\Token;
 
 trait OMPayement
 {
 
-    protected $baseUrl = "https://api.sandbox.orange-sonatel.com";
-    protected $tokenUrl = "https://api.sandbox.orange-sonatel.com/oauth/token";
-    protected $initUrl = "https://api.sandbox.orange-sonatel.com/api/eWallet/v1/payments";
-    protected $publicKeyUrl = "https://api.sandbox.orange-sonatel.com/api/account/v1/publicKeys";
-    protected $payementUrl = "https://api.sandbox.orange-sonatel.com/api/eWallet/v1/payments";
-    protected $oneStapUrl = "https://api.sandbox.orange-sonatel.com/api/eWallet/v1/payments/onestep";
+    protected $baseUrl = "https://api.orange-sonatel.com";
+    protected $tokenUrl = "https://api.orange-sonatel.com/oauth/token";
+    protected $initUrl = "https://api.orange-sonatel.com/api/eWallet/v1/payments";
+    protected $publicKeyUrl = "https://api.orange-sonatel.com/api/account/v1/publicKeys";
+    protected $payementUrl = "https://api.orange-sonatel.com/api/eWallet/v1/payments";
+    protected $oneStapUrl = "https://api.orange-sonatel.com/api/eWallet/v1/payments/onestep";
 
     private function requestOMToken()
     {
         $data = [
             "grant_type" => "client_credentials",
-            "client_secret" => env('OM_CLIENT_SECRET'),
-            "client_id" => env('OM_CLIENT_ID')
+            "client_id" => "cd46cbd1-5991-4e10-afac-d0573a32dd1d",
+            "client_secret" => "6560b034-c3b1-42c6-bfe3-ec409adae457"
         ];
 
         $ch = curl_init($this->tokenUrl);
@@ -44,8 +43,10 @@ trait OMPayement
         return $jsonResponse['access_token'];
     }
 
-    public function requestOMPayement(int $amount, Commande $commande, Client $client, $type)
+    public function requestOMPayement(int $amount, $telephone, $client, Commande $commande, $type)
     {
+        $ref = uniqid("om_");
+
         $data = [
             'method' => 'CLASSIC',
             'partner' => [
@@ -55,21 +56,17 @@ trait OMPayement
             ],
             'customer' => [
                 'idType' => 'MSISDN',
-                'id' => $client->telephone
-            ],
-            'metadata' => [
-                "client" => $client->id,
-                "client_phone" => $client->telephone,
-                "commande" => $commande->id
+                'id' => $telephone
             ],
             'amount' => [
                 'value' => $amount,
                 'unit' => 'XOF'
             ],
-            'reference' => (new Token())->Unique('paddings', 'reference', 45),
-            'receiveNotification' => false
+            'reference' => $commande->reference,
+            'receiveNotification' => true
         ];
         $access_token = $this->requestOMToken();
+
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => "Bearer $access_token"
@@ -78,14 +75,18 @@ trait OMPayement
         $response = json_decode($response, true);
 
         $padding = new Padding();
-        $padding->reference = $response['transactionId'];
+        $padding->reference = $commande->reference;
         $padding->type = $type;
         $padding->user_id = $client->id;
         $padding->via = "Orange Money";
         $padding->amount = $amount;
+        $padding->commande_id = $commande->id;
         $padding->save();
 
-        return $response;
+        return [
+            "response" => $response,
+            "padding" => $padding
+        ];
     }
 
     public function getPublicKey()
@@ -162,5 +163,40 @@ trait OMPayement
         else
             throw new \Exception('Unable to encrypt data. Perhaps it is bigger than the key size?');
         return $data;
+    }
+
+    public function isValideOrangeNumber($telephone)
+    {
+        $test = str_split($telephone);
+        if ($test && $test[0] == "7" && ($test[1] == "7" || $test[1] == "5" || $test[1] == "8")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function requestPublicKey($token)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer " . $token
+        ])->get("https://api.orange-sonatel.com/api/account/v1/publicKeys");
+        return $response;
+    }
+
+    public function changePin()
+    {
+        $data = [
+            "encryptedNewPinCode" => "VJ7tQ+b6MOyjM2lffU5plIjh808m1HrfqjEpvUaeRUqjswNowvybxCSSBAM6Nol5cU35ZK3E7nrH8pMF9dH22YJ4HWqA2qysU88jHJ+CgpTESgunWxHGO8sVflBl/oALsGpk7ja4uj/KaksZs5lhyhDWkS9fVVASJhVl/YBE7wpASaJEeKzBT1seCpCnCBaJrxhCYmeJDV8oFb3zowrn2rKCAMzq1cce4QsowqVnT12j6cU1yJJ3GqVeSLFmORLPxKJ60D8EOHoR6DoZ2/u+7Hu2ftAcKaqkMY4d+GjDfM4de7sei3AWBR+6kfrdDx3gdYbV5TcAcrLwuAgehEeyPw==",
+            "encryptedPinCode" => env('OM_MARCHAND_HASH_CODE')
+        ];
+
+        $token = $this->requestOMToken();
+        $tel = env('OM_MARCHAND_PONE');
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer " . $token
+        ])->patch("https://api.orange-sonatel.com/api/eWallet/v1/account?msisdn=". $tel, $data);
+
+
+        return $response;
     }
 }

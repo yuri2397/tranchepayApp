@@ -162,10 +162,15 @@ class ClientController extends Controller
                     "message" => "Il vous reste que $restant FCFA à payer. Merci d'effectuer un versement correcte."
                 ], 422);
             }
-
             switch ($request->via) {
                 case 'om':
-                    # code...
+                    if(!$this->isValideOrangeNumber($telephone)){
+                        return response()->json([
+                            "message" => "Pour payer avec Orange Money, veuillez mettre un numéro orange valide."
+                        ], 422);
+                    }
+                    $response = $this->requestOMPayement($request->amount,$telephone, $client, $commande, "vm");
+                    return $response;
                     break;
                 case 'wave':
                     $response  = $this->createCheckoutSession($request->montant, $client, $commande, "vm");
@@ -186,7 +191,7 @@ class ClientController extends Controller
                             "message" => "Pour payer avec FreeMoney, veuillez mettre un numéro free."
                         ], 422);
                     }
-                    
+
                     $response = $this->requestFreePayement($request->montant, $telephone, $client, $commande, 'vm');
                     if ($response && $response['response']['status'] == 'PENDING') {
                         return response()->json([
