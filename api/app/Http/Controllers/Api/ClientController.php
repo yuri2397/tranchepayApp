@@ -170,7 +170,7 @@ class ClientController extends Controller
                             "message" => "Pour payer avec Orange Money, veuillez mettre un numéro orange valide."
                         ], 422);
                     }
-                    $response = $this->requestOMPayement($request->amount, $telephone, $client, $commande, "vm");
+                    $response = $this->requestOMPayement($request->montant, $telephone, $client, $commande, "vm");
                     if ($response['response']['status'] === 'INITIATED') {
                         return response()->json([
                             "padding" => $response["padding"],
