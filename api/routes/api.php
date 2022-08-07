@@ -21,6 +21,7 @@ use App\Models\User;
  * MIXED
  */
 
+
 Route::post("contact-us", [ClientController::class, "contactUs"]);
 
 /**
