@@ -5,6 +5,7 @@ import { CommandesService } from './../../../services/commandes.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-versement-create',
@@ -43,7 +44,7 @@ export class VersementCreateComponent implements OnInit {
     private fb: FormBuilder,
     public commandeService: CommandesService,
     public clientService: ClientService,
-    private notification: NzNotificationService
+    private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -85,8 +86,10 @@ export class VersementCreateComponent implements OnInit {
           },
           error: (errors) => {
             console.log(errors);
-            this.notification.error('Notification', errors.error.message, {
-              nzDuration: 5000,
+            this.notification.emitChange({
+              title: 'Versement annulé',
+              message: errors.error.message,
+              type: 'error',
             });
             this.destroy(null);
           },

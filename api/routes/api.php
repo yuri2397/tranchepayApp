@@ -76,7 +76,7 @@ Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
     Route::post('create', [RegisteredUserController::class, "create"]);
     Route::get('commandes', [ClientController::class, "commandes"]);
     Route::get('versements', [ClientController::class, "versementsClient"]);
-    Route::post('do-versement', [ClientController::class, "effectuerVersement"]);
+    Route::post('do-versement', [ClientController::class, "effectuerVersement"])->middleware('throttle:5,1');
     Route::post('deplafonnement', [DeplafonnementController::class, 'store']);
     Route::get('paddings', [ClientController::class, 'paddings']);
     Route::get('search', [ClientController::class, 'search']);

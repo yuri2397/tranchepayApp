@@ -170,16 +170,19 @@ class ClientController extends Controller
                             "message" => "Pour payer avec Orange Money, veuillez mettre un numéro orange valide."
                         ], 422);
                     }
-                    $response = $this->requestOMPayement($request->montant, $telephone, $client, $commande, "vm");
-                    if ($response['response']['status'] === 'INITIATED') {
+                    $om = $this->requestOMPayement($request->montant, $telephone, $client, $commande, "vm");
+
+                    if ($om['response']['status'] === 'INITIATED') {
                         return response()->json([
-                            "padding" => $response["padding"],
+                            "padding" => $om["padding"],
+                            "code" => 201,
                             "message" => "Votre verssement est en attente de confirmation.",
-                            "data" => json_decode($response['response'])
+                            "data" => json_decode($om['response'])
                         ]);
-                    }
-                    else {
-                    return $response;
+                    } else if ($om['response']['status'] >= 400 && $om['response']['status'] < 500) {
+                        return response()->json([
+                            "message" => $om['response']["detail"]
+                        ], 422);
                     }
                     break;
                 case 'wave':

@@ -1,74 +1,44 @@
-<div nz-row>
-  <div nz-col nzSpan="24">
-    <div [ngStyle]="{ width: '100%', textAlign: 'center' }">
-      <nz-tag [nzColor]="'rgba(243,243,243, 0.1)'" [ngStyle]="{ width: '100%' }"
-        ><h3>
-          Nos Partenaires
-          <img src="/assets/img/partner.png" style="width: 100px" /></h3
-      ></nz-tag>
-    </div>
+<div class="bg-white p-3">
+  <div class="jumbotron">
+    <h1 class="display-4">Enseignes partenaires </h1>
+    <p class="lead">En magasin ou sur internet, réglez vos achat avec flexibilité dans plus de 50 enseignes.
+    </p>
   </div>
-</div>
-<div
-  nz-row
-  [ngStyle]="{
-    backgroundColor: 'none'
-  }"
->
-  <div nz-col nzSpan="22" nzOffset="1">
-    <div
-      [nzGutter]="16"
-      nz-row
-      [ngStyle]="{
-        backgroundColor: 'none'
-      }"
-    >
-      <div
-        nz-col
-        class="gutter-row pt-4"
-        [nzSpan]="6"
-        *ngFor="let item of partenaires"
-      >
-        <div
-          nz-card-grid
-          class="raduis-sm shadow"
-          nzSize="small"
-          [ngStyle]="{
-            width: '100%',
-            backgroundColor: 'white',
-            heigth: '100px !important'
-          }"
-          style="height: 360px !important"
-        >
-          <img
-            src="{{ item.logo_url }}"
-            class="bd-placeholder-img card-img-top p-5"
-            width="100%"
-            height="225"
-          />
-          <div class="card-body">
-            <h4 class="card-text text-dark-green bold">{{ item.nom }}</h4>
-            <p *ngIf="item.site_web">
-              <a
-                class="text-dark-green openlink bold btn shadow-sm border"
-                href="{{ item.site_web }}"
-                target="_blank"
-                >VOIR LE SITE <i class="bi bi-link-45deg bold"></i
-              ></a>
-            </p>
+
+
+  <div class="d-flex">
+
+    <div *ngFor="let item of partenaires" class="mx-1">
+      <div class="card card-body shadow-sm">
+        <a target="_blank" href="{{ item?.site_web ?? '' }}" class="ng-star-inserted">
+          <div class="item">
+            <img class="logo" src="{{ item.logo_url }}">
+
+            <div class="payment-type mt-2">
+              <div><span class="check"></span>
+                <p>{{ item.nom }}</p>
+              </div>
+              <div><span class="check"></span>
+                <p>{{ item.type.nom }}</p>
+              </div>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
-  </div>
-</div>
 
-<ng-template #loadData>
-  <div class="container w-100" style="width: 100%">
-    <nz-skeleton [nzActive]="true"></nz-skeleton>
-    <br />
-    <nz-skeleton [nzActive]="true"></nz-skeleton>
-    <br />
-    <nz-skeleton [nzActive]="true"></nz-skeleton>
   </div>
-</ng-template>
+
+
+
+  <ng-template #loadData>
+    <div class="container w-100" style="width: 100%">
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+      <br />
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+      <br />
+      <nz-skeleton [nzActive]="true"></nz-skeleton>
+    </div>
+  </ng-template>
+
+</div>

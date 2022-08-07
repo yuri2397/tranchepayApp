@@ -1,5 +1,22 @@
-.openlink{
-    &:hover{
-        transform: scale(1.05);
-    }
+.partners {
+    margin-bottom: 20px;
+    flex-grow: 1;
+    max-width: 224px;
+
+}
+
+.payment-type > * {
+    color: rgb(62, 56, 56) !important;
+}
+
+.logo{
+    width: 200px;
+    aspect-ratio: auto 200 / 119;
+    height: 119px;
+}
+
+.check{
+    height: 10px;
+    width: 12px;
+    background: #8bbc06;
 }

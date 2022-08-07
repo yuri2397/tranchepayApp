@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { CommandesService } from 'src/app/services/commandes.service';
 import { PayementPaddingComponent } from 'src/app/shared/component/payement-padding/payement-padding.component';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-show',
@@ -24,7 +25,8 @@ export class ShowComponent implements OnInit {
     private location: Location,
     private modal: NzModalService,
     private notification: NzNotificationService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private message: NotificationService
   ) { }
 
   ngOnInit(): void {

@@ -10,6 +10,13 @@ class Partenaire extends Model
 {
     use Uuids;
     use HasFactory;
+    protected $with = ["type"];
 
-    protected $fillable =["nom", "logo_url", "site_web"];
+    protected $fillable = ["nom", "logo_url", "site_web"];
+
+
+    public function type()
+    {
+        return $this->belongsTo(PartenaireType::class, "type");
+    }
 }
