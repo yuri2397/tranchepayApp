@@ -63,6 +63,10 @@ class PayementIPN extends Controller
 
     public function orangeMoney(Request $request)
     {
+        $log = new Log();
+        $log->text = "OM IPN LOG";
+        $log->log = json_encode($request->all());
+        $log->save();
         return response()->json(["message" => "Request success"], 200);
     }
 
