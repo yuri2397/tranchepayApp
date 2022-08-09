@@ -2,12 +2,15 @@
 
 namespace App\Traits;
 
-use App\Models\Client;
-use App\Models\Commande;
-use App\Models\Padding;
 use App\Models\Param;
-use Illuminate\Support\Facades\Http;
+use App\Models\Client;
+use App\Models\Compte;
+use App\Models\Padding;
+use App\Models\Commande;
+use App\Models\Versement;
+use App\Models\EtatCommande;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Http;
 
 trait OMPayement
 {
@@ -99,6 +102,43 @@ trait OMPayement
     {
     }
 
+    public function valideOMPayement(Padding $padding)
+    {
+        if ($padding) {
+
+            $padding->extra = json_encode("SUCCESS");
+            $padding->status = true;
+
+            $commande = Commande::with("versements")->find($padding->commande_id);
+
+            $versement = new Versement();
+            $versement->date_time = now();
+            $versement->via = $padding->via;
+            $versement->reference = $padding->reference;
+            $versement->montant = $padding->amount;
+            $versement->commande_id = $commande->id;
+            $versement->save();
+
+            if ($padding->type == "fp") {
+                $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
+                $compte->solde += $commande->prix_total;
+                $compte->save();
+            }
+
+            $res = $this->restant($commande);
+            $padding->save();
+
+            if ($res == 0) {
+                $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
+                $commande->save();
+            }
+            return "SUCCESS";
+        }
+        else{
+            return "ERROR";
+        }
+    }
+
     public function getPayementStatus($id)
     {
         $url = "https://api.orange-sonatel.com/api/eWallet/v1/transactions/$id/status";
@@ -109,7 +149,7 @@ trait OMPayement
             'Authorization' => "Bearer $access_token"
         ])->get($url);
 
-        return json_decode($response);
+        return json_decode($response, true);
     }
 
 

@@ -60,7 +60,6 @@ class PayementIPN extends Controller
         return response()->json(["message" => "Request success"], 200);
     }
 
-
     public function orangeMoney(Request $request)
     {
         $log = new Log();
