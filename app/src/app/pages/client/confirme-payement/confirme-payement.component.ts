@@ -14,9 +14,11 @@ export class ConfirmePayementComponent implements OnInit {
   data: Payements[] = [];
   // data: any;
   statut!: string;
+  dataLoad!: boolean;
   constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
+    this.dataLoad = true;
     this.clientService.paddings().subscribe({
       next: response => {
         this.data = response;
@@ -47,6 +49,7 @@ export class ConfirmePayementComponent implements OnInit {
               break;
           }
         });
+        this.dataLoad = false;
         console.log(this.data);
       },
       error: errors => {

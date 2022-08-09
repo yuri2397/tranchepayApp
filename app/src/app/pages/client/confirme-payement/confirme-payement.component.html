@@ -3,7 +3,7 @@
     <h3 class="my-3 text-dark-green bold">LISTE DE MES PAYEMENTS</h3>
     <nz-tabset [nzSize]="'large'">
       <nz-tab [nzTitle]="all_payments_title">
-        <nz-table #nzTable [nzData]="data" [nzPageSize]="10">
+        <nz-table #nzTable [nzData]="data" [nzPageSize]="10" [nzLoading]="dataLoad">
           <thead>
             <tr>
               <th>Réference</th>
@@ -16,10 +16,10 @@
           </thead>
           <tbody>
             <tr *ngFor="let i of nzTable.data">
-              <td>{{ i.reference }}</td>
-              <td>{{ i.via }}</td>
-              <td>{{ i.amount }}</td>
-              <td>{{ i.created_at | date }}</td>
+              <td>{{ i?.reference }}</td>
+              <td>{{ i?.via }}</td>
+              <td>{{ i?.amount | currency: "FCFA":"symbol":"1.0":"fr"}}</td>
+              <td>{{ i?.created_at | date }}</td>
               <td>
                 <nz-tag
                   [nzColor]="i.status == 'TERMINÉ' ? '#00FFC4' : 'error'"
@@ -45,7 +45,8 @@
           <thead>
             <tr>
               <th>Réference</th>
-              <th>Type</th>
+              <th>Via</th>
+              <th>Montant</th>
               <th>Date</th>
               <th>Statut</th>
               <th>Actions</th>
@@ -53,19 +54,26 @@
           </thead>
           <tbody>
             <tr *ngFor="let i of nzTable.data">
-              <ng-container *ngIf="i.status == 'EN ATTENTE'">
-                <td>{{ i.reference }}</td>
-                <td>{{ i.type }}</td>
-                <td>{{ i.created_at | date }}</td>
-                <td>
-                  <nz-tag [nzColor]="'error'" class="text-black">{{
-                    i.status
-                  }}</nz-tag>
-                </td>
-                <td>
-                  <button nz-button (click)="confirme(i)">Confirmer</button>
-                </td>
-              </ng-container>
+              <td>{{ i?.reference }}</td>
+              <td>{{ i?.via }}</td>
+              <td>{{ i?.amount | currency: "FCFA":"symbol":"1.0":"fr"}}</td>
+              <td>{{ i?.created_at | date }}</td>
+              <td>
+                <nz-tag
+                  [nzColor]="i.status == 'TERMINÉ' ? '#00FFC4' : 'error'"
+                  class="text-black"
+                  >{{ i.status }}</nz-tag
+                >
+              </td>
+              <td>
+                <button
+                  nz-button
+                  (click)="confirme(i)"
+                  [disabled]="i.status == 'TERMINÉ' ? 'true' : 'false'"
+                >
+                  Confirmer
+                </button>
+              </td>
             </tr>
           </tbody>
         </nz-table>
@@ -75,27 +83,25 @@
           <thead>
             <tr>
               <th>Réference</th>
-              <th>Type</th>
+              <th>Via</th>
+              <th>Montant</th>
               <th>Date</th>
               <th>Statut</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let i of nzTable.data">
               <ng-container *ngIf="i.status == 'TERMINÉ'">
-                <td>{{ i.reference }}</td>
-                <td>{{ i.type }}</td>
-                <td>{{ i.created_at | date }}</td>
+                <td>{{ i?.reference }}</td>
+                <td>{{ i?.via }}</td>
+                <td>{{ i?.amount| currency: "FCFA":"symbol":"1.0":"fr" }}</td>
+                <td>{{ i?.created_at | date }}</td>
                 <td>
-                  <nz-tag [nzColor]="'#00FFC4'" class="text-black">{{
-                    i.status
-                  }}</nz-tag>
-                </td>
-                <td>
-                  <button nz-button (click)="confirme(i)" disabled>
-                    Confirmer
-                  </button>
+                  <nz-tag
+                    [nzColor]="i.status == 'TERMINÉ' ? '#00FFC4' : 'error'"
+                    class="text-black"
+                    >{{ i.status }}</nz-tag
+                  >
                 </td>
               </ng-container>
             </tr>
