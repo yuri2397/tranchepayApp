@@ -7,6 +7,7 @@ use App\Models\Commande;
 use App\Models\Padding;
 use App\Models\Param;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\URL;
 
 trait OMPayement
 {
@@ -67,7 +68,8 @@ trait OMPayement
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => "Bearer $access_token"
+            'Authorization' => "Bearer $access_token",
+            "X-Callback-Url" => URL::to("/api/om/ipm")
         ])->post($this->payementUrl, $data);
 
         $response = json_decode($response, true);
