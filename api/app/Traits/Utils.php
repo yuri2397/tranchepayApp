@@ -353,7 +353,21 @@ trait Utils
         $commercant = $this->authCommercant();
 
         if ($montant > $commercant->boutique->compte->solde) {
-            return "Le solde de votre compte est insiffusant pour faire le retrait.";
+            return response()->json([
+                "message" => "Le solde de votre compte est insiffusant pour faire le retrait."
+            ]);
+        }
+
+        switch ($via) {
+            case 'om':
+                return $this->OMRetrait($montant, $telephone,$commercant);
+                break;
+            case 'free':
+
+                break;
+            case 'wave':
+
+                break;
         }
 
         $data = [

@@ -63,6 +63,7 @@ export class ShowComponent implements OnInit {
         nzFooter: null,
       })
       .afterClose.subscribe((data: any | null) => {
+        
         if (data) {
           let type: any = 'info';
           let m = this.modal.create({
@@ -74,7 +75,7 @@ export class ShowComponent implements OnInit {
             nzClosable: false,
             nzComponentParams: {
               text: data.message,
-              url: data.data.wave_launch_url,
+              url: data.data?.wave_launch_url  ?? null,
               load: true,
               type: type,
             },

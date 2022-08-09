@@ -81,7 +81,6 @@ export class VersementCreateComponent implements OnInit {
         .subscribe({
           next: (success) => {
             console.log(success);
-
             this.destroy(success);
           },
           error: (errors) => {

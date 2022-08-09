@@ -37,16 +37,27 @@ export class RetraitComponent implements OnInit {
       margin_top: '-6px',
     },
   ];
-  constructor(private comService: CommercantService, private fb: FormBuilder, private ref: NzModalRef) {}
+  constructor(
+    private comService: CommercantService,
+    private fb: FormBuilder,
+    private ref: NzModalRef
+  ) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       montant: [
         null,
-        [Validators.required, Validators.min(100), Validators.max(this.boutique.compte.solde)],
+        [
+          Validators.required,
+          Validators.min(100),
+          Validators.max(this.boutique.compte.solde),
+        ],
         ,
       ],
-      telephone: [null, [Validators.required, Validators.minLength(9), Validators.maxLength(9)]]
+      telephone: [
+        null,
+        [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
+      ],
     });
   }
 
@@ -60,10 +71,23 @@ export class RetraitComponent implements OnInit {
   }
 
   handleOk(via: string) {
-    if(this.validateForm.valid){
+    if (this.validateForm.valid) {
       this.isLoad = true;
+      this.comService
+        .doRetrait(
+          this.validateForm.value.montant,
+          via,
+          this.validateForm.value.telephone
+        )
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (errors) => {
+            console.log(errors);
+          },
+        });
     }
-    
   }
 
   handleCancel() {

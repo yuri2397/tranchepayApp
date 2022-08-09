@@ -74,25 +74,44 @@ trait OMPayement
 
         $response = json_decode($response, true);
 
-        $padding = new Padding();
-        $padding->reference = $commande->reference;
-        $padding->type = $type;
-        $padding->user_id = $client->id;
-        $padding->via = "Orange Money";
-        $padding->amount = $amount;
-        $padding->commande_id = $commande->id;
-        $padding->save();
+        if ($response["status"] == "INITIATED") {
+            $padding = new Padding();
+            $padding->reference = $response["transactionId"];
+            $padding->type = $type;
+            $padding->user_id = $client->id;
+            $padding->via = "Orange Money";
+            $padding->amount = $amount;
+            $padding->commande_id = $commande->id;
+            $padding->save();
+            return [
+                "response" => $response,
+                "padding" => $padding
+            ];
+        }
 
         return [
             "response" => $response,
-            "padding" => $padding->id
+            "padding" => null
         ];
     }
 
-    public function getPublicKey()
+    public function OMRetrait($amount, $telephone, $commercant)
     {
-        return Param::whereCle("om_public_key")->first()->value;
     }
+
+    public function getPayementStatus($id)
+    {
+        $url = "https://api.orange-sonatel.com/api/eWallet/v1/transactions/$id/status";
+
+        $access_token = $this->requestOMToken();
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => "Bearer $access_token"
+        ])->get($url);
+
+        return json_decode($response);
+    }
+
 
     public function initOMPayement($amount, $clientPhone)
     {

@@ -181,7 +181,8 @@ class ClientController extends Controller
                         ]);
                     } else if ($om['response']['status'] >= 400 && $om['response']['status'] < 500) {
                         return response()->json([
-                            "message" => $om['response']["detail"]
+                            "message" => $om['response']["detail"],
+                            "om" => $om
                         ], 422);
                     }
                     break;
@@ -190,6 +191,7 @@ class ClientController extends Controller
                     if ($response && $response['response']['id']) {
                         return response()->json([
                             "padding" => $response["padding"],
+                            "code" => 201,
                             "message" => "Votre verssement est en attente de confirmation.",
                             "data" => json_decode($response['response'])
                         ]);
