@@ -97,6 +97,7 @@ export class ShowComponent implements OnInit {
                     },
                     error: (error) => {
                       console.log(error);
+                      this.errorModal(error.error.message);
                       resolve(false);
                     },
                   });
@@ -123,6 +124,22 @@ export class ShowComponent implements OnInit {
       nzComponentParams: {
         text: message,
         type: 'success',
+        load: false,
+      },
+    });
+  }
+
+  errorModal(message: string) {
+    this.modal.create({
+      nzTitle: undefined,
+      nzFooter: null,
+      nzContent: PayementPaddingComponent,
+      nzCentered: true,
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzComponentParams: {
+        text: message,
+        type: 'error',
         load: false,
       },
     });

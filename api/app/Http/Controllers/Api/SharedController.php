@@ -42,6 +42,11 @@ class SharedController extends Controller
                     $padding->save();
                 }
             }
+            else if ($status["status"]  == "REJECTED" || $status["status"] == "FAILED"){
+                return response()->json([
+                    "message" => "Votre paiement a été annulé. Merci de réessayer."
+                ], 422);
+            }
         }
 
         return $padding;
