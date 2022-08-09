@@ -88,7 +88,7 @@ trait OMPayement
             $padding->save();
             return [
                 "response" => $response,
-                "padding" => $padding
+                "padding" => $padding->id
             ];
         }
 
