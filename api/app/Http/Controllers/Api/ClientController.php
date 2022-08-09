@@ -177,7 +177,7 @@ class ClientController extends Controller
                             "padding" => $om["padding"],
                             "code" => 201,
                             "message" => "Votre verssement est en attente de confirmation.",
-                            "data" => json_decode($om['response'])
+                            "data" => $om['response']
                         ]);
                     } else if ($om['response']['status'] >= 400 && $om['response']['status'] < 500) {
                         return response()->json([
