@@ -326,6 +326,7 @@ export class AjouterVentesComponent implements OnInit {
 
   selectCommission(data: any) {
     console.log('commission');
+    this.commission = this.total
   }
 
   closePayementModal() {
