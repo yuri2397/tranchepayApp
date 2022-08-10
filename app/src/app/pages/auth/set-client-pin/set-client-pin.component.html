@@ -25,10 +25,9 @@
               <nz-form-label [nzSpan]="24" nzRequired>Code Pin</nz-form-label>
               <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="combineTpl">
                 <input nz-input name="pin"  minlength="4" maxlength="4"
-                  required formControlName="pin" />
+                  required formControlName="pin" class="form-control shadow-sm"/>
                 <ng-template #combineTpl let-control>
-                  <ng-container *ngIf="control.hasError('maxlength')">Donner un code pin à 4 chiffres</ng-container>
-                  <ng-container *ngIf="control.hasError('minlength')">Donner un code pin à 4 chiffres</ng-container>
+                  <ng-container *ngIf="control.hasError('pattern')">Donner un code pin à 4 chiffres</ng-container>
                   <ng-container *ngIf="control.hasError('required')">Code pin est obligatoire.</ng-container>
                 </ng-template>
               </nz-form-control>

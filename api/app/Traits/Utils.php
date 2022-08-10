@@ -313,28 +313,26 @@ trait Utils
         $result["tous"] = $currentCommercant
             ->boutique
             ->commandes()
-            ->with(['produits', 'versements', 'client', 'etatCommande'])
-            ->limit(100)
+            ->limit(10)
             ->orderBy('created_at', 'desc')
             ->get();
 
         $result["en_cours"] = $currentCommercant
             ->boutique
             ->commandes()
-            ->with(['produits', 'versements', 'client', 'etatCommande'])
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "load")
-            ->limit(100)
+            ->orWhere("etat_commandes.nom", "append")
+            ->limit(10)
             ->orderBy('commandes.created_at', 'desc')
             ->get();
 
         $result["terminer"] = $currentCommercant
             ->boutique
             ->commandes()
-            ->with(['produits', 'versements', 'client', 'etatCommande'])
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "finish")
-            ->limit(100)
+            ->limit(10)
             ->orderBy('commandes.created_at', 'desc')
             ->get();
 

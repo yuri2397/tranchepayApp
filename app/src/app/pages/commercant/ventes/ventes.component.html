@@ -71,7 +71,7 @@
             </nz-tab>
             <nz-tab [nzTitle]="en_cours_ventes_title">
               <nz-table
-                #nzTableLoad
+                #nzTableEncours
                 [nzData]="data.en_cours"
                 nzTableLayout="fixed"
               >
@@ -86,7 +86,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of nzTableLoad.data">
+                  <tr *ngFor="let data of nzTableEncours.data">
                     <td class="text-dark-green bold">{{ data.reference }}</td>
                     <td>{{ data.prix_total }} FCFA</td>
                     <td>{{ montantR(data) }}</td>

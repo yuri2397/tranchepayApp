@@ -222,6 +222,8 @@ export class AjouterVentesComponent implements OnInit {
               nzClosable: false,
               nzComponentParams: {
                 text: response.message,
+                url: response.data?.wave_launch_url ?? null,
+                load: true,
                 type: type,
               },
             });
@@ -234,16 +236,18 @@ export class AjouterVentesComponent implements OnInit {
                       .checkPadding(response.padding)
                       .subscribe({
                         next: (check) => {
-                          resolve(!check.status);
                           if (check.status) {
                             this.successModal(
                               'Le client a confirmer la vente. ✅'
                             );
                             m.destroy();
                           }
+                          resolve(!check.status);
+
                         },
                         error: (error) => {
                           console.log(error);
+                          m.destroy();
                           this.errorModal(error.error.message);
                           resolve(false);
                         },
@@ -259,9 +263,9 @@ export class AjouterVentesComponent implements OnInit {
               'Notification',
               'Commande est validé avec succès'
             );
+            this.location.back();
+            this.isLoad = false;
           }
-          this.location.back()
-          this.isLoad = false;
         },
         error: (errors) => {
           this.notificatoinService.emitChange({
@@ -326,7 +330,10 @@ export class AjouterVentesComponent implements OnInit {
 
   selectCommission(data: any) {
     console.log('commission');
-    this.commission = this.total
+    let mode = this.modePaiements.find((com) => com.id == data);
+    if (mode) {
+      this.commission = this.total() * (mode.interet / 100);
+    }
   }
 
   closePayementModal() {

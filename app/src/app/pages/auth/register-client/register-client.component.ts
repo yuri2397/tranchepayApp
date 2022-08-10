@@ -89,7 +89,7 @@ export class RegisterClientComponent implements OnInit {
           'Notification',
           'Votre compte est bien crée.'
         );
-        this.router.navigate(['client-code-pin']);
+        this.router.navigate(['client-code-pin'], {queryParams: {telephone: client.telephone}});
         this.isLoad = false;
       },
       error: (errors) => {

@@ -16,7 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./set-client-pin.component.scss'],
 })
 export class SetClientPinComponent implements OnInit {
-  telephone!: string;
+  telephone?: string;
   token!: string;
   isLoad: boolean = false;
   validateForm!: FormGroup;
@@ -24,14 +24,18 @@ export class SetClientPinComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private notification: NzNotificationService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe( data => {
+      this.telephone = data.get("telephone") as any
+    } )
     this.validateForm = this.fb.group(
       {
         telephone: [
-          null,
+          this.telephone,
           [
             Validators.required,
             Validators.minLength(9),
@@ -53,7 +57,7 @@ export class SetClientPinComponent implements OnInit {
             Validators.required,
             Validators.minLength(4),
             Validators.maxLength(4),
-            Validators.pattern('^([0-9]{4}$'),
+            Validators.pattern('^[0-9]{4}$'),
           ],
         ],
         pin_conf: [

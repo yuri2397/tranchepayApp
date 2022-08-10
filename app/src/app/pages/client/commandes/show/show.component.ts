@@ -86,7 +86,6 @@ export class ShowComponent implements OnInit {
                 setTimeout(() => {
                   this.sharedService.checkPadding(data.padding).subscribe({
                     next: (check) => {
-                      resolve(!check.status);
                       if (check.status) {
                         m.destroy();
                         this.successModal(
@@ -94,6 +93,7 @@ export class ShowComponent implements OnInit {
                         );
                         this.findCommande(this.commande.id as any);
                       }
+                      resolve(!check.status);
                     },
                     error: (error) => {
                       console.log(error);
@@ -101,14 +101,12 @@ export class ShowComponent implements OnInit {
                       resolve(false);
                     },
                   });
-                }, 1000);
+                }, 500);
               })
             ) {
               console.log('Wait for check');
             }
           })();
-        }else if(data == "error"){
-          
         }
       });
   }
