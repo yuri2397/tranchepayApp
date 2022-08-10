@@ -59,6 +59,11 @@ nz-content {
     margin: 24px 16px 0;
 }
 
+.ant-layout-content {
+    overflow: auto;
+}
+
+
 .inner-content {
     padding: 24px;
     min-height: 360px;
