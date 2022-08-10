@@ -18,6 +18,7 @@ use App\Models\EtatCommande;
 use App\Models\ModePayement;
 use App\Models\Param;
 use App\Models\Partenaire;
+use App\Models\PartenaireType;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -237,13 +238,15 @@ class AdminController extends Controller
     {
         $request->validate([
             "nom" => "required",
-            "logo_url" => "required"
+            "logo_url" => "required",
+            "type" => "required|exists:partenaire_types,id"
         ]);
 
         $p = new Partenaire();
         $p->nom = $request->nom;
         $p->logo_url = $request->logo_url;
         $p->site_web = $request->site_web;
+        $p->type = $request->type;
         $p->save();
 
         return $p;
@@ -278,6 +281,11 @@ class AdminController extends Controller
     public function parametre()
     {
         return Param::all();
+    }
+
+    public function partenaireTypes()
+    {
+        return PartenaireType::all();
     }
 
     public function modePayements()

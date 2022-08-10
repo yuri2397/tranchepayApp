@@ -12,6 +12,7 @@ import { Partenaire } from 'src/app/models/partenaire';
 export class PartenaireCreateComponent implements OnInit {
   form!: FormGroup;
   createLoad: boolean = false;
+  types: any = [];
 
   constructor(
     private ref: NzModalRef,
@@ -23,8 +24,19 @@ export class PartenaireCreateComponent implements OnInit {
     this.form = this.fb.group({
       nom: [null, [Validators.required]],
       logo_url: [null, [Validators.required]],
+      type: [null, [Validators.required]],
       site_web: [null, []],
     });
+
+    this.getTypes();
+  }
+
+  getTypes(){
+    this.pService.getTypes().subscribe({
+      next: data => {
+        this.types = data;
+      }
+    })
   }
 
   _submitForm(value: any){

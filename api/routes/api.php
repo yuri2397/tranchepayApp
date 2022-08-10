@@ -115,6 +115,7 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function () {
     Route::get("partenaire", [AdminController::class, "partanaires"]);
     Route::post("partenaire/create", [AdminController::class, "createPartenaire"]);
     Route::post("partenaire/remove/{id}", [AdminController::class, "removePartenaire"]);
+    Route::get("partenaire/partenaire-types", [AdminController::class, "partenaireTypes"]);
     Route::post("partenaire/update/{id}", [AdminController::class, "updatePartenaire"]);
 
     // Parametres

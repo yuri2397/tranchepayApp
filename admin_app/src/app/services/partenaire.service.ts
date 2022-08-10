@@ -26,6 +26,12 @@ export class PartenaireService extends Base {
     });
   }
 
+  getTypes() {
+    return this.http.get<any>(this.endPoint + '/partenaire-types', {
+      headers: this.authorizationHeaders,
+    });
+  }
+
   update(partanaire: Partenaire) {
     return this.http.post<Partenaire>(
       this.endPoint + '/update/' + partanaire.id,

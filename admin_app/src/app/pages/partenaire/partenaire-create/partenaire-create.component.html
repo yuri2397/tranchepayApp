@@ -1,29 +1,58 @@
 <div>
   <form nz-form [formGroup]="form" nzLayout="vertical">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="24" nzRequired>Nom</nz-form-label>
-      <nz-form-control zHasFeedback [nzSpan]="24" [nzErrorTip]="nomVal">
-        <input nz-input nzSize="large" formControlName="nom" placeholder="Nom du partenaire" />
-        <ng-template #nomVal let-control>
-          <ng-container *ngIf="control.hasError('required')">Le nom est obligatoire</ng-container>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="24" nzRequired>Logo</nz-form-label>
-      <nz-form-control zHasFeedback [nzSpan]="24" [nzErrorTip]="logoVal">
-        <input nz-input nzSize="large" type="text" formControlName="logo_url" placeholder="Lien logo" />
-        <ng-template #logoVal let-control>
-          <ng-container *ngIf="control.hasError('required')">Le logo est obligatoire</ng-container>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7">Site web</nz-form-label>
-      <nz-form-control [nzSpan]="24">
-        <input nz-input nzSize="large" formControlName="site_web" placeholder="Lien site web" type="text" />
-      </nz-form-control>
-    </nz-form-item>
+
+
+
+    <div class="row">
+      <div class="col">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzRequired>Nom</nz-form-label>
+          <nz-form-control zHasFeedback [nzSpan]="24" [nzErrorTip]="nomVal">
+            <input nz-input nzSize="large" formControlName="nom" placeholder="Nom du partenaire" />
+            <ng-template #nomVal let-control>
+              <ng-container *ngIf="control.hasError('required')">Le nom est obligatoire</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzRequired>Logo</nz-form-label>
+          <nz-form-control zHasFeedback [nzSpan]="24" [nzErrorTip]="logoVal">
+            <input nz-input nzSize="large" type="text" formControlName="logo_url" placeholder="Lien logo" />
+            <ng-template #logoVal let-control>
+              <ng-container *ngIf="control.hasError('required')">Le logo est obligatoire</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7">Site web</nz-form-label>
+          <nz-form-control [nzSpan]="24">
+            <input nz-input nzSize="large" formControlName="site_web" placeholder="Lien site web" type="text" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7">Type</nz-form-label>
+          <nz-form-control [nzSpan]="24">
+            <nz-select formControlName="type" name="type" nzPlaceHolder="Types de partenaire">
+              <nz-option *ngFor="let item of types" [nzLabel]="item.nom" [nzValue]="item.id">
+              </nz-option>
+            </nz-select>
+
+          </nz-form-control>
+        </nz-form-item>
+
+      </div>
+    </div>
+
+
   </form>
 </div>
 
