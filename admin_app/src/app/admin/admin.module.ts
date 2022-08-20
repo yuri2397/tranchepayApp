@@ -38,6 +38,7 @@ import { PartenaireEditComponent } from '../pages/partenaire/partenaire-edit/par
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { ParametresListComponent } from '../pages/parametre/parametres-list/parametres-list.component';
 import { ParametresEditComponent } from '../pages/parametre/parametres-edit/parametres-edit.component';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,9 @@ import { ParametresEditComponent } from '../pages/parametre/parametres-edit/para
     NzInputModule,
     NzSelectModule,
     NzLayoutModule,
-    NzPopconfirmModule,NzPageHeaderModule
+    NzPopconfirmModule,
+    NzPageHeaderModule,
+    NzAvatarModule
   ]
 })
 export class AdminModule { }

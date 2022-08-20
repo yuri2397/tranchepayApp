@@ -283,6 +283,37 @@ class AdminController extends Controller
         return Param::all();
     }
 
+    public function updateParam(Request $request, $id)
+    {
+        $request->validate([
+            "valeur" => "required"
+        ]);
+
+        $param = Param::find($id);
+
+        if ($param) {
+            $param->valeur = $request->valeur;
+            $param->save();
+            return $param;
+        }
+
+        return response()->json([
+            "message" => "Cette parametre n'existe pas"
+        ], 422);
+    }
+
+    public function updateModePaiement(Request $request, $id)
+    {
+
+        $m = ModePayement::find($id);
+
+        $m->interet = $request->interet;
+        $m->nb_mois = $request->nb_mois;
+        $m->label = $request->label;
+        $m->save();
+        return $m;
+    }
+
     public function partenaireTypes()
     {
         return PartenaireType::all();
@@ -290,7 +321,7 @@ class AdminController extends Controller
 
     public function modePayements()
     {
-        
+
         return ModePayement::all();
     }
 }

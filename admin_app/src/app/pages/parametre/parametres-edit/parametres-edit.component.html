@@ -1,1 +1,46 @@
-<p>parametres-edit works!</p>
+<div>
+  <ng-container *ngIf="param; else elseTemplate">
+    <form nz-form [formGroup]="form" nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="valeur">Valeur</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="valeur" id="valeur" name="valeur">
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <form nz-form [formGroup]="form" nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="valeur">Nom</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="label" id="label" name="label">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="nb_mois">Nombre de mois</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="nb_mois" id="nb_mois" name="nb_mois">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="interet">Interet (%)</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="interet" id="interet" name="interet">
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+
+</div>
+
+<div *nzModalFooter>
+  <div class="d-flex align-items-center justify-content-between">
+    <div>
+      <button class="btn btn-danger" nz-button (click)="close(null)">Annuler</button>
+    </div>
+    <div>
+      <button class="btn btn-primary" nz-button [nzLoading]="load" (click)="save()">Enregistrer</button>
+    </div>
+  </div>
+</div>

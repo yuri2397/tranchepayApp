@@ -120,6 +120,8 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function () {
 
     // Parametres
     Route::get("parametres", [AdminController::class, "parametre"]);
+    Route::post("parametres/update/{id}", [AdminController::class, "updateParam"]);
+    Route::post("parametres/update-interet/{id}", [AdminController::class, "updateModePaiement"]);
     Route::get("/parametres/payements", [AdminController::class, "modePayements"]);
 
 

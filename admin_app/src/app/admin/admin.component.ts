@@ -38,4 +38,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   goto(route: string) {
     this.route.navigate(['/admin/' + route]);
   }
+
+  changeModal(data: string){
+
+  }
 }

@@ -46,7 +46,7 @@ export class ParametresListComponent implements OnInit {
   edit(p: Param) {
     this.modal
       .create({
-        nzTitle: 'Modifier un partenaire',
+        nzTitle: 'Modification',
         nzContent: ParametresEditComponent,
         nzWidth: '600px',
         nzComponentParams: {
@@ -69,11 +69,11 @@ export class ParametresListComponent implements OnInit {
   editMode(m: ModePayement) {
     this.modal
       .create({
-        nzTitle: 'Modifier un partenaire',
+        nzTitle: 'Modification',
         nzContent: ParametresEditComponent,
         nzWidth: '600px',
         nzComponentParams: {
-          param: JSON.parse(JSON.stringify(m)) as Param,
+          mode: JSON.parse(JSON.stringify(m)) as ModePayement,
         },
         nzCentered: true,
         nzMaskClosable: false,

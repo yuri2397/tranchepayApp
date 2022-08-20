@@ -20,8 +20,20 @@ export class ParamsService extends Base {
     });
   }
 
-  modePayement(){
-    return this.http.get<ModePayement[]>(this.endPoint+"/payements", {
+  modePayement() {
+    return this.http.get<ModePayement[]>(this.endPoint + '/payements', {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  update(param: Param) {
+    return this.http.post<Param>(this.endPoint + '/update/' + param.id, param, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  updateMode(mode: ModePayement) {
+    return this.http.post<ModePayement>(this.endPoint + '/update-interet/' + mode.id, mode, {
       headers: this.authorizationHeaders,
     });
   }

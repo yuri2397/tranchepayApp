@@ -24,11 +24,11 @@
             <span class="text-dark-green bold">Dernières Commandes</span>
           </li>
           <li nz-menu-item (click)="goto('commandes-encours')">
-            <i nz-icon nzType="check-circle" class="icon" nzTheme="outline"></i>
+            <i nz-icon nzType="field-time" class="icon" nzTheme="outline"></i>
             <span class="text-dark-green bold">Commandes En-Cours</span>
           </li>
           <li nz-menu-item (click)="goto('commandes-livres')">
-            <i nz-icon nzType="field-time" class="icon" nzTheme="outline"></i>
+            <i nz-icon nzType="check-circle" class="icon" nzTheme="outline"></i>
             <span class="text-dark-green bold">Commandes Livrées</span>
           </li>
         </ul>
@@ -70,8 +70,18 @@
         <div>
           <img class="logo" src="/assets/img/logo.png" alt="Tranchepay">
         </div>
-        <div>
-          LOGO
+        <div class="mx-5">
+          <nz-badge [nzCount]="10" (click)="changeModal('show')" class="dropdown-toggle" type="button"
+            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="icon-bel" nz-icon>
+              <svg width="19" height="21" viewBox="0 0 19 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M18.667 17V18H0.666992V17L2.66699 15V9C2.66699 5.9 4.69699 3.17 7.66699 2.29C7.66699 2.19 7.66699 2.1 7.66699 2C7.66699 1.46957 7.87771 0.960859 8.25278 0.585786C8.62785 0.210714 9.13656 0 9.66699 0C10.1974 0 10.7061 0.210714 11.0812 0.585786C11.4563 0.960859 11.667 1.46957 11.667 2C11.667 2.1 11.667 2.19 11.667 2.29C14.637 3.17 16.667 5.9 16.667 9V15L18.667 17ZM11.667 19C11.667 19.5304 11.4563 20.0391 11.0812 20.4142C10.7061 20.7893 10.1974 21 9.66699 21C9.13656 21 8.62785 20.7893 8.25278 20.4142C7.87771 20.0391 7.66699 19.5304 7.66699 19"
+                  fill="#010246" />
+              </svg>
+            </i>
+          </nz-badge>
+          <nz-avatar></nz-avatar>
         </div>
       </div>
     </nz-header>
