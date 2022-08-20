@@ -14,6 +14,8 @@ import { NotificationService } from 'src/app/shared/notification.service';
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
   isLoad = false;
+  errorMessage: any;
+  hasError: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.isLoad = true;
+    this.hasError = false;
     this.authService
       .login(this.validateForm.value.username, this.validateForm.value.password)
       .subscribe({
@@ -58,10 +61,8 @@ export class LoginComponent implements OnInit {
         error: (errors) => {
           this.isLoad = false;
           console.log(errors);
-          
-          this.notification.create("error", "Message d'erreur", errors.error.message, {
-            nzDuration: 5000
-          });
+          this.errorMessage = errors.error.message
+          this.hasError = true;
         },
       });
   }

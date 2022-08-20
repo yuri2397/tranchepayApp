@@ -14,6 +14,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgNumericKeyboardModule } from 'ng-numeric-keyboard';
 import { NzFormModule } from "ng-zorro-antd/form";
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -35,7 +36,8 @@ import { NzFormModule } from "ng-zorro-antd/form";
     NzIconModule,
     MatIconModule,
     NgNumericKeyboardModule,
-    NzFormModule
+    NzFormModule,
+    SharedModule
   ],
 })
 export class AuthModule {}

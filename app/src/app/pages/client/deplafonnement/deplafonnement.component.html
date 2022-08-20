@@ -55,20 +55,20 @@
         <div class="mx-5">
           <div class="row">
             <div class="col">
-              <img [src]="client.deplafonnement.cni_recto" class="cni-image" alt="RECTO">
+              <img nz-image [nzSrc]="client.deplafonnement.cni_recto" class="cni-image" alt="RECTO">
             </div>
             <div class="col">
-              <img [src]="client.deplafonnement.cni_verso" class="cni-image" alt="VERSO">
+              <img nz-image [nzSrc]="client.deplafonnement.cni_verso" class="cni-image" alt="VERSO">
             </div>
           </div>
         </div>
       </ng-container>
       <ng-template #elseTemplate>
-        <nz-alert [nzType]="'success'">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, sequi quam, officia iusto, ab sit velit
-          doloribus aperiam dicta possimus perspiciatis sapiente officiis! Tenetur atque aut eum molestias voluptates
-          eos!
+        <nz-alert class="col-6 text-center mt-5 px-5 center" [nzType]="'success'" [nzMessage]="mTemp">
         </nz-alert>
+        <ng-template #mTemp>
+          <h3>Votre est déplofonné.</h3>
+        </ng-template>
       </ng-template>
 
     </ng-template>

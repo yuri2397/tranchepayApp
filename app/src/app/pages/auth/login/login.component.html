@@ -13,15 +13,18 @@
           <div class="card login-card-bg shadow raduis-sm">
             <div class="card-body">
               <h3 class="">Connexion</h3>
+              <div *ngIf="hasError" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
               <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="form my-3">
                 <div class="form-group my-3">
                   <label for="username bold">Numéro téléphone</label>
-                  <input autocomplete="true" type="text" class="form-control shadow-sm" nz-input
+                  <input nzSize="large"  autocomplete="true" type="text" class="form-control shadow-sm" nz-input
                     formControlName="username" id="username" name="username" />
                 </div>
                 <div class="form-group my-3">
                   <label for="password bold">Mot de passe</label>
-                  <input type="password" autocomplete="false" formControlName="password" class="form-control shadow-sm" id="password"
+                  <input nz-input nzSize="large" type="password" autocomplete="false" formControlName="password" class="form-control shadow-sm" id="password"
                     name="password" />
                 </div>
                 <button nz-button (click)="login()" [nzLoading]="isLoad" class="bg" [disabled]="!validateForm.valid"

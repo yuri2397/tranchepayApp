@@ -39,14 +39,16 @@
               <div class="section-title title-sm">
                 <p>Créer un compte client</p>
               </div>
-
+              <div *ngIf="hasError" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
               <form nz-form [formGroup]="validateForm" [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
                 <div class="row my-2">
                   <div class="col form-group">
                     <nz-form-item>
                       <label for="prenoms">Prénoms *</label>
                       <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="prenoms">
-                        <input type="text" class="form-control
+                        <input nz-input nzSize="large" type="text" class="form-control
                                                 shadow-sm" id="prenoms" formControlName="prenoms" required
                           name="prenoms">
                         <ng-template #prenoms let-control>
@@ -63,7 +65,7 @@
                     <nz-form-item>
                       <label for="nom">Nom *</label>
                       <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="nom">
-                        <input type="text" required formControlName="nom" aria-label="nom" aria-describedby="nom"
+                        <input nz-input nzSize="large" type="text" required formControlName="nom" aria-label="nom" aria-describedby="nom"
                           class="form-control shadow-sm" id="nom" name="nom">
                         <ng-template #nom let-control>
                           <ng-container *ngIf="control.hasError('required')">
@@ -87,7 +89,7 @@
                       <label for="telephone">Téléphone *</label>
                       <nz-form-control [nzSpan]="24" nzHasFeedback [nzErrorTip]="telephone">
                         <nz-input-group nzAddOnBefore="+221">
-                          <input type="text" minlength="9" maxlength="9" formControlName="telephone" required
+                          <input nz-input nzSize="large" type="text" minlength="9" maxlength="9" formControlName="telephone" required
                             aria-label="telephone" aria-describedby="telephone" class="form-control shadow-sm"
                             id="telephone" name="telephone">
                         </nz-input-group>
@@ -103,7 +105,7 @@
                 <div class="row justify-content-between my-3">
                   <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 col-xl-6">
                     <button (click)="save()" [disabled]="!validateForm.valid" nz-button [nzLoading]="isLoad"
-                      class="btn submit-btn shadow btn-block" type="submit">Creér mon compte</button>
+                      class="btn submit-btn  btn-block" type="submit">Creér mon compte</button>
                   </div>
                   <div class="col-md-6 col-xs-12 col-sm-6 col-lg-6 col-xl-6 my-sm-2">
                     <u><a [routerLink]="['/auth/login']" class="text-dark-green">J'ai déjà un compte</a></u>

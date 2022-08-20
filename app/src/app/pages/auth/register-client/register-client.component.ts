@@ -16,7 +16,7 @@ declare interface MenuClass {
   styleUrls: ['./register-client.component.scss'],
 })
 export class RegisterClientComponent implements OnInit {
-  currentYear:any;
+  currentYear: any;
   validateForm!: FormGroup;
   isLoad = false;
   @ViewChild('preloader') preloader!: ElementRef;
@@ -31,9 +31,12 @@ export class RegisterClientComponent implements OnInit {
   expended: MenuClass = {
     navbar: 'navbar navbar-mobile',
     icon: 'bi mobile-nav-toggle bi-x',
-    btnConnexion: 'btn btn-sm btn-new-account-home my-sm-1 mx-3 px-2 py-1 text-white',
+    btnConnexion:
+      'btn btn-sm btn-new-account-home my-sm-1 mx-3 px-2 py-1 text-white',
     btnInscription: 'btn active-btn mx-3 py-1',
   };
+  hasError = false;
+  errorMessage: any;
 
   isCollapse!: boolean;
   constructor(
@@ -77,6 +80,7 @@ export class RegisterClientComponent implements OnInit {
   submitForm() {}
 
   save() {
+    this.hasError = false;
     this.isLoad = true;
     let client = new Client();
     client.prenoms = this.validateForm.value.prenoms;
@@ -89,18 +93,21 @@ export class RegisterClientComponent implements OnInit {
           'Notification',
           'Votre compte est bien crée.'
         );
-        this.router.navigate(['client-code-pin'], {queryParams: {telephone: client.telephone}});
+        this.router.navigate(['client-code-pin'], {
+          queryParams: { telephone: client.telephone },
+        });
         this.isLoad = false;
       },
       error: (errors) => {
         this.isLoad = false;
         if (errors.status == 422) {
+          this.hasError = true;
           let err = errors.error.errors;
           if (err.telephone[0]) {
-            this.notification.error('Erreur', err.telephone[0]);
+            this.errorMessage = err.telephone[0];
           }
           if (err.boutique[0]) {
-            this.notification.error('Erreur', err.boutique[0]);
+            this.errorMessage = err.boutique[0];
           }
         }
       },
