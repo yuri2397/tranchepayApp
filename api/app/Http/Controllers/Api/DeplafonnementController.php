@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Deplafonnement;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
 use App\Traits\Utils;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Models\Deplafonnement;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
 
 class DeplafonnementController extends Controller
 {
@@ -15,7 +16,7 @@ class DeplafonnementController extends Controller
     public function isPadding()
     {
         $dep = Deplafonnement::whereClientId(auth()->id())->first();
-        if($dep){
+        if ($dep) {
             return $dep;
         }
         return response()->json(null, Response::HTTP_NO_CONTENT);
@@ -32,27 +33,29 @@ class DeplafonnementController extends Controller
         ]);
 
         if ($request->hasFile('recto') && $request->hasFile('verso')) {
-            $recto = $request->file('recto')->store('public/images');
-            $verso = $request->file('verso')->store('public/images');
+            $recto = $request->file('recto')->move(storage_path('app/public/images'), $request->file("recto")->getClientOriginalName());
+            $verso = $request->file('verso')->move(storage_path('app/public/images'), $request->file("verso")->getClientOriginalName());
 
             $dep = new Deplafonnement;
             $dep->cni = $request->cni;
-            $dep->cni_recto = $recto;
-            $dep->cni_verso = $verso;
+            $dep->cni_recto = URL::to("/storage/images") . "/" . $request->file("recto")->getClientOriginalName();
+            $dep->cni_verso = URL::to("/storage/images") . "/" . $request->file("verso")->getClientOriginalName();
             $dep->client_id = $this->authClient()->id;
             $dep->save();
+            
             return response()->json([
-                "messag" => "Votre demande est bien enregistrée."
+                "messag" => "Votre demande est bien enregistrée.",
+                "recto" => $recto,
+                "versà" => $verso
             ]);
-        }
-        else {
+        } else {
             return response()->json([
                 "message" => "Veuillez ajouter votre carte d'identité."
             ], 422);
         }
     }
 
-    
+
     public function show(Deplafonnement $deplafonnement)
     {
         return $deplafonnement;

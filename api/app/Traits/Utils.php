@@ -116,6 +116,7 @@ trait Utils
                         "data" => $om['response']
                     ]);
                 } else if ($om['response']['status'] >= 400 && $om['response']['status'] < 500) {
+                    $commande->delete();
                     return response()->json([
                         "message" => $om['response']["detail"]
                     ], 422);
@@ -128,7 +129,7 @@ trait Utils
                     ], 422);
                 }
                 $free = $this->requestFreePayement($request->first_part, $telephone,  $client, $commande, "fp");
-                if (array_key_exists('status', json_decode($free['response'], true)) && $free['response']['status'] == 'PENDING') {
+                if ($free["padding"] != null && array_key_exists('status', json_decode($free['response'], true)) && $free['response']['status'] == 'PENDING') {
                     $sms = "Votre commande chez " . $commande->boutique->name . " est en attente. Merci de payer les " . $request->first_part . "FCFA via Free Money.\nTranche Pay";
                     $this->sendSMS($sms, '+221' . $client->telephone);
                     return response()->json([
@@ -137,6 +138,11 @@ trait Utils
                         "padding" => $free['padding'],
                         "message" => "La commande est attends de paiement merci d'attendre la validation du client."
                     ]);
+                } else {
+                    $commande->delete();
+                    return response()->json([
+                        "message" => "Le paiement est annulé à cause d'une erreur. Merci de réessayer."
+                    ], 422);
                 }
                 break;
 
@@ -151,6 +157,11 @@ trait Utils
                         "padding" => $response['padding'],
                         "message" => "La commande est attends de paiement merci d'attendre la validation du client."
                     ];
+                } else {
+                    $commande->delete();
+                    return response()->json([
+                        "message" => "Le paiement est annulé à cause d'une erreur. Merci de réessayer."
+                    ], 422);
                 }
                 break;
         }
@@ -358,7 +369,7 @@ trait Utils
 
         switch ($via) {
             case 'om':
-                return $this->OMRetrait($montant, $telephone,$commercant);
+                return $this->OMRetrait($montant, $telephone, $commercant);
                 break;
             case 'free':
 

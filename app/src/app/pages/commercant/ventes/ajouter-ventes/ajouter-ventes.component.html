@@ -23,7 +23,8 @@
           <nz-form-item>
             <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement</nz-form-label>
             <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="firstPartError">
-              <nz-select nzSize="large" class="total" (ngModelChange)="selectCommission($event)" formControlName="interet">
+              <nz-select nzSize="large" class="total" (ngModelChange)="selectCommission($event)"
+                formControlName="interet">
                 <nz-option *ngFor="let ii of modePaiements" [nzValue]="ii.id" [nzLabel]="ii.label"></nz-option>
               </nz-select>
               <ng-template let-control #firstPartError>
@@ -112,26 +113,25 @@
         </form>
       </div>
     </div>
+    <br>
+    <div class="card card-body raduis-sm border">
+      <nz-list>
+        <nz-list-item class="text-dark-green">
+          <span nz-typography><b>MONTANT</b></span>
+          {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
+        </nz-list-item>
+        <nz-list-item class="text-dark-green">
+          <span nz-typography><b>COMMISSION</b></span>
+          {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
+        </nz-list-item>
+        <nz-list-item class="text-dark-green">
+          <span nz-typography><b>MINIMUM À PAYER</b></span>
+          {{ aPayer() | currency: "FCFA":"symbol":"1.0":"fr" }}
+        </nz-list-item>
+      </nz-list>
+    </div>
   </div>
-  <br>
-  <div class="card card-body raduis-sm border">
-    <nz-list>
 
-      <nz-list-item class="text-dark-green">
-        <span nz-typography><b>MONTANT</b></span>
-        {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
-      </nz-list-item>
-      <nz-list-item class="text-dark-green">
-        <span nz-typography><b>COMMISSION</b></span>
-        {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
-      </nz-list-item>
-      <nz-list-item class="text-dark-green">
-        <span nz-typography><b>MINIMUM À PAYER</b></span>
-        {{ aPayer() | currency: "FCFA":"symbol":"1.0":"fr" }}
-      </nz-list-item>
-    </nz-list>
-  </div>
-  <br>
   <div *nzModalFooter>
     <div class="d-flex justify-content-between">
       <div>

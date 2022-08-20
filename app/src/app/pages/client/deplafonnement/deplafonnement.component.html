@@ -1,15 +1,15 @@
-<div class="card card-body raduis-sm shadow">
+<div class="card card-body h-100 raduis-sm shadow">
   <ng-container *ngIf="!isLoad; else elseTemplate">
     <nz-divider [nzText]="p_n"></nz-divider>
     <ng-template #p_n>
       <h3 class="text-dark-green">{{ client.prenoms }} {{ client.nom }}</h3>
-      <span
-        ><nz-tag [nzColor]="'default'">
+      <span>
+        <nz-tag [nzColor]="'default'">
           {{ etatCompte() }}
-        </nz-tag></span
-      >
+        </nz-tag>
+      </span>
     </ng-template>
-    <ng-container *ngIf="client.deplafonner == 0; else deplafonner">
+    <ng-container *ngIf="!client.deplafonnement; else deplafonner">
       <div class="row text-center">
         <p class="alert text-dark-green h3">
           Déplofonner votre compte pour plus d'avantage.
@@ -17,73 +17,30 @@
         <br />
         <br />
         <div class="m-auto col-5">
-          <form
-            [nzLayout]="'vertical'"
-            nz-form
-            [formGroup]="validateForm"
-            class="border raduis-sm p-4"
-          >
+          <form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm" class="border raduis-sm p-4">
             <nz-form-item class="form-group my-3">
               <nz-form-label [nzSpan]="12" nzRequired>Numéro CNI</nz-form-label>
-              <nz-form-control
-                [nzSpan]="24"
-                nzValidateStatus=""
-                nzHasFeedback
-                nzErrorTip="Donner un CNI valide!"
-              >
-                <input
-                  autocomplete="false"
-                  [maxLength]="13"
-                  maxlength="13"
-                  type="text"
-                  class="form-control shadow-sm"
-                  nz-input
-                  formControlName="cni"
-                  id="cni"
-                  name="cni"
-                />
+              <nz-form-control [nzSpan]="24" nzValidateStatus="" nzHasFeedback nzErrorTip="Donner un CNI valide!">
+                <input autocomplete="false" [maxLength]="13" maxlength="13" type="text" class="form-control shadow-sm"
+                  nz-input formControlName="cni" id="cni" name="cni" />
               </nz-form-control>
             </nz-form-item>
             <nz-form-item class="form-group my-3">
               <nz-form-label [nzSpan]="12" nzRequired>CNI Recto</nz-form-label>
-              <nz-form-control
-                [nzSpan]="24"
-                nzHasFeedback
-                nzErrorTip="Donner un CNI valide!"
-              >
-                <input
-                  type="file"
-                  (change)="recto($event)"
-                  class="form-control shadow-sm"
-                  id="recto"
-                />
+              <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="Donner un CNI valide!">
+                <input type="file" (change)="recto($event)" class="form-control shadow-sm" id="recto" />
               </nz-form-control>
             </nz-form-item>
             <nz-form-item class="form-group my-3">
               <nz-form-label [nzSpan]="12" nzRequired>CNI Verso</nz-form-label>
-              <nz-form-control
-                [nzSpan]="24"
-                nzHasFeedback
-                nzErrorTip="Donner un CNI valide!"
-              >
-                <input
-                  type="file"
-                  (change)="verso($event)"
-                  class="form-control shadow-sm"
-                  id="verso"
-                />
+              <nz-form-control [nzSpan]="24" nzHasFeedback nzErrorTip="Donner un CNI valide!">
+                <input type="file" (change)="verso($event)" class="form-control shadow-sm" id="verso" />
               </nz-form-control>
             </nz-form-item>
 
-            <button
-              (click)="save()"
-              [disabled]="
+            <button (click)="save()" [disabled]="
                 !validateForm.valid || cniRecto == null || cniVerso == null
-              "
-              nz-button
-              [nzLoading]="isBtnLoad"
-              class="btn submit-btn"
-            >
+              " nz-button [nzLoading]="isBtnLoad" class="btn submit-btn">
               Valider
             </button>
           </form>
@@ -92,13 +49,30 @@
       </div>
     </ng-container>
     <ng-template #deplafonner>
-      <nz-alert
-        [nzType]="'info'"
-        [nzMessage]="
-          'Votre compte est déplafonné. Vous pouvez faire des commandes de plus de 200.000FCFA.'
-        "
-      ></nz-alert>
+
+      <ng-container *ngIf="client.deplafonner == 0; else elseTemplate">
+        <span class="lead text-center mb-5">Votre demande est en attente de validation.</span>
+        <div class="mx-5">
+          <div class="row">
+            <div class="col">
+              <img [src]="client.deplafonnement.cni_recto" class="cni-image" alt="RECTO">
+            </div>
+            <div class="col">
+              <img [src]="client.deplafonnement.cni_verso" class="cni-image" alt="VERSO">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <nz-alert [nzType]="'success'">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, sequi quam, officia iusto, ab sit velit
+          doloribus aperiam dicta possimus perspiciatis sapiente officiis! Tenetur atque aut eum molestias voluptates
+          eos!
+        </nz-alert>
+      </ng-template>
+
     </ng-template>
+
   </ng-container>
 </div>
 <ng-template #elseTemplate>

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { LoginResponse } from 'src/app/models/login-response';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private notification: NzNotificationService,
-    private router: Router
+    private router: Router,
+    private alert: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -65,8 +67,9 @@ export class LoginComponent implements OnInit {
   }
 
   private loginSuccess(response: LoginResponse) {
-    console.log("RESPONSE:", response);
+    console.log("EMEINT EVENT");
     
+    this.alert.logoutEvent()    
     this.authService.setToken(response.token.accessToken);
     this.authService.setUser(response.user);
     this.authService.setClient(response.data);

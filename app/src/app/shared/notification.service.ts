@@ -15,4 +15,12 @@ export class NotificationService {
   emitChange(change: Notification) {
       this.emitChangeSource.next(change);
   }
+
+
+  // 
+  private logout = new Subject<boolean>();
+  logout$ = this.logout.asObservable();
+  logoutEvent() {
+      this.logout.next(true);
+  }
 }

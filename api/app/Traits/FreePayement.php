@@ -20,27 +20,30 @@ trait FreePayement
             "externaltransactionid" => $commande->reference,
             "username" => env("FREE_AGENT_USERNAME")
         ];
-        $log = new Log();
-        $log->text = "FREE SEND REQUEST TESTS";
-        $log->log = json_encode($data);
-        $log->save();
+        
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
         ])->post("https://gateway.free.sn/Live/paiementmarchand", $data);
 
-        
-        $padding = new Padding();
-        $padding->reference = "free_" . Str::random();
-        $padding->type = $type;
-        $padding->user_id = $client->id;
-        $padding->via = "Free Money";
-        $padding->amount = $amount;
-        $padding->commande_id = $commande->id;
-        $padding->save();
             
+        if(json_decode($response, true)){
+            $padding = new Padding();
+            $padding->reference = "free_" . Str::random();
+            $padding->type = $type;
+            $padding->user_id = $client->id;
+            $padding->via = "Free Money";
+            $padding->amount = $amount;
+            $padding->commande_id = $commande->id;
+            $padding->save();
+            return [
+                "response" => $response,
+                "padding" => $padding->id
+            ];
+        }
+
         return [
-            "response" => $response,
-            "padding" => $padding->id
+            "response" => json_decode($response),
+            "padding" => null
         ];
     }
 
