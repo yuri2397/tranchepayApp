@@ -7,11 +7,7 @@
           <ng-template #list_title>
             <div style="display: inline-block">
               <h3 class="text-dark-green bold">Liste de ventes</h3>
-              <button
-                (click)="openCreateVenteModal()"
-                nz-button
-                class="btn submit-btn border my-2 shadow"
-              >
+              <button (click)="openCreateVenteModal()" nz-button class="btn submit-btn border my-2 shadow">
                 AJOUTER UNE VENTE
               </button>
             </div>
@@ -47,19 +43,8 @@
               <nz-dropdown-menu #menu="nzDropdownMenu">
                 <div class="ant-table-filter-dropdown">
                   <div class="search-box">
-                    <input
-                      type="text"
-                      nz-input
-                      placeholder="Search name"
-                      [(ngModel)]="searchValue"
-                    />
-                    <button
-                      nz-button
-                      nzSize="small"
-                      nzType="primary"
-                      (click)="search()"
-                      class="search-button"
-                    >
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
                       Search
                     </button>
                     <button nz-button nzSize="small" (click)="reset()">
@@ -70,11 +55,7 @@
               </nz-dropdown-menu>
             </nz-tab>
             <nz-tab [nzTitle]="en_cours_ventes_title">
-              <nz-table
-                #nzTableEncours
-                [nzData]="data.en_cours"
-                nzTableLayout="fixed"
-              >
+              <nz-table #nzTableEncours [nzData]="data.en_cours" nzTableLayout="fixed">
                 <thead>
                   <tr>
                     <th>REFERENCE</th>
@@ -99,19 +80,45 @@
               <nz-dropdown-menu #menu="nzDropdownMenu">
                 <div class="ant-table-filter-dropdown">
                   <div class="search-box">
-                    <input
-                      type="text"
-                      nz-input
-                      placeholder="Search name"
-                      [(ngModel)]="searchValue"
-                    />
-                    <button
-                      nz-button
-                      nzSize="small"
-                      nzType="primary"
-                      (click)="search()"
-                      class="search-button"
-                    >
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+                      Search
+                    </button>
+                    <button nz-button nzSize="small" (click)="reset()">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </nz-dropdown-menu>
+            </nz-tab>
+            <nz-tab [nzTitle]="cancel_ventes_title">
+              <nz-table #nzTableCancel [nzData]="data.annuler" nzTableLayout="fixed">
+                <thead>
+                  <tr>
+                    <th>REFERENCE</th>
+                    <th>MONTANT</th>
+                    <th>MONTANT RESTANT</th>
+                    <th>CLIENT</th>
+                    <th>TELEPHONE</th>
+                    <th>DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of nzTableCancel.data">
+                    <td class="text-dark-green bold">{{ data.reference }}</td>
+                    <td>{{ data.prix_total }} FCFA</td>
+                    <td>{{ montantR(data) }}</td>
+                    <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
+                    <td>{{ data.client.telephone }}</td>
+                    <td>{{ data.created_at | date }}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                  <div class="search-box">
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
                       Search
                     </button>
                     <button nz-button nzSize="small" (click)="reset()">
@@ -122,11 +129,7 @@
               </nz-dropdown-menu>
             </nz-tab>
             <nz-tab [nzTitle]="terminer_ventes_title">
-              <nz-table
-                #nzTableFinish
-                [nzData]="data.terminer"
-                nzTableLayout="fixed"
-              >
+              <nz-table #nzTableFinish [nzData]="data.terminer" nzTableLayout="fixed">
                 <thead>
                   <tr>
                     <th>REFERENCE</th>
@@ -150,19 +153,8 @@
               <nz-dropdown-menu #menu="nzDropdownMenu">
                 <div class="ant-table-filter-dropdown">
                   <div class="search-box">
-                    <input
-                      type="text"
-                      nz-input
-                      placeholder="Search name"
-                      [(ngModel)]="searchValue"
-                    />
-                    <button
-                      nz-button
-                      nzSize="small"
-                      nzType="primary"
-                      (click)="search()"
-                      class="search-button"
-                    >
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
                       Search
                     </button>
                     <button nz-button nzSize="small" (click)="reset()">
@@ -187,6 +179,10 @@
   <ng-template #terminer_ventes_title>
     <h5 class="bold text-success">Terminée</h5>
   </ng-template>
+  <ng-template #cancel_ventes_title>
+    <h5 class="bold text-danger">Annuler</h5>
+  </ng-template>
+
 </ng-container>
 <ng-template #loadData>
   <div>

@@ -1,7 +1,7 @@
 <nz-result [nzStatus]="type" [nzTitle]="text" [nzSubTitle]="s_t">
   <ng-template #s_t>
     <div *ngIf="url" class="text-center">
-      <a class="url" href="{{ url }}">Continuer votre paiement en cliquant 👈</a>
+      <a class="url" target=”_blank” href="{{ url }}">Continuer votre paiement en cliquant 👈</a>
     </div>
   </ng-template>
 

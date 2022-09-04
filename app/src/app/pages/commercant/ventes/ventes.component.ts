@@ -66,6 +66,9 @@ export class VentesComponent implements OnInit {
       case 'load':
         etat = 'gold';
         break;
+      case 'cancel':
+        etat = 'red';
+        break;
     }
     return etat;
   }
@@ -81,6 +84,9 @@ export class VentesComponent implements OnInit {
         break;
       case 'finish':
         etat = 'TERMINER';
+        break
+        case 'cancel':
+        etat = 'ANNULER';
     }
     return etat;
   }

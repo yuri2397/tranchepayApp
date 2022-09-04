@@ -45,14 +45,19 @@ class PayementIPN extends Controller
                         $compte->solde += $commande->prix_total;
                         $compte->save();
                     }
+                    $message = "Votre paiement de " . $data['amount'] . ' FCFA avec WAVE est validé avec succès.';
 
                     $res = $this->restant($commande);
                     $padding->save();
-
                     if ($res == 0) {
+                        $message = $message . ' Votre commande est entierement payé.';
                         $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                         $commande->save();
+                    } else {
+                        $message = $message . ' Votre commande cous sera livré une fois tout payer.';
                     }
+
+                    $this->sendSMS($message, $commande->client->telephone);
                     return response()->json([], 200);
                 }
                 break;

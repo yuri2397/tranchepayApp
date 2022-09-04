@@ -42,7 +42,12 @@ class ClientController extends Controller
      */
     public function commandes()
     {
-        return Commande::whereClientId($this->authClient()->id)->get();
+        $append = EtatCommande::whereNom("append")->first();
+        $commandes =  Commande::whereClientId($this->authClient()->id)
+            ->where("etat_commande_id", "!=", $append->id)
+            ->get();
+
+        return $commandes;
     }
 
     public function versementsClient()

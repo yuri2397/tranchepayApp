@@ -333,7 +333,6 @@ trait Utils
             ->commandes()
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "load")
-            ->orWhere("etat_commandes.nom", "append")
             ->limit(10)
             ->orderBy('commandes.created_at', 'desc')
             ->get();
@@ -343,6 +342,15 @@ trait Utils
             ->commandes()
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "finish")
+            ->limit(10)
+            ->orderBy('commandes.created_at', 'desc')
+            ->get();
+
+        $result["annuler"] = $currentCommercant
+            ->boutique
+            ->commandes()
+            ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
+            ->where("etat_commandes.nom", "cancel")
             ->limit(10)
             ->orderBy('commandes.created_at', 'desc')
             ->get();

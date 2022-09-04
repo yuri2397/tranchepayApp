@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\PermissionsController;
 use App\Http\Controllers\Api\DeplafonnementController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PayementIPN;
+use App\Models\EtatCommande;
 use App\Models\User;
 
 /**
@@ -147,9 +148,14 @@ Route::prefix("admin")->middleware(['auth:admin', 'cors'])->group(function () {
 
 
 Route::get("/artisan", function () {
-    $user = User::whereModelType("Commercant")->first();
-    $user->givePermissionTo(Permission::whereGuardName("api")->get());
-    return User::with("permissions")->whereModelType("Commercant")->first();
+    // $user = User::whereModelType("Commercant")->first();
+    // $user->givePermissionTo(Permission::whereGuardName("api")->get());
+    // return User::with("permissions")->whereModelType("Commercant")->first();
+
+    $et = new EtatCommande();
+    $et->nom = "cancel";
+    $et->save();
+    return $et;
 });
 
 

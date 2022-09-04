@@ -3,4 +3,5 @@ import { Commande } from './commande';
         tous:     Commande[];
         en_cours: Commande[];
         terminer: Commande[];
+        annuler: Commande[];
     }

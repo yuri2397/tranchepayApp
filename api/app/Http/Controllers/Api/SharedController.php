@@ -7,8 +7,11 @@ use App\Models\Client;
 use App\Models\Partenaire;
 use App\Models\ModePayement;
 use App\Http\Controllers\Controller;
+use App\Models\Commande;
+use App\Models\EtatCommande;
 use App\Models\Padding;
 use App\Traits\OMPayement;
+use Illuminate\Console\Command;
 
 class SharedController extends Controller
 {
@@ -41,9 +44,14 @@ class SharedController extends Controller
                     $padding->status = false;
                     $padding->save();
                 }
-            }
-            else if ($status["status"]  == "REJECTED" || $status["status"] == "FAILED"){
+            } else if ($status["status"]  == "REJECTED" || $status["status"] == "FAILED") {
                 $padding->extra = json_encode("REJECTED");
+                $commande = Commande::find($padding->commande_id);
+                if ($commande) {
+                    $cancel = EtatCommande::whereNom("cancel")->first();
+                    $commande->etat_commande_id = $cancel->id;
+                    $commande->save();
+                }
                 return response()->json([
                     "message" => "Votre paiement a été annulé. Merci de réessayer."
                 ], 422);
