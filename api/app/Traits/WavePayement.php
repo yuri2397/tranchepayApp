@@ -15,8 +15,8 @@ trait WavePayement
         $data = array(
             'amount' => $amount,
             'currency' => 'XOF',
-            'error_url' => "https://tranchepay.com/payement-error?via=wave&ci=".$client->id."&cdi=".$commande->id,
-            'success_url' => "https://tranchepay.com/payement_success?via=wave&ci=".$client->id."&cdi=".$commande->id,
+            'error_url' => "https://tranchepay.com/payement-error?via=wave&ci=" . $client->id . "&cdi=" . $commande->id,
+            'success_url' => "https://tranchepay.com/payement_success?via=wave&ci=" . $client->id . "&cdi=" . $commande->id,
             'client_reference' => $commande->reference
         );
 
@@ -25,19 +25,27 @@ trait WavePayement
             'Authorization' => "Bearer " . env('WAVE_OAUTH_TOKEN')
         ])->post(env('WAVE_CHECKOUT_SESSION_URL'), $data);
 
-        $padding = new Padding();
-        $padding->reference = $response['id'];
-        $padding->type = $type;
-        $padding->user_id = $client->id;
-        $padding->via = "Wave";
-        $padding->amount = $amount;
-        $padding->commande_id = $commande->id;
-        $padding->save();
+        if ($response->successful()) {
+            $padding = new Padding();
+            $padding->reference = $response['id'];
+            $padding->type = $type;
+            $padding->user_id = $client->id;
+            $padding->via = "Wave";
+            $padding->amount = $amount;
+            $padding->commande_id = $commande->id;
+            $padding->save();
 
-        return [
-            "padding" => $padding->id,
-            "response" => $response
-        ];
+            return [
+                "padding" => $padding->id,
+                "response" => $response->json()
+            ];
+        } else {
+            return
+                [
+                    "padding" => null,
+                    "response" => $response
+                ];
+        }
     }
 
     public function getSession(WaveSession $session)

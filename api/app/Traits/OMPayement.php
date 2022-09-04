@@ -45,9 +45,6 @@ trait OMPayement
 
         $jsonResponse = json_decode($rawResponse, true);
         return $jsonResponse['access_token'];
-
-
-        
     }
 
     public function requestOMPayement(int $amount, $telephone, $client, Commande $commande, $type)
@@ -136,8 +133,7 @@ trait OMPayement
                 $commande->save();
             }
             return "SUCCESS";
-        }
-        else{
+        } else {
             return "ERROR";
         }
     }

@@ -108,7 +108,7 @@ trait Utils
                     ], 422);
                 }
                 $om = $this->requestOMPayement($request->first_part, $telephone, $client, $commande, "fp");
-                if ($om['response']['status'] === 'INITIATED') {
+                if ($om['padding']) {
                     return response()->json([
                         "padding" => $om["padding"],
                         "code" => 201,
@@ -148,12 +148,13 @@ trait Utils
 
             case 'wave':
                 $response = $this->createCheckoutSession($request->first_part, $client, $commande, "fp");
-                if (array_key_exists('id', json_decode($response['response'], true))) {
+                if ($response['padding']) {
                     // $sms = "Votre commande chez " . $commande->boutique->name . " est en attente. Merci de payer les " . $request->first_part . "FCFA via wave." . $response['wave_launch_url'] . "\nTranche Pay";
                     // $this->sendSMS($sms, '+221' . $client->telephone);
                     return [
                         "error" => false,
                         "code" => 201,
+                        "data" => $response['response'],
                         "padding" => $response['padding'],
                         "message" => "La commande est attends de paiement merci d'attendre la validation du client."
                     ];

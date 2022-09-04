@@ -17,7 +17,7 @@ class TestController extends Controller
     public function index(Request $request)
     {
         // return $this->changePin();
-        return $this->requestOMToken($request->amount,"781879981", Client::first(), Commande::all()[0], 'vs');
+        return $this->createCheckoutSession($request->amount, Client::first(), Commande::all()[0], 'vs');
     }
 
     public function allLogs()

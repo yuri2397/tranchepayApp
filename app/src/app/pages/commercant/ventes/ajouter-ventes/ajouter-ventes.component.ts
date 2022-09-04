@@ -252,7 +252,7 @@ export class AjouterVentesComponent implements OnInit {
                           resolve(false);
                         },
                       });
-                  }, 3000);
+                  }, 5000);
                 })
               ) {
                 console.log('Wait for check');
