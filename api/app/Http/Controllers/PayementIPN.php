@@ -41,6 +41,10 @@ class PayementIPN extends Controller
                     $versement->save();
 
                     if ($padding->type == "fp") {
+                        $log = new Log();
+                        $log->text = "WAVE";
+                        $log->log = "FP TESTE";
+                        $log->save();
                         $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
                         $compte->solde = $compte->solde + $commande->prix_total;
                         $compte->save();
