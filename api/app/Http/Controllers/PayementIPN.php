@@ -20,7 +20,11 @@ class PayementIPN extends Controller
         $body = $request->all();
         $webhook_event = $body['type'];
         $data = $body['data'];
+        $log = new Log();
 
+        $log->text = "WAVE";
+        $log->log = json_encode($body);
+        $log->save();
         switch ($webhook_event) {
             case 'checkout.session.completed':
                 $padding = Padding::whereReference($data['id'])->whereStatus(false)->first();
