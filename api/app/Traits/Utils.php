@@ -78,7 +78,7 @@ trait Utils
         $versement->save();
 
         $compte = Compte::find(Boutique::find($commande->boutique_id)->compte->id);
-        $compte->solde += $this->totalCommande($request->produits);
+        $compte->solde += ($this->totalCommande($request->produits) - $request->first_part);
         $compte->save();
 
         $message = "Salut " . $client->prenoms . "\nVotre commande de  " . ($commande->prix_total - $commande->commission) . " FCFA chez " . $this->authCommercantWithBoutique()->boutique->nom . " est validé.Vous paierez une commission de " . $commande->commission . " FCFA.\nRetrouver nous sur https://tranchepay.com pour plus de détails.";
