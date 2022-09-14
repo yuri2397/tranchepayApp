@@ -198,7 +198,7 @@ class ClientController extends Controller
                             "padding" => $response["padding"],
                             "code" => 201,
                             "message" => "Votre verssement est en attente de confirmation.",
-                            "data" => json_decode($response['response'])
+                            "data" => $response['response']
                         ]);
                     }
                     return response()->json([
