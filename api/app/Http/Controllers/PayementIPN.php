@@ -42,9 +42,10 @@ class PayementIPN extends Controller
 
                     if ($padding->type == "fp") {
                         $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
-                        $compte->solde += $commande->prix_total;
+                        $compte->solde = $compte->solde + $commande->prix_total;
                         $compte->save();
                     }
+
                     $message = "Votre paiement de " . $data['amount'] . ' FCFA avec WAVE est validé avec succès.';
 
                     $res = $this->restant($commande);
@@ -54,10 +55,10 @@ class PayementIPN extends Controller
                         $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                         $commande->save();
                     } else {
-                        $message = $message . ' Votre commande cous sera livré une fois tout payer.';
+                        $message = $message . ' Votre commande sera livré une fois tout payer.';
                     }
 
-                    $this->sendSMS($message, $commande->client->telephone);
+                    // $this->sendSMS($message, $commande->client->telephone);
                     return response()->json([], 200);
                 }
                 break;
@@ -94,7 +95,7 @@ class PayementIPN extends Controller
 
                         $versement = new Versement();
                         $versement->date_time = now();
-                        $versement->via = 'Free Money';
+                        $versement->via = 'Free Monefpy';
                         $versement->reference = $body['externalId'];
                         $versement->montant = $body['amount'];
                         $versement->commande_id = $commande->id;
