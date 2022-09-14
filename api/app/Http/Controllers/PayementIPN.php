@@ -64,6 +64,7 @@ class PayementIPN extends Controller
                         $commande->save();
                     } else {
                         $message = $message . ' Votre commande sera livré une fois tout payer.';
+                        $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
                     }
 
                     // $this->sendSMS($message, $commande->client->telephone);
