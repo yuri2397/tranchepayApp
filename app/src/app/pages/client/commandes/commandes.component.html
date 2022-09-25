@@ -11,7 +11,7 @@
         <th class="bold text-dark-green">BOUTIQUE</th>
         <th class="bold text-dark-green">ETAT</th>
         <th class="bold text-dark-green">DATE COMMANDE</th>
-        <th class="bold text-dark-green">A PAYER AVANT</th>
+        <th class="bold text-dark-green">DATE LIMITE DE PAIEMENT</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
         <td class="text-dark-green">
           {{ data.created_at | date: "d MMMM y" }}
         </td>
-        <td class="text-dark-green">
+        <td class="text-dark-green bold">
           {{ data.date_limite | date: "d MMMM y" }}
         </td>
       </tr>

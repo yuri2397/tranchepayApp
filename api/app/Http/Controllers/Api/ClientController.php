@@ -54,7 +54,7 @@ class ClientController extends Controller
     public function versementsClient()
     {
         $commandes = Commande::whereClientId($this->authClient()->id)->get()->pluck('id');
-        return Versement::with("commande")->whereIn('commande_id', $commandes)->get();
+        return Versement::with("commande")->whereIn('commande_id', $commandes)->orderBy('created_at', 'DESC')->get();
     }
 
     public function search(Request $request)
