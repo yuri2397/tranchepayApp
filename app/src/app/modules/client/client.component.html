@@ -1,11 +1,5 @@
 <nz-layout class="layout">
-  <nz-sider
-    nzCollapsible
-    class="bg"
-    [(nzCollapsed)]="isCollapsed"
-    [nzWidth]="280"
-    [nzTrigger]="null"
-  >
+  <nz-sider nzCollapsible class="bg" [(nzCollapsed)]="isCollapsed" [nzWidth]="280" [nzTrigger]="null">
     <div class="logo">
       <img src="/assets/img/logo2.png" alt="logo" />
       <h1>{{ title }}</h1>
@@ -15,12 +9,7 @@
         <i nz-icon nzType="unordered-list" class="icon" nzTheme="outline"></i>
         <span class="text-dark-green bold">Mes Commandes</span>
       </li>
-      <li
-        nz-submenu
-        nzOpen
-        [nzMenuClassName]="'sub-menu text-dark-green bold'"
-        [nzTitle]="activite"
-      >
+      <li nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'" [nzTitle]="activite">
         <ng-template #activite>
           <i nz-icon nzType="dashboard" class="icon" nzTheme="outline"></i>
 
@@ -37,12 +26,7 @@
             <span class="text-dark-green bold">Déplafonnement</span>
           </li>
           <li nz-menu-item (click)="goto('payements')">
-            <i
-              nz-icon
-              nzType="dollar-circle"
-              class="icon"
-              nzTheme="outline"
-            ></i>
+            <i nz-icon nzType="dollar-circle" class="icon" nzTheme="outline"></i>
             <span class="text-dark-green bold">Mes paiements</span>
           </li>
         </ul>
@@ -72,16 +56,19 @@
         <i nz-icon nzType="link" class="icon" nzTheme="outline"></i>
         <span class="text-dark-green bold">Nos Partenaires</span>
       </li>
+      <li (click)="logout()" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
+                    'Se déconnecter' : ''">
+        <i nz-icon nzType="logout" class="icon" nzTheme="outline">
+
+        </i>
+        <span class="text-dark-green bold">Se déconnecter</span>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <i
-        class="trigger"
-        nz-icon
-        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-        (click)="isCollapsed = !isCollapsed"
-      ></i>
+      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"></i>
     </nz-header>
     <nz-content>
       <div class="inner-content p-sm-0 p-xs-0 m-sm-0 m-xs-0">

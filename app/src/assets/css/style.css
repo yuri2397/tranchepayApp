@@ -2535,3 +2535,13 @@ btn-dark-green {
 .ant-radio-inner::after {
     background-color: #004f69;
 }
+
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn+.ant-btn {
+    color: #fff;
+    background-color: #010246;
+    font-family: "Poppins";
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 5px;
+    border-color: #010246;
+}
