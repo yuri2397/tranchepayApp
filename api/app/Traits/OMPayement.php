@@ -9,6 +9,7 @@ use App\Models\Padding;
 use App\Models\Commande;
 use App\Models\Versement;
 use App\Models\EtatCommande;
+use App\Models\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Http;
 
@@ -129,6 +130,10 @@ trait OMPayement
             }
 
             $res = $this->restant($commande);
+            $log = new Log();
+            $log->text = "RESTATNT";
+            $log->log = $res;
+            $log->save();
             $padding->save();
 
             if ($res <= 0) {
