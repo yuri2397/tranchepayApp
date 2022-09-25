@@ -1,164 +1,44 @@
-<nz-modal nzTitle="Choisir votre moyen de paiement" nzCentered nzWidth="50%" [(nzVisible)]="makeVisible"
-  [nzFooter]="null" [nzTitle]="'Choissir un moyen de paiement'" (nzOnCancel)="closePayementModal()">
-  <div *nzModalContent>
-    <div *ngIf="amountError" class="alert alert-danger">
-      {{ amountErrorMessage }}
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <form nz-form [formGroup]="payementFormGroup">
-          <nz-form-item>
-            <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement</nz-form-label>
-            <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="firstPartError">
-              <input type="number" nz-input class="total " formControlName="firstPart" name="first_part"
-                placeholder="Prémier versement" />
-              <ng-template let-control #firstPartError>
-                <ng-container *ngIf="control.hasError('required')">Le montant est obligatoire.</ng-container>
-                <ng-container *ngIf="control.hasError('min')">Le montant mini est {{ aPayer() }} FCFA.</ng-container>
-              </ng-template>
-            </nz-form-control>
-          </nz-form-item>
-
-          <nz-form-item>
-            <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Mode de paiement</nz-form-label>
-            <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="firstPartError">
-              <nz-select nzSize="large" class="total" (ngModelChange)="selectCommission($event)"
-                formControlName="interet">
-                <nz-option *ngFor="let ii of modePaiements" [nzValue]="ii.id" [nzLabel]="ii.label"></nz-option>
-              </nz-select>
-              <ng-template let-control #firstPartError>
-                <ng-container *ngIf="control.hasError('required')">Ce champ est obligatoire.</ng-container>
-              </ng-template>
-            </nz-form-control>
-          </nz-form-item>
-
-          <nz-form-item>
-            <nz-form-label class="total" nzFor="phone_number" nzSpan="24" nzRequired>Téléphone</nz-form-label>
-            <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="telephoneError">
-              <input type="number" nz-input class="total " formControlName="telephone" name="phone_number"
-                placeholder="Numéro de téléphone" />
-              <ng-template let-control #telephoneError>
-                <ng-container *ngIf="control.hasError('required')">Le numéro est obligatoire.</ng-container>
-                <ng-container *ngIf="control.hasError('pattern')">Le numéro de téléphone est invalide.</ng-container>
-              </ng-template>
-            </nz-form-control>
-          </nz-form-item>
-
-        </form>
-      </div>
-    </div>
-    <br>
-    <div class="card card-body raduis-sm border">
-      <nz-list>
-
-        <nz-list-item class="text-dark-green">
-          <span nz-typography><b>MONTANT</b></span>
-          {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
-        </nz-list-item>
-        <nz-list-item class="text-dark-green">
-          <span nz-typography><b>COMMISSION</b></span>
-          {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
-        </nz-list-item>
-        <nz-list-item class="text-dark-green">
-          <span nz-typography><b>MINIMUM À PAYER</b></span>
-          {{ aPayer() | currency: "FCFA":"symbol":"1.0":"fr" }}
-        </nz-list-item>
-      </nz-list>
-    </div>
-    <br>
-    <div *ngIf="payementFormGroup.valid" class="row">
-      <div class="col-md-4" *ngFor="let item of mobilePayements" (click)="onMobilePayementSelected(item.name)">
-        <div class="card body shadow-sm raduis-sm pointer card-pay">
-          <img [src]="item.image_src" [alt]="item.choice_label" [title]="item.choice_label" class="card-img-top" />
-        </div>
-      </div>
-    </div>
-  </div>
-</nz-modal>
-
-<!-- LOCAL PAYEMENT -->
-<nz-modal nzTitle="Choisir votre moyen de paiement" nzCentered nzWidth="50%" [(nzVisible)]="localPayementVisible"
-  [nzTitle]="'Choissir un moyen de paiement'" (nzOnCancel)="(localPayementVisible)">
-  <div *nzModalContent class="modalPaiement">
-    <div *ngIf="amountError" class="alert alert-danger">
-      {{ amountErrorMessage }}
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <form nz-form [formGroup]="payementFormGroup">
-          <nz-form-item>
-            <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement</nz-form-label>
-            <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="firstPartError">
-              <input nzSize="large" type="number" nz-input class="total " formControlName="firstPart" name="first_part"
-                placeholder="Prémier versement" />
-              <ng-template let-control #firstPartError>
-                <ng-container *ngIf="control.hasError('required')">Le montant est obligatoire.</ng-container>
-                <ng-container *ngIf="control.hasError('min')">Le montant mini est {{ aPayer() }} FCFA.</ng-container>
-              </ng-template>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Mode de paiement</nz-form-label>
-            <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="firstPartError">
-              <nz-select (ngModelChange)="selectCommission($event)" class="total" formControlName="interet">
-                <nz-option *ngFor="let ii of modePaiements" [nzValue]="ii.id" [nzLabel]="ii.label"></nz-option>
-              </nz-select>
-              <ng-template let-control #firstPartError>
-                <ng-container *ngIf="control.hasError('required')">Ce champ est obligatoire.</ng-container>
-              </ng-template>
-            </nz-form-control>
-          </nz-form-item>
-        </form>
-      </div>
-    </div>
-    <br>
-    <div class="card card-body raduis-sm border">
-      <nz-list>
-        <nz-list-item class="text-dark-green">
-          <span nz-typography><b>MONTANT</b></span>
-          {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
-        </nz-list-item>
-        <nz-list-item class="text-dark-green">
-          <span nz-typography><b>COMMISSION</b></span>
-          {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
-        </nz-list-item>
-        <nz-list-item class="text-dark-green">
-          <span nz-typography><b>MINIMUM À PAYER</b></span>
-          {{ aPayer() | currency: "FCFA":"symbol":"1.0":"fr" }}
-        </nz-list-item>
-      </nz-list>
-    </div>
-  </div>
-
-  <div *nzModalFooter>
-    <div class="d-flex justify-content-between">
-      <div>
-        <button class="shadow" nz-button class="btn white-btn" (click)="localPayementVisible = false">
-          Annuler
-        </button>
-      </div>
-      <div>
-        <button class="shadow" nz-button class="btn submit-btn" (click)="
-            localPayementVisible = false; onMobilePayementSelected('offline')
-          " [disabled]="!payementFormGroup.valid">
-          Valider la vente
-        </button>
-      </div>
-    </div>
-  </div>
-</nz-modal>
-
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-8">
-      <div>
-        <form [nzLayout]="'vertical'" class="card card-body shadow p-3 border raduis-sm" nz-form
-          [formGroup]="validateForm">
+    <div class="col-md-8 h-100">
+
+      <div class="card card-body shadow p-2 border raduis-sm mb-3">
+        <div class="row">
+          <div class="col">
+            <span class="text-dark-green bold lead">{{ selectedClient.prenoms }} {{ selectedClient.nom }}
+            </span>
+            <h6 class="text-dark-green m-0 p-0">+221 {{ selectedClient.telephone }} </h6>
+          </div>
+          <div class="col">
+            <div>
+              <h5 class="text-dark-green m-0 p-0">Total</h5>
+            </div>
+            <div>
+              <span class="total lead text-dark-green">
+                {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
+              </span>
+            </div>
+          </div>
+          <div class="col">
+            <div>
+              <h5 class="text-dark-green m-0 p-0">Commission</h5>
+            </div>
+            <div>
+              <span class="total lead text-dark-green">
+                {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card card-body shadow p-2 border raduis-sm">
+        <form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm">
           <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_t"></nz-divider>
           <ng-template #i_t>
-            <span class="text-dark-green bold"> Ajouter un produit </span>
+            <span class="text-dark-green bold lead"> Ajouter un produit </span>
           </ng-template>
           <div class="row align-items-center">
             <div class="col-md-4">
@@ -197,13 +77,9 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-6"></div>
-          </div>
         </form>
         <br />
-        <nz-table #basicTable nzShowPagination="false" class="card card-body shadow p-2 border raduis-sm mb-3"
-          [nzTitle]="t_title" [nzData]="produits" [nzLoading]="isLoad">
+        <nz-table #basicTable nzShowPagination="false" [nzData]="produits" [nzLoading]="isLoad">
           <thead>
             <tr>
               <th>Nom</th>
@@ -212,12 +88,6 @@
               <th>Action</th>
             </tr>
           </thead>
-          <ng-template #t_title>
-            <nz-divider nzDashed nzOrientation="left" [nzText]="t_text"></nz-divider>
-            <ng-template #t_text>
-              <span class="text-dark-green bold"> Informations du client </span>
-            </ng-template>
-          </ng-template>
 
           <tbody>
             <tr *ngFor="let data of basicTable.data">
@@ -233,60 +103,78 @@
           </tbody>
         </nz-table>
       </div>
+
+
     </div>
     <div class="col">
-      <div class="card shadow raduis-sm">
-        <div class="card-body">
-          <nz-divider nzDashed [nzText]="i_cc"></nz-divider>
-          <ng-template #i_cc>
-            <span class="text-dark-green bold">{{ selectedClient.prenoms }} {{ selectedClient.nom }}
-            </span>
-            <h6 class="text-dark-green m-0 p-0">+221 {{ selectedClient.telephone }} </h6>
 
-          </ng-template>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="text-dark-green m-0 p-0">Total</h6>
-            </div>
-            <div>
-              <span class="total text-dark-green">
-                {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
-              </span>
-            </div>
-          </div>
-          <div class="d-flex py-1 justify-content-between align-items-center">
-            <div>
-              <h6 class="text-dark-green m-0 p-0">Commission </h6>
-            </div>
-            <div>
-              <span class="total text-dark-green">
-                {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br />
       <div class="card shadow raduis-sm">
         <div class="card-body">
           <div nz-row>
             <div nz-col nzSpan="24">
+
               <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_c"></nz-divider>
               <ng-template #i_c>
-                <span class="text-dark-green bold">
-                  Informations du client
+                <span class="text-dark-green bold lead">
+                  Comment payer?
                 </span>
               </ng-template>
-              <div class="row justify-content-between">
-                <div class="col pointer" (click)="onPayementTypeSelected(item.name)" *ngFor="let item of modePaiement">
-                  <div class="card card-body  border-1 raduis-sm">
-                    <img [src]="item.image_src" [alt]="item.type_paiement" [title]="item.type_paiement"
-                      class="card-img-top" />
-                    <br />
-                    <h5 class="card-title text-center">
-                      {{ item.type_paiement }}
-                    </h5>
+              <div *ngIf="selectModeError" class="alert alert-danger">
+                Choissir le mode de paiement
+              </div>
+
+              <form nz-form [formGroup]="payementFormGroup">
+
+                <nz-form-item>
+                  <nz-form-label class="total" nzFor="payementType" nzSpan="24" nzRequired>Choisir la durée
+                  </nz-form-label>
+                  <nz-form-control nzHasFeedback [nzSpan]="24">
+                    <nz-radio-group (ngModelChange)="onModeChange($event)" formControlName="payementType">
+                      <label class="d-block" *ngFor="let item of modePaiements" nz-radio
+                        [nzValue]="item.id">{{ item.label }}</label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label class="total" nzFor="first_part" nzSpan="24" nzRequired>Prémier versement
+                  </nz-form-label>
+                  <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="firstPartError">
+                    <input nzSize="large" type="number" nz-input class="total" min="{{ aPayer() }}"
+                      formControlName="firstPart" name="first_part" placeholder="Prémier versement" />
+                    <ng-template let-control #firstPartError>
+                      <ng-container *ngIf="control.hasError('required')">Le montant est obligatoire.</ng-container>
+                      <ng-container *ngIf="control.hasError('min')">Le montant mini est {{ aPayer() }} FCFA.
+                      </ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label class="total" nzFor="phone_number" nzSpan="24" nzRequired>Téléphone</nz-form-label>
+                  <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="telephoneError">
+                    <input type="number" nz-input class="total " formControlName="telephone" name="phone_number"
+                      placeholder="Numéro de téléphone" />
+                    <ng-template let-control #telephoneError>
+                      <ng-container *ngIf="control.hasError('required')">Le numéro est obligatoire.</ng-container>
+                      <ng-container *ngIf="control.hasError('pattern')">Le numéro de téléphone est invalide.
+                      </ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+
+              </form>
+
+              <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_p_t"></nz-divider>
+              <ng-template #i_p_t>
+                <span class="text-dark-green lead bold">
+                  Payer avec
+                </span>
+              </ng-template>
+              <div class="row">
+                <div (click)="saveVente(item.type_paiement, item.name)" *ngFor="let item of paiementTypes"
+                  class="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
+                  <div class="shadow-sm card card-body payement-img">
+                    <img [src]="item.image_src" />
+
                   </div>
                 </div>
               </div>

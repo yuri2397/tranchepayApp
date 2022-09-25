@@ -86,6 +86,7 @@ h6 {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -95,6 +96,7 @@ h6 {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -353,23 +355,29 @@ h6 {
     .navbar .dropdown .dropdown ul {
         left: -90%;
     }
+
     .navbar .dropdown .dropdown:hover>ul {
         left: -100%;
     }
+
     .mx-md-5 {
         margin: 0 20px;
     }
+
     .hero-title {
         text-align: start;
     }
+
     .center-sm {
         display: block;
     }
+
     #zindex {
         position: absolute;
         top: -100px;
         z-index: 500;
     }
+
     .number-round {
         color: #010246;
         font-family: "Poppins" sans-serif;
@@ -409,26 +417,33 @@ h6 {
     .mobile-nav-toggle {
         display: block;
     }
+
     .navbar ul {
         display: none;
     }
+
     .my-sm-2 {
         margin: 2em 0;
     }
+
     .my-sm-1 {
         margin: 0.5em 0;
     }
+
     .center-sm {
         display: flex;
         margin: auto;
     }
+
     .img-fluid h1 {
         font-size: 15px;
         padding: 2px;
     }
+
     .home-card h1 {
         width: min-content;
     }
+
     #zindex {
         position: relative;
         z-index: 10;
@@ -439,6 +454,7 @@ h6 {
     .w-70 {
         width: 50%;
     }
+
     #zindex {
         position: relative;
         top: 0%;
@@ -624,6 +640,7 @@ h6 {
     #hero {
         background-attachment: fixed;
     }
+
     .my-md-2 {
         margin: 50px 0;
     }
@@ -633,21 +650,26 @@ h6 {
     #hero {
         padding-bottom: 50px;
     }
+
     #hero .animated {
         -webkit-animation: none;
         animation: none;
     }
+
     #hero .hero-img {
         text-align: center;
     }
+
     #hero .hero-img img {
         max-width: 50%;
     }
+
     #hero h2 {
         font-size: 18px;
         line-height: 24px;
         margin-bottom: 30px;
     }
+
     .home-img-card {
         width: 65%;
         margin: auto;
@@ -660,9 +682,11 @@ h6 {
     #hero {
         padding-bottom: 0;
     }
+
     #hero .hero-img img {
         width: 80%;
     }
+
     #zindex {
         display: flex;
         flex-direction: column;
@@ -670,40 +694,50 @@ h6 {
         margin-bottom: 10px;
         margin-top: 10px;
     }
+
     .hero-img {
         width: 100%;
         margin-top: 10px;
     }
+
     .femme-img {
         width: 100%;
     }
+
     .hero-img-card {
         position: absolute;
         bottom: 0;
         width: 50%;
     }
+
     .home-card {
         width: 50%;
     }
+
     #hero h1 {
         font-size: 15px;
         font-weight: 400;
         line-height: 10px;
     }
+
     #hero .home-title {
         font-size: 35px;
         line-height: 40px;
     }
+
     .home-card {
         padding: 8px;
     }
+
     .home-card b,
     span {
         font-size: 10px;
     }
+
     .home-img-card {
         width: 60%;
     }
+
     .number-round {
         color: #010246;
         font-family: "Poppins" sans-serif;
@@ -719,6 +753,7 @@ h6 {
         position: absolute;
         top: -30px;
     }
+
     .hero-title {
         text-align: center;
         margin-top: 2em;
@@ -802,21 +837,26 @@ h6 {
     #hero1 {
         padding-top: 80px;
     }
+
     #hero1 .animated {
         -webkit-animation: none;
         animation: none;
     }
+
     #hero1 .hero1-img {
         text-align: center;
     }
+
     #hero1 .hero1-img img {
         max-width: 50%;
     }
+
     #hero1 h1 {
         font-size: 28px;
         line-height: 32px;
         margin-bottom: 10px;
     }
+
     #hero1 h2 {
         font-size: 18px;
         line-height: 24px;
@@ -834,6 +874,7 @@ h6 {
     0% {
         transform: translateY(10px);
     }
+
     100% {
         transform: translateY(-10px);
     }
@@ -843,6 +884,7 @@ h6 {
     0% {
         transform: translateY(10px);
     }
+
     100% {
         transform: translateY(-10px);
     }
@@ -882,6 +924,7 @@ h6 {
     0% {
         transform: translate(85px, 0%);
     }
+
     100% {
         transform: translate(-90px, 0%);
     }
@@ -891,6 +934,7 @@ h6 {
     0% {
         transform: translate(85px, 0%);
     }
+
     100% {
         transform: translate(-90px, 0%);
     }
@@ -900,6 +944,7 @@ h6 {
     0% {
         transform: translate(-90px, 0%);
     }
+
     100% {
         transform: translate(85px, 0%);
     }
@@ -909,6 +954,7 @@ h6 {
     0% {
         transform: translate(-90px, 0%);
     }
+
     100% {
         transform: translate(85px, 0%);
     }
@@ -918,6 +964,7 @@ h6 {
     0% {
         transform: translate(-90px, 0%);
     }
+
     100% {
         transform: translate(85px, 0%);
     }
@@ -927,6 +974,7 @@ h6 {
     0% {
         transform: translate(-90px, 0%);
     }
+
     100% {
         transform: translate(85px, 0%);
     }
@@ -1006,6 +1054,7 @@ section {
     .breadcrumbs {
         margin-top: 64px;
     }
+
     .section-title p {
         margin: 0;
         margin: 0;
@@ -1052,9 +1101,11 @@ section {
     .breadcrumbs .d-flex {
         display: block !important;
     }
+
     .breadcrumbs ol {
         display: block;
     }
+
     .breadcrumbs ol li {
         display: inline-block;
     }
@@ -1201,6 +1252,7 @@ section {
         transform: scale(0.6, 0.6);
         opacity: 1;
     }
+
     100% {
         transform: scale(1, 1);
         opacity: 0;
@@ -1212,6 +1264,7 @@ section {
         transform: scale(0.6, 0.6);
         opacity: 1;
     }
+
     100% {
         transform: scale(1, 1);
         opacity: 0;
@@ -1914,6 +1967,7 @@ section {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -1923,6 +1977,7 @@ section {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -2460,15 +2515,23 @@ btn-dark-green {
     background-color: #85ffc2;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
 .white-btn {
-    color: #010246;
+    color: #004f69;
     background-color: #fff;
     font-family: "Poppins";
     text-transform: uppercase;
     font-weight: 600;
     border-radius: 5px;
+}
+
+.ant-radio-checked .ant-radio-inner {
+    border-color: #004f69
+}
+
+.ant-radio-inner::after {
+    background-color: #004f69;
 }

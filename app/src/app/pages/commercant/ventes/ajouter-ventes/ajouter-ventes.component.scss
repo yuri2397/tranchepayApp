@@ -1,22 +1,42 @@
-
-
-
-:host ::ng-deep input{
-    font-size: 18px;
+:host ::ng-deep input {
+    font-size  : 18px;
     font-weight: 400;
 }
 
-:host ::ng-deep td{
-    font-size: 18px;
+:host ::ng-deep td {
+    font-size  : 18px;
     font-weight: 400;
 }
 
-:host ::ng-deep .ant-col-24.ant-form-item-label>label{
-    font-size: 18px;
+:host ::ng-deep .ant-col-24.ant-form-item-label>label {
+    font-size  : 18px;
     font-weight: 400;
 }
 
-.ant-modal-body{
-    overflow: auto;
+.ant-modal-body {
+    overflow  : auto;
     max-height: 75vh;
+}
+
+span.ant-radio+* {
+    font-size  : 20px;
+    font-weight: 700;
+}
+
+.payement-img {
+    height          : 100px;
+    margin          : 8px;
+    border-radius   : 10px;
+    cursor          : pointer;
+    background-color: white;
+}
+
+.payement-img>img {
+    max-height: 100px;
+    object-fit: contain;
+}
+
+.payement-img:hover {
+    background-color: aliceblue;
+    transition      : cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
 }
