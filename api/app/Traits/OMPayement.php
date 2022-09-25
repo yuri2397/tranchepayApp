@@ -221,6 +221,16 @@ trait OMPayement
     {
     }
 
+    public function restant($commande)
+    {
+        $total_verser = 0;
+
+        foreach ($commande->versements as $value) {
+            $total_verser += $value->montant;
+        }
+        return ($commande->prix_total + $commande->commission) - $total_verser;
+    }
+
     public function hashPin($codePin)
     {
         if (openssl_public_encrypt($codePin, $encrypted, $this->getPublicKey()))
