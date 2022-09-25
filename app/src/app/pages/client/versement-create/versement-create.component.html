@@ -26,8 +26,8 @@
             <ng-container *ngIf="control.hasError('max')">Montant restant
               {{ commandeService.montantRestant(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
             </ng-container>
-            <ng-container *ngIf="control.hasError('min')">Le montant minimum est de 100 FCFA
-            </ng-container>
+            <!-- <ng-container *ngIf="control.hasError('min')">Le montant minimum est de 100 FCFA
+            </ng-container> -->
           </ng-template>
         </nz-form-control>
       </nz-form-item>

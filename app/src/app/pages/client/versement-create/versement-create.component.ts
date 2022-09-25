@@ -49,7 +49,7 @@ export class VersementCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      amount: [null, [Validators.required, Validators.min(50)]],
+      amount: [null, [Validators.required]],
       telephone: [
         this.commande.client.telephone,
         [Validators.required, Validators.pattern('^(77|78|75|70|76)[0-9]{7}$')],
