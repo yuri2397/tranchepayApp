@@ -1,11 +1,11 @@
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { ClientService } from './../../../services/client.service';
-import { Commande } from 'src/app/models/commande';
-import { CommandesService } from './../../../services/commandes.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NzModalRef } from 'ng-zorro-antd/modal';
-import { NotificationService } from 'src/app/shared/notification.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification'
+import { ClientService } from './../../../services/client.service'
+import { Commande } from 'src/app/models/commande'
+import { CommandesService } from './../../../services/commandes.service'
+import { Component, Input, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { NzModalRef } from 'ng-zorro-antd/modal'
+import { NotificationService } from 'src/app/shared/notification.service'
 
 @Component({
   selector: 'app-versement-create',
@@ -13,9 +13,9 @@ import { NotificationService } from 'src/app/shared/notification.service';
   styleUrls: ['./versement-create.component.scss'],
 })
 export class VersementCreateComponent implements OnInit {
-  load: boolean = false;
-  form!: FormGroup;
-  @Input() readonly commande!: Commande;
+  load: boolean = false
+  form!: FormGroup
+  @Input() readonly commande!: Commande
   mobilePayements = [
     {
       name: 'wave',
@@ -38,61 +38,54 @@ export class VersementCreateComponent implements OnInit {
       padding: '5px',
       margin_top: '-6px',
     },
-  ];
+  ]
   constructor(
     private modal: NzModalRef,
     private fb: FormBuilder,
     public commandeService: CommandesService,
     public clientService: ClientService,
-    private notification: NotificationService
+    private notification: NotificationService,
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      amount: [
-        null,
-        [
-          Validators.required,
-          Validators.min(100),
-          Validators.max(this.commandeService.montantRestant(this.commande)),
-        ],
-      ],
+      amount: [null, [Validators.required, Validators.min(50)]],
       telephone: [
         this.commande.client.telephone,
         [Validators.required, Validators.pattern('^(77|78|75|70|76)[0-9]{7}$')],
       ],
-    });
+    })
   }
 
   destroy(data: string | null) {
-    this.modal.destroy(data);
+    this.modal.destroy(data)
   }
 
   save(via: any) {
     if (this.form.valid) {
-      this.load = true;
+      this.load = true
       this.clientService
         .doVersement(
           this.commande,
           this.form.value.amount,
           via,
-          this.form.value.telephone
+          this.form.value.telephone,
         )
         .subscribe({
           next: (success) => {
-            console.log(success);
-            this.destroy(success);
+            console.log(success)
+            this.destroy(success)
           },
           error: (errors) => {
-            console.log(errors);
+            console.log(errors)
             this.notification.emitChange({
               title: 'Versement annulé',
               message: errors.error.message,
               type: 'error',
-            });
-            this.destroy(null);
+            })
+            this.destroy(null)
           },
-        });
+        })
     }
   }
 }
