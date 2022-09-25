@@ -129,7 +129,14 @@ trait OMPayement
                 $commande->save();
             }
 
-            $res = $this->restant($commande);
+
+            $total_verser = 0;
+
+            foreach ($commande->versements as $value) {
+                $total_verser += $value->montant;
+            }
+            $res = ($commande->prix_total + $commande->commission) - $total_verser;
+
             $log = new Log();
             $log->text = "RESTATNT";
             $log->log = $res;
@@ -226,15 +233,15 @@ trait OMPayement
     {
     }
 
-    public function restant($commande)
-    {
-        $total_verser = 0;
+    // public function restant($commande)
+    // {
+    //     $total_verser = 0;
 
-        foreach ($commande->versements as $value) {
-            $total_verser += $value->montant;
-        }
-        return ($commande->prix_total + $commande->commission) - $total_verser;
-    }
+    //     foreach ($commande->versements as $value) {
+    //         $total_verser += $value->montant;
+    //     }
+    //     return ($commande->prix_total + $commande->commission) - $total_verser;
+    // }
 
     public function hashPin($codePin)
     {

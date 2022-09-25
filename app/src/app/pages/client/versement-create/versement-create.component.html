@@ -23,7 +23,8 @@
             placeholder="Montant à verser" />
           <ng-template #amountErrorTpl let-control>
             <ng-container *ngIf="control.hasError('required')">Donner le montant à verser</ng-container>
-            <ng-container *ngIf="control.hasError('max')">Montant restant {{ commandeService.montantRestant(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
+            <ng-container *ngIf="control.hasError('max')">Montant restant
+              {{ commandeService.montantRestant(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
             </ng-container>
             <ng-container *ngIf="control.hasError('min')">Le montant minimum est de 100 FCFA
             </ng-container>
@@ -31,9 +32,9 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label class="" total nzRequired>TÉLÉPHONE</nz-form-label>
+        <nz-form-label class="" total nzRequired>NUMÉRO DE PAIEMENT</nz-form-label>
         <nz-form-control nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="telephoneErrorTpl">
-          <input class=" form-control shadow-sm" nzSize="large" nz-input  formControlName="telephone"
+          <input class=" form-control shadow-sm" nzSize="large" nz-input formControlName="telephone"
             placeholder="Montant à verser" />
           <ng-template #telephoneErrorTpl let-control>
             <ng-container *ngIf="control.hasError('pattern')">Donner un numéro valide.

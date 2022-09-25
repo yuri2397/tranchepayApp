@@ -94,6 +94,7 @@ export class ShowComponent implements OnInit {
                     },
                     error: (error) => {
                       console.log(error)
+                      m.destroy()
                       this.errorModal(error.error.message)
                       resolve(false)
                     },
@@ -104,6 +105,7 @@ export class ShowComponent implements OnInit {
               console.log('Wait for check')
             }
           })()
+        } else {
         }
       })
   }
