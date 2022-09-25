@@ -116,8 +116,7 @@
               <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_c"></nz-divider>
               <ng-template #i_c>
                 <span class="text-dark-green bold lead">
-                  Comment payer?
-                </span>
+                  Durée de paiement </span>
               </ng-template>
               <div *ngIf="selectModeError" class="alert alert-danger">
                 Choissir le mode de paiement
@@ -126,8 +125,6 @@
               <form nz-form [formGroup]="payementFormGroup">
 
                 <nz-form-item>
-                  <nz-form-label class="total" nzFor="payementType" nzSpan="24" nzRequired>Choisir la durée
-                  </nz-form-label>
                   <nz-form-control nzHasFeedback [nzSpan]="24">
                     <nz-radio-group (ngModelChange)="onModeChange($event)" formControlName="payementType">
                       <label class="d-block" *ngFor="let item of modePaiements" nz-radio
@@ -149,7 +146,13 @@
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
-                  <nz-form-label class="total" nzFor="phone_number" nzSpan="24" nzRequired>Téléphone</nz-form-label>
+                  <nz-form-label class="total" nzFor="phone_number" nzSpan="24" nzRequired>
+                    <nz-divider [nzText]="n_p"></nz-divider>
+                    <ng-template #n_p>
+                      <span class="lead bold">Numéro de paiement</span>
+                    </ng-template>
+
+                  </nz-form-label>
                   <nz-form-control nzHasFeedback [nzSpan]="24" [nzErrorTip]="telephoneError">
                     <input type="number" nz-input class="total " formControlName="telephone" name="phone_number"
                       placeholder="Numéro de téléphone" />

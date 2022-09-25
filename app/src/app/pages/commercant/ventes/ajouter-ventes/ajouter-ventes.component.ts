@@ -104,7 +104,7 @@ export class AjouterVentesComponent implements OnInit {
 
     this.payementFormGroup = this.fb.group({
       firstPart: [null, [Validators.required, Validators.min(this.aPayer())]],
-      telephone: [this.selectedClient.telephone, [Validators.required]],
+      telephone: [null, [Validators.required]],
       payementType: [null, [Validators.required]],
     })
 

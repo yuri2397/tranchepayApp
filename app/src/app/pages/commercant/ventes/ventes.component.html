@@ -23,6 +23,7 @@
                     <th>CLIENT</th>
                     <th>TELEPHONE</th>
                     <th>DATE</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,10 @@
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
                     <td>{{ data.created_at | date }}</td>
+                    <td>
+                      <button [disabled]="data.etat_commande.nom == 'pending'"
+                        class="btn btn-primary">Supprimer</button>
+                    </td>
                   </tr>
                 </tbody>
               </nz-table>

@@ -1,8 +1,10 @@
 <nz-layout class="layout">
   <nz-sider nzCollapsible class="bg" [(nzCollapsed)]="isCollapsed" [nzWidth]="280" [nzTrigger]="null">
     <div class="logo">
-      <img src="/assets/img/logo2.png" alt="logo" />
-      <h1>{{ title }}</h1>
+      <a href="/">
+        <img src="/assets/img/logo2.png" alt="logo" />
+        <h1>{{ title }}</h1>
+      </a>
     </div>
     <ul nz-menu class="bg mt-3" nzMode="inline">
       <li nzSelected="true" nz-menu-item (click)="goto('commandes')">

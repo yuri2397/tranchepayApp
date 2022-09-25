@@ -121,15 +121,22 @@ trait OMPayement
 
             if ($padding->type == "fp") {
                 $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
-                $compte->solde += $commande->prix_total;
+                $compte->solde = $compte->solde + $commande->prix_total;
                 $compte->save();
+
+                $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
+                $commande->save();
             }
 
             $res = $this->restant($commande);
             $padding->save();
 
-            if ($res == 0) {
+            if ($res <= 0) {
                 $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
+                $commande->save();
+            } else {
+                // $message = $message . ' Votre commande sera livré une fois tout payer.';
+                $commande->etat_commande_id = EtatCommande::whereNom("load")->first()->id;
                 $commande->save();
             }
             return "SUCCESS";
