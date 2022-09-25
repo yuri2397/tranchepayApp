@@ -4,17 +4,17 @@
   <nz-table #basicTable [nzData]="versements" [nzLoading]="isLoad">
     <thead>
       <tr>
-        <th class="text-dark-green">COMMANDE</th>
+        <th class="text-dark-green">N° COMMANDE</th>
         <th class="text-dark-green">BOUTIQUE</th>
         <th class="text-dark-green">MÉTHODE DE PAIEMENT</th>
         <th class="text-dark-green">MONTANT</th>
-        <th class="text-dark-green">DATE</th>
+        <th class="text-dark-green">DATE DE VERSEMENT</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
         <td class="text-dark-green">
-          <a routerLink="/client/commandes/show/{{ data.commande.id }}">
+          <a class="text-dark-green" routerLink="/client/commandes/show/{{ data.commande.id }}">
             {{ data.commande.reference }}
           </a>
         </td>

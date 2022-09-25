@@ -120,6 +120,8 @@ trait OMPayement
             $versement->commande_id = $commande->id;
             $versement->save();
 
+            $commande->load('versements');
+
             if ($padding->type == "fp") {
                 $compte = Compte::whereBoutiqueId($commande->boutique_id)->first();
                 $compte->solde = $compte->solde + $commande->prix_total;
