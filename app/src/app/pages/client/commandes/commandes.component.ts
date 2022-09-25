@@ -1,7 +1,7 @@
-import { Router } from '@angular/router';
-import { ClientService } from './../../../services/client.service';
-import { Component, OnInit } from '@angular/core';
-import { Commande } from 'src/app/models/commande';
+import { Router } from '@angular/router'
+import { ClientService } from './../../../services/client.service'
+import { Component, OnInit } from '@angular/core'
+import { Commande } from 'src/app/models/commande'
 
 @Component({
   selector: 'app-commandes',
@@ -9,74 +9,80 @@ import { Commande } from 'src/app/models/commande';
   styleUrls: ['./commandes.component.scss'],
 })
 export class CommandesComponent implements OnInit {
-  commandes!: Commande[];
-  isLoad = true;
-  constructor(private clientService: ClientService, private router: Router) { }
+  commandes!: Commande[]
+  isLoad = true
+  constructor(private clientService: ClientService, private router: Router) {}
 
   ngOnInit(): void {
-    this.findAll();
+    this.findAll()
   }
 
   findAll() {
-    this.isLoad = true;
+    this.isLoad = true
     this.clientService.findCommandes().subscribe({
       next: (response) => {
-        this.commandes = response;
-        console.log(this.commandes);
-        this.isLoad = false;
+        this.commandes = response
+        console.log(this.commandes)
+        this.isLoad = false
       },
 
       error: (errors) => {
-        console.error(errors);
+        console.error(errors)
       },
-    });
+    })
   }
 
   montantVerser(data: Commande) {
-    let res = 0;
+    let res = 0
     data.versements.forEach((e) => {
-      res += e.montant;
-    });
-    return res;
+      res += e.montant
+    })
+    return res
   }
 
   montantRestant(data: Commande): number {
-    return (+data.prix_total + +data.commission) - this.montantVerser(data);
+    return +data.prix_total + +data.commission - this.montantVerser(data)
   }
 
   etatCommande(data: Commande): string {
-    let etat = '';
+    let etat = ''
     switch (data.etat_commande.nom) {
       case 'append':
-        etat = 'EN ATTENTE';
-        break;
+        etat = 'EN ATTENTE'
+        break
       case 'load':
-        etat = 'EN COURS';
-        break;
+        etat = 'EN COURS'
+        break
+      case 'cancel':
+        etat = 'ANNULER'
+        break
       case 'finish':
-        etat = 'TERMINER';
+        etat = 'TERMINER'
     }
-    return etat;
+    return etat
   }
 
   etatColor(data: Commande) {
-    let etat = 'green';
+    let etat = 'green'
     switch (data.etat_commande.nom) {
       case 'append':
-        etat = 'red';
-        break;
+        etat = 'red'
+        break
       case 'load':
-        etat = 'gold';
-        break;
+        etat = 'gold'
+        break
+      case 'cancel':
+        etat = 'red'
+        break
     }
-    return etat;
+    return etat
   }
 
-  show(item: Commande){
-    this.router.navigate(['/client/commandes/show/'+item.id])
+  show(item: Commande) {
+    this.router.navigate(['/client/commandes/show/' + item.id])
   }
 
-  total(commande: Commande){
-    return (+commande.prix_total + +commande.commission);
+  total(commande: Commande) {
+    return +commande.prix_total + +commande.commission
   }
 }

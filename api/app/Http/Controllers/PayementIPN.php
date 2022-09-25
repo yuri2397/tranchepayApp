@@ -58,7 +58,7 @@ class PayementIPN extends Controller
 
                     $res = $this->restant($commande);
                     $padding->save();
-                    if ($res == 0) {
+                    if ($res <= 0) {
                         $message = $message . ' Votre commande est entierement payé.';
                         $commande->etat_commande_id = EtatCommande::whereNom("finish")->first()->id;
                         $commande->save();

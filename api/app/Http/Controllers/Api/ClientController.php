@@ -45,6 +45,7 @@ class ClientController extends Controller
         $append = EtatCommande::whereNom("append")->first();
         $commandes =  Commande::whereClientId($this->authClient()->id)
             ->where("etat_commande_id", "!=", $append->id)
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return $commandes;

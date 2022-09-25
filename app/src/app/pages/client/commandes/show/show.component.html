@@ -2,25 +2,17 @@
   <ng-container *ngIf="!isLoad; else elseTemplate">
     <div class="d-flex my-3 justify-content-between align-items-center">
       <div>
-        <button
-          nz-tooltip
-          [nzTooltipTitle]="'Revenir en arrièr'"
-          class="mx-2"
-          (click)="onBack()"
-          mat-mini-fab
-          color="default"
-        >
+        <button nz-tooltip [nzTooltipTitle]="'Revenir en arrièr'" class="mx-2" (click)="onBack()" mat-mini-fab
+          color="default">
           <i nz-icon nzType="arrow-left"></i>
         </button>
         <span class="h4 text-dark-green mx-2">Détails de la commande</span>
       </div>
       <div *ngIf="commande.etat_commande.nom != 'finish'">
         <div class="mx-1">
-          <button
-            nz-button
-            class="btn submit-btn border my-2 shadow"
-            (click)="openAddVersementModal()"
-          >
+          <button nz-button
+            [disabled]="commande.etat_commande.nom == 'finish' || commande.etat_commande.nom == 'cancel'"
+            class="btn submit-btn border my-2 shadow" (click)="openAddVersementModal()">
             Faire un versement
           </button>
         </div>
@@ -60,19 +52,18 @@
               {{ commande.boutique.nom }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
-              <span nz-typography
-                ><b>DATE LIMITE</b>
+              <span nz-typography><b>DATE LIMITE</b>
               </span>
               {{ commande.date_limite|date:"dd/MM/yyy" }}
 
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>TOTAL VERSEMENT</b></span>
-              {{ commandeService.montantVerser(commande)| currency: "FCFA":"symbol":"1.0":"fr" }} 
+              {{ commandeService.montantVerser(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>MONTANT RESTANT</b></span>
-              {{ commandeService.montantRestant(commande) | currency: "FCFA":"symbol":"1.0":"fr"}}
+              {{ commandeService.montantRestant(commande) | currency: "FCFA":"symbol":"1.0":"fr" }}
             </nz-list-item>
           </nz-list>
         </div>
@@ -88,11 +79,7 @@
     </nz-divider>
     <div class="row">
       <div class="col">
-        <nz-table
-          [nzScroll]="{ x: '100px' }"
-          #versements
-          [nzData]="commande.versements"
-        >
+        <nz-table [nzScroll]="{ x: '100px' }" #versements [nzData]="commande.versements">
           <thead>
             <tr>
               <th class="bold text-dark-green">REFERENCE</th>
@@ -105,7 +92,9 @@
             <tr *ngFor="let data of versements.data">
               <td class="bold text-dark-green">{{ data.reference }}</td>
               <td class="bold text-dark-green">{{ data.via }}</td>
-              <td class="bold text-dark-green">{{ data.montant| currency: "FCFA":"symbol":"1.0":"fr" }} </td>
+              <td class="bold text-dark-green">
+                {{ data.montant| currency: "FCFA":"symbol":"1.0":"fr" }}
+              </td>
               <td class="bold text-dark-green">
                 {{ data.date_time | date: "d MMMM y" }}
               </td>
