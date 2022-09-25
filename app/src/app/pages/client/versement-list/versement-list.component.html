@@ -13,7 +13,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
-        <td class="text-dark-green">{{ data.commande.reference }}</td>
+        <td class="text-dark-green">
+          <a routerLink="/client/commandes/show/{{ data.commande.id }}">
+            {{ data.commande.reference }}
+          </a>
+        </td>
         <td class="text-dark-green">{{ data.commande.boutique.nom }}</td>
         <td class="bold text-dark-green">{{ data.via }}</td>
         <td class="text-dark-green">{{ data.montant }} FCFA</td>
