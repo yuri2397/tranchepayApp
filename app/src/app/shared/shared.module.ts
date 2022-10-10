@@ -1,42 +1,43 @@
-import { CommonModule } from '@angular/common';
-import { SpinnerComponent } from './component/spinner/spinner.component';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzImageModule } from 'ng-zorro-antd/image';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzNotificationModule } from 'ng-zorro-antd/notification';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { ShowComponent } from '../pages/client/commandes/show/show.component';
-import { SecuriteComponent } from '../pages/client/securite/securite.component';
-import { PayementSuccessComponent } from './component/payement-success/payement-success.component';
-import { PayementErrorComponent } from './component/payement-error/payement-error.component';
-import { NzResultModule } from 'ng-zorro-antd/result';
-import { PayementPaddingComponent } from './component/payement-padding/payement-padding.component';
-import { MobileMoneyModalComponent } from './component/mobile-money-modal/mobile-money-modal.component';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
+import { CommonModule } from '@angular/common'
+import { SpinnerComponent } from './component/spinner/spinner.component'
+import { NgModule } from '@angular/core'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { NzAlertModule } from 'ng-zorro-antd/alert'
+import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzDividerModule } from 'ng-zorro-antd/divider'
+import { NzDrawerModule } from 'ng-zorro-antd/drawer'
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown'
+import { NzFormModule } from 'ng-zorro-antd/form'
+import { NzGridModule } from 'ng-zorro-antd/grid'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzImageModule } from 'ng-zorro-antd/image'
+import { NzInputModule } from 'ng-zorro-antd/input'
+import { NzLayoutModule } from 'ng-zorro-antd/layout'
+import { NzListModule } from 'ng-zorro-antd/list'
+import { NzModalModule } from 'ng-zorro-antd/modal'
+import { NzNotificationModule } from 'ng-zorro-antd/notification'
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header'
+import { NzRadioModule } from 'ng-zorro-antd/radio'
+import { NzSelectModule } from 'ng-zorro-antd/select'
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton'
+import { NzStepsModule } from 'ng-zorro-antd/steps'
+import { NzTableModule } from 'ng-zorro-antd/table'
+import { NzTabsModule } from 'ng-zorro-antd/tabs'
+import { NzTagModule } from 'ng-zorro-antd/tag'
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip'
+import { ShowComponent } from '../pages/client/commandes/show/show.component'
+import { SecuriteComponent } from '../pages/client/securite/securite.component'
+import { PayementSuccessComponent } from './component/payement-success/payement-success.component'
+import { PayementErrorComponent } from './component/payement-error/payement-error.component'
+import { NzResultModule } from 'ng-zorro-antd/result'
+import { PayementPaddingComponent } from './component/payement-padding/payement-padding.component'
+import { MobileMoneyModalComponent } from './component/mobile-money-modal/mobile-money-modal.component'
+import { NzAvatarModule } from 'ng-zorro-antd/avatar'
+import { AlertModalComponent } from './alert-modal/alert-modal.component'
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
   imports: [
     CommonModule,
     NzLayoutModule,
-    NzListModule,NzAvatarModule,
+    NzListModule,
+    NzAvatarModule,
     NzResultModule,
     NzIconModule,
     MatIconModule,
@@ -111,6 +113,7 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
     NzNotificationModule,
     NzStepsModule,
     NzRadioModule,
+    NzAutocompleteModule,
   ],
   exports: [
     SpinnerComponent,
@@ -140,7 +143,8 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
     NzPageHeaderModule,
     NzModalModule,
     NzDrawerModule,
-    NzGridModule,NzAvatarModule,
+    NzGridModule,
+    NzAvatarModule,
     NzNotificationModule,
     NzImageModule,
     NzDividerModule,
@@ -176,7 +180,7 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
     NzStepsModule,
     SecuriteComponent,
     NzRadioModule,
+    NzAutocompleteModule,
   ],
-
 })
-export class SharedModule { }
+export class SharedModule {}

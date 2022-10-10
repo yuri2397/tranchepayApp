@@ -1,3 +1,4 @@
+import { NzModalService } from 'ng-zorro-antd/modal'
 import { AuthService } from './../../services/auth.service'
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
@@ -21,9 +22,9 @@ export const ROUTES: RouteInfo[] = [
     permissions: ['administrateur'],
   },
   {
-    path: '/search-client-vente',
+    path: 'finaliser-vente',
     title: 'Ajouter une vente',
-    icon: 'shopping_cart',
+    icon: 'shopping-cart',
     class: '',
     roles: ['super admin'],
     permissions: ['administrateur'],
@@ -97,7 +98,11 @@ export class CommercantComponent implements OnInit {
   menuItems!: RouteInfo[]
   isLoad = false
   title = 'TRANCHEPAY'
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private modalService: NzModalService,
+  ) {}
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter((menuItem) => menuItem)
@@ -108,8 +113,17 @@ export class CommercantComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout()
-    this.router.navigate(['/auth'])
+    this.modalService.confirm({
+      nzTitle: 'Déconnexion',
+      nzContent: '<b>Voulez-vous vous déconnecter?</b>',
+      nzOkText: 'Je me deconnecte',
+      nzCancelText: 'Annuler',
+      nzCentered: true,
+      nzOnOk: () => {
+        this.authService.logout()
+        this.router.navigate(['/auth'])
+      },
+    })
   }
 
   selected(item: RouteInfo) {

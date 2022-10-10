@@ -1,5 +1,5 @@
 <nz-layout *ngIf="!isLoad; else loadingTemplate" class="app-layout">
-  <nz-sider class="menu-sidebar bg" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+  <nz-sider class="menu-sidebar bg" nzCollapsible nzWidth="300px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
     <div class="sidebar-logo">
       <a routerLink="/">
@@ -15,11 +15,11 @@
           <i nz-icon nzType="{{ item.icon }}" class="icon" nzTheme="outline">
 
           </i>
-          <span class="text-dark-green bold">{{ item.title }}</span>
+          <span class="text-dark-green bold menu-title">{{ item.title }}</span>
         </li>
       </ng-container>
       <ng-container>
-        <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
+        <li (click)="logout()" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
                     'Se déconnecter' : ''">
           <i nz-icon nzType="logout" class="icon" nzTheme="outline">
 

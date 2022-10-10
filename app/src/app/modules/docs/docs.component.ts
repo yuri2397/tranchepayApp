@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service'
+import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-docs',
   templateUrl: './docs.component.html',
-  styleUrls: ['./docs.component.scss']
+  styleUrls: ['./docs.component.scss'],
 })
 export class DocsComponent implements OnInit {
+  currentYear: any
 
-  currentYear : any;
-
-  constructor() { }
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.currentYear = new Date().getFullYear();
+    this.currentYear = new Date().getFullYear()
   }
-
 }

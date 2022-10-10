@@ -49,12 +49,27 @@ export class VersementCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      amount: [null, [Validators.required]],
+      amount: [
+        null,
+        [
+          Validators.required,
+          Validators.min(this.minAmount()),
+          Validators.max(this.commandeService.montantRestant(this.commande)),
+        ],
+      ],
       telephone: [
         this.commande.client.telephone,
         [Validators.required, Validators.pattern('^(77|78|75|70|76)[0-9]{7}$')],
       ],
     })
+  }
+  minAmount(): any {
+    let restant = this.commandeService.montantRestant(this.commande)
+    if (restant < 200) {
+      return restant
+    } else {
+      return 100
+    }
   }
 
   destroy(data: string | null) {

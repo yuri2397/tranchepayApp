@@ -1,3 +1,4 @@
+import { ClientService } from 'src/app/services/client.service'
 import { ActivatedRoute } from '@angular/router'
 import { PayementPaddingComponent } from './../../../../shared/component/payement-padding/payement-padding.component'
 import { ModePaiement } from './../../../../models/mode-paiement'
@@ -82,10 +83,13 @@ export class AjouterVentesComponent implements OnInit {
   amountErrorMessage!: string
   selectedInteret!: any
   commission: any = 0
+  clientLoad!: boolean
+  searchClientValue!: string
+  produitsError!: string
+  clientError!: string
+  paymentError!: string
 
   constructor(
-    private domSanitizer: DomSanitizer,
-    private matIconRegistry: MatIconRegistry,
     private fb: FormBuilder,
     private commercantService: CommercantService,
     private modalService: NzModalService,
@@ -94,17 +98,18 @@ export class AjouterVentesComponent implements OnInit {
     private route: ActivatedRoute,
     private notificatoinService: NotificationService,
     private location: Location,
+    private clientService: ClientService,
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.selectedClient = JSON.parse(params['customer']) as Client
-      this.getModePayement(this.selectedClient.id)
-    })
+    // this.route.queryParams.subscribe((params) => {
+    //   this.selectedClient = JSON.parse(params['customer']) as Client
+    //   this.getModePayement(this.selectedClient.id)
+    // })
 
     this.payementFormGroup = this.fb.group({
       firstPart: [null, [Validators.required, Validators.min(this.aPayer())]],
-      telephone: [this.selectedClient.telephone, [Validators.required]],
+      telephone: [null, [Validators.required]],
       payementType: [null, [Validators.required]],
     })
 
@@ -113,6 +118,20 @@ export class AjouterVentesComponent implements OnInit {
       quantite_produit: [null, [Validators.required, Validators.min(0)]],
       prix_unitaire_produit: [null, [Validators.required]],
     })
+  }
+
+  clientSelected(telephone: any) {
+    if (telephone && this.clients) {
+      this.selectedClient = this.clients?.find(
+        (e) => e.telephone == telephone,
+      ) as Client
+      console.log(this.selectedClient)
+      if (this.selectedClient) {
+        this.getModePayement(this.selectedClient.id)
+      }
+      this.clients = []
+    }
+    this.reset()
   }
 
   aPayer(): number {
@@ -135,12 +154,14 @@ export class AjouterVentesComponent implements OnInit {
     })
     this.selectProductError = false
     this.validateForm.reset()
+    this.reset()
   }
 
   removeProduit(data: Produit) {
     this.produits.splice(this.produits.indexOf(data), 1)
 
     this.produits = [...this.produits]
+    this.reset()
   }
 
   total() {
@@ -157,6 +178,8 @@ export class AjouterVentesComponent implements OnInit {
       next: (response) => {
         console.log(response)
         this.modePaiements = response
+        this.reset()
+
         this.modeLoad = false
       },
       error: (errors) => {
@@ -168,6 +191,7 @@ export class AjouterVentesComponent implements OnInit {
   onModeChange(data: any) {
     this.selectModeError = false
     this.selectCommission(data)
+    this.reset()
   }
 
   saveVente(
@@ -274,9 +298,24 @@ export class AjouterVentesComponent implements OnInit {
     }
   }
   valideData() {
+    this.reset()
     if (!this.produits.length) {
       this.selectProductError = true
+      this.produitsError = 'Ajouter un produit'
     }
+
+    if (!this.selectedClient) {
+      this.clientError = 'Rechercher et selected un client'
+    }
+
+    if (!this.payementFormGroup.valid) {
+      this.paymentError = 'Veuillez remplir ces informations.'
+    }
+  }
+  reset() {
+    this.produitsError = ''
+    this.clientError = ''
+    this.paymentError = ''
   }
 
   successModal(message: string) {
@@ -336,6 +375,20 @@ export class AjouterVentesComponent implements OnInit {
     let mode = this.modePaiements.find((com) => com.id == data)
     if (mode) {
       this.commission = this.total() * (mode.interet / 100)
+    }
+  }
+
+  search(event: Event) {
+    const data = (event.target as HTMLInputElement).value
+    if (data) {
+      this.clientLoad = true
+      this.clientService.search(data).subscribe({
+        next: (response) => {
+          console.log(response)
+          this.clients = response
+          this.clientLoad = false
+        },
+      })
     }
   }
 }

@@ -1,40 +1,44 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8 h-100">
+      <div class="row">
+        <div class="col">
+          <div class="card card-body shadow border raduis-sm h-100">
+            <span class="h6" nzRequered>Rechercher un client</span>
 
-      <div class="card card-body shadow p-2 border raduis-sm mb-3">
-        <div class="row">
-          <div class="col">
-            <span class="text-dark-green bold lead">{{ selectedClient.prenoms }} {{ selectedClient.nom }}
-            </span>
-            <h6 class="text-dark-green m-0 p-0">+221 {{ selectedClient.telephone }} </h6>
-          </div>
-          <div class="col">
-            <div>
-              <h5 class="text-dark-green m-0 p-0">Total</h5>
-            </div>
-            <div>
-              <span class="total lead text-dark-green">
-                {{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}
-              </span>
-            </div>
-          </div>
-          <div class="col">
-            <div>
-              <h5 class="text-dark-green m-0 p-0">Commission</h5>
-            </div>
-            <div>
-              <span class="total lead text-dark-green">
-                {{ commission | currency: "FCFA":"symbol":"1.0":"fr" }}
-              </span>
-            </div>
+            <input nz-input nzSize="large" class="total" (ngModelChange)="clientSelected($event)" ngModel
+              (input)="search($event)" [nzAutocomplete]="auto"
+              placeholder="Rechercher le client par numéro de téléphone">
+            <nz-autocomplete #auto>
+              <nz-auto-option *ngFor="let client of clients ?? []" [nzValue]="client.telephone">
+                {{ client.prenoms }}
+                {{ client.nom }} - {{ client.telephone }}</nz-auto-option>
+            </nz-autocomplete>
+            <nz-alert *ngIf="clientError" nzType="error" nzShowIcon [nzDescription]="clientError"></nz-alert>
+
+
           </div>
         </div>
+        <div class="col">
+          <div class="card card-body shadow border raduis-sm h-100">
+            <nz-divider nzOrientation="left" [nzText]="client"></nz-divider>
+            <ng-container *ngIf="selectedClient; else addClient">
+              <span class="lead bold text-dark">Prénom : {{ selectedClient.prenoms }}</span>
+              <span class="lead bold text-dark">Nom : {{ selectedClient.nom }}</span>
+              <h3 class="lead bold text-dark">Téléphone : {{ selectedClient.telephone }}</h3>
+            </ng-container>
+            <ng-template #addClient>
+              <nz-alert class="rounded-2" nzShowIcon nzType="warning"
+                nzDescription="Rechercher et selectionner un client."></nz-alert>
+            </ng-template>
 
+
+          </div>
+        </div>
       </div>
-
-
+      <br>
       <div class="card card-body shadow p-2 border raduis-sm">
+
         <form [nzLayout]="'vertical'" nz-form [formGroup]="validateForm">
           <nz-divider nzDashed [nzOrientation]="'left'" [nzText]="i_t"></nz-divider>
           <ng-template #i_t>
@@ -78,6 +82,8 @@
           </div>
 
         </form>
+        <nz-alert *ngIf="produitsError" nzType="error" nzShowIcon [nzDescription]="produitsError"></nz-alert>
+
         <br />
         <nz-table #basicTable nzShowPagination="false" [nzData]="produits" [nzLoading]="isLoad">
           <thead>
@@ -110,6 +116,17 @@
 
       <div class="card shadow raduis-sm">
         <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="lead text-dark">Total: </span>
+            <span
+              class="lead bold text-dark-green">{{ total() | currency: "FCFA":"symbol":"1.0":"fr" }}</span>
+          </div>
+          <br>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="lead text-dark">Commission: </span>
+            <span
+              class="lead bold text-dark-green">{{ commission| currency: "FCFA":"symbol":"1.0":"fr" }}</span>
+          </div>
           <div nz-row>
             <div nz-col nzSpan="24">
 
@@ -121,6 +138,8 @@
               <div *ngIf="selectModeError" class="alert alert-danger">
                 Choissir le mode de paiement
               </div>
+
+              <nz-alert *ngIf="paymentError" nzType="error" nzShowIcon [nzDescription]="paymentError"></nz-alert>
 
               <form nz-form [formGroup]="payementFormGroup">
 
@@ -177,7 +196,6 @@
                   class="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
                   <div class="shadow-sm card card-body payement-img">
                     <img [src]="item.image_src" />
-
                   </div>
                 </div>
               </div>
@@ -188,3 +206,11 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- TEMPLATES -->
+
+<ng-template #client>
+  <span class="lead bold text-dark-green">Information du client</span>
+</ng-template>

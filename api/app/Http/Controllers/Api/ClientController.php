@@ -257,7 +257,7 @@ class ClientController extends Controller
 
     public function paddings()
     {
-        return Padding::whereUserId($this->authClient()->id)->limit(5)->get();
+        return Padding::whereUserId($this->authClient()->id)->get();
     }
 
     public function confirmePaddings(Request $request, Padding $padding)
