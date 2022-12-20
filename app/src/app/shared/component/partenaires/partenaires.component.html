@@ -1,27 +1,24 @@
-<div class="bg-white p-3">
-  <div class="jumbotron">
-    <h1 class="display-4">Enseignes partenaires </h1>
-    <p class="lead">En magasin ou sur internet, réglez vos achat avec flexibilité dans plus de 50 enseignes.
+<div class="card raduis-sm shadow my-3 p-4">
+  <h4 class="text-dark-green text-uppercase bold" >Nos PARTENAIRES</h4>
+    <p>En magasin ou sur internet, réglez vos achat avec flexibilité dans plus de 50 enseignes.
     </p>
-  </div>
-
+    <br><br>
 
   <div class="d-flex">
-
     <div *ngFor="let item of partenaires" class="mx-1">
-      <div class="card card-body shadow-sm">
+      <div >
         <a target="_blank" href="{{ item?.site_web ?? '' }}" class="ng-star-inserted">
           <div class="item">
-            <img class="logo" src="{{ item.logo_url }}">
+            <img class="logo mx-3" src="{{ item.logo_url }}">
 
-            <div class="payment-type mt-2">
+            <!-- <div class="payment-type mt-2">
               <div><span class="check"></span>
                 <p>{{ item.nom }}</p>
               </div>
               <div><span class="check"></span>
                 <p>{{ item.type.nom }}</p>
               </div>
-            </div>
+            </div> -->
           </div>
         </a>
       </div>

@@ -15,6 +15,41 @@
 @import url("assets/vendor/swiper/swiper-bundle.min.css");
 @import url("assets/css/style.css");
 
+::root{
+    --primary-color  :#004F69;
+    --default-color: #eee;
+    --secondary-color: #009DD1;
+    --primary-color-light: #85FFC2;
+    --primary-color-dark: #004F69    ;
+    --primary-color-bg: #004F69    ;
+}
+
+.btn-primary{
+    background-color: #004F69 !important;
+    border-color: #004F69 !important;
+    border: solid 2px;
+    color: #85FFC2 !important;
+    text-transform: uppercase;
+}
+
+.btn-primary:hover{
+    background-color: #85FFC2 !important;
+    border-color: #85FFC2 !important;
+    color: #004F69 !important;
+}
+
+.btn-default{
+    background-color: white !important;
+    text-transform: uppercase;
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.btn-default:hover{
+    background-color:#85FFC2 !important;
+}
+
+
 html,
 body {
     height: 100%;
@@ -88,4 +123,21 @@ body {
 
 .ant-modal-content {
     border-radius: 8px;
+}
+
+
+.primary-color{
+    color: #004F69 !important    ;
+}
+
+.primary-color-bg{
+    background-color: #004F69 !important    ;
+}
+
+.primary-color-border{
+    border-color: #004F69 !important    ;
+}
+
+.inline-edit{
+
 }

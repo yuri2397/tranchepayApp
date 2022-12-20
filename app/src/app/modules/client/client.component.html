@@ -7,25 +7,26 @@
       </a>
     </div>
     <ul nz-menu class="bg mt-3" nzMode="inline">
-      <li nzSelected="true" nz-menu-item (click)="goto('commandes')">
+      <li nzSelected="true" nz-menu-item (click)="goto('dashboard')">
+        <span nz-icon nzType="dot-chart" nzTheme="outline"></span>
+        <span class="text-dark-green bold">TABLEAU DE BORD</span>
+      </li>
+      <!-- <li nzSelected="true" nz-menu-item (click)="goto('commandes')">
         <i nz-icon nzType="unordered-list" class="icon" nzTheme="outline"></i>
         <span class="text-dark-green bold">Mes Commandes</span>
-      </li>
-      <li nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green bold'" [nzTitle]="activite">
+      </li> -->
+      <li nz-submenu nzOpen [nzMenuClassName]="'sub-menu text-dark-green'" [nzTitle]="activite">
         <ng-template #activite>
-          <i nz-icon nzType="dashboard" class="icon" nzTheme="outline"></i>
-
-          <span class="text-dark-green bold"> Mes Activités </span>
+          <span nz-icon nzType="unordered-list" nzTheme="outline"></span>
+          <span class="text-dark-green bold">MES ACTIVITÉS</span>
         </ng-template>
 
         <ul>
-          <li nz-menu-item (click)="goto('versement-list')">
-            <i nz-icon nzType="dollar-circle" class="icon" nzTheme="outline"></i>
-            <span class="text-dark-green bold">Mes versements</span>
+          <li nz-menu-item (click)="goto('commandes')">
+            <span class="text-dark-green ">Mes commandes</span>
           </li>
-          <li nz-menu-item (click)="goto('deplafonnement')">
-            <i nz-icon nzType="up-circle" class="icon" nzTheme="outline"></i>
-            <span class="text-dark-green bold">Déplafonnement</span>
+          <li nz-menu-item (click)="goto('versement-list')">
+            <span class="text-dark-green ">Mes versements</span>
           </li>
           <!-- <li nz-menu-item (click)="goto('payements')">
             <i nz-icon nzType="dollar-circle" class="icon" nzTheme="outline"></i>
@@ -36,17 +37,17 @@
       <li nz-submenu nzOpen [nzTitle]="profil">
         <ng-template #profil>
           <i nz-icon nzType="user" class="icon" nzTheme="outline"></i>
-
           <span class="text-dark-green bold"> Mon profil </span>
         </ng-template>
         <ul>
           <li nz-menu-item (click)="goto('coordonnees')">
-            <i nz-icon nzType="info-circle" class="icon" nzTheme="outline"></i>
-            <span class="text-dark-green bold">Coordonnées</span>
+            <span class="text-dark-green ">Coordonnées</span>
           </li>
           <li nz-menu-item (click)="goto('securite')">
-            <i nz-icon nzType="lock" class="icon" nzTheme="outline"></i>
-            <span class="text-dark-green bold">Connexion et sécurité</span>
+            <span class="text-dark-green ">Connexion et sécurité</span>
+          </li>
+          <li nz-menu-item (click)="goto('deplafonnement')">
+            <span class="text-dark-green ">Déplafonnement</span>
           </li>
         </ul>
       </li>

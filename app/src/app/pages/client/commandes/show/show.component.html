@@ -6,7 +6,7 @@
           color="default">
           <i nz-icon nzType="arrow-left"></i>
         </button>
-        <span class="h4 text-dark-green mx-2">Détails de la commande</span>
+        <span class="h4 text-dark-green mx-2">détail de la commande</span>
       </div>
       <div *ngIf="commande.etat_commande.nom != 'finish'">
         <div class="mx-1">
@@ -28,18 +28,23 @@
               {{ commande.reference }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
-              <span nz-typography><b>MONTANT</b></span>
-              {{ total(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
+              <span nz-typography><b>BOUTIQUE</b></span>
+              {{ commande.boutique.nom }}
             </nz-list-item>
-            <nz-list-item class="text-dark-green">
-              <span nz-typography><b>COMMISSION</b></span>
-              {{ commande.commission| currency: "FCFA":"symbol":"1.0":"fr" }}
-            </nz-list-item>
+            
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>État commande</b></span>
               <nz-tag [nzColor]="etatColor(commande)">
                 {{ etatCommande(commande) }}
               </nz-tag>
+            </nz-list-item>
+            <nz-list-item class="text-dark-green">
+              <span nz-typography><b>DATE LIMITE</b>
+              </span>
+              <nz-tag [nzColor]="'red'">
+                {{ commande.date_limite|date:"dd/MM/yyy" }}
+              </nz-tag>
+              
             </nz-list-item>
           </nz-list>
         </div>
@@ -48,14 +53,12 @@
         <div class="card card-body raduis-sm border">
           <nz-list>
             <nz-list-item class="text-dark-green">
-              <span nz-typography><b>BOUTIQUE</b></span>
-              {{ commande.boutique.nom }}
+              <span nz-typography><b>MONTANT</b></span>
+              {{ total(commande)| currency: "FCFA":"symbol":"1.0":"fr" }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
-              <span nz-typography><b>DATE LIMITE</b>
-              </span>
-              {{ commande.date_limite|date:"dd/MM/yyy" }}
-
+              <span nz-typography><b>COMMISSION</b></span>
+              {{ commande.commission| currency: "FCFA":"symbol":"1.0":"fr" }}
             </nz-list-item>
             <nz-list-item class="text-dark-green">
               <span nz-typography><b>TOTAL VERSEMENT</b></span>
@@ -74,7 +77,7 @@
     <br />
     <nz-divider [nzText]="v_l">
       <ng-template #v_l>
-        <h4 class="text-dark-green">Liste des versements</h4>
+        <h5 class="text-dark-green">historique des versements</h5>
       </ng-template>
     </nz-divider>
     <div class="row">
@@ -96,7 +99,7 @@
                 {{ data.montant| currency: "FCFA":"symbol":"1.0":"fr" }}
               </td>
               <td class="bold text-dark-green">
-                {{ data.date_time | date: "d MMMM y" }}
+                {{ data.date_time | date: "dd/MM/yyyy" }}
               </td>
             </tr>
           </tbody>

@@ -118,9 +118,20 @@ export class AuthService extends Base {
     );
   }
 
-  getPermissions(guard = "api") {
-    return this.http.get<Permission[]>(this.endPoint + `permissions?guard=${guard}`, {
-      headers: this.authorizationHeaders,
-    });
+  getPermissions(guard = 'api') {
+    return this.http.get<Permission[]>(
+      this.endPoint + `permissions?guard=${guard}`,
+      {
+        headers: this.authorizationHeaders,
+      }
+    );
+  }
+
+  updatePhoneNumber(newPhoneNumber: string) {
+    return this.http.put(
+      this.endPoint + 'update-phone-number',
+      { new_phone_number: newPhoneNumber },
+      { headers: this.authorizationHeaders }
+    );
   }
 }

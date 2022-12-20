@@ -1,3 +1,4 @@
+import { UpdatePasswordComponent } from './../../pages/client/securite/update-password/update-password.component';
 import { ConfirmePayementComponent } from './../../pages/client/confirme-payement/confirme-payement.component';
 import { ProfileComponent } from './../../pages/client/profile/profile.component';
 import { PartenairesComponent } from './../../shared/component/partenaires/partenaires.component';
@@ -13,9 +14,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from './client.component';
 import { ShowComponent } from 'src/app/pages/client/commandes/show/show.component';
+import { DashboardComponent } from 'src/app/pages/client/dashboard/dashboard.component';
+import { UpdatePhoneNumberComponent } from 'src/app/pages/client/securite/update-phone-number/update-phone-number.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'commandes' },
+  {path: "dashboard", component: DashboardComponent},
+  {path: "update-phone-number", component: UpdatePhoneNumberComponent},
+  {path: "update-password", component: UpdatePasswordComponent},
   { path: 'commandes', component: CommandesComponent },
   { path: 'commandes/show/:id', component: ShowComponent },
   { path: 'versement-create', component: VersementCreateComponent },

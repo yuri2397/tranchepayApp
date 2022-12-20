@@ -1,6 +1,5 @@
 <div class="card card-body raduis-sm shadow pb-5">
-  <div class="container">
-    <h3 class="text-dark-green bold my-2">Connexion & Sécurité</h3>
+  <!-- <div class="container">
     <nz-divider></nz-divider>
     <div class="row justify-content-center">
       <div
@@ -86,5 +85,29 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <h4 class="text-dark-green my-2 bold text-uppercase">connexion et sécurité</h4>
+    </li>
+    <li class="list-group-item">
+      <div class="d-flex align-items-center justify-content-between">
+        <span class="d-block text-dark">Numéro de téléphone</span>
+        <div (click)="editPhoneNumber()" >
+          <span class="text-dark fs-6">{{ previewPhone() }}</span>
+          <span nz-icon nzType="edit" class="mx-2 btn btn-default" nzTheme="outline"></span>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="d-flex align-items-center justify-content-between">
+        <span class="d-block text-dark">Mot de Passe</span>
+        <div (click)="editPassword()"> 
+          <span class="text-dark fs-3">....</span>
+          <span  routerLinkActive="router-link-active"  nz-icon nzType="edit" class="mx-2 btn btn-default" nzTheme="outline"></span>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>

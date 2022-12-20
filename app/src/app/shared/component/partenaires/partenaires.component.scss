@@ -10,9 +10,9 @@
 }
 
 .logo{
-    width: 200px;
-    aspect-ratio: auto 200 / 119;
-    height: 119px;
+    width: 100px;
+    aspect-ratio: auto 100 / 119;
+    object-fit: cover;
 }
 
 .check{

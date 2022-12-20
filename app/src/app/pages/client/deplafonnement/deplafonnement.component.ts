@@ -14,6 +14,8 @@ export class DeplafonnementComponent implements OnInit {
   isLoad = true;
   isBtnLoad = false;
   validateForm!: FormGroup;
+  rectoPreview = "/assets/img/recto.png"
+  versoPreview = "/assets/img/verso.png"
   cniRecto!: File;
   cniVerso!: File;
   constructor(

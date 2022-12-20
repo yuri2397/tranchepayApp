@@ -23,6 +23,9 @@ import { ReturnPaymentComponent } from './pages/client/return-payment/return-pay
 import { SetClientPinComponent } from './pages/auth/set-client-pin/set-client-pin.component';
 import { PartenairesComponent } from './shared/component/partenaires/partenaires.component';
 import { ServiceClientComponent } from './shared/component/service-client/service-client.component';
+import { DashboardComponent } from './pages/client/dashboard/dashboard.component';
+import { UpdatePhoneNumberComponent } from './pages/client/securite/update-phone-number/update-phone-number.component';
+import { UpdatePasswordComponent } from './pages/client/securite/update-password/update-password.component';
 // import { DocsModule } from './modules/docs/docs.module';
 
 registerLocaleData(fr);
@@ -38,6 +41,8 @@ registerLocaleData(fr);
     SetClientPinComponent,
     PartenairesComponent,
     ServiceClientComponent,
+    UpdatePhoneNumberComponent,
+    UpdatePasswordComponent
   ],
   imports: [
     BrowserModule,

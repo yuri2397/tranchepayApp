@@ -38,6 +38,8 @@ import { DemandeFinancementComponent } from '../../pages/client/demande-financem
 import { CoordonneesComponent } from '../../pages/client/coordonnees/coordonnees.component';
 import { ProfileComponent } from '../../pages/client/profile/profile.component';
 import { ConfirmePayementComponent } from '../../pages/client/confirme-payement/confirme-payement.component';
+import { DashboardComponent } from 'src/app/pages/client/dashboard/dashboard.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -50,8 +52,9 @@ import { ConfirmePayementComponent } from '../../pages/client/confirme-payement/
     DemandeFinancementComponent,
     CoordonneesComponent,
     ProfileComponent,
+    DashboardComponent,
     ConfirmePayementComponent,
   ],
-  imports: [ClientRoutingModule, SharedModule],
+  imports: [ClientRoutingModule,SharedModule],
 })
 export class ClientModule { }

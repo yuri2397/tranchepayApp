@@ -1,3 +1,4 @@
+import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -9,6 +10,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Client } from 'src/app/models/client';
 
 @Component({
   selector: 'app-securite',
@@ -20,6 +22,7 @@ export class SecuriteComponent implements OnInit {
   isLoad = false;
   currentSteps = 0;
   current!: string;
+  user!: User;
   constructor(
     private fb: FormBuilder,
     private notification: NzNotificationService,
@@ -28,12 +31,27 @@ export class SecuriteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      current_pin: [
-        null,
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)],
-      ],
-    });
+    this.user =   this.authService.getUser();
+    this.validateForm = this.fb.group(
+      {
+        password: [null, [Validators.required]],
+        new_password: [null, [Validators.required]],
+        new_password_conf: [null, Validators.required],
+      },
+      { validators: this.checkPasswords }
+    );
+  }
+
+  editPhoneNumber(){
+    this.router.navigate(['/client/update-phone-number'])
+  }
+
+  editPassword(){
+    this.router.navigate(['/client/update-password'])
+  }
+
+  previewPhone(){
+    return this.user.username.substring(0, 2) + "******" +  this.user.username.substring(8, 9);
   }
 
   save() {

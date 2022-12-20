@@ -43,6 +43,8 @@ Route::prefix("auth")->group(function () {
     Route::post('register-client', [AuthController::class, 'registerClient']);
     Route::post('register-commercant', [AuthController::class, 'registerCommercant']);
     Route::post('set-client-pin', [AuthController::class, 'setCodePin']);
+    Route::put("update-phone-number", [AuthController::class, 'updatePhone'])->middleware("auth:api");
+    Route::put("update-password", [AuthController::class, 'updatePassword'])->middleware("auth:api");
     Route::get('permissions', [AuthController::class, 'listPermissions']);
     Route::put('new-pin', [AuthController::class, 'newClientPin'])->middleware("auth:api");
     Route::post('check-password', [AuthController::class, 'ckeckPassword'])->middleware("auth:api");

@@ -1,16 +1,9 @@
 <div class="card card-body h-100 raduis-sm shadow">
   <ng-container *ngIf="!isLoad; else elseTemplate">
-    <nz-divider [nzText]="p_n"></nz-divider>
-    <ng-template #p_n>
-      <h3 class="text-dark-green">{{ client.prenoms }} {{ client.nom }}</h3>
-      <span>
-        <nz-tag [nzColor]="'default'">
-          {{ etatCompte() }}
-        </nz-tag>
-      </span>
-    </ng-template>
+    <h4 class="text-dark-green bold text-uppercase">Déplafonner votre compte</h4>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, accusantium. Atque quae quidem ducimus commodi voluptates perspiciatis deserunt rerum tenetur odio suscipit, provident dolores quaerat ab omnis eos distinctio culpa.</p>
     <ng-container *ngIf="!client.deplafonnement; else deplafonner">
-      <div class="row text-center">
+      <!-- <div class="row text-center">
         <p class="alert text-dark-green h3">
           Déplofonner votre compte pour plus d'avantage.
         </p>
@@ -46,7 +39,21 @@
           </form>
           <br /><br /><br />
         </div>
+      </div> -->
+      <br><br><br>
+      <div class="d-flex align-items-center justify-content-around">
+        <img (click)="rectoRef.click()" class="pointer" [src]="rectoPreview" alt="RECTO">
+        
+        <img (click)="versoRef.click()" class="pointer" [src]="versoPreview" alt="VERSO">
+
+        <form enctype="multipart/form-data">
+          <input #rectoRef (change)="recto($event)" type="file" name="recto" id="recto" hidden>
+        <input #versoRef (change)="verso($event)" type="file" name="verso" id="verso" hidden>
+        </form>
+
       </div>
+      <br><br><br>
+
     </ng-container>
     <ng-template #deplafonner>
 

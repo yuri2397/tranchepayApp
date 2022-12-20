@@ -313,4 +313,23 @@ class AuthController extends Controller
             throw $th;
         }
     }
+
+    public function updatePhone(Request $request)
+    {
+        $request->validate(["new_phone_number" => "required|unique:users,username"]);
+
+        $user = $this->currentUser();
+        $user->username = $request->new_phone_number;
+        $user->save();
+        return response()->json(["message" => "Votre numéro de téléphone a été modifié avec succès.", "data" => $user]);
+    }
+
+    public function updatePassword(Request $request)    
+    {
+        $request->validate([
+            "current_password" => "required",
+            "new_password" => "required",
+            "new_password_conf" => "required|same:new_password"
+        ]);
+    }
 }

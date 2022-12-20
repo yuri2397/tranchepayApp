@@ -1,5 +1,5 @@
 <div class="card card-body raduis-sm shadow">
-  <h3 class="my-3 text-dark-green bold">Mes commandes</h3>
+  <h4 class="my-3 text-dark-green bold text-uppercase">Mes commandes</h4>
   <br />
   <nz-table #basicTable [nzData]="commandes" [nzLoading]="isLoad" nzShowPagination nzShowSizeChanger [nzPageSize]="5">
     <thead>
@@ -31,10 +31,10 @@
           </nz-tag>
         </td>
         <td class="text-dark-green">
-          {{ data.created_at | date: "d MMMM y" }}
+          {{ data.created_at | date: "dd/MM/yyyy" }}
         </td>
         <td class="text-dark-green bold">
-          {{ data.date_limite | date: "d MMMM y" }}
+          {{ data.date_limite | date: "dd/MM/yyyy" }}
         </td>
       </tr>
     </tbody>

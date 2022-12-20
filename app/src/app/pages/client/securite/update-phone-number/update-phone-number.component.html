@@ -1,0 +1,32 @@
+<div class="card card-body raduis-sm shadow pb-5">
+  
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <h3 class="text-dark-green my-2 text-uppercase">Modifier le numéro de téléphone de connexion</h3>
+      </li>
+      <li class="list-group-item">
+        <div class="d-flex align-items-center justify-content-between">
+          <span class="d-block text-dark">Numéro de téléphone actuel</span>
+          <div> 
+            <span class="text-dark fs-6">{{ previewPhone() }}</span>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="d-flex align-items-center justify-content-between">
+          <span class="d-block text-dark">Quel numéro de tétphone souhaitez-vous utiliser pour vous connecter</span>
+          <div> 
+            <span class="text-dark fs-6">+221</span>
+            <span class="text-dark fs-6">
+                <input [(ngModel)]="new_phone_number" class="inline-edit" type="text" min="9" max="9">
+            </span>
+          </div>
+        </div>
+      </li>    </ul>
+      <br>
+      <div class="d-flex align-items-center justify-content-between ">
+        <button class="btn btn-default" (click)="location.back()">Annuler</button>
+        <button [disabled]="load || !new_phone_number" class="btn btn-primary" (click)="save()">Valider</button>
+      </div>
+  </div>
+  
