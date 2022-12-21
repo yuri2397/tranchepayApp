@@ -63,8 +63,6 @@ export class LoginComponent implements OnInit {
   }
 
   private loginSuccess(response: LoginResponse) {
-    console.log('EMEINT EVENT')
-
     this.alert.logoutEvent()
     this.authService.setToken(response.token.accessToken)
     this.authService.setUser(response.user)

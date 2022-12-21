@@ -18,7 +18,7 @@ import { DashboardComponent } from 'src/app/pages/client/dashboard/dashboard.com
 import { UpdatePhoneNumberComponent } from 'src/app/pages/client/securite/update-phone-number/update-phone-number.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'commandes' },
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   {path: "dashboard", component: DashboardComponent},
   {path: "update-phone-number", component: UpdatePhoneNumberComponent},
   {path: "update-password", component: UpdatePasswordComponent},

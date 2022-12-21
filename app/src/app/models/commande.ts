@@ -25,3 +25,8 @@ export class Commande {
     versements!: Versement[];
     etat_commande!: EtatVente;
 }
+
+
+export interface Param{
+    [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>
+}

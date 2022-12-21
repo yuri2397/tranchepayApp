@@ -35,26 +35,54 @@ class ClientController extends Controller
         return $this->authClient();
     }
 
+    public function solde()
+    {
+        $load = EtatCommande::whereNom("load")->first();
+        $query =  Commande::whereClientId($this->authClient()->id)
+            ->where("etat_commande_id", "!=", $load->id);
+        $solde = 0;
+        foreach ($query->get() as $value) {
+            $solde += $this->restant($value);
+        }
+
+        return $solde ? -$solde : $solde;
+    }
+
     /**
      * Listes des commandes d'un client
      *
      * @return void
      */
-    public function commandes()
+    public function commandes(Request $request)
     {
         $append = EtatCommande::whereNom("append")->first();
-        $commandes =  Commande::whereClientId($this->authClient()->id)
-            ->where("etat_commande_id", "!=", $append->id)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        $query =  Commande::whereClientId($this->authClient()->id)
+            ->where("etat_commande_id", "!=", $append->id);
 
-        return $commandes;
+        if ($request->has('per_page')) {
+            return $query->simplePaginate($request->per_page ?: 15, $request->columns ?: '*', $request->page_name ?: 'page', $request->page ?: 1);
+        }
+
+        return $query->get();
     }
 
-    public function versementsClient()
+    public function versementsClient(Request $request)
     {
         $commandes = Commande::whereClientId($this->authClient()->id)->get()->pluck('id');
-        return Versement::with("commande")->whereIn('commande_id', $commandes)->orderBy('created_at', 'DESC')->get();
+
+        $query =  Versement::with("commande")->whereIn('commande_id', $commandes)->orderBy('created_at', 'DESC');
+
+        if ($request->has('per_page')) {
+
+            return  $query->simplePaginate(
+                $request->per_page ?: 15,
+                $request->columns ?: '*',
+                $request->page_name ?: 'page',
+                $request->page ?: 1
+            );
+        }
+
+        return $query->get();
     }
 
     public function search(Request $request)

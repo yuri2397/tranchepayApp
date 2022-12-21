@@ -70,8 +70,12 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-        (click)="isCollapsed = !isCollapsed"></i>
+      <div class="d-flex align-items-center justify-content-end">
+        <a routerLink="/docs/presentation" class="text-uppercase bold text-dark-green mx-2">documentation</a>
+        <a routerLink="/home/page-commercant" class="text-uppercase bold text-dark-green mx-2">commercants</a>
+        <a routerLink="/home/page-client" class="text-uppercase bold text-dark-green mx-2">particuliers</a>
+        <a routerLink="/home/page-contact" class="text-uppercase bold text-dark-green me-4">Contactez nous</a>
+      </div>
     </nz-header>
     <nz-content>
       <div class="inner-content p-sm-0 p-xs-0 m-sm-0 m-xs-0">

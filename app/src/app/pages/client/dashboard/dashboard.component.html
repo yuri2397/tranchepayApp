@@ -1,1 +1,104 @@
-<p>dashboard works!</p>
+<div *ngIf="!load" class="mx-3 row">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <span class="d-block fs-5 bold text-uppercase text-dark-green">{{ client.prenoms }} {{ client.nom }}</span>
+        <span class="d-block fs-5 bold text-dark-green">solde: {{ solde }} FCFA</span>
+    </div>
+    <div class="col">
+        <div class="card card-body px-5  h-100 raduis-sm shadow">
+            <span class=" text-center fs-6 bold  text-dark-green mt-2 mb-4 text-uppercase">commande en cours</span>
+            <div *ngIf="lastCommande; else notCommandeFound" class="border border-1 rounded rounded-3">
+            <!-- list  -->
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">reference:</span>
+                <span class="fs-6 d-block">{{ lastCommande.reference }}</span>
+            </div>
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">Prix total:</span>
+                <span class="fs-6 d-block">{{ total(lastCommande)| currency: "FCFA":"symbol":"1.0":"fr" }}</span>
+            </div>
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">montant restant:</span>
+                <span class="fs-6 d-block">{{ montantRestant(lastCommande)| currency: "FCFA":"symbol":"1.0":"fr" }}</span>
+            </div>
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">Boutique:</span>
+                <span class="fs-6 d-block">{{ lastCommande.boutique.nom }}</span>
+            </div>
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">etat:</span>
+                <span class="fs-6 d-block"><nz-tag [nzColor]="etatColor(lastCommande)">
+                    {{ etatCommande(lastCommande) }}
+                  </nz-tag></span>
+            </div>
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">date de commande:</span>
+                <span class="fs-6 d-block">{{ lastCommande.created_at | date: "dd/MM/yyyy" }}</span>
+            </div>
+            <div class="d-flex my-2 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">date limite de paiement:</span>                
+                    
+                <span class="fs-6 d-block">
+                    <nz-tag [nzColor]="'red'">
+                        {{ lastCommande.date_limite | date: "dd/MM/yyyy" }}
+                  </nz-tag>
+                </span>
+            </div>
+            </div>
+            <br>
+            <div class="center"><button routerLink="/client/commandes" class="btn btn-primary">Voir plus</button></div>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-body raduis-sm shadow">
+            <span class=" text-center fs-6 bold  text-dark-green mt-2 mb-4 text-uppercase">Mes versements</span>
+            <br>
+            <nz-table #basicTable [nzData]="versements" [nzLoading]="load" nzShowPagination="false">
+                <thead>
+                  <tr>
+                    <th class="text-dark-green text-uppercase">reference</th>
+                    <th class="text-dark-green text-uppercase">methode</th>
+                    <th class="text-dark-green text-uppercase">MONTANT</th>
+                    <th class="text-dark-green text-uppercase">DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of basicTable.data">
+                    <td class="text-dark-green">
+                      <a class="text-dark-green" routerLink="/client/commandes/show/{{ data.commande.id }}">
+                        {{ data.commande.reference }}
+                      </a>
+                    </td>
+                    <td class="bold text-dark-green">{{ data.via }}</td>
+                    <td class="text-dark-green">{{ data.montant }} FCFA</td>
+                    <td class="text-dark-green">{{ data.date_time | date: "dd/MM/yyyy" }}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+              <br>
+            <div class="center"><button routerLink="/client/versement-list" class="btn btn-primary">Voir plus</button></div>
+
+        </div>
+        <br>
+        <div class="card card-body raduis-sm shadow">
+            <span class=" text-center fs-6 bold  text-dark-green mt-2 mb-4 text-uppercase">Mon profil</span>
+            <br>
+            <div class="d-flex my-1 justify-content-between align-items-center">
+                <span class="fs-6 bold  text-uppercase d-block">Prénom Nom</span>
+                <span class="fs-6 d-block">{{ client.prenoms }} {{ client.nom }}</span>
+            </div>
+            <div class="d-flex my-1 justify-content-between align-items-center">
+                <span class="fs-6 bold text-uppercase d-block">Téléphone</span>
+                <span class="fs-6 d-block">+221 {{ client.telephone }}</span>
+            </div>
+            <div class="d-flex my-1 justify-content-between align-items-center">
+                <span class="fs-6 bold text-uppercase d-block">Adresse</span>
+                <span class="fs-6 d-block">{{ client.adresse }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #notCommandeFound>
+    <h1 class="center text-dark-primary">Aucune commande trouvées.</h1>
+</ng-template>

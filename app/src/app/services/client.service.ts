@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Base } from './../shared/http/base';
 import { Injectable } from '@angular/core';
 import { Client } from 'src/app/models/client';
-import { Commande } from '../models/commande';
+import { Commande, Param } from '../models/commande';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,15 @@ export class ClientService extends Base {
     });
   }
 
-  findVersements() {
+  findVersements(params?: Param) {
     return this.http.get<Versement[]>(this.endPoint + 'versements', {
+      headers: this.authorizationHeaders,
+      params: params
+    });
+  }
+
+  solde(){
+    return this.http.get<number>(this.endPoint + 'solde', {
       headers: this.authorizationHeaders,
     });
   }
@@ -94,9 +101,10 @@ export class ClientService extends Base {
     );
   }
 
-  findCommandes() {
+  findCommandes(params?: Param) {
     return this.http.get<Commande[]>(this.endPoint + 'commandes', {
       headers: this.authorizationHeaders,
+      params: params
     });
   }
 

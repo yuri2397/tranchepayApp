@@ -77,6 +77,7 @@ Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function ()
 
 Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
     Route::get('profile', [ClientController::class, 'profile']);
+    Route::get('solde', [ClientController::class, 'solde']);
     Route::post('create', [RegisteredUserController::class, "create"]);
     Route::get('commandes', [ClientController::class, "commandes"]);
     Route::get('versements', [ClientController::class, "versementsClient"]);
