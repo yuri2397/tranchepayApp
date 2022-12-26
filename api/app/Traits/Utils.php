@@ -30,7 +30,7 @@ trait Utils
         "3" => 0.1
     ];
 
-    public function getUserInfo(User $user)
+    public function getUserInfo(User $user, $with = ["commandes"])
     {
         if ($user->model_type == "Commercant" && $user->hasPermission('administrateur')) {
             return Commercant::with("boutique")->find($user->model);
@@ -39,7 +39,7 @@ trait Utils
             $commercant->boutique = BoutiqueHasUser::whereUserId($commercant->model)->first()->boutique;
             return $commercant;
         }
-        return Client::with("commandes")->find($user->model);
+        return Client::with($with)->find($user->model);
     }
 
     public function currentUser(): User

@@ -13,7 +13,6 @@ use App\Http\Controllers\Api\CommandeController;
 use App\Http\Controllers\Api\CommercantController;
 use App\Http\Controllers\Api\PermissionsController;
 use App\Http\Controllers\Api\DeplafonnementController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PayementIPN;
 use App\Models\EtatCommande;
 use App\Models\User;
@@ -78,7 +77,6 @@ Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function ()
 Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
     Route::get('profile', [ClientController::class, 'profile']);
     Route::get('solde', [ClientController::class, 'solde']);
-    Route::post('create', [RegisteredUserController::class, "create"]);
     Route::get('commandes', [ClientController::class, "commandes"]);
     Route::get('versements', [ClientController::class, "versementsClient"]);
     Route::post('do-versement', [ClientController::class, "effectuerVersement"])->middleware('throttle:5,1');
