@@ -18,7 +18,11 @@ export class VersementListComponent implements OnInit {
 
   findAll() {
     this.isLoad = true;
-    this.clientService.findVersements().subscribe({
+    this.clientService.findVersements(
+      {
+        'with[]': ['commande', 'commande.boutique'],
+      }
+    ).subscribe({
       next: (response) => {
         this.versements = response;
         this.isLoad = false;

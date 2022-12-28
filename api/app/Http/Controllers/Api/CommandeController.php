@@ -34,7 +34,7 @@ class CommandeController extends Controller
      */
     public function show($id)
     {
-        return Commande::find($id);
+        return Commande::with(['versements', 'boutique', 'client'])->find($id);
     }
 
     /**

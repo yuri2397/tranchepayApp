@@ -1,18 +1,17 @@
-<div class="card card-body raduis-sm shadow">
+<div class="card card-body raduis-sm shadow-sm">
   <ng-container *ngIf="!isLoad; else elseTemplate">
     <div class="d-flex my-3 justify-content-between align-items-center">
-      <div>
-        <button nz-tooltip [nzTooltipTitle]="'Revenir en arrièr'" class="mx-2" (click)="onBack()" mat-mini-fab
-          color="default">
-          <i nz-icon nzType="arrow-left"></i>
-        </button>
-        <span class="h4 text-dark-green mx-2">détail de la commande</span>
+      <div class="d-flex align-items-center">
+          <div><i (click)="onBack()" class="pointer d-block fs-4 text-dark-green me-3" nz-icon nzType="arrow-left"></i></div>
+        <div>
+          <span class="h4 text-dark-green mx-2 text-uppercase">détail de la commande</span>
+        </div>
       </div>
       <div *ngIf="commande.etat_commande.nom != 'finish'">
         <div class="mx-1">
-          <button nz-button
+          <button
             [disabled]="commande.etat_commande.nom == 'finish' || commande.etat_commande.nom == 'cancel'"
-            class="btn submit-btn border my-2 shadow" (click)="openAddVersementModal()">
+            class="btn btn-primary" (click)="openAddVersementModal()">
             Faire un versement
           </button>
         </div>
@@ -31,9 +30,9 @@
               <span nz-typography><b>BOUTIQUE</b></span>
               {{ commande.boutique.nom }}
             </nz-list-item>
-            
+
             <nz-list-item class="text-dark-green">
-              <span nz-typography><b>État commande</b></span>
+              <span nz-typography><b>ÉTAT COMMANDE</b></span>
               <nz-tag [nzColor]="etatColor(commande)">
                 {{ etatCommande(commande) }}
               </nz-tag>
@@ -44,7 +43,7 @@
               <nz-tag [nzColor]="'red'">
                 {{ commande.date_limite|date:"dd/MM/yyy" }}
               </nz-tag>
-              
+
             </nz-list-item>
           </nz-list>
         </div>
@@ -75,11 +74,7 @@
     <br />
     <br />
     <br />
-    <nz-divider [nzText]="v_l">
-      <ng-template #v_l>
-        <h5 class="text-dark-green">historique des versements</h5>
-      </ng-template>
-    </nz-divider>
+        <h5 class="text-dark-green text-center text-uppercase">historique des versements</h5>
     <div class="row">
       <div class="col">
         <nz-table [nzScroll]="{ x: '100px' }" #versements [nzData]="commande.versements">

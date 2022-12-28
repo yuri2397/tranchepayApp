@@ -19,7 +19,11 @@ export class CommandesComponent implements OnInit {
 
   findAll() {
     this.isLoad = true
-    this.clientService.findCommandes().subscribe({
+    this.clientService.findCommandes(
+      {
+        'with[]': ['versements', 'boutique'],
+      }
+    ).subscribe({
       next: (response) => {
         this.commandes = response
         console.log(this.commandes)

@@ -71,14 +71,21 @@
   <nz-layout>
     <nz-header>
       <div class="d-flex align-items-center justify-content-end">
-        <a routerLink="/docs/presentation" class="text-uppercase bold text-dark-green mx-2">documentation</a>
-        <a routerLink="/home/page-commercant" class="text-uppercase bold text-dark-green mx-2">commercants</a>
-        <a routerLink="/home/page-client" class="text-uppercase bold text-dark-green mx-2">particuliers</a>
-        <a routerLink="/home/page-contact" class="text-uppercase bold text-dark-green me-4">Contactez nous</a>
+        <a routerLink="/docs/presentation" class="text-uppercase bold text-dark-green mx-3">documentation</a>
+        <a routerLink="/home/page-commercant" class="text-uppercase bold text-dark-green mx-3">commercants</a>
+        <a routerLink="/home/page-client" class="text-uppercase bold text-dark-green mx-3">particuliers</a>
+        <a routerLink="/home/page-contact" class="text-uppercase bold text-dark-green mx-3">Contactez nous</a>
+        <a routerLink="/client/coordonnees" class="text-uppercase bold text-dark-green user-avatar">
+          <span nz-icon nzType="user" nzTheme="outline" ></span>
+        </a>
       </div>
     </nz-header>
     <nz-content>
       <div class="inner-content p-sm-0 p-xs-0 m-sm-0 m-xs-0">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <span class="d-block fs-5 bold text-uppercase text-dark-green">{{ client?.prenoms }} {{ client?.nom }}</span>
+          <span class="d-block fs-5 bold text-dark-green">solde: {{ solde }} FCFA</span>
+      </div>
         <router-outlet></router-outlet>
       </div>
     </nz-content>

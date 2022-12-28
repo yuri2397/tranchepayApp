@@ -26,6 +26,7 @@ export class ClientComponent implements OnInit {
   isVisible = false
   validateForm!: FormGroup
   message = 'Premier versement:'
+  solde = 0;
   isFirst = false
   collapse: MenuClass = {
     navbar: 'navbar',
@@ -73,6 +74,9 @@ export class ClientComponent implements OnInit {
     this.isCollapse = false
     this.menuState = this.collapse
     this.getClient()
+
+    this.clientService.solde().subscribe(data => this.solde = data);
+
   }
 
   getClient() {

@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   versements!: Versement[];
   solde = 0;
   client!: Client;
+  versementLoad: boolean = true;
   constructor(private clientService: ClientService,
     private router: Router,
     private authService: AuthService
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit {
       .findCommandes({
         per_page: 1,
         page: 1,
+        'with[]': ['versements', 'boutique']
       })
       .pipe(
         first(),
@@ -68,7 +70,7 @@ export class DashboardComponent implements OnInit {
       })
       .pipe(
         first(),
-        finalize(() => (this.load = false))
+        finalize(() => (this.versementLoad = false))
       )
       .subscribe({
         next: (response: any) => {
@@ -79,15 +81,15 @@ export class DashboardComponent implements OnInit {
           console.log(error);
         },
       });
-        
-      this.clientService.solde().subscribe(data => this.solde = data);
+
   }
 
   montantVerser(data: Commande) {
     let res = 0
-    data.versements.forEach((e) => {
+    data.versements?.forEach((e) => {
       res += e.montant
-    })
+    });
+
     return res
   }
 

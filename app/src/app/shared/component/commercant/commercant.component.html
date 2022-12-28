@@ -51,7 +51,7 @@
         </div>
         <div class=" row align-items-center justify-content-center ">
             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12" data-aos="fade-right">
-                <img src="/assets/img/intregration.gif" width="100%" alt="INTEGRATION DE TRANCHEPAY">
+                <img src="/assets/img/4.svg" width="100%" alt="INTEGRATION DE TRANCHEPAY">
             </div>
             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 my-3">
                 <h3 class="text-dark-green fw-md">Comment intégrer Tranche Pay sur votre site?</h3>
@@ -171,16 +171,16 @@
         <br><br>
         <div class="row justify-content-center align-items-center">
             <div data-aos="fade-up" class="col-md-6 order-1 order-sm-1 order-lg-0 order-md-0 col-lg-6 col-sm-12 col-xs-12">
-                <img src="/assets/img/Subscriber.gif" width="100%" alt="POURQUOI TRACHEPAY?">
+                <img src="/assets/img/5.svg" width="100%" alt="POURQUOI TRACHEPAY?">
 
                 <br><br>
                 <div class="d-flex justify-content-center align-items-center">
-                    <div class="mx-2">
-                        <a class="btn primary-btn" [routerLink]="['/auth/login']">CONNEXION</a>
-                    </div>
-                    <div class="mx-2">
-                        <a class="btn info-btn" [routerLink]="['/auth/register-commercant']">CRÉER UN COMPTE</a>
-                    </div>
+                    <button [routerLink]="['/auth/login']" class="mx-2 btn btn-primary">
+                      CONNEXION
+                    </button>
+                    <button [routerLink]="['/auth/register-commercant']" class="mx-2 btn btn-default">
+                      CRÉER UN COMPTE
+                    </button>
                 </div>
             </div>
 
@@ -211,8 +211,7 @@
                         <p class="text-white mx-md-5 mx-xs-1">Pour prendre contact avec nos équipe.</p>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <button nz-button class="my-2 btn btn-1 my-4 shadow p-0">
-                                    <a [routerLink]="['/home/page-contact']">CONTACTEZ NOUS</a>
+                                <button [routerLink]="['/home/page-contact']" class="my-2 btn btn-default">CONTACTEZ NOUS
                                 </button>
                             </div>
                         </div>

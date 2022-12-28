@@ -56,7 +56,7 @@ class ClientController extends Controller
     public function commandes(Request $request)
     {
         $append = EtatCommande::whereNom("append")->first();
-        $query =  Commande::whereClientId($this->authClient()->id)
+        $query =  Commande::with($request->with ?: [])->whereClientId($this->authClient()->id)
             ->where("etat_commande_id", "!=", $append->id);
 
         if ($request->has('per_page')) {
@@ -70,7 +70,7 @@ class ClientController extends Controller
     {
         $commandes = Commande::whereClientId($this->authClient()->id)->get()->pluck('id');
 
-        $query =  Versement::with("commande")->whereIn('commande_id', $commandes)->orderBy('created_at', 'DESC');
+        $query =  Versement::with($request->with ?? [])->whereIn('commande_id', $commandes)->orderBy('created_at', 'DESC');
 
         if ($request->has('per_page')) {
 

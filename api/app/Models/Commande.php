@@ -10,7 +10,7 @@ class Commande extends Model
 {
     use Uuids;
     use HasFactory;
-    protected $with = ['etatCommande', 'produits', 'versements', 'client', 'boutique'];
+    protected $with = ['etatCommande'];
     public function produits()
     {
         return $this->hasMany(Produit::class);

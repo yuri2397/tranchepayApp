@@ -1,10 +1,7 @@
-<div *ngIf="!load" class="mx-3 row">
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <span class="d-block fs-5 bold text-uppercase text-dark-green">{{ client.prenoms }} {{ client.nom }}</span>
-        <span class="d-block fs-5 bold text-dark-green">solde: {{ solde }} FCFA</span>
-    </div>
+<div *ngIf="!(load && versementLoad)" class="mx-3 row">
+   
     <div class="col">
-        <div class="card card-body px-5  h-100 raduis-sm shadow">
+        <div class="card card-body px-5  h-100 raduis-sm shadow-sm">
             <span class=" text-center fs-6 bold  text-dark-green mt-2 mb-4 text-uppercase">commande en cours</span>
             <div *ngIf="lastCommande; else notCommandeFound" class="border border-1 rounded rounded-3">
             <!-- list  -->
@@ -35,8 +32,8 @@
                 <span class="fs-6 d-block">{{ lastCommande.created_at | date: "dd/MM/yyyy" }}</span>
             </div>
             <div class="d-flex my-2 justify-content-between align-items-center">
-                <span class="fs-6 bold  text-uppercase d-block">date limite de paiement:</span>                
-                    
+                <span class="fs-6 bold  text-uppercase d-block">date limite de paiement:</span>
+
                 <span class="fs-6 d-block">
                     <nz-tag [nzColor]="'red'">
                         {{ lastCommande.date_limite | date: "dd/MM/yyyy" }}
@@ -50,14 +47,14 @@
         </div>
     </div>
     <div class="col">
-        <div class="card card-body raduis-sm shadow">
+        <div class="card card-body raduis-sm shadow-sm">
             <span class=" text-center fs-6 bold  text-dark-green mt-2 mb-4 text-uppercase">Mes versements</span>
             <br>
-            <nz-table #basicTable [nzData]="versements" [nzLoading]="load" nzShowPagination="false">
+            <nz-table #basicTable [nzData]="versements" [nzLoading]="versementLoad" nzShowPagination="false">
                 <thead>
                   <tr>
-                    <th class="text-dark-green text-uppercase">reference</th>
-                    <th class="text-dark-green text-uppercase">methode</th>
+                    <th class="text-dark-green text-uppercase">REFERENCE</th>
+                    <th class="text-dark-green text-uppercase">METHODE</th>
                     <th class="text-dark-green text-uppercase">MONTANT</th>
                     <th class="text-dark-green text-uppercase">DATE</th>
                   </tr>
@@ -65,8 +62,8 @@
                 <tbody>
                   <tr *ngFor="let data of basicTable.data">
                     <td class="text-dark-green">
-                      <a class="text-dark-green" routerLink="/client/commandes/show/{{ data.commande.id }}">
-                        {{ data.commande.reference }}
+                      <a class="text-dark-green" routerLink="/client/commandes/show/{{ data.commande_id }}">
+                        {{ data.reference }}
                       </a>
                     </td>
                     <td class="bold text-dark-green">{{ data.via }}</td>
@@ -80,7 +77,7 @@
 
         </div>
         <br>
-        <div class="card card-body raduis-sm shadow">
+        <div class="card card-body raduis-sm shadow-sm">
             <span class=" text-center fs-6 bold  text-dark-green mt-2 mb-4 text-uppercase">Mon profil</span>
             <br>
             <div class="d-flex my-1 justify-content-between align-items-center">
