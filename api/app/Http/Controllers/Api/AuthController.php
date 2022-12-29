@@ -45,10 +45,13 @@ class AuthController extends Controller
                 "message" => "Votre compte n'est toujours activé. Votre demande et toujours en cours d'étude."
             ], 401);
         }
+        $auth = $this->getUserInfo($user, []);
+
         return response()->json([
             "token" => $user->createToken($request->device_name),
             "user" => $user,
             'permissions' => $user->permissions,
+"data" => $auth,
             "model_type" => $user->model_type
         ], 200);
     }
@@ -321,7 +324,7 @@ class AuthController extends Controller
         return response()->json(["message" => "Votre numéro de téléphone a été modifié avec succès.", "data" => $user]);
     }
 
-    public function updatePassword(Request $request)    
+    public function updatePassword(Request $request)
     {
         $request->validate([
             "current_password" => "required",
