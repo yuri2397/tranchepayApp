@@ -32,9 +32,9 @@
     position        : relative;
     height          : 64px;
     padding-left    : 24px;
+    background: #004F69;
     overflow        : hidden;
     line-height     : 64px;
-    background-color: #009dd1;
     transition      : all 0.3s;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .bg {
-    background-color: #85ffc2;
+  background: #000B26;
 }
 
 .bg-sidebar {
@@ -68,11 +68,9 @@
 }
 
 nz-header {
-    padding: 0;
-    width  : 100%;
-    z-index: 2;
+  background: #fff;
+  padding   : 0;
 }
-
 .app-header {
     position  : relative;
     height    : 64px;
@@ -105,11 +103,11 @@ nz-content {
 }
 
 .bg-grad {
-    background: linear-gradient(-180deg, #009dd1, #85ffc2 120%);
+    background: linear-gradient(180deg, #004F69 0%, #000B26 100%);
 }
 
 .icon {
-    color    : #000b26;
+    color    : white;
     font-size: 25px;
 }
 

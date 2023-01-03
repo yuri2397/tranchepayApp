@@ -325,6 +325,7 @@ trait Utils
         $result["tous"] = $currentCommercant
             ->boutique
             ->commandes()
+            ->with(['client', 'versements'])
             ->limit(10)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -332,6 +333,7 @@ trait Utils
         $result["en_cours"] = $currentCommercant
             ->boutique
             ->commandes()
+            ->with(['client', 'versements'])
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "load")
             ->limit(10)
@@ -341,6 +343,7 @@ trait Utils
         $result["terminer"] = $currentCommercant
             ->boutique
             ->commandes()
+            ->with(['client', 'versements'])
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "finish")
             ->limit(10)
@@ -350,6 +353,7 @@ trait Utils
         $result["annuler"] = $currentCommercant
             ->boutique
             ->commandes()
+            ->with(['client', 'versements'])
             ->join("etat_commandes", "etat_commandes.id", "commandes.etat_commande_id")
             ->where("etat_commandes.nom", "cancel")
             ->limit(10)

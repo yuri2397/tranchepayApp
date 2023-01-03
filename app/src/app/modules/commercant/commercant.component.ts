@@ -15,14 +15,14 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
   {
     path: 'accueil',
-    title: 'Tableau de   bord',
-    icon: 'dot-chart',
+    title: 'TABLEAU DE BORD',
+    icon: 'MES VENTES',
     class: '',
     roles: ['super admin'],
     permissions: ['administrateur'],
   },
   {
-    path: 'finaliser-vente',
+    path: 'PORTFEUILLE',
     title: 'Ajouter une vente',
     icon: 'shopping-cart',
     class: '',
@@ -48,7 +48,7 @@ export const ROUTES: RouteInfo[] = [
 
   {
     path: 'utilisateurs',
-    title: 'Utilisateurs',
+    title: 'UTILISATEURS',
     icon: 'user',
     class: '',
     roles: ['super admin'],

@@ -8,53 +8,75 @@
       </a>
     </div>
     <ul nz-menu class="bg-grad" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <ng-container *ngFor="let item of menuItems">
-        <li *ngIf="can(item)" (click)="routerLink(item)" nz-menu-item nz-tooltip nzTooltipPlacement="right"
-          [nzTooltipTitle]="isCollapsed ?
-                    item.title : ''" [nzSelected]='selected(item)'>
-          <i nz-icon nzType="{{ item.icon }}" class="icon" nzTheme="outline">
-
-          </i>
-          <span class="text-dark-green bold menu-title">{{ item.title }}</span>
-        </li>
-      </ng-container>
       <ng-container>
-        <li (click)="logout()" nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ?
-                    'Se déconnecter' : ''">
-          <i nz-icon nzType="logout" class="icon" nzTheme="outline">
-
+        <li [routerLink]="['/commercant/accueil']" nz-menu-item >
+          <i nz-icon class="icon">
+            <img src="/assets/icons/grid.svg" alt="" srcset="">
           </i>
-          <span class="text-dark-green bold">Se déconnecter</span>
+          <span class="text-white bold menu-title">TABLEAU DE BORD</span>
+        </li>
+        <li [routerLink]="['/commercant/ventes']" nz-menu-item >
+          <i nz-icon class="icon">
+            <img src="/assets/icons/list.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title">MES VENTES</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/commercant/soldes']">
+          <i nz-icon class="icon">
+            <img src="/assets/icons/8.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title">PORTFEUILLE</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/commercant/utilisateurs']">
+          <i nz-icon class="icon">
+            <img src="/assets/icons/7.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title">UTILISATEURS</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/commercant/soldes']">
+          <i nz-icon class="icon">
+            <img src="/assets/icons/4.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title text-uppercase">Connexion et Sécurité</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/commercant/api']">
+          <i nz-icon class="icon">
+            <img src="/assets/icons/2.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title">API</span>
+        </li>
+        <li nz-menu-item [routerLink]="['/commercant/conditions']">
+          <i nz-icon class="icon">
+            <img src="/assets/icons/7.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title text-uppercase">CoNDITIONS</span>
+        </li>
+
+        <li nz-menu-item [routerLink]="['/commercant/service-client']">
+          <i nz-icon class="icon">
+            <img src="/assets/icons/6.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title text-uppercase">SERVICE CLIENT</span>
+        </li>
+        <li nz-menu-item >
+          <i nz-icon class="icon">
+            <img src="/assets/icons/1.svg" alt="" srcset="">
+          </i>
+          <span class="text-white bold menu-title text-uppercase">DÉCONNEXION</span>
         </li>
       </ng-container>
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header>
-      <div class="d-flex app-header justify-content-between
-                align-items-center">
-        <div>
-          <span class="header-trigger" (click)="isCollapsed=
-                        !isCollapsed">
-            <ng-container *ngIf="isCollapsed; else elseTemplate">
-              <i nz-icon nzType="double-right" nzTheme="outline"></i>
-            </ng-container>
-            <ng-template #elseTemplate>
-              <i nz-icon nzType="double-left" nzTheme="outline"></i>
-            </ng-template>
-          </span>
-        </div>
-        <div class="mx-3">
-          <button mat-mini-fab color="primary" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-            <i nz-icon nzType="user" nzTheme="outline"></i>
-          </button>
-          <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item (click)="goto('profile')">Profile</li>
-              <li (click)="logout()" nz-menu-item>Déconnexion</li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
+    <nz-header class="bg-white">
+      <div class="d-flex align-items-center justify-content-end">
+        <a routerLink="/docs/presentation" class="text-uppercase bold text-dark-green mx-3">documentation</a>
+        <a routerLink="/home/page-commercant" class="text-uppercase bold text-dark-green mx-3">commercants</a>
+        <a routerLink="/home/page-client" class="text-uppercase bold text-dark-green mx-3">particuliers</a>
+        <a routerLink="/home/page-contact" class="text-uppercase bold text-dark-green mx-3">Contactez nous</a>
+        <a routerLink="/commercant/profile" class="text-uppercase bold text-dark-green user-avatar">
+          <span nz-icon nzType="user" nzTheme="outline" ></span>
+        </a>
       </div>
 
     </nz-header>

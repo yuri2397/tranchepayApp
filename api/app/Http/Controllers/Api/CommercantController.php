@@ -34,9 +34,9 @@ class CommercantController extends Controller
         return $this->commercantDashBoard();
     }
 
-    public function ventes()
+    public function ventes(Request $request)
     {
-        return $this->commercantVentes();
+        return $this->commercantVentes($request);
     }
 
     public function solde()

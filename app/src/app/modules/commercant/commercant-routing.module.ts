@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'api', component: ApiComponent },
   { path: 'conditions', component: ConditionsComponent },
   { path: 'parrainages', component: ParrainagesComponent },
-  { path: 'aide', component: ServiceClientComponent },
+  { path: 'service-client', component: ServiceClientComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'finaliser-vente', component: AjouterVentesComponent },
   { path: 'search-client-vente', component: SearchClientComponent },

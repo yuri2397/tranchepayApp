@@ -1,26 +1,28 @@
 <div class="card card-body raduis-sm h-100 shadow-sm">
-
- <h4 class="text-dark-green bold text-uppercase">
-  Mon profil
- </h4>
- <br>
- <!-- list prenom, nom, adresse telephone -->
+  <h4 class="text-dark-green bold text-uppercase">Mon profil</h4>
+  <br />
+  <!-- list prenom, nom, adresse telephone -->
   <ul class="list-group list-group-flush">
     <li class="list-group-item">
-    <strong>Prénom</strong>
-    <span class="float-right mx-2">{{client.prenoms}}</span>
+      <strong>Prénom</strong>
+      <span class="float-right mx-2">{{ client.prenoms }}</span>
     </li>
     <li class="list-group-item">
-    <strong>Nom</strong>
-    <span class="float-right mx-2">{{client.nom}}</span>
+      <strong>Nom</strong>
+      <span class="float-right mx-2">{{ client.nom }}</span>
     </li>
     <li class="list-group-item">
-    <strong>Adresse</strong>
-    <span class="float-right mx-2">{{client.adresse}}</span>
+      <strong>Adresse</strong>
+      <span class="float-right mx-2">{{ client.adresse }}</span>
     </li>
     <li class="list-group-item">
-    <strong>Téléphone</strong>
-    <span class="float-right mx-2">{{client.telephone}}</span>
+      <strong>Téléphone</strong>
+      <span class="float-right mx-2">{{ client.telephone }}</span>
+    </li>
+    <li class="list-group-item">
+      <span class="float-right">
+        <button class="btn btn-primary" (click)="logout()">DÉCONNEXION</button>
+      </span>
     </li>
   </ul>
 </div>

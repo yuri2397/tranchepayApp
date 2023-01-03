@@ -2,8 +2,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <div class="card card-body shadow raduis-sm">
-          <nz-divider class="p-0 m-2" [nzText]="list_title"></nz-divider>
+        <div class="card card-body shadow-sm raduis-sm">
+          <h4 class="text-dart-green bold">MES COMMANDES</h4>
+          <!-- <nz-divider class="p-0 m-2" [nzText]="list_title"></nz-divider>
           <ng-template #list_title>
             <div style="display: inline-block">
               <h3 class="text-dark-green bold">Liste de ventes</h3>
@@ -11,7 +12,7 @@
                 AJOUTER UNE VENTE
               </button>
             </div>
-          </ng-template>
+          </ng-template> -->
           <nz-tabset [nzSize]="'large'">
             <nz-tab [nzTitle]="all_ventes_title">
               <nz-table #nzTableAll [nzData]="data.tous" nzTableLayout="fixed">
@@ -23,7 +24,6 @@
                     <th>CLIENT</th>
                     <th>TELEPHONE</th>
                     <th>DATE</th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -37,11 +37,7 @@
                     </td>
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
-                    <td>{{ data.created_at | date }}</td>
-                    <td>
-                      <button [disabled]="data.etat_commande.nom == 'pending'"
-                        class="btn btn-primary">Supprimer</button>
-                    </td>
+                    <td>{{ data.created_at | date: 'dd/MM/yyyy' }}</td>
                   </tr>
                 </tbody>
               </nz-table>
@@ -78,7 +74,7 @@
                     <td>{{ montantR(data) }}</td>
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
-                    <td>{{ data.created_at | date }}</td>
+                    <td>{{ data.created_at | date: 'dd/MM/yyyy' }}</td>
                   </tr>
                 </tbody>
               </nz-table>
@@ -115,7 +111,7 @@
                     <td>{{ montantR(data) }}</td>
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
-                    <td>{{ data.created_at | date }}</td>
+                    <td>{{ data.created_at | date: 'dd/MM/yyyy' }}</td>
                   </tr>
                 </tbody>
               </nz-table>
@@ -151,7 +147,7 @@
 
                     <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
                     <td>{{ data.client.telephone }}</td>
-                    <td>{{ data.created_at | date }}</td>
+                    <td>{{ data.created_at | date: 'dd/MM/yyyy' }}</td>
                   </tr>
                 </tbody>
               </nz-table>

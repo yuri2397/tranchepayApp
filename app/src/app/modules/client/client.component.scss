@@ -91,6 +91,10 @@ nz-footer {
     background-color: #85ffc2;
 }
 
+.bg-grad {
+  background: linear-gradient(180deg, #004F69 0%, #000B26 100%);
+}
+
 .list {
     background-color: red;
 }
@@ -102,16 +106,3 @@ nz-footer {
     border-right: 3px solid #000b26;
 }
 
-.user-avatar{
-    width: 40px;
-    height: 40px;
-    border-radius: 10%;
-    background: #eee;
-    color: #000b26;
-    font-size: 20px;
-    text-align: center;
-    line-height: 40px;
-    margin-right: 10px;
-    margin-left: 1em;
-    margin-right: 1em;
-}

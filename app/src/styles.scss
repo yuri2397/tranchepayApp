@@ -57,6 +57,21 @@
   color: #004F69 !important;
 }
 
+.user-avatar{
+  width: 40px;
+  height: 40px;
+  border-radius: 10%;
+  background: #eee;
+  color: #000b26;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
+  margin-right: 10px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+
 .btn-default:hover{
     background-color:#85FFC2 !important;
     border: none !important
