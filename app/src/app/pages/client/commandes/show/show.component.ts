@@ -30,19 +30,21 @@ export class ShowComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((param) => {
+    this.route.params.subscribe((param: any) => {
       this.findCommande(param['id'])
     })
   }
   findCommande(id: string) {
     this.isLoad = true
-    this.commandeService.show(id).subscribe({
-      next: (response) => {
+    this.commandeService.show(id, {
+      'with[]': ['versements', 'produits', 'boutique','client']
+    }).subscribe({
+      next: (response: any) => {
         console.log(response)
         this.commande = response
         this.isLoad = false
       },
-      error: (errors) => {
+      error: (errors: any) => {
         console.log(errors)
       },
     })
@@ -84,7 +86,7 @@ export class ShowComponent implements OnInit {
               await new Promise<boolean>((resolve) => {
                 setTimeout(() => {
                   this.sharedService.checkPadding(data.padding).subscribe({
-                    next: (check) => {
+                    next: (check: any) => {
                       if (check.status) {
                         m.destroy()
                         this.successModal('Le paiement est validé avec succès.')
@@ -92,7 +94,7 @@ export class ShowComponent implements OnInit {
                       }
                       resolve(!check.status)
                     },
-                    error: (error) => {
+                    error: (error: any) => {
                       console.log(error)
                       m.destroy()
                       this.errorModal(error.error.message)
@@ -125,7 +127,7 @@ export class ShowComponent implements OnInit {
           load: false,
         },
       })
-      .afterClose.subscribe((_) => this.location.back())
+      .afterClose.subscribe((_: any) => this.location.back())
   }
 
   errorModal(message: string) {

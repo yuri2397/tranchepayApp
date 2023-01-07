@@ -54,7 +54,15 @@ Route::prefix("auth")->group(function () {
  * COMMERCANT
  */
 
-Route::prefix('commercant')->middleware(['auth:api', 'cors'])->group(function () {
+Route::prefix('commercants')->middleware(['auth:api', 'cors'])->group(function () {
+
+    Route::get('/', [CommercantController::class, 'index']);
+    Route::get('/{id}', [CommercantController::class, 'show']);
+    Route::post('/', [CommercantController::class, 'store']);
+    Route::put('/{id}', [CommercantController::class, 'update']);
+    Route::delete('/{id}', [CommercantController::class, 'destroy']);
+
+
     Route::get('profile', [CommercantController::class, 'profile']);
     Route::get('dashboard', [CommercantController::class, 'dashboard']);
     Route::get('ventes', [CommercantController::class, 'ventes']);
@@ -100,10 +108,13 @@ Route::prefix('shared')->middleware(['auth:api', 'cors'])->group(function () {
 /**
  * Commandes Service
  */
-Route::prefix('commande')->middleware(['auth:api', 'cors'])->group(function () {
-    Route::get("", [CommandeController::class, 'index']);
-    Route::get("show/{id}", [CommandeController::class, 'show']);
-});
+Route::prefix('commandes')
+    ->middleware(['auth:api', 'cors'])
+    ->apiResource('commandes', CommandeController::class);
+
+
+
+
 
 
 /**

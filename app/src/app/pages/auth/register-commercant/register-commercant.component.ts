@@ -111,7 +111,7 @@ export class RegisterCommercantComponent implements OnInit {
     commercant.adresse = this.validateForm.value.adresse;
     commercant.email = this.validateForm.value.email;
     this.authService.createCommercant(commercant).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         this.notification.create(
           'success',
           'Notification',
@@ -119,7 +119,7 @@ export class RegisterCommercantComponent implements OnInit {
         );
         this.router.navigate(['/auth/login']);
       },
-      error: (errors) => {
+      error: (errors: any) => {
         console.log(errors);
         
         if (errors.status < 500) {

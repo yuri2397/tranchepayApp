@@ -22,5 +22,14 @@ class Boutique extends Model
         return $this->hasOne(Compte::class);
     }
 
+    public function commercant()
+    {
+        return $this->belongsTo(Commercant::class);
+    }
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class);
+    }
 
 }

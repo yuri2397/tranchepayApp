@@ -19,11 +19,11 @@ export class PartenairesComponent implements OnInit {
   getPartenaires() {
     this.isLoad = true;
     this.pService.partenaire().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.partenaires = response;
         this.isLoad = false;
       },
-      error: (errors) => {
+      error: (errors: any) => {
         console.log(errors);
       },
     });

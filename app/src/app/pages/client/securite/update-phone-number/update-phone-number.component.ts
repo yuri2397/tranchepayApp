@@ -55,7 +55,7 @@ export class UpdatePhoneNumberComponent implements OnInit {
             this.authService.logout()
             this.router.navigate(['/auth/login'])
           },
-          error: (errors) => {
+          error: (errors: any) => {
             console.log(errors);
             this.nofication.error('Erreur', errors.error.message);
           },

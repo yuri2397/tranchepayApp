@@ -11,6 +11,18 @@ class Commande extends Model
     use Uuids;
     use HasFactory;
     protected $with = ['etatCommande'];
+
+    // generate reference number
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->reference = 'CMD-' . date('Ymd') . '-' . str_pad($model->id, 5, '0', STR_PAD_LEFT);
+        });
+    }
+
+
     public function produits()
     {
         return $this->hasMany(Produit::class);

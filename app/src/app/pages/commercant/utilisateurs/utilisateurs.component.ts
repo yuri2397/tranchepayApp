@@ -37,7 +37,7 @@ export class UtilisateursComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.authService.getPermissions().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.permissions = response;
       },
     });
@@ -73,7 +73,7 @@ export class UtilisateursComponent implements OnInit {
     this.comService
       .edit(commercant, this.selectedUpdatePermissions)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.isUpdateModalVisible = false;
           this.formUpdate.reset();
           this.createLoad = false;
@@ -85,7 +85,7 @@ export class UtilisateursComponent implements OnInit {
           );
           this.getUsers();
         },
-        error: (errors) => {
+        error: (errors: any) => {
           this.createLoad = false;
           if (errors.status < 500) {
             (this.errors = errors.error.errors), (this.hasError = true);
@@ -102,7 +102,7 @@ export class UtilisateursComponent implements OnInit {
     this.comService
       .del(commercant)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.notification.create(
             'success',
             'Message',
@@ -110,7 +110,7 @@ export class UtilisateursComponent implements OnInit {
           );
           this.getUsers();
         },
-        error: (errors) => {
+        error: (errors: any) => {
           this.createLoad = false;
           if (errors.status < 500) {
             (this.errors = errors.error.errors), (this.hasError = true);
@@ -140,7 +140,7 @@ export class UtilisateursComponent implements OnInit {
     this.comService
       .addCommercantUsers(commercant, this.selectedPermissions)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.isVisible = false;
           this.form.reset();
           this.createLoad = false;
@@ -152,7 +152,7 @@ export class UtilisateursComponent implements OnInit {
           );
           this.getUsers();
         },
-        error: (errors) => {
+        error: (errors: any) => {
           console.log(errors);
           this.createLoad = false;
           if (errors.status < 500) {
@@ -166,7 +166,7 @@ export class UtilisateursComponent implements OnInit {
   getUsers() {
     this.isLoad = true;
     this.comService.getUsers().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.users = response;
         this.isLoad = false;
       },

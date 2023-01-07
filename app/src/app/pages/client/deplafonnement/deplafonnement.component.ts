@@ -45,11 +45,11 @@ export class DeplafonnementComponent implements OnInit {
   findClient() {
     this.isLoad = true;
     this.clientService.findClient().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.client = response;
         this.isLoad = false;
       },
-      error: (errors) => {
+      error: (errors: any) => {
         console.log(errors);
       },
     });
@@ -69,11 +69,11 @@ export class DeplafonnementComponent implements OnInit {
     this.clientService
       .deplafonnement(this.validateForm.value.cni, this.cniRecto, this.cniVerso)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.notification.success("Notification", response.message);
           this.isBtnLoad = false;
         },
-        error: (errors) => {
+        error: (errors: any) => {
           console.log(errors);
           this.isBtnLoad = false;
         },

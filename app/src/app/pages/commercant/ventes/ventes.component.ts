@@ -39,11 +39,11 @@ export class VentesComponent implements OnInit {
   getData() {
     this.isLoad = true;
     this.commercantService.getVentes().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.data = response;
         this.isLoad = false;
       },
-      error: (errors) => {
+      error: (errors: any) => {
         this.isLoad = false;
         console.log(errors);
       },

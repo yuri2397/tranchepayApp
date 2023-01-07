@@ -11,7 +11,7 @@ export class PayementErrorComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
   params: any;
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params: any) => {
       console.log(params);
       this.params = params;
     });

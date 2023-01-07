@@ -24,13 +24,13 @@ export class CommandesComponent implements OnInit {
         'with[]': ['versements', 'boutique'],
       }
     ).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.commandes = response
         console.log(this.commandes)
         this.isLoad = false
       },
 
-      error: (errors) => {
+      error: (errors: any) => {
         console.error(errors)
       },
     })

@@ -13,8 +13,8 @@ export class Base extends AbstractPreferences {
   private _super_admin = 'super admin';
   private _editeur = 'chef de département';
   protected httpClient!: HttpClient;
-  protected _returnUrl = 'https://tranchepay.com/';
-  protected _cancelUrl = 'https://tranchepay.com/';
+  protected _returnUrl = 'https://tranchepay.io/';
+  protected _cancelUrl = 'https://tranchepay.io/';
 
   _canDeleteErreurs!: string[];
   _canDeleteSubTitle!: string;
@@ -182,5 +182,41 @@ export class Base extends AbstractPreferences {
   logout() {
     sessionStorage.clear();
     localStorage.clear();
+  }
+
+  /**
+   * HTTP REQUEST
+   */
+
+  index<T>(params?: any){
+    return this.http.get<T>(this.endPoint, {
+        headers: this.authorizationHeaders,
+        params: params,
+    })
+  }
+
+  show<T>(id: any, params?: any) {
+    return this.http.get<T>(this.endPoint + '/' + id, {
+      headers: this.authorizationHeaders,
+      params: params,
+    });
+  }
+
+  store<T>(data: any) {
+    return this.http.post<T>(this.endPoint, data, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  update<T>(id: any, data: any) {
+    return this.http.put<T>(this.endPoint + '/' + id, data, {
+      headers: this.authorizationHeaders,
+    });
+  }
+
+  destroy<T>(id: any) {
+    return this.http.delete<T>(this.endPoint + '/' + id, {
+      headers: this.authorizationHeaders,
+    });
   }
 }

@@ -52,7 +52,7 @@ export class SearchClientComponent implements OnInit {
     if(data){
       this.load = true;
       this.clientService.search(data).subscribe({
-        next: response => {
+        next: (response: any) => {
           console.log(response);
           this.clients = response;
           this.load = false;
@@ -79,7 +79,7 @@ export class SearchClientComponent implements OnInit {
     client.nom = this.validateForm.value.nom;
     client.telephone = this.validateForm.value.telephone;
     this.authService.createClient(client).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.notification.create(
           'success',
           'Notification',
@@ -89,7 +89,7 @@ export class SearchClientComponent implements OnInit {
         this.searchValue = client.telephone;
         this.modalVisible = false;
       },
-      error: (errors) => {
+      error: (errors: any) => {
         this.isLoad = false;
         if (errors.status == 422) {
           let err = errors.error.errors;

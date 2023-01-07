@@ -23,11 +23,11 @@ export class DashboardComponent implements OnInit {
   getData() {
     this.isLoad = true;
     this.commercantService.getStatistique().subscribe({
-      next: response => {
+      next: (response:any) => {
         this.data = response;
         this.isLoad = false;
       },
-      error: errors => {
+      error: (errors:any) => {
       }
     })
   }

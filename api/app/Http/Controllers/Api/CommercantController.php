@@ -7,23 +7,162 @@ use App\Traits\Utils;
 use App\Models\Client;
 use App\Models\Compte;
 use App\Models\Produit;
+use App\Models\Boutique;
 use App\Models\Commande;
 use App\Traits\Paydunya;
 use App\Models\Versement;
 use App\Models\Commercant;
 use PHPUnit\Util\Exception;
 use App\Models\EtatCommande;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Models\BoutiqueHasUser;
 use App\Models\ModePayement;
 use App\Traits\Notification;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Models\BoutiqueHasUser;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class CommercantController extends Controller
 {
     use Utils, Paydunya;
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    public function index(Request $request)
+    {
+        $commercants = Commercant::with($request->with ?? []);
+
+        if ($request->has('search')) {
+            $commercants->where('prenoms', 'like', "%{$request->search}%")
+                ->orWhere('nom', 'like', "%{$request->search}%")
+                ->orWhere('telephone', 'like', "%{$request->search}%");
+        }
+
+        if ($request->has('per_page')) {
+            return $commercants->paginate($request->per_page ?? 15, $request->columns ?? ['*'], $request->page_name ?? 'page', $request->current_page ?? 1);
+        }
+
+        return $commercants->get();
+    }
+
+
+    public function show(Request $request, $id)
+    {
+        return Commercant::with($request->with ?? [])->find($id);
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            "nom" => "required",
+            "prenoms" => "required",
+            "telephone" => "required|unique:commercants,telephone",
+            "adresse" => "string",
+            "password" => "required",
+            "boutique.*.nom" => "required",
+            "boutique.*.addresse" => "required",
+        ]);
+
+        try {
+            $commercant = new Commercant();
+            $commercant->nom = $request->nom;
+            $commercant->prenoms = $request->prenoms;
+            $commercant->telephone = $request->telephone;
+            $commercant->adresse = $request->adresse;
+            $commercant->save();
+
+            $user = new User();
+            $user->email = $request->email;
+            $user->username = $request->telephone;
+            $user->password = bcrypt($request->password);
+            $user->model_type = Commercant::class;
+            $user->model = $commercant->id;
+            $user->save();
+
+            $boutique = new Boutique();
+            $boutique->nom = $request->boutique["nom"];
+            $boutique->addresse = $request->boutique["addresse"];
+            $boutique->commercant_id = $commercant->id;
+            $boutique->save();
+
+            $compte = new Compte();
+            $compte->solde = 0;
+            $compte->boutique_id = $boutique->id;
+            $compte->save();
+
+            return response()->json([
+                "message" => "Commercant enregistré avec succès",
+                "commercant" => $commercant
+            ], Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                "message" => "Une erreur est survenue",
+                "error" => $th->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            "nom" => "required",
+            "prenoms" => "required",
+            "telephone" => "required|unique:commercants,telephone," . $id,
+            "adresse" => "string",
+            "boutique.*.nom" => "required",
+            "boutique.*.addresse" => "required",
+        ]);
+
+        try {
+            $commercant = Commercant::find($id);
+            $commercant->nom = $request->nom;
+            $commercant->prenoms = $request->prenoms;
+            $commercant->telephone = $request->telephone;
+            $commercant->adresse = $request->adresse;
+            $commercant->save();
+
+            $boutique = Boutique::whereCommercantId($commercant->id)->first();
+            $boutique->nom = $request->boutique["nom"];
+            $boutique->addresse = $request->boutique["addresse"];
+            $boutique->commercant_id = $commercant->id;
+            $boutique->save();
+
+            return response()->json([
+                "message" => "Commercant enregistré avec succès",
+                "commercant" => $commercant
+            ], Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                "message" => "Une erreur est survenue",
+                "error" => $th->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $commercant = Commercant::find($id);
+            $commercant->delete();
+
+            return response()->json([
+                "message" => "Commercant supprimé avec succès",
+                "commercant" => $commercant
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                "message" => "Une erreur est survenue",
+                "error" => $th->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function profile()
     {
         return $this->authCommercant();

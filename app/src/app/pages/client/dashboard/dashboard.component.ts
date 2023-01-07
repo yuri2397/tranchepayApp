@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
           if(response && response.data.length != 0)
           this.lastCommande = response.data[0];
         },
-        error: (error) => {
+        error: (error:any) => {
           console.log(error);
         },
       });
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
           this.versements = response.data;
           console.log(response);
         },
-        error: (error) => {
+        error: (error:any) => {
           console.log(error);
         },
       });

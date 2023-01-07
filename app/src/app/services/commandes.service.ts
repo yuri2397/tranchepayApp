@@ -7,17 +7,12 @@ import { Commande } from '../models/commande';
   providedIn: 'root'
 })
 export class CommandesService extends Base{
-  protected override _baseUrl: string = "commande/";
+  protected override _baseUrl: string = "commandes";
   constructor(protected h: HttpClient) { 
     super()
     this.httpClient = h;
   }
 
-  show(id: string){
-    return this.http.get<Commande>(this.endPoint + "show/" + id, {
-      headers: this.authorizationHeaders
-    })
-  }
 
   montantVerser(data: Commande) {
     let res = 0;

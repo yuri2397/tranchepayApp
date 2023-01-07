@@ -23,13 +23,13 @@ export class VersementListComponent implements OnInit {
         'with[]': ['commande', 'commande.boutique'],
       }
     ).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.versements = response;
         this.isLoad = false;
         console.log(response);
         
       },
-      error: (errors) => {
+      error: (errors: any) => {
         console.log(errors);
         this.versements = [];
       },

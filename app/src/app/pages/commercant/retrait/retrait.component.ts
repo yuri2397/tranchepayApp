@@ -80,10 +80,10 @@ export class RetraitComponent implements OnInit {
           this.validateForm.value.telephone
         )
         .subscribe({
-          next: (response) => {
+          next: (response: any) => {
             console.log(response);
           },
-          error: (errors) => {
+          error: (errors: any) => {
             console.log(errors);
           },
         });

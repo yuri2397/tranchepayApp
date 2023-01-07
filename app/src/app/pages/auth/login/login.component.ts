@@ -49,11 +49,11 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.validateForm.value.username, this.validateForm.value.password)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.loginSuccess(response)
           this.isLoad = false
         },
-        error: (errors) => {
+        error: (errors:any) => {
           this.isLoad = false
           console.log(errors)
           this.errorMessage = errors.error.message

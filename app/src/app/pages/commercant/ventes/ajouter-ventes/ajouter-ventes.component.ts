@@ -102,7 +102,7 @@ export class AjouterVentesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.route.queryParams.subscribe((params) => {
+    // this.route.queryParams.subscribe((params: any) => {
     //   this.selectedClient = JSON.parse(params['customer']) as Client
     //   this.getModePayement(this.selectedClient.id)
     // })
@@ -175,14 +175,14 @@ export class AjouterVentesComponent implements OnInit {
 
     this.modeLoad = true
     this.sharedService.modePaiement(client).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log(response)
         this.modePaiements = response
         this.reset()
 
         this.modeLoad = false
       },
-      error: (errors) => {
+      error: (errors: any) => {
         console.log(errors)
       },
     })
@@ -228,7 +228,7 @@ export class AjouterVentesComponent implements OnInit {
           via,
         )
         .subscribe({
-          next: (response) => {
+          next: (response: any) => {
             console.log(response)
             let type: any = 'info'
             if (mode == 'online') {
@@ -254,7 +254,7 @@ export class AjouterVentesComponent implements OnInit {
                       this.sharedService
                         .checkPadding(response.padding)
                         .subscribe({
-                          next: (check) => {
+                          next: (check:any) => {
                             if (check.status) {
                               this.successModal(
                                 'Le client a confirmer la vente. ✅',
@@ -263,7 +263,7 @@ export class AjouterVentesComponent implements OnInit {
                             }
                             resolve(!check.status)
                           },
-                          error: (error) => {
+                          error: (error: any) => {
                             console.log(error)
                             m.destroy()
                             this.errorModal(error.error.message)
@@ -285,7 +285,7 @@ export class AjouterVentesComponent implements OnInit {
               this.isLoad = false
             }
           },
-          error: (errors) => {
+          error: (errors: any) => {
             this.notificatoinService.emitChange({
               title: 'Paiement annullé',
               message: errors.error.message,
@@ -332,7 +332,7 @@ export class AjouterVentesComponent implements OnInit {
           load: false,
         },
       })
-      .afterClose.subscribe((_) => {
+      .afterClose.subscribe((_: any) => {
         this.location.back()
       })
   }
@@ -383,7 +383,7 @@ export class AjouterVentesComponent implements OnInit {
     if (data) {
       this.clientLoad = true
       this.clientService.search(data).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log(response)
           this.clients = response
           this.clientLoad = false

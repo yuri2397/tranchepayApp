@@ -51,7 +51,7 @@ class AuthController extends Controller
             "token" => $user->createToken($request->device_name),
             "user" => $user,
             'permissions' => $user->permissions,
-"data" => $auth,
+            "data" => $auth,
             "model_type" => $user->model_type
         ], 200);
     }

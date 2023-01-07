@@ -26,8 +26,7 @@ export class AppComponent implements OnInit {
       this.showModal(data);
     });
     
-    this.notification.logout$.subscribe((data) => {
-      
+    this.notification.logout$.subscribe((_: any) => {
       setTimeout(() => {
         this.goOut();
       }, 600);

@@ -87,7 +87,7 @@ export class RegisterClientComponent implements OnInit {
     client.nom = this.validateForm.value.nom;
     client.telephone = this.validateForm.value.telephone;
     this.authService.createClient(client).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         this.notification.create(
           'success',
           'Notification',
@@ -98,7 +98,7 @@ export class RegisterClientComponent implements OnInit {
         });
         this.isLoad = false;
       },
-      error: (errors) => {
+      error: (errors: any) => {
         this.isLoad = false;
         if (errors.status == 422) {
           this.hasError = true;

@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
       this.authService
         .checkPassword(this.validateForm.value.current_pin)
         .subscribe({
-          next: (response) => {
+          next: (response: any) => {
             this.isLoad = false;
             this.current = this.validateForm.value.current_pin;
             this.validateForm = this.fb.group(
@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
             );
             this.currentSteps = 1;
           },
-          error: (errors) => {
+          error: (errors: any) => {
             console.log(errors);
             this.notification.error('Notification', errors.error.message);
             this.isLoad = false;
@@ -85,13 +85,13 @@ export class ProfileComponent implements OnInit {
       this.authService
         .setUserPassword(this.current, this.validateForm.value.pin)
         .subscribe({
-          next: (response) => {
+          next: (response: any) => {
             console.log(response);
             this.notification.success('Notification', response.message);
             this.authService.logout();
             this.router.navigate(['/auth']);
           },
-          error: (errors) => {
+          error: (errors: any) => {
             console.error(errors);
           },
         });

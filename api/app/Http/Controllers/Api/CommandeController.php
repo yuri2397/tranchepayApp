@@ -12,9 +12,27 @@ class CommandeController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Commande::all();
+        $commandes = Commande::with($request->with ?? []);
+
+        if ($request->has('search')) {
+            $commandes->where('numero', 'like', "%{$request->search}%");
+        }
+
+        if ($request->has('boutique_id')) {
+            $commandes->where('boutique_id', $request->boutique_id);
+        }
+
+        if ($request->has('client_id')) {
+            $commandes->where('client_id', $request->client_id);
+        }
+        
+        if ($request->has('per_page')) {
+            return $commandes->paginate($request->per_page ?? 15, $request->columns ?? ['*'], $request->page_name ?? 'page', $request->current_page ?? 1);
+        }
+
+        return $commandes->get();
     }
 
     /**
@@ -24,7 +42,26 @@ class CommandeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'boutique_id' => 'required',
+            'client_id' => 'required',
+            'montant' => 'required',
+            'products' => 'required|array',
+            'products.*.nom' => 'required',
+            'products.*.prix_unitaire' => 'required',
+            'products.*.quantite' => 'required',
+            'interet' => 'required',
+            'nb_products' => 'required',
+            'nb_tranche' => 'required',
+            'commission' => 'required',
+            'etat_commande_id' => 'required',
+         ]);
+
+        $commande = Commande::create($request->all());
+
+        $commande->produits()->createMany($request->products);
+
+        return $commande;
     }
 
     /**
@@ -32,9 +69,9 @@ class CommandeController extends Controller
      *
      * @param  int  $id
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return Commande::with(['versements', 'boutique', 'client'])->find($id);
+        return Commande::with($request->with ?? [])->find($id);
     }
 
     /**
@@ -46,7 +83,30 @@ class CommandeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'boutique_id' => 'required',
+            'client_id' => 'required',
+            'montant' => 'required',
+            'products' => 'required|array',
+            'products.*.nom' => 'required',
+            'products.*.prix_unitaire' => 'required',
+            'products.*.quantite' => 'required',
+            'interet' => 'required',
+            'nb_products' => 'required',
+            'nb_tranche' => 'required',
+            'commission' => 'required',
+            'etat_commande_id' => 'required',
+        ]);
+
+        $commande = Commande::find($id);
+
+        $commande->update($request->all());
+
+        $commande->produits()->delete();
+
+        $commande->produits()->createMany($request->products);
+
+        return $commande;
     }
 
     /**
@@ -57,6 +117,12 @@ class CommandeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $commande = Commande::find($id);
+
+        $commande->produits()->delete();
+
+        $commande->delete();
+
+        return $commande;
     }
 }

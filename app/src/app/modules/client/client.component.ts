@@ -75,20 +75,20 @@ export class ClientComponent implements OnInit {
     this.menuState = this.collapse
     this.getClient()
 
-    this.clientService.solde().subscribe(data => this.solde = data);
+    this.clientService.solde().subscribe((data: any) => this.solde = data);
 
   }
 
   getClient() {
     this.isLoad = true
     this.clientService.findClient().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('client: \n', response)
         this.client = response
         this.clientService.setClient(this.client)
         this.isLoad = false
       },
-      error: (errors) => {
+      error: (errors:any) => {
         console.error(errors)
       },
     })

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 declare interface MenuClass {
   navbar: string;
@@ -26,11 +27,13 @@ export class CommercantComponent implements OnInit {
     btnConnexion: 'btn btn-sm  mx-3 px-2 py-1',
     btnInscription: 'btn btn-sm btn-new-account-home my-sm-1 mx-3 px-2 py-1 text-white',
   };
+  user_type = ''
 
   isCollapse!: boolean;
-  constructor() {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
+    this.user_type = this.authService.getUser().model_type.toLocaleLowerCase();
     this.isCollapse = true;
     this.menuState = this.collapse;
   }

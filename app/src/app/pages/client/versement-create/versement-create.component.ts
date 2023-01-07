@@ -87,11 +87,11 @@ export class VersementCreateComponent implements OnInit {
           this.form.value.telephone,
         )
         .subscribe({
-          next: (success) => {
+          next: (success: any) => {
             console.log(success)
             this.destroy(success)
           },
-          error: (errors) => {
+          error: (errors: any) => {
             console.log(errors)
             this.notification.emitChange({
               title: 'Versement annulé',

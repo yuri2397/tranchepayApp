@@ -29,7 +29,7 @@ export class SetClientPinComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe( data => {
+    this.route.paramMap.subscribe( (data: any) => {
       this.telephone = data.get("telephone") as any
     } )
     this.validateForm = this.fb.group(
@@ -83,7 +83,7 @@ export class SetClientPinComponent implements OnInit {
         this.validateForm.value.code
       )
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log(response);
           this.notification.success(
             'Notification',
@@ -92,7 +92,7 @@ export class SetClientPinComponent implements OnInit {
           this.isLoad = false;
           this.router.navigate(['/auth']);
         },
-        error: (errors) => {
+        error: (errors:any) => {
           console.log(errors);
 
           this.isLoad = false;

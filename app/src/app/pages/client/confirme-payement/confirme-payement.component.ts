@@ -30,7 +30,7 @@ export class ConfirmePayementComponent implements OnInit {
   ngOnInit(): void {
     this.dataLoad = true;
     this.clientService.paddings().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.data = response;
         this.haveData = true;
         this.data.forEach(
@@ -69,7 +69,7 @@ export class ConfirmePayementComponent implements OnInit {
         this.dataLoad = false;
         console.log(this.data);
       },
-      error: (errors) => {
+      error: (errors:any) => {
         console.log(errors);
       },
     });
@@ -78,7 +78,7 @@ export class ConfirmePayementComponent implements OnInit {
 
   confirme(i: any) {
     this.sharedService.checkPadding(i.id).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         console.log(response);
         if (response.status) {
           this.notification.emitChange({
@@ -95,7 +95,7 @@ export class ConfirmePayementComponent implements OnInit {
         }
         i = response;
       },
-      error: (errors) => {
+      error: (errors:any) => {
         console.log(errors);
       },
     });

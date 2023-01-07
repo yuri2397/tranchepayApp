@@ -23,12 +23,12 @@ export class SoldesComponent implements OnInit {
   getSolde() {
     this.isLoad = true;
     this.comService.getSolde().subscribe({
-      next: response => {
+      next: (response:any) => {
         console.log(response);
         this.boutique = response;
         this.isLoad = false;
       },
-      error: errors => {
+      error: (errors:any) => {
         console.log(errors);
       }
     })

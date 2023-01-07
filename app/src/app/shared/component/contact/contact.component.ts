@@ -104,7 +104,7 @@ export class ContactComponent implements OnInit {
         this.validateForm.value.entreprise
       )
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.notification.success(
             'Notification',
             'Votre message est envoyé. Merci'
@@ -112,7 +112,7 @@ export class ContactComponent implements OnInit {
           this.isLoad = false;
           this.validateForm.reset();
         },
-        error: (errors) => {
+        error: (errors: any) => {
           this.isLoad = false;
           this.notification.error('Notification', errors.error.message);
         },
