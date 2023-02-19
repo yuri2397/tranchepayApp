@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "kutia-software-company/larafirebase": "^1.3",
         "laravel/framework": "^9.19",
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.14.1",
@@ -27,7 +28,9 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": ["app/Utils/Helpers.php"]
+
     },
     "autoload-dev": {
         "psr-4": {

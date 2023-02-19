@@ -126,8 +126,8 @@ export class CommercantComponent implements OnInit {
     })
   }
 
-  selected(item: RouteInfo) {
-    return this.router.url.indexOf(item.path) !== -1 ? true : false
+  selected(item: string) {
+    return this.router.url.indexOf(item) !== -1 ? true : false
   }
 
   can(item: RouteInfo) {

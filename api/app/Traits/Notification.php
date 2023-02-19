@@ -57,6 +57,8 @@ trait Notification
             $jsonResponse = json_decode($rawResponse, true);
             return $jsonResponse;
         }
+
+        
     }
 
     public function demandeSMSToken()

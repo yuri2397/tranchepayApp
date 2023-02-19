@@ -19,7 +19,9 @@ use App\Traits\WavePayement;
 use Illuminate\Http\Request;
 use PHPUnit\TextUI\Exception;
 use App\Mail\SendClientHelpMail;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Paydunya\Checkout\CheckoutInvoice;
 
@@ -55,9 +57,16 @@ class ClientController extends Controller
      */
     public function commandes(Request $request)
     {
-        $append = EtatCommande::whereNom("append")->first();
-        $query =  Commande::with($request->with ?: [])->whereClientId($this->authClient()->id)
-            ->where("etat_commande_id", "!=", $append->id);
+        $filter = $request->filter ? array_keys($request->input('filter')) : null;
+        $query =  Commande::with($request->with ?: []);
+
+        if ($filter && in_array('etat_commande', $filter)) {
+            $query
+                ->join('etat_commandes as EC', 'EC.id', 'etat_commande_id')
+                ->where('EC.nom', $request->filter['etat_commande']);
+        }
+
+        $query->whereClientId($this->authClient()->id);
 
         if ($request->has('per_page')) {
             return $query->simplePaginate($request->per_page ?: 15, $request->columns ?: '*', $request->page_name ?: 'page', $request->page ?: 1);
@@ -66,7 +75,7 @@ class ClientController extends Controller
         return $query->get();
     }
 
-    public function versementsClient(Request $request)
+    public function versements(Request $request)
     {
         $commandes = Commande::whereClientId($this->authClient()->id)->get()->pluck('id');
 
@@ -291,5 +300,47 @@ class ClientController extends Controller
     public function confirmePaddings(Request $request, Padding $padding)
     {
         return "ok";
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+                'prenoms' => 'required',
+                'nom' => 'required',
+                'telephone' => 'required',
+                'password' => 'required'
+            ]
+        );
+
+        DB::beginTransaction();
+        try {
+            $client = new Client();
+            $client->prenoms = $request->prenoms;
+            $client->nom = $request->nom;
+            $client->adresse = $request->adresse;
+            $client->telephone = $request->telephone;
+            $client->save();
+
+            $user = new User();
+            $user->username = $client->telephone;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->model = $client->id;
+            $user->model_type = Client::class;
+            $user->save();
+            DB::commit();
+            return response()->json([
+                "message" => "Votre compte a été créé avec succès.",
+                "data" => $client
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Une erreur est survenue lors de la création de votre compte. Merci',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

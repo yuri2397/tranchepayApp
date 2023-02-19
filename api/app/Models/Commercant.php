@@ -18,7 +18,7 @@ class Commercant extends Model
 
     public function user()
     {
-        return $this->morphTo(User::class, 'model_type', 'model');
+        return $this->morphOne(User::class, 'model', 'model_type', 'model');
     }
 
     public function commandes()

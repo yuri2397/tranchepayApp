@@ -20,7 +20,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['*'];
+    protected $fillable = ['username', 'password','email','email_verify_at','model_type','model', 'remember_token'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -65,5 +65,10 @@ class User extends Authenticatable
     public function appNotifications()
     {
         return $this->hasMany(AppNotification::class);
+    }
+
+    public function model()
+    {
+        return $this->morphTo(__FUNCTION__, 'model_type', 'model');
     }
 }

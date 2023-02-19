@@ -34,4 +34,16 @@ return [
         'client_id' => env('ORANGE_CLIENT_ID'),
         'client_secret' => env('ORANGE_CLIENT_SECRET'),
     ],
+
+    'services' => [
+
+        'orange' => [
+            'api_url' => env('ORANGE_API_URL'),
+            'client_id' => env('ORANGE_CLIENT_ID'),
+            'client_secret' => env('ORANGE_CLIENT_SECRET'),
+            'authorization_header' => env('ORANGE_AUTHORIZATION_HEADER'),
+            'sender_number' => env('ORANGE_SENDER_NUMBER'),
+            'sender_name' => env('ORANGE_SENDER_NAME')
+        ],
+    ]
 ];

@@ -16,4 +16,5 @@ class Versement extends Model
         return $this->belongsTo(Commande::class);
     }
     
+    
 }

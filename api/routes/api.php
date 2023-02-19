@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\User;
+use App\Models\EtatCommande;
 use App\Models\ModePayement;
+use Illuminate\Http\Request;
+use App\Http\Controllers\PayementIPN;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\TestController;
@@ -13,9 +17,9 @@ use App\Http\Controllers\Api\CommandeController;
 use App\Http\Controllers\Api\CommercantController;
 use App\Http\Controllers\Api\PermissionsController;
 use App\Http\Controllers\Api\DeplafonnementController;
-use App\Http\Controllers\PayementIPN;
-use App\Models\EtatCommande;
-use App\Models\User;
+use App\Http\Controllers\Api\PartenaireController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\VersementController;
 
 /**
  * MIXED
@@ -38,12 +42,19 @@ Route::post("free/ipn", [PayementIPN::class, "free"]);
 
 Route::prefix("auth")->group(function () {
     Route::post('login', [AuthController::class, 'login', 'cors'])->name("se_connecter");
+    Route::get('/check', [AuthController::class, 'check', 'cors']);
+    Route::post('/otp/request', [AuthController::class, 'sendOtp']);
+    Route::post('/otp/verify', [AuthController::class, 'verifyOtp']);
+    Route::post('/register/client', [ClientController::class, 'store']);
+    // Route::post('/register/vendor', [ClientController::class, 'store']);
+
     Route::get("amc/{telephone}/{token}", [AuthController::class, 'activerCompte'])->name("verifier_telephone");
     Route::post('register-client', [AuthController::class, 'registerClient']);
     Route::post('register-commercant', [AuthController::class, 'registerCommercant']);
     Route::post('set-client-pin', [AuthController::class, 'setCodePin']);
     Route::put("update-phone-number", [AuthController::class, 'updatePhone'])->middleware("auth:api");
     Route::put("update-password", [AuthController::class, 'updatePassword'])->middleware("auth:api");
+    Route::put("update-fcm-token", [AuthController::class, 'updateFcmToken'])->middleware("auth:api");
     Route::get('permissions', [AuthController::class, 'listPermissions']);
     Route::put('new-pin', [AuthController::class, 'newClientPin'])->middleware("auth:api");
     Route::post('check-password', [AuthController::class, 'ckeckPassword'])->middleware("auth:api");
@@ -56,17 +67,10 @@ Route::prefix("auth")->group(function () {
 
 Route::prefix('commercants')->middleware(['auth:api', 'cors'])->group(function () {
 
-    Route::get('/', [CommercantController::class, 'index']);
-    Route::get('/{id}', [CommercantController::class, 'show']);
-    Route::post('/', [CommercantController::class, 'store']);
-    Route::put('/{id}', [CommercantController::class, 'update']);
-    Route::delete('/{id}', [CommercantController::class, 'destroy']);
-
-
-    Route::get('profile', [CommercantController::class, 'profile']);
-    Route::get('dashboard', [CommercantController::class, 'dashboard']);
-    Route::get('ventes', [CommercantController::class, 'ventes']);
-    Route::get('solde', [CommercantController::class, 'solde']);
+    Route::get('/profile', [CommercantController::class, 'profile']);
+    Route::get('/dashboard', [CommercantController::class, 'dashboard']);
+    Route::get('/ventes', [CommercantController::class, 'ventes']);
+    Route::get('/solde', [CommercantController::class, 'solde']);
     Route::post('retrait', [CommercantController::class, 'retrait']);
     Route::post('new-user', [AuthController::class, 'addCommercantUsers']);
     Route::delete('remove-user/{id}', [AuthController::class, 'removeCommercantUsers']);
@@ -74,6 +78,13 @@ Route::prefix('commercants')->middleware(['auth:api', 'cors'])->group(function (
     Route::get('users', [CommercantController::class, 'users']);
     Route::post("new-commande", [CommercantController::class, "createCommande"]);
     Route::get('search-client/{telephone}', [ClientController::class, 'search']);
+
+
+    Route::get('/', [CommercantController::class, 'index']);
+    Route::get('/{id}', [CommercantController::class, 'show']);
+    Route::post('/', [CommercantController::class, 'store']);
+    Route::put('/{id}', [CommercantController::class, 'update']);
+    Route::delete('/{id}', [CommercantController::class, 'destroy']);
 });
 
 
@@ -83,15 +94,31 @@ Route::prefix('commercants')->middleware(['auth:api', 'cors'])->group(function (
 
 
 Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
+
+    Route::post('/', [ClientController::class, 'store']);
+    Route::put('/{id}', [ClientController::class, 'update']);
+    Route::delete('/{id}', [ClientController::class, 'destroy']);
+    Route::get('/', [ClientController::class, 'index']);
+
+
     Route::get('profile', [ClientController::class, 'profile']);
     Route::get('solde', [ClientController::class, 'solde']);
     Route::get('commandes', [ClientController::class, "commandes"]);
-    Route::get('versements', [ClientController::class, "versementsClient"]);
+    Route::get('commandes/{id}/details', [CommandeController::class, "show"]);
+    Route::get('versements', [ClientController::class, "versements"]);
+    Route::get('versements/{id}/details', [VersementController::class, "show"]);
     Route::post('do-versement', [ClientController::class, "effectuerVersement"])->middleware('throttle:5,1');
     Route::post('deplafonnement', [DeplafonnementController::class, 'store']);
     Route::get('paddings', [ClientController::class, 'paddings']);
     Route::get('search', [ClientController::class, 'search']);
     Route::post('paddings/confirme/{id}', [ClientController::class, 'confirmePaddings']);
+});
+
+
+Route::prefix('payments')->middleware(['auth:api', 'cors'])->group(function () {
+    Route::post('wave', [PaymentController::class, 'wave']);
+    Route::post('om', [PaymentController::class, 'om']);
+    Route::post('free', [PaymentController::class, 'free']);
 });
 
 
@@ -111,6 +138,10 @@ Route::prefix('shared')->middleware(['auth:api', 'cors'])->group(function () {
 Route::prefix('commandes')
     ->middleware(['auth:api', 'cors'])
     ->apiResource('commandes', CommandeController::class);
+
+Route::prefix('parteners')
+    ->middleware(['auth:api', 'cors'])
+    ->apiResource('parteners', PartenaireController::class);
 
 
 

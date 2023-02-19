@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "103778805605",
+    "project_id": "tranchepay-7106f",
+    "storage_bucket": "tranchepay-7106f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103778805605:android:0aa904a9d069105c40a38c",
+        "android_client_info": {
+          "package_name": "com.example.tranchepay_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103778805605-7ljod5q8f694jmfg6sh05cg82uiqncqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx1KJJJlTwO9W06m5OfydK_kcXNVPDKGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103778805605-7ljod5q8f694jmfg6sh05cg82uiqncqr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "103778805605-tdejtprg6haoo4ftucq2n1f7qmcllkok.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tranchepay.app.tranchepay"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

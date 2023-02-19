@@ -1,88 +1,83 @@
 <ng-container *ngIf="!isLoad; else loadData">
-    <div class="container-fluid">
-        <div class="row align-items-center">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="card card-body raduis-sm shadow-sm">
+          <div>
+            <h5>Revenu dans l'année</h5>
+          </div>
+          <div class="row align-items-center pb-1 section-title d-card">
             <div class="col">
-                <div class="card card-body raduis-sm shadow-sm">
-                    <div>
-                        <h5>Revenu dans l'année</h5>
-                    </div>
-                    <div class="row align-items-center pb-1 section-title
-                        d-card">
-                        <div class="col">
-                            <h1>{{ data.annee }} FCFA</h1>
-                        </div>
-                    </div>
-                </div>
+              <h1>{{ data.annee }} FCFA</h1>
             </div>
-            <div class="col">
-                <div class="card card-body raduis-sm shadow-sm">
-                    <div>
-                        <h5>Revenu le mois passé</h5>
-                    </div>
-                    <div class="row align-items-center pb-1 section-title
-                        d-card">
-                        <div class="col">
-                            <h1>{{ data.mois }} FCFA</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card card-body raduis-sm shadow-sm">
-                    <div>
-                        <h5>Ventes dans la journée</h5>
-                    </div>
-                    <div class="row align-items-center pb-1 section-title
-                        d-card">
-                        <div class="col">
-                            <h1>{{ data.jour }} FCFA</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row my-4 mx-0 p-0 align-items-center">
-                <div class="col-12">
-                    <div class="card card-body raduis-sm shadow-sm">
-                        <nz-table #basicTable [nzPageSize]="5" [nzData]="data.ventes">
-                            <thead>
-                                <tr>
-                                    <th>REFERENCE</th>
-                                    <th>Montant</th>
-                                    <th>Etat</th>
-                                    <th>Client</th>
-                                    <th>Téléphone</th>
-                                    <th>Produits</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of basicTable.data">
-                                    <td class="text-dark-green bold">{{ data.reference}}</td>
-                                    <td>{{ data.prix_total }} FCFA</td>
-                                    <td>
-                                        <nz-tag [nzColor]="etatColor(data)">
-                                            {{ etatCommande(data) }}
-                                        </nz-tag>
-                                    </td>
-                                    <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
-                                    <td>{{ data.client.telephone }}</td>
-                                    <td>{{ data.nb_produits }} Produits</td>
-                                </tr>
-                            </tbody>
-                        </nz-table>
-
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <div class="col">
+        <div class="card card-body raduis-sm shadow-sm">
+          <div>
+            <h5>Revenu le mois passé</h5>
+          </div>
+          <div class="row align-items-center pb-1 section-title d-card">
+            <div class="col">
+              <h1>{{ data.mois }} FCFA</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-body raduis-sm shadow-sm">
+          <div>
+            <h5>Ventes dans la journée</h5>
+          </div>
+          <div class="row align-items-center pb-1 section-title d-card">
+            <div class="col">
+              <h1>{{ data.jour }} FCFA</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row my-4 mx-0 p-0 align-items-center">
+        <div class="col-12">
+          <div class="card card-body raduis-sm shadow-sm">
+            <nz-table #basicTable [nzPageSize]="5" [nzData]="data.ventes">
+              <thead>
+                <tr>
+                  <th>REFERENCE</th>
+                  <th>Montant</th>
+                  <th>Etat</th>
+                  <th>Client</th>
+                  <th>Téléphone</th>
+                  <th>Produits</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                  <td class="text-dark-green bold">{{ data.reference }}</td>
+                  <td>{{ data.prix_total }} FCFA</td>
+                  <td>
+                    <nz-tag [nzColor]="etatColor(data)">
+                      {{ etatCommande(data) }}
+                    </nz-tag>
+                  </td>
+                  <td>{{ data.client.prenoms }} {{ data.client.nom }}</td>
+                  <td>{{ data.client.telephone }}</td>
+                  <td>{{ data.nb_produits }} Produits</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </ng-container>
 <ng-template #loadData>
-    <div>
-        <app-spinner></app-spinner>
-    </div>
+  <div>
+    <app-spinner></app-spinner>
+  </div>
 </ng-template>
 
-
 <ng-template #list_title>
-    <h3>Dérnières ventes</h3>
+  <h3>Dérnières ventes</h3>
 </ng-template>

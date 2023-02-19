@@ -1,68 +1,151 @@
 <nz-layout *ngIf="!isLoad; else loadingTemplate" class="app-layout">
-  <nz-sider class="menu-sidebar bg" nzCollapsible nzWidth="300px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
+  <nz-sider
+    class="menu-sidebar bg"
+    nzCollapsible
+    nzWidth="300px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
     <div class="sidebar-logo">
       <a routerLink="/">
-        <img src="/assets/img/logo2.png" alt="logo">
+        <img src="/assets/img/logo2.png" alt="logo" />
         <h1>{{ title }}</h1>
       </a>
     </div>
-    <ul nz-menu class="bg-grad" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+    <ul
+      nz-menu
+      class="bg-grad"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+    >
       <ng-container>
-        <li [routerLink]="['/commercant/accueil']" nz-menu-item >
+        <li
+          [routerLink]="['/commercant/accueil']"
+          nz-menu-item
+          [ngClass]="{ 'bg-white': selected('/commercant/accueil') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/grid.svg" alt="" srcset="">
+            <img src="/assets/icons/grid.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title">TABLEAU DE BORD</span>
+          <span
+            class="text-white bold menu-title"
+            [ngClass]="{ 'text-dark-green': selected('/commercant/accueil') }"
+            >TABLEAU DE BORD</span
+          >
         </li>
-        <li [routerLink]="['/commercant/ventes']" nz-menu-item >
+        <li
+          [routerLink]="['/commercant/ventes']"
+          nz-menu-item
+          [ngClass]="{ 'bg-white': selected('/commercant/ventes') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/list.svg" alt="" srcset="">
+            <img src="/assets/icons/list.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title">MES VENTES</span>
+          <span
+            class="text-white bold menu-title"
+            [ngClass]="{ 'text-dark-green': selected('/commercant/ventes') }"
+            >MES VENTES</span
+          >
         </li>
-        <li nz-menu-item [routerLink]="['/commercant/soldes']">
+        <li
+          nz-menu-item
+          [routerLink]="['/commercant/soldes']"
+          [ngClass]="{ 'text-dark-green': selected('/commercant/accueil') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/8.svg" alt="" srcset="">
+            <img src="/assets/icons/8.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title">PORTFEUILLE</span>
+          <span
+            class="text-white bold menu-title"
+            [ngClass]="{ 'text-dark-green': selected('/commercant/accueil') }"
+            >PORTFEUILLE</span
+          >
         </li>
-        <li nz-menu-item [routerLink]="['/commercant/utilisateurs']">
+        <li
+          nz-menu-item
+          [routerLink]="['/commercant/utilisateurs']"
+          [ngClass]="{ 'text-dark-green': selected('/commercant/accueil') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/7.svg" alt="" srcset="">
+            <img src="/assets/icons/7.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title">UTILISATEURS</span>
+          <span
+            class="text-white bold menu-title"
+            [ngClass]="{ 'text-dark-green': selected('/commercant/accueil') }"
+            >UTILISATEURS</span
+          >
         </li>
-        <li nz-menu-item [routerLink]="['/commercant/soldes']">
+        <li
+          nz-menu-item
+          [routerLink]="['/commercant/soldes']"
+          [ngClass]="{ 'text-dark-green': selected('/commercant/soldes') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/4.svg" alt="" srcset="">
+            <img src="/assets/icons/4.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title text-uppercase">Connexion et Sécurité</span>
+          <span
+            class="text-white bold menu-title text-uppercase"
+            [ngClass]="{ 'text-dark-green': selected('/commercant/soldes') }"
+            >Connexion et Sécurité</span
+          >
         </li>
-        <li nz-menu-item [routerLink]="['/commercant/api']">
+        <li
+          nz-menu-item
+          [routerLink]="['/commercant/api']"
+          [ngClass]="{ 'text-dark-green': selected('/commercant/api') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/2.svg" alt="" srcset="">
+            <img src="/assets/icons/2.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title">API</span>
+          <span
+            class="text-white bold menu-title"
+            [ngClass]="{ 'text-dark-green': selected('/commercant/api') }"
+            >API</span
+          >
         </li>
-        <li nz-menu-item [routerLink]="['/commercant/conditions']">
+        <li
+          nz-menu-item
+          [routerLink]="['/commercant/conditions']"
+          [ngClass]="{ 'text-dark-green': selected('/commercant/conditions') }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/7.svg" alt="" srcset="">
+            <img src="/assets/icons/7.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title text-uppercase">CoNDITIONS</span>
+          <span
+            class="text-white bold menu-title text-uppercase"
+            [ngClass]="{
+              'text-dark-green': selected('/commercant/conditions')
+            }"
+            >CoNDITIONS</span
+          >
         </li>
 
-        <li nz-menu-item [routerLink]="['/commercant/service-client']">
+        <li
+          nz-menu-item
+          [routerLink]="['/commercant/service-client']"
+          [ngClass]="{
+            'text-dark-green': selected('/commercant/service-client')
+          }"
+        >
           <i nz-icon class="icon">
-            <img src="/assets/icons/6.svg" alt="" srcset="">
+            <img src="/assets/icons/6.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title text-uppercase">SERVICE CLIENT</span>
+          <span
+            class="text-white bold menu-title text-uppercase"
+            [ngClass]="{
+              'text-dark-green': selected('/commercant/service-client')
+            }"
+            >SERVICE CLIENT</span
+          >
         </li>
-        <li nz-menu-item >
+        <li nz-menu-item>
           <i nz-icon class="icon">
-            <img src="/assets/icons/1.svg" alt="" srcset="">
+            <img src="/assets/icons/1.svg" alt="" srcset="" />
           </i>
-          <span class="text-white bold menu-title text-uppercase">DÉCONNEXION</span>
+          <span class="text-white bold menu-title text-uppercase"
+            >DÉCONNEXION</span
+          >
         </li>
       </ng-container>
     </ul>
@@ -70,30 +153,50 @@
   <nz-layout>
     <nz-header class="bg-white">
       <div class="d-flex align-items-center justify-content-end">
-        <a routerLink="/docs/presentation" class="text-uppercase bold text-dark-green mx-3">documentation</a>
-        <a routerLink="/home/page-commercant" class="text-uppercase bold text-dark-green mx-3">commercants</a>
-        <a routerLink="/home/page-client" class="text-uppercase bold text-dark-green mx-3">particuliers</a>
-        <a routerLink="/home/page-contact" class="text-uppercase bold text-dark-green mx-3">Contactez nous</a>
-        <a routerLink="/commercant/profile" class="text-uppercase bold text-dark-green user-avatar">
-          <span nz-icon nzType="user" nzTheme="outline" ></span>
+        <a
+          routerLink="/docs/presentation"
+          class="text-uppercase bold text-dark-green mx-3"
+          >documentation</a
+        >
+        <a
+          routerLink="/home/page-commercant"
+          class="text-uppercase bold text-dark-green mx-3"
+          >commercants</a
+        >
+        <a
+          routerLink="/home/page-client"
+          class="text-uppercase bold text-dark-green mx-3"
+          >particuliers</a
+        >
+        <a
+          routerLink="/home/page-contact"
+          class="text-uppercase bold text-dark-green mx-3"
+          >Contactez nous</a
+        >
+        <a
+          routerLink="/commercant/profile"
+          class="text-uppercase bold text-dark-green user-avatar"
+        >
+          <span nz-icon nzType="user" nzTheme="outline"></span>
         </a>
       </div>
-
     </nz-header>
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-
   </nz-layout>
-
 </nz-layout>
 
 <ng-template #loadingTemplate>
   <div class="center">
     <div class="loader">
-      <svg viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        viewBox="0 0 120 120"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <circle class="load one" cx="60" cy="60" r="40" />
         <circle class="load two" cx="60" cy="60" r="40" />
         <circle class="load three" cx="60" cy="60" r="40" />

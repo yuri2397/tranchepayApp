@@ -49,9 +49,13 @@ trait FreePayement
 
     public function isValideFreeNumber($telephone)
     {
+        if($telephone && Str::length(formatOnePhone($telephone, false)) == 12){
+            $telephone = Str::substr(formatOnePhone($telephone, false), 3);
+        }
         $test = str_split($telephone);
-        if ($test && $test[0] == "7" && $test[1] == "6") {
-            return true;
+        
+        if ($test && $test[0] == "7" && ($test[1] == "6")) {
+            return $telephone;
         }
 
         return false;

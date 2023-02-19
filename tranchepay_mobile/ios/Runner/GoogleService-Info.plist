@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>103778805605-h7bm7erbl41eq2hkj0h21g3ucvrlkkgo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.103778805605-h7bm7erbl41eq2hkj0h21g3ucvrlkkgo</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>103778805605-g8r32jg9afeu4hfm9t5ne7tulgskr6ee.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAxXFMo9ykvSLPzVd4vTi4ZksV83miir_8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>103778805605</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.tranchepayMobile</string>
+	<key>PROJECT_ID</key>
+	<string>tranchepay-7106f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tranchepay-7106f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:103778805605:ios:b3f920358cc539a740a38c</string>
+</dict>
+</plist>

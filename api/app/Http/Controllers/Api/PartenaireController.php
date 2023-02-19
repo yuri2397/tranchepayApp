@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Partenaire;
 use App\Traits\Utils;
 
+use function PHPUnit\Framework\isEmpty;
+
 class PartenaireController extends Controller
 {
     use Utils;
@@ -15,9 +17,19 @@ class PartenaireController extends Controller
      *
      * @return Partenaire[]
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Partenaire::all();
+        $query =  Partenaire::with($request->with ?? []);
+
+        if($request->has("search_query") && !isEmpty($request->search_query)){
+            $query->where('nom', 'like', "%{$request->search_query}%");
+        }
+
+        if ($request->has('per_page') && $request->per_page) {
+            return $query->paginate($request->per_page ?? 15, $request->columns ?? ['*'], $request->page_name ?? 'page', $request->current_page ?? 1);
+        }
+
+        return $query->get();
     }
 
     /**
@@ -38,7 +50,7 @@ class PartenaireController extends Controller
         $p->nom = $request->nom;
         $p->logo_url = $this->uploadImage($request->logo, "partenaire_logo");
         $p->site_web = $request->site_web;
-        
+
         return $p;
     }
 

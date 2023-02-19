@@ -13,6 +13,8 @@ class Client extends Model
 
     protected $with = ['deplafonnement'];
 
+    protected $fillables = ['prenoms', 'nom', 'adresse', 'telephone', 'image_path'];
+
     public function deplafonnement()
     {
         return $this->hasOne(Deplafonnement::class, "client_id");
@@ -21,5 +23,10 @@ class Client extends Model
     public function commandes()
     {
         return $this->hasMany(Commande::class);
+    }
+
+    public function user()
+    {
+        return $this->morphOne(User::class, 'model', 'model_type', 'model');
     }
 }

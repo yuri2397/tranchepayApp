@@ -3,25 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 
+use Throwable;
 use App\Models\User;
+use App\Models\Admin;
 use App\Traits\Utils;
 use App\Models\Client;
+use App\Models\Compte;
 use App\Models\Boutique;
 use App\Models\Commercant;
 use Illuminate\Support\Str;
+use App\Traits\Notification;
 use Illuminate\Http\Request;
+use App\Models\PasswordReset;
 use App\Models\PasswordResets;
+use Illuminate\Support\Carbon;
+use App\Models\BoutiqueHasUser;
+use function PHPSTORM_META\type;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Providers\Services\OrangeSMSService;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Compte;
-use App\Traits\Notification;
-use App\Models\Admin;
-use App\Models\BoutiqueHasUser;
 use Spatie\Permission\Models\Permission;
-use Throwable;
-
-use function PHPSTORM_META\type;
 
 class AuthController extends Controller
 {
@@ -55,7 +57,6 @@ class AuthController extends Controller
             "model_type" => $user->model_type
         ], 200);
     }
-
 
 
     public function registerClient(Request $request)
@@ -327,9 +328,99 @@ class AuthController extends Controller
     public function updatePassword(Request $request)
     {
         $request->validate([
-            "current_password" => "required",
-            "new_password" => "required",
-            "new_password_conf" => "required|same:new_password"
+            "password" => "required",
+            "new_password" => "required"
         ]);
+
+        $user = User::whereUserId(auth()->id());
+
+        if ($user && Hash::check($request->current_password, $user->password)) {
+            $user->password = 
+            Hash::make($request->new_password);
+            $user->save();
+            // $this->sendSMS();
+            return response()->json(["message" => "Votre code pin est changé avec succés."], 200);
+        }
+
+        return response()->json(["message" => "Code pin invalide"], 422);
+    }
+
+    public function updateFcmToken(Request $request)
+    {
+        $request->validate([
+            "token" => 'required'
+        ]);
+
+        $user = User::find(auth()->id());
+
+        $user->remember_token = $request->token;
+
+        $user->save();
+
+        return $user;
+    }
+
+    public function sendOtp(OrangeSMSService $orangeSMSService, Request $request)
+    {
+        $request->validate(["phone_number" => "required"]);
+
+        $userExists = User::whereUsername($request->phone_number)->first();
+
+        if ($userExists) {
+            return response()->json([
+                "message" => "Ce numéro de téléphone est déjà utilisé."
+            ], 422);
+        }
+
+        $otp = random_int(10000, 99999);
+
+        $password_resets = new PasswordReset();
+        $password_resets->email = $request->phone_number;
+        $password_resets->token = $otp;
+        $password_resets->created_at = Carbon::now();
+        $password_resets->save();
+
+        orange()->sendSMS("Votre code de vérification est : $otp", $request->phone_number);
+
+        return response()->json([
+            "message" => "Votre code pin est envoyé avec succès.",
+            "otp" => $otp
+        ]);
+    }
+
+    public function verifyOtp(OrangeSMSService $orangeSMSService, Request $request)
+    {
+        $request->validate([
+            "otp_code" => 'required',
+            "phone_number" => "required"
+        ]);
+
+        $password_resets = DB::select("SELECT * FROM password_resets WHERE email = ? AND token = ? AND created_at > ?", [$request->phone_number, $request->otp_code, Carbon::now()->subMinutes(5)->toDateTimeString()]);
+
+        if ($password_resets && count($password_resets) != 0) {
+            // delete all otp with the same phone number
+            DB::delete("DELETE FROM password_resets WHERE email = ?", [$request->phone_number]);
+            return response()->json([
+                "message" => "Votre code pin est correcte."
+            ], 200);
+        } else {
+            return response()->json([
+                "message" => "Code de validation incorrecte."
+            ], 422);
+        }
+    }
+
+    public function check(Request $request)
+    {
+        if ($request->has('username')) {
+            $user = User::whereUsername($request->username)->first();
+            if ($user) {
+                return response()->json($user);
+            }
+        }
+
+        return response()->json([
+            "message" => "Veuillez créer un compte"
+        ], 422);
     }
 }

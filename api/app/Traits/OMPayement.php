@@ -2,14 +2,15 @@
 
 namespace App\Traits;
 
+use App\Models\Log;
 use App\Models\Param;
 use App\Models\Client;
 use App\Models\Compte;
 use App\Models\Padding;
 use App\Models\Commande;
 use App\Models\Versement;
+use Illuminate\Support\Str;
 use App\Models\EtatCommande;
-use App\Models\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Http;
 
@@ -256,9 +257,13 @@ trait OMPayement
 
     public function isValideOrangeNumber($telephone)
     {
+        if($telephone && Str::length(formatOnePhone($telephone, false)) == 12){
+            $telephone = Str::substr(formatOnePhone($telephone, false), 3);
+        }
         $test = str_split($telephone);
+        
         if ($test && $test[0] == "7" && ($test[1] == "7" || $test[1] == "5" || $test[1] == "8")) {
-            return true;
+            return $telephone;
         }
 
         return false;

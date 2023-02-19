@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit {
     this.isLoad = true;
     this.commercantService.getStatistique().subscribe({
       next: (response:any) => {
+        console.log(response);
+        
         this.data = response;
         this.isLoad = false;
       },

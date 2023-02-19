@@ -14,7 +14,7 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class CommercantService extends Base {
-  protected override _baseUrl: string = 'commercant/';
+  protected override _baseUrl: string = 'commercants/';
   constructor(private h: HttpClient) {
     super();
     this.httpClient = h;
