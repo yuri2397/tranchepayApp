@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tranchepay_mobile/app/models/shared.model.dart';
 
 class LocalStorageService extends GetxService {
   late GetStorage _box;
 
-  LocalStorageService() {
+  Future<LocalStorageService> init() async {
+    await GetStorage.init();
     _box = GetStorage();
+    return this;
   }
 
   void setToken(String token) {

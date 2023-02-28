@@ -23,7 +23,6 @@ class ApiClient extends GetxService with BaseApiClient {
     baseUrl = settingsService.setting.value.appApiUrl!;
     httpClient = createDio();
     _box = GetStorage();
-    Get.log('TanelApiClient created');
     Get.log('baseUrl: $baseUrl');
   }
 

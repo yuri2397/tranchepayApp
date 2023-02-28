@@ -100,7 +100,6 @@ Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
     Route::delete('/{id}', [ClientController::class, 'destroy']);
     Route::get('/', [ClientController::class, 'index']);
 
-
     Route::get('profile', [ClientController::class, 'profile']);
     Route::get('solde', [ClientController::class, 'solde']);
     Route::get('commandes', [ClientController::class, "commandes"]);

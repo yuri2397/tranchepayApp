@@ -30,7 +30,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                 title: const Text('Partenaires',
                     style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400)),
                 trailing: Icon(
                   Icons.navigate_next_outlined,
@@ -46,7 +46,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   'Modifier code pin',
                   style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
                 trailing: Icon(
@@ -63,7 +63,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   'Centre d’aide',
                   style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
                 trailing: Icon(
@@ -82,7 +82,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   'Partager l’application',
                   style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
                 trailing: Icon(
@@ -99,7 +99,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   'Déplafonnenemet compte',
                   style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
                 trailing: Icon(
@@ -116,7 +116,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   'Information générale',
                   style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400),
                 ),
                 trailing: Icon(

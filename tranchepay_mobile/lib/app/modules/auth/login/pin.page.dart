@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -40,7 +41,7 @@ class LoginPinPage extends GetView<LoginController> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: Obx(
             () => Center(
               child: Column(
@@ -50,45 +51,51 @@ class LoginPinPage extends GetView<LoginController> {
                   SvgPicture.asset("assets/icons/key_pin.svg")
                       .marginOnly(bottom: 30),
                   Text("Veuillez saisir votre code PIN pour continuer",
+                          textAlign: TextAlign.center,
                           style: Get.textTheme.bodyMedium
                               ?.merge(TextStyle(color: Color(mainColor))))
                       .marginOnly(bottom: 30),
-                  PinCodeTextField(
-                    length: 4,
-                    keyboardType: TextInputType.number,
-                    autoDismissKeyboard: true,
-                    cursorColor: Color(mainColor),
-                    autoFocus: true,
-                    textStyle: TextStyle(fontSize: 30, color: Color(mainColor)),
-                    obscureText: true,
-                    animationType: AnimationType.fade,
-                    pinTheme: PinTheme(
-                      borderRadius: BorderRadius.circular(10),
-                      activeColor: Color(mainColor),
-                      selectedColor: Color(mainColor),
-                      inactiveColor: Color(neutralColor),
-                      activeFillColor: Color(neutralColor),
-                      selectedFillColor: Color(mainColor),
-                      inactiveFillColor: Color(mainColor),
-                      errorBorderColor: Colors.redAccent,
-                      borderWidth: 3,
-                      fieldHeight: 60,
-                      fieldWidth: 60,
+                  SizedBox(
+                    width: Get.width * 0.5,
+                    child: PinCodeTextField(
+                      length: 4,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      autoDismissKeyboard: true,
+                      cursorColor: Color(mainColor),
+                      autoFocus: true,
+                      textStyle:
+                          TextStyle(fontSize: 30, color: Color(mainColor)),
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      pinTheme: PinTheme(
+                        borderRadius: BorderRadius.circular(10),
+                        activeColor: Color(mainColor),
+                        selectedColor: Color(mainColor),
+                        inactiveColor: Color(neutralColor),
+                        activeFillColor: Color(neutralColor),
+                        selectedFillColor: Color(mainColor),
+                        inactiveFillColor: Color(mainColor),
+                        errorBorderColor: Colors.redAccent,
+                        borderWidth: 2,
+                        fieldHeight: 30,
+                        fieldWidth: 30,
+                      ),
+                      onCompleted: (v) async {
+                        controller.password.value = v;
+                        await controller.login();
+                      },
+                      onChanged: (value) {
+                        controller.password.value = value;
+                      },
+                      beforeTextPaste: (text) {
+                        print("Allowing to paste $text");
+                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                        return true;
+                      },
+                      appContext: Get.context!,
                     ),
-                    onCompleted: (v) async {
-                      controller.password.value = v;
-                      await controller.login();
-                    },
-                    onChanged: (value) {
-                      controller.password.value = value;
-                    },
-                    beforeTextPaste: (text) {
-                      print("Allowing to paste $text");
-                      //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                      //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                      return true;
-                    },
-                    appContext: Get.context!,
                   ),
                   controller.loading.value
                       ? const CircularProgressIndicator()

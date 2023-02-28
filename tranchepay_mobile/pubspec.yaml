@@ -29,6 +29,8 @@ dependencies:
   url_launcher: ^6.1.9
   firebase_core: ^2.6.1
   firebase_messaging: ^14.2.4
+  qr_flutter: ^4.0.0
+  money_formatter: ^0.0.4
 
 dev_dependencies:
   flutter_test:

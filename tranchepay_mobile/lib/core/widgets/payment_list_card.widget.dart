@@ -61,7 +61,7 @@ class PaymentListCardWidget extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.red,
                         fontFamily: 'Poppins',
-                        fontSize: 18,
+                        fontSize: 12,
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
@@ -69,7 +69,7 @@ class PaymentListCardWidget extends StatelessWidget {
                     style: const TextStyle(
                         color: Colors.red,
                         fontFamily: 'Poppins',
-                        fontSize: 18,
+                        fontSize: 12,
                         fontWeight: FontWeight.w700),
                   ),
                 ],

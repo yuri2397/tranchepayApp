@@ -9,6 +9,7 @@ class ClientAppBarWidget extends AppBar {
   Function()? plusButtonTap;
   Function()? notificationButtonTap;
   Function()? profileButtonTap;
+
   ClientAppBarWidget(
       {super.key,
       this.notificationButtonTap,
@@ -33,7 +34,7 @@ class ClientAppBarWidget extends AppBar {
                       shape: BoxShape.circle,
                       color: Colors.white,
                       image: DecorationImage(
-                        fit: BoxFit.fill,
+                        fit: BoxFit .fill,
                         image: AssetImage('assets/icons/avatar.jpg'),
                       ),
                     ),

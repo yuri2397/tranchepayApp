@@ -9,12 +9,24 @@ class PaymentProvider {
           {required double amount,
           required String phone,
           required String commandeId}) async =>
-      _client.post('/auth/login',
+      _client.post('/payments/wave',
           data: {'amount': amount, 'phone': phone, 'commande_id': commandeId});
 
-  Future<dio.Response> om(String phoneNumber) async =>
-      _client.post('/auth/otp/request', data: {'phone_number': phoneNumber});
+  Future<dio.Response> om(
+      {required double amount,
+        required String phone,
+        required String commandeId}) async =>
+      _client.post('/payments/om',
+          data: {'amount': amount, 'phone': phone, 'commande_id': commandeId});
 
-  Future<dio.Response> free({required Map<String, dynamic> data}) async =>
-      _client.post('/auth/otp/verify', data: data);
+  Future<dio.Response> free(
+      {required double amount,
+        required String phone,
+        required String commandeId}) async =>
+      _client.post('/payments/free',
+          data: {'amount': amount, 'phone': phone, 'commande_id': commandeId});
+
+  Future<dio.Response> checkPayment(String paddingId) async =>
+      _client.get('/shared/check-padding/$paddingId');
+
 }

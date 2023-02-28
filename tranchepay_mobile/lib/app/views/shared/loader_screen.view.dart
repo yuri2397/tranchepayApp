@@ -19,27 +19,32 @@ class LoaderScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SvgPicture.asset("assets/icons/bag.svg"),
-              const SizedBox(height: 20),
+              SvgPicture.asset(
+                "assets/icons/bag.svg",
+                width: 80,
+              ),
+              const SizedBox(height: 10),
               Text(
                 "$message",
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 25,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   fontFamily: "Poppins",
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                "$paragraph",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "Poppins",
-                ),
-              ),
+              paragraph != null
+                  ? Text(
+                      "$paragraph",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "Poppins",
+                      ),
+                    )
+                  : Container(),
               if (loading!) const SizedBox(height: 100),
               if (loading!)
                 SizedBox(

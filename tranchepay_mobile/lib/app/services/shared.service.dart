@@ -7,6 +7,7 @@ import 'package:tranchepay_mobile/core/ui.dart';
 
 class SharedService extends GetxService {
   static final _provider = SharedProvider();
+
   Future<SharedService> init() async {
     final fcmToken = await FirebaseMessaging.instance.getToken();
     setFcmToken(fcmToken!);

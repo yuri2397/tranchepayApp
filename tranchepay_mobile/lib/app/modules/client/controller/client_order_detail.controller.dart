@@ -19,12 +19,7 @@ class ClientOrderDetailController extends GetxController {
   final order = Commande().obs;
   final hasError = false.obs;
   final loading = true.obs;
-  final panelHeightOpen = (500.0).obs;
-  final panelHeightClosed = (0.0).obs;
-  final initFabHeight = (120.0).obs;
-  final fabHeight = (120.0).obs;
 
-  final panelController = PanelController();
   @override
   void onInit() async {
     await findOrderDetails();
@@ -176,4 +171,6 @@ class ClientOrderDetailController extends GetxController {
       ),
     );
   }
+
+
 }

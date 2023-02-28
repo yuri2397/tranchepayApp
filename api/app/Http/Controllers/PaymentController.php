@@ -81,10 +81,10 @@ class PaymentController extends Controller
 
         if($om && $om['padding'] == null){
             if(((int)$om['response']['status']) >= 400 && ((int)$om['response']['status']) < 500){
-                return response()->json(['message' => $om['response']['detail']]);
+                return response()->json(['message' => $om['response']['detail']], 422);
 
             }else{
-                return response()->json(['message' => 'Une erreur s\'est produite, merci de réessayer plus tard.']);
+                return response()->json(['message' => 'Une erreur s\'est produite, merci de réessayer plus tard.'], 422);
             }
         }
 

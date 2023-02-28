@@ -42,7 +42,6 @@ class ClientModuleController extends GetxController {
     pages.add(
       PersistentBottomNavBarItem(
           icon: const Icon(Icons.home_rounded),
-          iconSize: 30,
           inactiveIcon: const Icon(Icons.home_rounded),
           title: 'Accueil',
           inactiveColorSecondary: Colors.white,
@@ -52,7 +51,6 @@ class ClientModuleController extends GetxController {
     );
     pages.add(PersistentBottomNavBarItem(
         icon: const Icon(Icons.shopping_bag_outlined),
-        iconSize: 30,
         inactiveIcon: const Icon(Icons.shopping_bag_outlined),
         title: 'Commandes',
         inactiveColorSecondary: Colors.white,
@@ -62,7 +60,6 @@ class ClientModuleController extends GetxController {
     pages.add(
       PersistentBottomNavBarItem(
           icon: const Icon(Icons.download_rounded),
-          iconSize: 30,
           inactiveIcon: const Icon(Icons.download_rounded),
           title: 'Versements',
           inactiveColorSecondary: Colors.white,
@@ -73,7 +70,6 @@ class ClientModuleController extends GetxController {
     pages.add(
       PersistentBottomNavBarItem(
           icon: const Icon(Icons.settings_rounded),
-          iconSize: 30,
           inactiveIcon: const Icon(Icons.settings_rounded),
           title: 'Paramètres',
           inactiveColorSecondary: Colors.white,
