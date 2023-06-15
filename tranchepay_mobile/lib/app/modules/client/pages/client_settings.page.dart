@@ -14,13 +14,35 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Ui.parseColorText("#EDEDED"),
-          title: Text(
-            "PARAMETRES".toUpperCase(),
-            style: Get.textTheme.headline2
-                ?.merge(TextStyle(color: Color(mainColor))),
+          backgroundColor: Color(neutralColor),
+          automaticallyImplyLeading: false,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(10),
+            child:
+            Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  width: 35,
+                  height: 35,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/icons/avatar.jpg'),
+                    ),
+                  ),
+                ),
+              ).marginOnly(right: 5),
+              Expanded(
+                child: Text("PARAMETRES",
+                    style: Get.textTheme.headline5
+                        ?.merge(TextStyle(color: Color(mainColor))))
+                    .marginOnly(left: 10),
+              ),
+            ]).marginAll(10),
           ),
-          centerTitle: true,
         ),
         body: ListView(
           children: [
@@ -37,7 +59,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   color: Color(mainColor),
                   size: 30,
                 ),
-              ).marginOnly(bottom: 20, top: 20),
+              )
             ),
             TextButton(
               onPressed: () => Get.toNamed(AppRoutes.updatePinCode),
@@ -54,7 +76,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   color: Color(mainColor),
                   size: 30,
                 ),
-              ).marginOnly(bottom: 20),
+              )
             ),
             TextButton(
               onPressed: () => Get.toNamed(AppRoutes.helpCenter),
@@ -71,7 +93,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   color: Color(mainColor),
                   size: 30,
                 ),
-              ).marginOnly(bottom: 20),
+              )
             ),
             TextButton(
               onPressed: () {
@@ -90,7 +112,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   color: Color(mainColor),
                   size: 30,
                 ),
-              ).marginOnly(bottom: 20),
+              )
             ),
             TextButton(
               onPressed: () => Get.toNamed(AppRoutes.deplafonnement),
@@ -107,7 +129,7 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
                   color: Color(mainColor),
                   size: 30,
                 ),
-              ).marginOnly(bottom: 20),
+              )
             ),
             TextButton(
               onPressed: () => Get.toNamed(AppRoutes.generalInfo),
@@ -127,6 +149,6 @@ class ClientSettingsPage extends GetView<ClientSettingsController> {
               ),
             )
           ],
-        ).marginSymmetric(vertical: 20, horizontal: 10));
+        ));
   }
 }

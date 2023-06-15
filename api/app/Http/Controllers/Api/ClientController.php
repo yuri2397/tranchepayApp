@@ -37,7 +37,7 @@ class ClientController extends Controller
         return $this->authClient();
     }
 
-    public function solde()
+    public function accountBalance()
     {
         $load = EtatCommande::whereNom("load")->first();
         $query =  Commande::whereClientId($this->authClient()->id)
@@ -342,5 +342,41 @@ class ClientController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+
+    public function show(Request $request, $id)
+    {
+        return Client::find($id);
+    }
+
+    public function index(Request $request)
+    {
+        $clients = Client::with($request->with ?? []);
+
+        if ($request->has('search')) {
+            $search_query = trim($request->search);
+            $search_parts = explode(' ', $search_query);
+            $first_name = isset($search_parts[0]) ? $search_parts[0] : '';
+            $last_name = isset($search_parts[1]) ? $search_parts[1] : '';
+            $clients->where(function ($query) use ($first_name, $last_name) {
+                $query->where('prenoms', 'LIKE', '%' . $first_name . '%')
+                    ->where('nom', 'LIKE', '%' . $last_name . '%');
+            })
+                ->orWhere(function ($query) use ($first_name, $last_name) {
+                    $query->where('nom', 'LIKE', '%' . $first_name . '%')
+                        ->where('prenoms', 'LIKE', '%' . $last_name . '%');
+                })
+                ->orWhere('telephone', 'LIKE', '%' . $search_query . '%');
+        }
+
+        if ($request->has('qr_code')) {
+        }
+
+        if ($request->has("per_page")) {
+            return $clients->paginate($request->per_page ?? 15, $request->columns ?? ['*'], "page", $request->page ?? 1);
+        }
+
+        return $clients->get();
     }
 }

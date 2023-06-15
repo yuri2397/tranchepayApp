@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import 'package:tranchepay_mobile/app/services/auth.service.dart';
 import 'package:tranchepay_mobile/app/services/client.service.dart';
 import 'package:tranchepay_mobile/app/services/local_storage.service.dart';
-import 'package:tranchepay_mobile/app/services/payement.service.dart';
+import 'package:tranchepay_mobile/app/services/order.service.dart';
+import 'package:tranchepay_mobile/app/services/payment.service.dart';
 import 'package:tranchepay_mobile/app/services/settings.service.dart';
 import 'package:tranchepay_mobile/app/services/shared.service.dart';
+import 'package:tranchepay_mobile/app/services/vendor.service.dart';
 import 'package:tranchepay_mobile/app/views/shared/utils.dart';
 import 'package:tranchepay_mobile/core/provider/base/api_client.dart';
 import 'package:tranchepay_mobile/core/routes/app_routing.dart';
@@ -26,9 +28,12 @@ Future<void> initServices() async {
 
   await Get.putAsync(() => SettingService().init());
   await Get.putAsync(() => ApiClient().init());
+  await Get.putAsync(() => OrderService().init());
+  Get.lazyPut(() => PaymentService());
 
   await Get.putAsync(() => AuthService().init());
   await Get.putAsync(() => ClientService().init());
+  await Get.putAsync(() => VendorService().init());
   await Get.putAsync(() => SharedService().init());
   Get.lazyPut<PaymentService>(() => PaymentService());
 

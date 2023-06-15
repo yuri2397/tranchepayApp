@@ -14,7 +14,42 @@ class ClientService extends GetxService {
   Future<Client?> store(Client client, String password) async {
     try {
       final response = await _provider.registerClient(client, password);
-      print("response: $response");
+      if (response.statusCode == 200) {
+        return Client.fromJson(response.data);
+      }
+      Ui.errorMessage(message: "Une erreur est survenue");
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<List<Client>> index({Map<String, dynamic>? params}) async {
+    try {
+      var response = await _provider.index(params: params);
+      Get.log("RESPONSE: ${response.data}");
+      if (response.statusCode == 200) {
+        if (params != null && params.containsKey('per_page')) {
+          return List<Client>.from(
+              response.data['data'].map((x) => Client.fromJson(x)));
+        } else {
+          return List<Client>.from(
+              response.data.map((x) => Client.fromJson(x)));
+        }
+      }
+      return [];
+    } catch (e) {
+      print('ERRRRRRR: $e');
+      return [];
+    }
+  }
+
+  Future<Client?> show(
+      {required String id, Map<String, dynamic>? params}) async {
+    try {
+      final response = await _provider.show(id: id, params: params);
+      print("show Client: $response");
       if (response.statusCode == 200) {
         return Client.fromJson(response.data);
       }
@@ -89,13 +124,12 @@ class ClientService extends GetxService {
     }
   }
 
-  Future<int?> solde() async {
+  Future<double?> solde() async {
     try {
       var response = await _provider.solde();
-      print(response.data);
+      Get.log("SOOOOOO ${response.data}");
       if (response.statusCode == 200) {
-        Get.log("parse");
-        return int.tryParse(response.data);
+        return double.parse("${response.data}");
       }
       return 0;
     } catch (e) {

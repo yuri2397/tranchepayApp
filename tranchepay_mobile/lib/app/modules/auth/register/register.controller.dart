@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:tranchepay_mobile/app/models/boutique.model.dart';
 import 'package:tranchepay_mobile/app/models/client.model.dart';
+import 'package:tranchepay_mobile/app/models/commande.model.dart';
+import 'package:tranchepay_mobile/app/models/commercant.model.dart';
 import 'package:tranchepay_mobile/app/models/shared.model.dart';
 import 'package:tranchepay_mobile/app/services/auth.service.dart';
 import 'package:tranchepay_mobile/app/services/local_storage.service.dart';
+import 'package:tranchepay_mobile/app/services/vendor.service.dart';
 import 'package:tranchepay_mobile/core/routes/routes.dart';
 import 'package:tranchepay_mobile/core/theme.colors.dart';
 
 class RegisterController extends GetxController {
-  final RxString username = '781879981'.obs;
+  final RxString username = ''.obs;
   final RxString password = ''.obs;
   final RxString passwordConfirm = ''.obs;
   final RxBool pinConfirm = false.obs;
@@ -19,32 +26,52 @@ class RegisterController extends GetxController {
   final phoneNumber = ''.obs;
   final opt = ''.obs;
   final client = Client().obs;
+  final vendor = Commercant().obs;
   final clientFormLoad = false.obs;
   final registerLoad = false.obs;
   final step = 0.obs;
+  final clientFormKey = GlobalKey<FormState>();
+  final comFormKey = GlobalKey<FormState>();
 
   final phoneNumberController = TextEditingController(text: '+221 ');
   final TextEditingController pinController = TextEditingController();
   final TextEditingController pinConfirmController = TextEditingController();
+  final TextEditingController verifyOtpPinController = TextEditingController();
 
   Future<void> validateClientForm() async {
-    if (client.value.prenoms!.isNotEmpty && client.value.nom!.isNotEmpty) {
-      clientFormLoad.value = true;
-      phoneNumber.value = client.value.telephone!.replaceAll(' ', '');
+    Get.focusScope?.unfocus();
+    if (clientFormKey.currentState?.validate() == true) {
+      Get.log("CLIENT DATA: ${client.value.toJson()}");
+      phoneNumber.value =
+          client.value.telephone!.replaceAll(" ", "").removeAllWhitespace;
       await sendOpt();
-      Get.log("OPEN BOTTOM SHEET");
-      otpBottomSheet();
-      clientFormLoad.value = false;
+    }
+  }
+
+  Future<void> validateVendorForm() async {
+    Get.focusScope?.unfocus();
+    if (comFormKey.currentState?.validate() == true) {
+      phoneNumber.value =
+          vendor.value.telephone!.replaceAll(" ", "").removeAllWhitespace;
+      sendOpt();
+    }
+  }
+
+  Future<void> createVendor() async {
+    Get.focusScope?.unfocus();
+    if (comFormKey.currentState?.validate() == true) {
+      phoneNumber.value =
+          vendor.value.telephone!.replaceAll(" ", "").removeAllWhitespace;
+      await sendOpt();
     }
   }
 
   sendOpt() async {
     Get.focusScope?.unfocus();
     loading.value = true;
-    print(client);
     try {
-      final response = await Get.find<AuthService>().sendOpt(phoneNumber.value);
-      print(response);
+      await Get.find<AuthService>().sendOpt(phoneNumber.value);
+      await otpBottomSheet();
     } catch (e) {
       print(e);
       rethrow;
@@ -60,10 +87,13 @@ class RegisterController extends GetxController {
       var response =
           await Get.find<AuthService>().verifyOpt(phoneNumber.value, opt.value);
       if (response != null) {
+        Get.back();
         Get.toNamed(AppRoutes.pinPage);
+      } else {
+        verifyOtpPinController.clear();
       }
     } catch (e) {
-      print(e);
+      verifyOtpPinController.clear();
       rethrow;
     } finally {
       loading.value = false;
@@ -83,9 +113,10 @@ class RegisterController extends GetxController {
             Text("Verification du numéro de téléphone",
                     style: Get.textTheme.headline2)
                 .marginOnly(bottom: 8),
-            Text("Vous recevrez un un SMS avec un code de confirmation sur le numéro ${phoneNumber.value}")
+            Text("Vous avez reçu un message avec le code de confirmation sur le numéro ${client.value.telephone}")
                 .marginOnly(bottom: 10),
             PinCodeTextField(
+                controller: verifyOtpPinController,
                 keyboardType: TextInputType.number,
                 animationType: AnimationType.none,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -111,6 +142,7 @@ class RegisterController extends GetxController {
                 }).marginOnly(bottom: 20),
             TextButton(
                     onPressed: () async {
+                      Get.back();
                       await sendOpt();
                     },
                     child: Text("Renvoyer un nouveau code",
@@ -131,22 +163,46 @@ class RegisterController extends GetxController {
   Future<void> register() async {
     registerLoad.value = true;
     try {
+      client.value.telephone =
+          client.value.telephone?.replaceAll(" ", "").removeAllWhitespace;
+
       if (registerType.value == UserType.client) {
         final response = await Get.find<AuthService>()
             .registerClient(client.value, pinController.text);
-        if (response != null) {
-          client.value = response;
-          Get.find<LocalStorageService>().setIsLogged(true);
-          Get.find<LocalStorageService>().setUserType('App\\Models\\Client');
-          Get.find<LocalStorageService>().setClient(response.toJson());
-          Get.offAllNamed(AppRoutes.clientProfile);
-        }
-      } else {}
+        _registerSuccess(response);
+      } else {
+        printInfo(info: "REGISTER VENDOR");
+        final response = await Get.find<AuthService>()
+            .registerVendor(vendor.value, pinController.text);
+        _registerSuccess(response);
+      }
     } catch (e) {
-      print(e);
+      print("REGISTER : $e");
       rethrow;
     } finally {
       registerLoad.value = false;
+    }
+  }
+
+  void _registerSuccess(response) {
+    if (response != null) {
+      QuickAlert.show(
+          context: Get.context!,
+          type: QuickAlertType.success,
+          title: "Bienvenue sur TranchePay !",
+          text:
+              'Nous sommes ravis de vous avoir parmi nos utilisateurs. Notre application mobile vous permettra de gérer facilement vos paiements et vos transactions en toute sécurité.',
+          confirmBtnText: "Merci!",
+          confirmBtnColor: Color(primaryColor),
+          confirmBtnTextStyle:
+              TextStyle(color: Color(mainColor), fontFamily: 'Poppins'),
+          onConfirmBtnTap: () {
+            if (registerType.value == UserType.client) {
+              Get.offAllNamed(AppRoutes.loginNumber);
+            } else {
+              Get.offAllNamed(AppRoutes.addShop);
+            }
+          });
     }
   }
 }

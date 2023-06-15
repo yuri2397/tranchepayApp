@@ -18,10 +18,10 @@ class TakePinConfirmPage extends GetView<RegisterController> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Color(neutralColor),
+          backgroundColor: Colors.white,
           title: Text(
-            "CONFIRMATION".toUpperCase(),
-            style: Get.textTheme.headline2
+            "Confirmez votre code PIN".toUpperCase(),
+            style: Get.textTheme.headline3
                 ?.merge(TextStyle(color: Color(mainColor))),
           ),
           centerTitle: true,
@@ -40,19 +40,15 @@ class TakePinConfirmPage extends GetView<RegisterController> {
             )
           ],
         ),
-        body: Center(
-            child: Padding(
-          padding: const EdgeInsets.all(20.0),
+        body: Padding(
+          padding: const EdgeInsets.all(50.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SvgPicture.asset("assets/icons/key_pin.svg",
                       width: 60, height: 60)
-                  .marginOnly(bottom: 30),
-              const Text(
-                'Confirmez votre code PIN',
-                style: TextStyle(fontSize: 15),
-              ).marginOnly(bottom: 40),
+                  .marginOnly(bottom: 40),
+
               PinCodeTextField(
                 controller: controller.pinConfirmController,
                 appContext: context,
@@ -61,6 +57,7 @@ class TakePinConfirmPage extends GetView<RegisterController> {
                 autoUnfocus: false,
                 keyboardType: TextInputType.number,
                 animationType: AnimationType.fade,
+                textStyle: TextStyle(color: Color(mainColor)),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 pinTheme: PinTheme(
                   shape: PinCodeFieldShape.underline,
@@ -91,9 +88,6 @@ class TakePinConfirmPage extends GetView<RegisterController> {
                   print(value);
                 },
                 beforeTextPaste: (text) {
-                  print("Allowing to paste $text");
-                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
                   return false;
                 },
               ).marginOnly(bottom: 20),
@@ -103,7 +97,6 @@ class TakePinConfirmPage extends GetView<RegisterController> {
             ],
           ),
         )),
-      ),
     );
   }
 }

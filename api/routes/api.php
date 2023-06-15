@@ -9,17 +9,18 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\TestController;
 use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\VersementController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\SharedController;
+use App\Http\Controllers\Api\BoutiqueController;
 use App\Http\Controllers\Api\CommandeController;
 use App\Http\Controllers\Api\CommercantController;
+use App\Http\Controllers\Api\PartenaireController;
 use App\Http\Controllers\Api\PermissionsController;
 use App\Http\Controllers\Api\DeplafonnementController;
-use App\Http\Controllers\Api\PartenaireController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\VersementController;
 
 /**
  * MIXED
@@ -46,7 +47,7 @@ Route::prefix("auth")->group(function () {
     Route::post('/otp/request', [AuthController::class, 'sendOtp']);
     Route::post('/otp/verify', [AuthController::class, 'verifyOtp']);
     Route::post('/register/client', [ClientController::class, 'store']);
-    // Route::post('/register/vendor', [ClientController::class, 'store']);
+    Route::post('/register/vendor', [CommercantController::class, 'store']);
 
     Route::get("amc/{telephone}/{token}", [AuthController::class, 'activerCompte'])->name("verifier_telephone");
     Route::post('register-client', [AuthController::class, 'registerClient']);
@@ -94,14 +95,8 @@ Route::prefix('commercants')->middleware(['auth:api', 'cors'])->group(function (
 
 
 Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
-
-    Route::post('/', [ClientController::class, 'store']);
-    Route::put('/{id}', [ClientController::class, 'update']);
-    Route::delete('/{id}', [ClientController::class, 'destroy']);
-    Route::get('/', [ClientController::class, 'index']);
-
     Route::get('profile', [ClientController::class, 'profile']);
-    Route::get('solde', [ClientController::class, 'solde']);
+    Route::get('/account-balance', [ClientController::class, 'accountBalance']);
     Route::get('commandes', [ClientController::class, "commandes"]);
     Route::get('commandes/{id}/details', [CommandeController::class, "show"]);
     Route::get('versements', [ClientController::class, "versements"]);
@@ -111,6 +106,13 @@ Route::prefix('client')->middleware(['auth:api', 'cors'])->group(function () {
     Route::get('paddings', [ClientController::class, 'paddings']);
     Route::get('search', [ClientController::class, 'search']);
     Route::post('paddings/confirme/{id}', [ClientController::class, 'confirmePaddings']);
+
+    Route::get('/', [ClientController::class, 'index']);
+    Route::post('/', [ClientController::class, 'store']);
+    Route::get('/{id}', [ClientController::class, 'show']);
+    Route::put('/{id}', [ClientController::class, 'update']);
+    Route::delete('/{id}', [ClientController::class, 'destroy']);
+
 });
 
 
@@ -138,13 +140,17 @@ Route::prefix('commandes')
     ->middleware(['auth:api', 'cors'])
     ->apiResource('commandes', CommandeController::class);
 
+Route::prefix('boutiques')
+    ->middleware(['auth:api', 'cors'])
+    ->apiResource('boutiques', BoutiqueController::class);
+
 Route::prefix('parteners')
     ->middleware(['auth:api', 'cors'])
     ->apiResource('parteners', PartenaireController::class);
 
-
-
-
+Route::prefix('retraits')
+    ->middleware(['auth:api', 'cors'])
+    ->apiResource('parteners', PartenaireController::class);
 
 
 /**

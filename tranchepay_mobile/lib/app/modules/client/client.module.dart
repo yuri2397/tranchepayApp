@@ -1,6 +1,7 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tranchepay_mobile/app/modules/client/client.module.controller.dart';
 import 'package:tranchepay_mobile/core/theme.colors.dart';
 
@@ -9,32 +10,19 @@ class ClientModule extends GetView<ClientModuleController> {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      context,
-      screens: controller.buildScreens(),
+    return Obx( () => Scaffold(
+        bottomNavigationBar: BottomNavyBar(
+      showElevation: true,
+      selectedIndex: controller.selectedPagesIndex.value,
       items: controller.navBarsItems(),
-      confineInSafeArea: true,
-      backgroundColor: Color(mainColor), // Default is Colors.white.
-      handleAndroidBackButtonPress: true, // Default is true.
-      resizeToAvoidBottomInset: true,
-      hideNavigationBarWhenKeyboardShows:
-          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: const NavBarDecoration(
-        colorBehindNavBar: Colors.white,
+      animationDuration: const Duration(milliseconds: 300),
+      onItemSelected: (index) => controller.routerOutlet(index),
+      backgroundColor: Color(mainColor),
+    ),
+      body: Container(
+          color: Colors.white,
+          child: controller.screens[controller.selectedPagesIndex.value]),
       ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 100),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 100),
-      ),
-      navBarStyle:
-          NavBarStyle.style3, // Choose the nav bar style with this property.
     );
   }
 }

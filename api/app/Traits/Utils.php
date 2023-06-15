@@ -413,6 +413,6 @@ trait Utils
 
     public function uploadImage($file, $path)
     {
-        return $file->move(public_path($path), time() . "." . $file->extension());
+        return URL::to('/') . $file->move(public_path($path), time() . "." . $file->extension());
     }
 }

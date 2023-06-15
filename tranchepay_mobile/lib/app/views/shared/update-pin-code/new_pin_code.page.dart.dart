@@ -20,7 +20,7 @@ class NewPinCodePage extends GetView<UpdatePinCondeController> {
           backgroundColor: Ui.parseColorText("#EDEDED"),
           title: Text(
             "Modifier Pin".toUpperCase(),
-            style: Get.textTheme.headline2
+            style: Get.textTheme.headline1
                 ?.merge(TextStyle(color: Color(mainColor))),
           ),
           centerTitle: true,

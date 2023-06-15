@@ -44,4 +44,17 @@ class Produit {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };
+
+  Produit copyWith() {
+    return Produit(
+      id: id,
+      nom: nom,
+      quantite: quantite,
+      prixUnitaire: prixUnitaire,
+      imagePath: imagePath,
+      commandeId: commandeId,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
 }

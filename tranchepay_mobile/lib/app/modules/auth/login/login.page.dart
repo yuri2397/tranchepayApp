@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tranchepay_mobile/app/modules/auth/login/login.controller.dart';
 import 'package:tranchepay_mobile/core/helper.dart';
 import 'package:tranchepay_mobile/core/routes/routes.dart';
@@ -13,12 +14,13 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor: Colors.white,
+      /*appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(neutralColor),
         title: Text(
           "CONNEXION".toUpperCase(),
-          style: Get.textTheme.headline2
+          style: Get.textTheme.headline3
               ?.merge(TextStyle(color: Color(mainColor))),
         ),
         centerTitle: true,
@@ -36,64 +38,99 @@ class LoginPage extends GetView<LoginController> {
             ).marginOnly(right: 20),
           )
         ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
+      ),*/
+      body:Padding(
           padding: const EdgeInsets.all(30),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Bienvenue sur TranchePay entrez votre numéro de téléphone pour continuer",
-                  style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.black,
+                SizedBox(
+                  width: Get.width,
+                  child: Text(
+                    "Votre numéro de téléphone",
+                    style: TextStyle(
+                      color: Color(darkColor),
                       fontSize: 16,
-                      fontWeight: FontWeight.w400),
-                  textAlign: TextAlign.center,
-                ).marginOnly(bottom: 30),
-                TextFormField(
-                        controller: controller.inputController,
-                        style: const TextStyle(
-                            fontSize: 20, fontFamily: 'Poppins'),
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          const UpperCaseTextFormatter(),
-                          controller.formatter,
-                        ],
-                        decoration: InputDecoration(
-                            hintText: 'Numéro de téléphone',
-                            hintStyle: TextStyle(color: Color(mainColor))))
-                    .marginOnly(bottom: 50),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ).marginOnly(bottom: 30),
+                ),
+                IntlPhoneField(
+                  decoration: InputDecoration(
+                    labelText: 'Numéro de téléphone',
+                    labelStyle: TextStyle(
+                      color: Color(darkColor),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(darkColor)
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  initialCountryCode: 'SN',
+                  countries: const ['SN'],
+                  onChanged: (phone) {
+                    print(phone.completeNumber);
+                  },
+                  keyboardType: TextInputType.number,
+                  controller: controller.inputController,
+                ).marginOnly(bottom: 20),
                 Obx(() => controller.loading.value
-                    ? const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
-                    : PrimaryButton(
-                        onPressed: () async {
-                          Get.log(
-                              "username: ${controller.inputController.text}");
-                          // if (controller.username.value.length < 9) {
-                          //   Ui.errorMessage(
-                          //       title: "Erreur",
-                          //       message: "Numéro de téléphone invalide");
-                          //   return;
-                          // }
-                          await controller.checkPhoneNumber();
-                        },
-                        child: Text(
-                          "Continuer".toUpperCase(),
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                    ? Center(
+                      child:  CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(mainColor)),
                         ),
-                      ).marginOnly(bottom: 20))
+                    )
+                    : SizedBox(
+                  width: Get.width,
+                      child: PrimaryButton(
+                        elevation: 0,
+                          onPressed: () async {
+                            Get.log(
+                                "username: ${controller.inputController.text}");
+                            await controller.checkPhoneNumber();
+                          },
+                          child: Text(
+                            "Suivant".toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                        ).marginOnly(bottom: 20),
+                    )).marginOnly(bottom: 10),
+                SizedBox(
+                  width: Get.width,
+                  child: TextButton(
+                    onPressed: () => Get.toNamed(AppRoutes.register),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Créer un compte",
+                          style: TextStyle(
+                            color: Color(mainColor),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ).marginOnly(right: 10),
+                        Icon(
+                          Icons.forward,
+                          color: Color(mainColor),
+                          size: 14,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
-      ),
     );
   }
 }

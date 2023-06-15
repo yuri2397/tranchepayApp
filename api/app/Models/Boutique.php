@@ -11,6 +11,13 @@ class Boutique extends Model
     use Uuids;
     use HasFactory;
     protected $with = ['compte'];
+    protected $fillable = [
+        'nom',
+        'addresse',
+        'telephone',
+        'logo',
+        'commercant_id',
+    ];
 
     public function commandes()
     {

@@ -12,4 +12,10 @@ class ModePayement extends Model
     use Uuids;
 
     public $table = "mode_payement";
+
+    protected $fillable = [
+        'interet',
+        'label',
+        'nb_mois',
+    ];
 }

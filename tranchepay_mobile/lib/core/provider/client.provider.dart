@@ -30,12 +30,17 @@ class ClientProvider {
     });
   }
 
+  Future<dio.Response> show(
+      {required String id, Map<String, dynamic>? params}) async {
+    return _client.get('/client/$id', params: params);
+  }
+
   Future<dio.Response> versements({params}) async {
     return _client.get('/client/versements', params: params);
   }
 
   Future<dio.Response> solde() async {
-    return _client.get('/client/solde');
+    return _client.get('/client/account-balance');
   }
 
   Future<dio.Response> commandes({params}) async {
@@ -53,5 +58,9 @@ class ClientProvider {
   Future<dio.Response> detailsPayment(String versementId, {required params}) {
     return _client.get('/client/versements/$versementId/details',
         params: params);
+  }
+
+  Future<dio.Response> index({Map<String, dynamic>? params}) async {
+    return _client.get('/client', params: params);
   }
 }

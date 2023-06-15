@@ -28,17 +28,17 @@ class CommercantController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except(['index', 'store', 'show']);
     }
 
     public function index(Request $request)
     {
         $commercants = Commercant::with($request->with ?? []);
 
-        if ($request->has('search')) {
-            $commercants->where('prenoms', 'like', "%{$request->search}%")
-                ->orWhere('nom', 'like', "%{$request->search}%")
-                ->orWhere('telephone', 'like', "%{$request->search}%");
+        if ($request->has('q')) {
+            $commercants->where('prenoms', 'like', "%{$request->q}%")
+                ->orWhere('nom', 'like', "%{$request->q}%")
+                ->orWhere('telephone', 'like', "%{$request->q}%");
         }
 
         if ($request->has('per_page')) {
@@ -59,39 +59,39 @@ class CommercantController extends Controller
         $this->validate($request, [
             "nom" => "required",
             "prenoms" => "required",
+            "email" => "string",
             "telephone" => "required|unique:commercants,telephone",
             "adresse" => "string",
             "password" => "required",
-            "boutique.*.nom" => "required",
-            "boutique.*.addresse" => "required",
         ]);
 
         try {
             $commercant = new Commercant();
             $commercant->nom = $request->nom;
             $commercant->prenoms = $request->prenoms;
-            $commercant->telephone = $request->telephone;
+            $commercant->telephone = formatOnePhone($request->telephone, false);
             $commercant->adresse = $request->adresse;
             $commercant->save();
 
             $user = new User();
             $user->email = $request->email;
-            $user->username = $request->telephone;
+            $user->username = formatOnePhone($request->telephone, false);
             $user->password = bcrypt($request->password);
             $user->model_type = Commercant::class;
             $user->model = $commercant->id;
             $user->save();
 
-            $boutique = new Boutique();
-            $boutique->nom = $request->boutique["nom"];
-            $boutique->addresse = $request->boutique["addresse"];
-            $boutique->commercant_id = $commercant->id;
-            $boutique->save();
+            // $boutique = new Boutique();
+            // $boutique->nom = $request->boutique["nom"];
+            // $boutique->addresse = $request->boutique["addresse"];
+            // $boutique->telephone = formatOnePhone($request->boutique["telephone"], false);
+            // $boutique->commercant_id = $commercant->id;
+            // $boutique->save();
 
-            $compte = new Compte();
-            $compte->solde = 0;
-            $compte->boutique_id = $boutique->id;
-            $compte->save();
+            // $compte = new Compte();
+            // $compte->solde = 0;
+            // $compte->boutique_id = $boutique->id;
+            // $compte->save();
 
             return response()->json([
                 "message" => "Commercant enregistré avec succès",
@@ -227,10 +227,10 @@ class CommercantController extends Controller
                     "message" => $check['message']
                 ], Response::HTTP_CONFLICT);
             }
+
             $prix_total = $check["prix_total"];
 
             $commande = new Commande;
-            $commande->reference = uniqid();
             $commande->nb_produits = count($request->produits);
             $commande->nb_tranche = $mode->nb_mois;
             $commande->date_time = now();
@@ -253,7 +253,7 @@ class CommercantController extends Controller
                 $p->save();
             }
 
-            $telephone = $request->telephone;
+            $telephone = formatOnePhone($request->telephone);
             if (!$telephone) {
                 $telephone = $client->telephone;
             }
@@ -267,7 +267,7 @@ class CommercantController extends Controller
                 return $response;
             } else if ($request->type === 'offline') {
                 $response = $this->paiementEnCaise($request, $commande, $client);
-                $this->sendSMS($response['sms'], '+221' . $client->telephone);
+                $this->sendSMS($response['sms'], $client->telephone);
                 DB::commit();
                 return response()->json([
                     "message" => $response['message'],

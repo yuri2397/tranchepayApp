@@ -16,7 +16,7 @@ class PaymentListCardWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.transparent,
-            border: Border.all(color: Ui.parseColorText("#849398"), width: 2)),
+            border: Border.all(color: Ui.parseColorText("#849398"), width: 1)),
         child: Column(
           children: [
             ListView.separated(

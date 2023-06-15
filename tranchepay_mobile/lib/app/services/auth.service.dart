@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tranchepay_mobile/app/models/client.model.dart';
+import 'package:tranchepay_mobile/app/models/commercant.model.dart';
 import 'package:tranchepay_mobile/app/models/login_response.model.dart';
 import 'package:tranchepay_mobile/app/models/user.model.dart';
+import 'package:tranchepay_mobile/app/services/local_storage.service.dart';
 import 'package:tranchepay_mobile/core/provider/auth.provider.dart';
+import 'package:tranchepay_mobile/core/routes/routes.dart';
 import 'package:tranchepay_mobile/core/ui.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -40,6 +44,8 @@ class AuthService extends GetxService {
     }
   }
 
+
+
   Future<void> updateUserNotificationToken(String token) async {
     try {
       await _provider.updateUserNotificationToken(token);
@@ -53,7 +59,8 @@ class AuthService extends GetxService {
     //   Routes.logout,
     //   options: _client.optionsNetwork,
     // );
-    // await _client._box.remove('token');
+    Get.find<LocalStorageService>().clear();
+    Get.offAllNamed(AppRoutes.firstTimeInstall);
   }
 
   Future<dynamic> sendOpt(String phoneNumber) async {
@@ -68,12 +75,10 @@ class AuthService extends GetxService {
 
   Future<dynamic> verifyOpt(String phoneNumber, String otpCode) async {
     try {
-      print("phoneNumber: $phoneNumber, otpCode: $otpCode");
       final response = await _provider.verifyOtp(data: {
         'phone_number': phoneNumber,
         'otp_code': otpCode,
       });
-      print(response);
       if (response.statusCode == 200) {
         return response.data;
       } else if (response.statusCode == 422) {
@@ -81,7 +86,6 @@ class AuthService extends GetxService {
       }
       return null;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
@@ -91,9 +95,9 @@ class AuthService extends GetxService {
       final response = await _provider.registerClient(
           data: client.toJson()..addAll({'password': password}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data;
+        return Client.fromJson(response.data);
       } else if (response.statusCode == 422) {
-        Ui.errorMessage(title: "Erreur", message: "Code OTP invalide");
+        Ui.errorMessage(title: "Une erreur", message: "Code de vérification invalide !!!");
       }
       return null;
     } catch (e) {
@@ -107,10 +111,12 @@ class AuthService extends GetxService {
       Get.log("PHONE NUMBER: $username");
       dio.Response response = await _provider.userByPhoneNumber(username);
       if (response.statusCode == 200) {
+        print(response.data);
         return User.fromJson(response.data);
       }
       return null;
     } catch (e) {
+      print("EEE $e");
       rethrow;
     }
   }
@@ -126,6 +132,22 @@ class AuthService extends GetxService {
       Ui.errorMessage(message: 'Une erreur s\'est produite', title: 'Erreur');
       print('[AuthService] : (updatePassword) => $e');
       return null;
+    }
+  }
+
+  Future<Commercant?> registerVendor(Commercant commercant, String password) async{
+    try {
+      final response = await _provider.registerVendor(
+          data: commercant.toJson()..addAll({'password': password}));
+      printInfo(info: response.data.toString());
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Commercant.fromJson(response.data);
+      } else if (response.statusCode == 422) {
+        Ui.errorMessage(title: "Une erreur", message: "Code de vérification invalide !!!");
+      }
+      return null;
+    } catch (e) {
+      rethrow;
     }
   }
 }

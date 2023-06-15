@@ -38,7 +38,7 @@ return [
     'services' => [
 
         'orange' => [
-            'api_url' => env('ORANGE_API_URL'),
+            'api_url' => env('ORANGE_SMS_HOST'),
             'client_id' => env('ORANGE_CLIENT_ID'),
             'client_secret' => env('ORANGE_CLIENT_SECRET'),
             'authorization_header' => env('ORANGE_AUTHORIZATION_HEADER'),

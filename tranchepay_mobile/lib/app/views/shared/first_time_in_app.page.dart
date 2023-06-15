@@ -1,100 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'package:tranchepay_mobile/core/routes/routes.dart';
 import 'package:tranchepay_mobile/core/theme.colors.dart';
-import 'package:tranchepay_mobile/core/widgets/button.widget.dart';
+import 'package:tranchepay_mobile/core/utils/helpers.dart';
 
-class FirstTimeInstall extends StatelessWidget {
+class FirstTimeInstall extends StatefulWidget {
   FirstTimeInstall({super.key});
 
+  @override
+  State<FirstTimeInstall> createState() => _FirstTimeInstallState();
+}
+
+class _FirstTimeInstallState extends State<FirstTimeInstall> {
   final Shader linearGradient = const LinearGradient(
     colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
   ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
+  final List<PageViewModel> listPagesViewModel = [
+    PageViewModel(
+      titleWidget: const Text("Achetez maintenant, payez plus tard avec TranchPay", style: TextStyle(
+        fontFamily: 'Poppins',
+        fontSize: 16,
+        fontWeight: FontWeight.w600
+      ), textAlign: TextAlign.center,),
+      bodyWidget: const Text("Avec TranchPay, vous pouvez acheter des produits en ligne dès maintenant et payer plus tard en plusieurs fois.",
+      style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
+      image: CircleAvatar(radius: 80, backgroundColor: Color(neutralColor), child:  Image.asset("assets/images/img.png", height: 140),),
+    ),
+    PageViewModel(
+      titleWidget: const Text("Paiements instantanés pour les commerçants", style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+          fontWeight: FontWeight.w600
+      ), textAlign: TextAlign.center,),
+      bodyWidget: const Text("TranchPay offre un système de paiement instantané pour les commerçants, leur permettant de recevoir l'intégralité du montant de la commande dès qu'elle est validée.",
+        style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
+      image: CircleAvatar(radius: 80, backgroundColor: Color(neutralColor), child:  Image.asset("assets/images/img.png", height: 140)),
+    ),
+    PageViewModel(
+      titleWidget: const Text(" Options de paiement pratiques avec TranchPay", style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+          fontWeight: FontWeight.w600
+      ), textAlign: TextAlign.center,),
+      bodyWidget: const Text("TranchPay offre une variété d'options de paiement pour rendre le processus de paiement encore plus pratique et accessible pour vous. Nous acceptons les paiements mobiles tels que Wave, Orange Money et Free Money.",
+        style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
+      image: CircleAvatar(radius: 80, backgroundColor: Color(neutralColor), child:  Image.asset("assets/images/img.png", height: 140),),
+    ),
+    PageViewModel(
+      titleWidget: const Text(" Sécurité et simplicité avec TranchPay", style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+          fontWeight: FontWeight.w600
+      ), textAlign: TextAlign.center,),
+      bodyWidget: const Text("Chez TranchPay, nous croyons en une expérience de paiement facile et sécurisée pour tous. Notre processus de paiement est simple et sécurisé, vous offrant la tranquillité d'esprit que vos informations de paiement sont protégées.",
+        style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
+      image: CircleAvatar(radius: 80, backgroundColor: Color(neutralColor), child:  Image.asset("assets/images/img.png", height: 140),),
+    ),
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(mainColor),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Flexible(
-                    flex: 4,
-                    child: Column(
-                      children: [
-                        const Text(
-                          "Ne faites pas qu’acheter!",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Poppins",
-                              height: 2),
-                          textAlign: TextAlign.center,
-                        ).marginOnly(bottom: 10),
-                        const Text(
-                          "Achetez à votre",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Poppins"),
-                          textAlign: TextAlign.center,
-                        ).marginOnly(bottom: 10),
-                        Text(
-                          "RYTHME",
-                          style: TextStyle(
-                              color: Color(accentColor),
-                              fontSize: 50,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ).marginOnly(bottom: 20),
-                      ],
-                    )),
-                Flexible(
-                  flex: 2,
-                  child: Image.asset("assets/images/logo.jpg",
-                          width: 100, height: 100)
-                      .marginOnly(bottom: 20),
-                ),
-                Flexible(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                            width: Get.width,
-                            child: PrimaryButton(
-                                onPressed: () {
-                                  Get.toNamed(AppRoutes.login);
-                                },
-                                child: Text(
-                                  "Connexion".toUpperCase(),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w700),
-                                ))).marginOnly(bottom: 10),
-                        SizedBox(
-                          width: Get.width,
-                          child: SecondaryButton(
-                              onPressed: () {
-                                Get.toNamed(AppRoutes.register);
-                              },
-                              child: Text(
-                                "Inscription".toUpperCase(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w700),
-                              )),
-                        )
-                      ],
-                    ))
-              ],
-            ),
+      backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: IntroductionScreen(
+            pages: listPagesViewModel,
+            showBackButton: false,
+            showNextButton: false,
+            globalBackgroundColor: Colors.white,
+            done: const Icon(Icons.arrow_forward_ios_rounded),
+            onDone: () {
+              localStorage.setFirstTimeInstall(true);
+              Get.offAllNamed(AppRoutes.loginNumber);
+            },
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

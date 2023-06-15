@@ -17,7 +17,7 @@ class PartenerPage extends GetView<PartenerController> {
         backgroundColor: Ui.parseColorText("#EDEDED"),
         title: Text(
           "Partenaires".toUpperCase(),
-          style: Get.textTheme.headline2
+          style: Get.textTheme.headline4
               ?.merge(TextStyle(color: Color(mainColor))),
         ),
         centerTitle: true,
@@ -49,18 +49,7 @@ class PartenerPage extends GetView<PartenerController> {
                 "Nos boutiques partenaires",
                 style: Get.textTheme.caption
                     ?.merge(TextStyle(fontSize: 18, color: Color(mainColor))),
-              ),
-              Row(
-                children: [
-                  SvgPicture.asset("assets/icons/wave.svg")
-                      .marginOnly(right: 20),
-                  SvgPicture.asset("assets/icons/om.svg").marginOnly(right: 20),
-                  SvgPicture.asset("assets/icons/free.svg")
-                      .marginOnly(right: 20),
-                ],
-              ).marginOnly(top: 10, bottom: 30)
-            ],
-          ).marginSymmetric(vertical: 20),
+              ),])
         ),
       ),
     );

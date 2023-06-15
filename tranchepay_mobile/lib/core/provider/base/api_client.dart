@@ -65,19 +65,19 @@ class ApiClient extends GetxService with BaseApiClient {
     }
   }
 
-  Future<dio.Response> get(String url, {Map<String, dynamic>? params}) async {
+  Future<dio.Response> get(String url, {Map<String, dynamic>? params, Options? options}) async {
     Uri uri = getApiBaseUri(url);
     if (params != null) {
       uri = uri.replace(queryParameters: params);
     }
-    return await httpClient.get(url, queryParameters: params);
+    return await httpClient.get(url, queryParameters: params, options: options);
   }
 
   Future<dio.Response> post(String url,
-      {data, Map<String, dynamic>? params}) async {
+      {data, Map<String, dynamic>? params, Options? options}) async {
     Uri uri = getApiBaseUri(url);
     if (params != null) {
-      uri = uri.replace(queryParameters: params);
+      uri = uri.replace(queryParameters: params,);
     }
     Get.log(uri.toString());
     return await httpClient.postUri(uri, data: data, options: optionsNetwork);
@@ -91,6 +91,7 @@ class ApiClient extends GetxService with BaseApiClient {
     }
     return await httpClient.putUri(uri, data: data, options: optionsNetwork);
   }
+
 
   Future<dio.Response> delete(String url,
       {data, Map<String, dynamic>? params}) async {
@@ -122,7 +123,8 @@ class AppInterceptors extends Interceptor {
   @override
   Future<void> onError(
       dio.DioError err, dio.ErrorInterceptorHandler handler) async {
-    print("DATA ERR: ${err.response?.data}");
+    Get.log("ERROR[${err.response?.statusCode}] => [RESPONE] => ${err.message} => PATH: ${err.requestOptions.path}");
+
     if (err.response?.statusCode == 401 &&
         Get.currentRoute != AppRoutes.login) {
       await Get.find<AuthService>().logout();

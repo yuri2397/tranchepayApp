@@ -1,4 +1,5 @@
 import 'package:get/state_manager.dart';
+import 'package:tranchepay_mobile/app/models/mode_payement.model.dart';
 import 'package:tranchepay_mobile/app/models/om_payment_response.model.dart';
 import 'package:tranchepay_mobile/app/models/padding.model.dart';
 import 'package:tranchepay_mobile/app/models/wave_payment.model.dart';
@@ -32,7 +33,8 @@ class PaymentService extends GetxService {
       required String phone,
       required String commandeId}) async {
     try {
-      var response = await _provider.om(amount: amount, phone: phone, commandeId: commandeId);
+      var response = await _provider.om(
+          amount: amount, phone: phone, commandeId: commandeId);
       print(response);
       if (response.statusCode == 200) {
         return OmPaymentResponse.fromJson(response.data);
@@ -47,20 +49,32 @@ class PaymentService extends GetxService {
     }
   }
 
-  Future<bool> checkPayment(String paddingId)async {
+  Future<bool> checkPayment(String paddingId) async {
     try {
       var response = await _provider.checkPayment(paddingId);
       print(response);
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         var data = Padding.fromJson(response.data);
         return data.status != 0;
       }
-    return false;
+      return false;
     } catch (e) {
       print("CHECK: $e");
       return false;
     }
   }
 
-
+  Future<List<ModePayement>> modePayments(String client) async {
+    try {
+      var response = await _provider.modePayments(client);
+      print(response);
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+      return [];
+    } catch (e) {
+      print("CHECK: $e");
+      return [];
+    }
+  }
 }

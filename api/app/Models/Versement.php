@@ -11,6 +11,14 @@ class Versement extends Model
     use Uuids;
     use HasFactory;
 
+   protected $fillable = [
+        'date_time',
+        'via',
+        'reference',
+        'montant',
+        'commande_id',
+    ];
+
     public function commande()
     {
         return $this->belongsTo(Commande::class);

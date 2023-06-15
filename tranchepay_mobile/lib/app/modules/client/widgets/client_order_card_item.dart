@@ -61,7 +61,7 @@ class ClientOrderCardItem extends StatelessWidget {
               children: [
                 const Text(
                   "PRIX TOTAL",
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, fontSize: 12),
                 ),
                 Text(
                   "${order.prixTotal.toString()} FCFA",
@@ -77,7 +77,7 @@ class ClientOrderCardItem extends StatelessWidget {
               children: [
                 const Text(
                   "COMMISSION",
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, fontSize: 12),
                 ),
                 Text(
                   "${order.commission?.toInt()} FCFA",
@@ -91,7 +91,7 @@ class ClientOrderCardItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("BOUTIQUE", style: TextStyle(fontFamily: 'Poppins')),
+                const Text("BOUTIQUE", style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, fontSize: 12)),
                 Text(
                   "${order.boutique?.nom}",
                   style: const TextStyle(fontFamily: 'Poppins'),
@@ -106,7 +106,7 @@ class ClientOrderCardItem extends StatelessWidget {
               children: [
                 const Text(
                   "DATE COMMANDE",
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, fontSize: 12),
                 ),
                 Text(
                   formatDate(date: order.dateTime!),
@@ -122,7 +122,7 @@ class ClientOrderCardItem extends StatelessWidget {
               children: [
                 const Text(
                   "DATE LIMITE DE PAIEMENT",
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, fontSize: 12),
                 ),
                 Text(formatDate(date: order.dateLimite!))
               ],

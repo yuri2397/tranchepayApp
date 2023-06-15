@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:tranchepay_mobile/app/models/om_payment_response.model.dart';
 import 'package:tranchepay_mobile/app/models/wave_payment.model.dart';
-import 'package:tranchepay_mobile/app/services/payement.service.dart';
+import 'package:tranchepay_mobile/app/services/payment.service.dart';
 import 'package:tranchepay_mobile/core/theme.colors.dart';
 import 'package:tranchepay_mobile/core/ui.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -62,7 +64,8 @@ class PaymentController extends GetxController {
 
           if (wave != null) {
             //launchUrl(Uri.parse(wave.data.waveLaunchUrl));
-            await _waitConfirmation(title: wave.message, code: "wave", paddingId: wave.padding);
+            await _waitConfirmation(
+                title: wave.message, code: "wave", paddingId: wave.padding);
           } else {
             Ui.errorMessage(message: "Une erreur s'est produite");
           }
@@ -76,7 +79,10 @@ class PaymentController extends GetxController {
               commandeId: commandeId);
 
           if (om != null) {
-            await _waitConfirmation(title: "Veuillez confirmer votre paiement.", code: "om", paddingId: om.padding);
+            await _waitConfirmation(
+                title: "Veuillez confirmer votre paiement.",
+                code: "om",
+                paddingId: om.padding);
           }
           break;
       }
@@ -87,15 +93,12 @@ class PaymentController extends GetxController {
     }
   }
 
-
-  Future<void> _waitConfirmation({
-    required String title,
-    required String code,
-    required paddingId
-  }) async {
+  Future<void> _waitConfirmation(
+      {required String title, required String code, required paddingId}) async {
     executePeriodically(paddingId);
     Get.defaultDialog(
       title: title,
+      titleStyle: const TextStyle(color: Colors.black, fontFamily: "Poppins", fontSize: 16, fontWeight: FontWeight.w500),
       barrierDismissible: false,
       cancel: PrimaryButton(
           elevation: 0,
@@ -107,23 +110,21 @@ class PaymentController extends GetxController {
             "Annuler le paiement",
             style: TextStyle(color: Colors.white, fontFamily: "Poppins"),
           )),
-      titlePadding: const EdgeInsets.only(top: 30, bottom: 20),
+      titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       content: Container(
           color: Colors.white,
           width: Get.width,
-          height: 200,
           child: Column(
             children: [
               CircularProgressIndicator(
                 color: Color(mainColor),
                 strokeWidth: 2,
-              ).marginOnly(bottom: 20),
+              ).marginOnly(bottom: 10),
               Image.asset(
                 "assets/icons/$code.png",
                 width: 60,
                 height: 60,
               )
-
             ],
           )),
     );
@@ -131,16 +132,28 @@ class PaymentController extends GetxController {
 
   void executePeriodically(String padding) {
     periodicTimer = Timer.periodic(const Duration(seconds: 7), (timer) async {
-        if((await paymentService.checkPayment(padding))){
-          stopExecution();
-          Get.back();
-          Get.back();
-          Ui.successMessage(message: "Paiement valider avec succes", title: "Notification", );
-        }
+      if ((await paymentService.checkPayment(padding))) {
+        stopExecution();
+        Get.back();
+        Get.back();
+        QuickAlert.show(
+            context: Get.context!,
+            type: QuickAlertType.success,
+            title: "Notification!",
+            text: 'Paiement valider avec succes.',
+          showCancelBtn: false,
+        );
+      }
     });
   }
 
   void stopExecution() {
     periodicTimer?.cancel(); // Annule l'exécution périodique
   }
+
+@override
+  void onClose(){
+    stopExecution();
+    super.onClose();
+}
 }

@@ -29,4 +29,22 @@ class Client extends Model
     {
         return $this->morphOne(User::class, 'model', 'model_type', 'model');
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->prenoms . ' ' . $this->nom;
+    }
+
+    // get telephone attribute
+    public function getTelephoneAttribute($value)
+    {
+        return $value ? str_replace(" ", "", $value) : 'Inconnu';
+    }
+
+    // set telephone attribute
+    public function setTelephoneAttribute($value)
+    {
+        $this->attributes['telephone'] = $value ? formatOnePhone(str_replace(" ", "", $value)) : null;
+    }
+    
 }

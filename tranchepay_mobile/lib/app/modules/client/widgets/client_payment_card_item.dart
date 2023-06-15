@@ -20,14 +20,14 @@ class ClientPaymentCardItem extends StatelessWidget {
           style: const TextStyle(
               fontFamily: 'Poppins',
               color: Colors.black,
-              fontSize: 18,
+              fontSize: 12,
               fontWeight: FontWeight.w700),
         ),
         horizontalTitleGap: 20,
         minVerticalPadding: 10,
         subtitle: Text("${payment.reference}"),
         leading: CircleAvatar(
-          radius: 25,
+          radius: 20,
           backgroundColor: Colors.white,
           child: Icon(
             Icons.payment_rounded,
@@ -36,12 +36,12 @@ class ClientPaymentCardItem extends StatelessWidget {
           ) /* SvgPicture.asset('assets/icons/${payment.via?.toLowerCase()}.svg')*/,
         ),
         trailing: Text(
-          "${payment.montant} FCFA",
+          "${payment.montant} F",
           style: const TextStyle(
               fontFamily: 'Poppins',
               color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w400),
+              fontSize: 16,
+              fontWeight: FontWeight.w600),
         ),
       ),
     );

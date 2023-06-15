@@ -16,25 +16,15 @@ class ClientLastOrderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(20),
       width: Get.width,
-      decoration: BoxDecoration(
-        color: Ui.parseColorText("#EDEDED"),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Ui.parseColorText("#EDEDED"),
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: const Offset(.2, .5), // changes position of shadow
-          ),
-        ],
-      ),
+      decoration:Ui.containerDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Derniere commande",
-              style: Get.textTheme.headline4
+              style: Get.textTheme.headline5
                   ?.merge(TextStyle(color: Color(mainColor)))),
           const SizedBox(height: 10),
           Row(
@@ -42,7 +32,7 @@ class ClientLastOrderWidget extends StatelessWidget {
             children: [
               Text("Réference:  ",
                   style: Get.textTheme.caption?.merge(
-                      const TextStyle(fontSize: 14, fontFamily: 'Poppins'))),
+                      const TextStyle(fontSize: 12, fontFamily: 'Poppins'))),
               const SizedBox(
                 width: 20,
               ),
@@ -50,7 +40,7 @@ class ClientLastOrderWidget extends StatelessWidget {
                 "${order.reference?.toUpperCase()}",
                 overflow: TextOverflow.ellipsis,
                 style: Get.textTheme.caption?.merge(
-                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 14)),
+                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 12)),
               ),
             ],
           ),
@@ -60,7 +50,7 @@ class ClientLastOrderWidget extends StatelessWidget {
             children: [
               Text("Date d'achat:  ",
                   style: Get.textTheme.caption?.merge(
-                      const TextStyle(fontSize: 14, fontFamily: 'Poppins'))),
+                      const TextStyle(fontSize: 12, fontFamily: 'Poppins'))),
               const SizedBox(
                 width: 20,
               ),
@@ -68,7 +58,7 @@ class ClientLastOrderWidget extends StatelessWidget {
                 formatDate(date: order.dateTime!),
                 overflow: TextOverflow.ellipsis,
                 style: Get.textTheme.caption?.merge(
-                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 14)),
+                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 12)),
               ),
             ],
           ),
@@ -78,7 +68,7 @@ class ClientLastOrderWidget extends StatelessWidget {
             children: [
               Text("À payer avant le:  ",
                   style: Get.textTheme.caption?.merge(
-                      const TextStyle(fontSize: 14, fontFamily: 'Poppins'))),
+                      const TextStyle(fontSize: 12, fontFamily: 'Poppins'))),
               const SizedBox(
                 width: 20,
               ),
@@ -86,7 +76,7 @@ class ClientLastOrderWidget extends StatelessWidget {
                 formatDate(date: order.dateLimite!),
                 overflow: TextOverflow.ellipsis,
                 style: Get.textTheme.caption?.merge(
-                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 14)),
+                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 12)),
               ),
             ],
           ),
@@ -96,7 +86,7 @@ class ClientLastOrderWidget extends StatelessWidget {
             children: [
               Text("Status:  ",
                   style: Get.textTheme.caption?.merge(
-                      const TextStyle(fontSize: 14, fontFamily: 'Poppins'))),
+                      const TextStyle(fontSize: 12, fontFamily: 'Poppins'))),
               const SizedBox(
                 width: 10,
               ),
@@ -115,7 +105,7 @@ class ClientLastOrderWidget extends StatelessWidget {
                       Text("Détails",
                           style: Get.textTheme.caption?.merge(TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Color(mainColor)))),
                       const SizedBox(
                         width: 3,
@@ -126,20 +116,7 @@ class ClientLastOrderWidget extends StatelessWidget {
                   )),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: Get.width,
-            child: PrimaryButton(
-                elevation: 0,
-                onPressed: () {
-                  Get.toNamed(AppRoutes.orderDetails,
-                      arguments: {'commande_id', order.id});
-                },
-                child: Text("Faire un versement".toUpperCase(),
-                    style: Get.textTheme.button)),
-          )
+
         ],
       ),
     );

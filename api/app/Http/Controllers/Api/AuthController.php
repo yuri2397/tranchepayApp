@@ -36,7 +36,7 @@ class AuthController extends Controller
             "password" => "required"
         ]);
 
-        $user = User::whereUsername($request->username)->first();
+        $user = User::whereUsername(formatOnePhone($request->username, false))->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
@@ -380,7 +380,7 @@ class AuthController extends Controller
         $password_resets->created_at = Carbon::now();
         $password_resets->save();
 
-        orange()->sendSMS("Votre code de vérification est : $otp", $request->phone_number);
+        // orange()->sendSMS("Votre code de vérification est : $otp", $request->phone_number);
 
         return response()->json([
             "message" => "Votre code pin est envoyé avec succès.",
@@ -413,7 +413,7 @@ class AuthController extends Controller
     public function check(Request $request)
     {
         if ($request->has('username')) {
-            $user = User::whereUsername($request->username)->first();
+            $user = User::whereUsername(formatOnePhone($request->username, false))->first();
             if ($user) {
                 return response()->json($user);
             }

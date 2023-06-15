@@ -17,7 +17,7 @@ class ClientAppBarWidget extends AppBar {
       this.plusButtonTap})
       : super(
           elevation: 0,
-          backgroundColor: Colors.white,
+    backgroundColor: Color(neutralColor),
           automaticallyImplyLeading: false,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(25),
@@ -49,10 +49,10 @@ class ClientAppBarWidget extends AppBar {
                         .marginOnly(left: 10),
                   ),
                 ),
-                GestureDetector(
+               /* GestureDetector(
                         onTap: () => plusButtonTap,
                         child: SvgPicture.asset("assets/icons/plus.svg"))
-                    .marginOnly(right: 20),
+                    .marginOnly(right: 20),*/
                 GestureDetector(
                         onTap: notificationButtonTap,
                         child: SvgPicture.asset("assets/icons/bel.svg"))

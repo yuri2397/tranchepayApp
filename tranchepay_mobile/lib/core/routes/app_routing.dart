@@ -20,6 +20,10 @@ import 'package:tranchepay_mobile/app/modules/client/pages/client_update_profile
 import 'package:tranchepay_mobile/app/modules/client/pages/make_payment.page.dart';
 import 'package:tranchepay_mobile/app/modules/client/widgets/client_order_detail.widget.dart';
 import 'package:tranchepay_mobile/app/modules/client/widgets/client_payment_detail.widget.dart';
+import 'package:tranchepay_mobile/app/modules/vendor/binding/confirm_order.binding.dart';
+import 'package:tranchepay_mobile/app/modules/vendor/pages/add_client_page.dart';
+import 'package:tranchepay_mobile/app/modules/vendor/pages/confirm_order.page.dart';
+import 'package:tranchepay_mobile/app/modules/vendor/pages/search_client_page.dart';
 import 'package:tranchepay_mobile/app/views/shared/first_time_in_app.page.dart';
 import 'package:tranchepay_mobile/app/views/shared/general_info.page.dart';
 import 'package:tranchepay_mobile/app/views/shared/help_center.page.dart';
@@ -30,6 +34,15 @@ import 'package:tranchepay_mobile/app/views/shared/splash_screen.view.dart';
 import 'package:tranchepay_mobile/app/views/shared/update-pin-code/update_pin_code.binding.dart';
 import 'package:tranchepay_mobile/app/views/shared/update-pin-code/update_pin_code.page.dart';
 import 'package:tranchepay_mobile/core/routes/routes.dart';
+
+import '../../app/modules/vendor/binding/add_boutique.binding.dart';
+import '../../app/modules/vendor/binding/add_client.binding.dart';
+import '../../app/modules/vendor/binding/add_order.binding.dart';
+import '../../app/modules/vendor/binding/search_client.binding.dart';
+import '../../app/modules/vendor/pages/add_order_page.dart';
+import '../../app/modules/vendor/pages/vendor_add_shop.page.dart';
+import '../../app/modules/vendor/vendor.module.dart';
+import '../../app/modules/vendor/vendor_module.binding.dart';
 
 class AppRouting {
   static const initial = AppRoutes.splashScreen;
@@ -84,6 +97,36 @@ class AppRouting {
         name: AppRoutes.clientUpdateProfile,
         page: () => ClientUpdateProfileProfile(),
         binding: ClientProfileBinding()),
+
+    GetPage(
+        name: AppRoutes.addShop,
+        binding: AddBoutiqueBinding(),
+        page: () => const VendorAddShopPage()),
+
+    GetPage(
+        name: AppRoutes.vendorModule,
+        binding: VendorModuleBinding(),
+        page: () => const VendorModule()),
+
+    GetPage(
+        name: AppRoutes.addOrder,
+        binding: AddOrderBinding(),
+        page: () => const AddOrderPage()),
+
+    GetPage(
+        name: AppRoutes.searchClient,
+        binding: SearchClientBinding(),
+        page: () => SearchClientPage()),
+
+    GetPage(
+        name: AppRoutes.addClient,
+        binding: AddClientBinding(),
+        page: () => AddClientPage()),
+
+    GetPage(
+        name: AppRoutes.confirmOrder,
+        binding: ConfirmOrderBinding(),
+        page: () => const ConfirmOrderPage()),
 
     // SHARED
 

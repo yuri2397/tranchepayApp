@@ -105,8 +105,24 @@ class LocalStorageService extends GetxService {
     _box.remove('solde');
   }
 
+  void setVendor(Map<String, dynamic> data) => _box.write("vendor", data);
+
+  Map<String, dynamic>? getVendor() => _box.read('vendor');
+
+  void setVendorBoutique(Map<String, dynamic>? boutique) => _box.write('boutique', boutique);
+
+  Map<String, dynamic>? getVendorBoutique() => _box.read('boutique');
+
   void clear() {
     _box.erase();
+  }
+
+  bool firstTimeInstall() {
+    return _box.read('firstTimeInstall') != null && _box.read('firstTimeInstall') == true;
+  }
+
+  void setFirstTimeInstall(bool value) {
+    _box.write('firstTimeInstall', value);
   }
 
   // vendor

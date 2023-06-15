@@ -6,7 +6,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tranchepay_mobile/app/modules/auth/login/login.controller.dart';
 import 'package:tranchepay_mobile/core/routes/routes.dart';
 import 'package:tranchepay_mobile/core/theme.colors.dart';
-import 'package:tranchepay_mobile/core/ui.dart';
 
 class LoginPinPage extends GetView<LoginController> {
   const LoginPinPage({super.key});
@@ -14,98 +13,88 @@ class LoginPinPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
-          "CODE PIN".toUpperCase(),
-          style: Get.textTheme.headline2
-              ?.merge(TextStyle(color: Color(mainColor))),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Color(mainColor)),
-          onPressed: () => Get.back(),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () => Get.toNamed(AppRoutes.forgotPassword),
-            child: SvgPicture.asset(
-              "assets/icons/help.svg",
-              width: 35,
-              height: 35,
-            ).marginOnly(right: 20),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          child: Obx(
-            () => Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset("assets/icons/key_pin.svg")
-                      .marginOnly(bottom: 30),
-                  Text("Veuillez saisir votre code PIN pour continuer",
-                          textAlign: TextAlign.center,
-                          style: Get.textTheme.bodyMedium
-                              ?.merge(TextStyle(color: Color(mainColor))))
-                      .marginOnly(bottom: 30),
-                  SizedBox(
-                    width: Get.width * 0.5,
-                    child: PinCodeTextField(
-                      length: 4,
-                      keyboardType: TextInputType.phone,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      autoDismissKeyboard: true,
-                      cursorColor: Color(mainColor),
-                      autoFocus: true,
-                      textStyle:
-                          TextStyle(fontSize: 30, color: Color(mainColor)),
-                      obscureText: true,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        borderRadius: BorderRadius.circular(10),
-                        activeColor: Color(mainColor),
-                        selectedColor: Color(mainColor),
-                        inactiveColor: Color(neutralColor),
-                        activeFillColor: Color(neutralColor),
-                        selectedFillColor: Color(mainColor),
-                        inactiveFillColor: Color(mainColor),
-                        errorBorderColor: Colors.redAccent,
-                        borderWidth: 2,
-                        fieldHeight: 30,
-                        fieldWidth: 30,
-                      ),
-                      onCompleted: (v) async {
-                        controller.password.value = v;
-                        await controller.login();
-                      },
-                      onChanged: (value) {
-                        controller.password.value = value;
-                      },
-                      beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
-                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                        return true;
-                      },
-                      appContext: Get.context!,
-                    ),
-                  ),
-                  controller.loading.value
-                      ? const CircularProgressIndicator()
-                      : Container()
-                ],
-              ),
-            ),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: Text(
+            "CODE PIN".toUpperCase(),
+            style: Get.textTheme.headline4
+                ?.merge(TextStyle(color: Color(mainColor))),
           ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Color(mainColor)),
+            onPressed: () => Get.back(),
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () => Get.toNamed(AppRoutes.forgotPassword),
+              child: SvgPicture.asset(
+                "assets/icons/help.svg",
+                width: 35,
+                height: 35,
+              ).marginOnly(right: 20),
+            )
+          ],
         ),
-      ),
-    );
+        body:  Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+
+              Text("Veuillez entrer le code PIN",
+                  style: TextStyle(
+                    color: Color(darkColor),
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ).marginOnly(bottom: 30),
+
+              PinCodeTextField(
+                appContext: context,
+                length: 4,
+                obscureText: true,
+                autoUnfocus: true,
+                keyboardType: TextInputType.number,
+                animationType: AnimationType.fade,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(10),
+                  fieldHeight: 50,
+                  fieldWidth: 45,
+                  inactiveFillColor: Color(neutralColor),
+                  borderWidth: 3,
+                  activeFillColor: Color(neutralColor),
+                  selectedFillColor: Color(neutralColor),
+                  selectedColor: Color(mainColor),
+                  activeColor: Color(mainColor),
+                  inactiveColor: Color(neutralColor),
+                  fieldOuterPadding: EdgeInsets.all(10),
+                ),
+                animationDuration: const Duration(milliseconds: 300),
+                backgroundColor: Colors.transparent,
+                enableActiveFill: true,
+                onCompleted: (v) async {
+                  controller.password.value = v;
+                  controller.login();
+                },
+                onChanged: (value) {
+                  controller.password.value = value;
+                },
+                beforeTextPaste: (text) {
+                  return false;
+                },
+              ).marginOnly(bottom: 20),
+              controller.loading.value
+                  ?  CircularProgressIndicator(
+                color: Color(mainColor),
+              )
+                  : Container()
+            ],
+          ).marginOnly(left: 30, right: 30, top: 30));
   }
 }

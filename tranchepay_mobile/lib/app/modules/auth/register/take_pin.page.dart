@@ -17,10 +17,10 @@ class TakePinPage extends GetView<RegisterController> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Color(neutralColor),
+          backgroundColor: Colors.white,
           title: Text(
-            "CODE PIN".toUpperCase(),
-            style: Get.textTheme.headline2
+            "CHOISIR UN CODE PIN".toUpperCase(),
+            style: Get.textTheme.headline3
                 ?.merge(TextStyle(color: Color(mainColor))),
           ),
           centerTitle: true,
@@ -39,19 +39,16 @@ class TakePinPage extends GetView<RegisterController> {
             )
           ],
         ),
-        body: Center(
-            child: Padding(
-          padding: const EdgeInsets.all(20.0),
+        body:  Padding(
+          padding: const EdgeInsets.all(50.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               SvgPicture.asset("assets/icons/key_pin.svg",
                       width: 60, height: 60)
-                  .marginOnly(bottom: 30),
-              const Text(
-                "Choisissez votre code PIN",
-                style: TextStyle(fontSize: 15),
-              ).marginOnly(bottom: 40),
+                  .marginOnly(bottom: 40),
+
               PinCodeTextField(
                 controller: controller.pinController,
                 appContext: context,
@@ -97,7 +94,6 @@ class TakePinPage extends GetView<RegisterController> {
             ],
           ),
         )),
-      ),
     );
   }
 }

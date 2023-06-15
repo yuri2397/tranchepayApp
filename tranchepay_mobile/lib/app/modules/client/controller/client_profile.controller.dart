@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tranchepay_mobile/app/models/client.model.dart';
@@ -5,6 +6,9 @@ import 'package:tranchepay_mobile/app/models/commande.model.dart';
 import 'package:tranchepay_mobile/app/modules/client/client.module.controller.dart';
 import 'package:tranchepay_mobile/app/services/client.service.dart';
 import 'package:tranchepay_mobile/core/ui.dart';
+import 'package:tranchepay_mobile/core/utils/helpers.dart';
+
+import '../../../services/local_storage.service.dart';
 
 class ClientProfileController extends GetxController {
   final client = Client().obs;
@@ -15,9 +19,14 @@ class ClientProfileController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   final order = Commande().obs;
   late XFile? image;
+  final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
+
 
   @override
   void onInit() async {
+    if(isAuth()){
+        client.value = Client.fromJson(Get.find<LocalStorageService>().getClient()!);
+    }
     await getLastOrder();
     super.onInit();
   }

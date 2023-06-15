@@ -23,8 +23,8 @@ class PaymentTypeWidget extends Container {
               onTap: () => onTap(),
               child: Image.asset(
                 "assets/icons/$code.png",
-                width: 60,
-                height: 60,
+                width: 30,
+                height: 30,
               ).marginAll(15)),
           Positioned(
             right: 8,
@@ -33,8 +33,8 @@ class PaymentTypeWidget extends Container {
                 visible: selected,
                 child: Image.asset(
                   "assets/icons/checked.png",
-                  width: 15,
-                  height: 15,
+                  width: 10,
+                  height: 10,
                 )),
           )
         ],

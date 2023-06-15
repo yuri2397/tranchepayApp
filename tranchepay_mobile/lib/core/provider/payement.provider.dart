@@ -13,20 +13,22 @@ class PaymentProvider {
           data: {'amount': amount, 'phone': phone, 'commande_id': commandeId});
 
   Future<dio.Response> om(
-      {required double amount,
-        required String phone,
-        required String commandeId}) async =>
+          {required double amount,
+          required String phone,
+          required String commandeId}) async =>
       _client.post('/payments/om',
           data: {'amount': amount, 'phone': phone, 'commande_id': commandeId});
 
   Future<dio.Response> free(
-      {required double amount,
-        required String phone,
-        required String commandeId}) async =>
+          {required double amount,
+          required String phone,
+          required String commandeId}) async =>
       _client.post('/payments/free',
           data: {'amount': amount, 'phone': phone, 'commande_id': commandeId});
 
   Future<dio.Response> checkPayment(String paddingId) async =>
       _client.get('/shared/check-padding/$paddingId');
 
+  Future<dio.Response> modePayments(String client) async =>
+      _client.get('/shared/mode-paiement/$client');
 }

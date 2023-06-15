@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tranchepay_mobile/core/provider/base/api_client.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -30,4 +31,7 @@ class AuthProvider {
 
   Future<dio.Response> updateUserNotificationToken(String token) =>
       _client.put('/auth/update-fcm-token', data: {'token': token});
+
+  Future<dio.Response> registerVendor(
+      {required Map<String, dynamic> data,}) async => _client.post('/auth/register/vendor', data: data);
 }

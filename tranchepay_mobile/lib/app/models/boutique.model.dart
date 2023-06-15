@@ -1,45 +1,57 @@
-import 'package:tranchepay_mobile/app/models/compte.model.dart';
+// To parse this JSON data, do
+//
+//     final boutique = boutiqueFromJson(jsonString);
+
+import 'dart:convert';
+
+Boutique boutiqueFromJson(String str) => Boutique.fromJson(json.decode(str));
+
+String boutiqueToJson(Boutique data) => json.encode(data.toJson());
 
 class Boutique {
   Boutique({
-    this.id,
     this.nom,
     this.addresse,
+    this.telephone,
     this.commercantId,
-    this.createdAt,
+    this.id,
     this.updatedAt,
-    this.compte,
+    this.createdAt,
+    this.logo,
   });
 
-  String? id;
   String? nom;
   String? addresse;
+  String? telephone;
   String? commercantId;
-  DateTime? createdAt;
+  String? id;
   DateTime? updatedAt;
-  Compte? compte;
+  DateTime? createdAt;
+  String? logo;
 
   factory Boutique.fromJson(Map<String, dynamic> json) => Boutique(
-        id: json["id"],
         nom: json["nom"],
         addresse: json["addresse"],
+        telephone: json["telephone"],
         commercantId: json["commercant_id"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
+        id: json["id"],
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
-        compte: json["compte"] == null ? null : Compte.fromJson(json["compte"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        logo: json["logo"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "nom": nom,
         "addresse": addresse,
+        "telephone": telephone,
         "commercant_id": commercantId,
-        "created_at": createdAt?.toIso8601String(),
+        "id": id,
         "updated_at": updatedAt?.toIso8601String(),
-        "compte": compte?.toJson(),
+        "created_at": createdAt?.toIso8601String(),
+        "logo": logo,
       };
 }

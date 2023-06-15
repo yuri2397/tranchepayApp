@@ -8,6 +8,7 @@ class AppRoutes {
   static const String makePayment = '/make-payment';
   static const String register = '/register';
   static const String clientModule = '/client-module';
+  static const String vendorModule = '/vendor-module';
   static const String orderDetails = '/order-details';
   static const String paymentDetails = '/payment-details';
   static const String takePassword = '/take-password';
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String clientProfile = '/client-profile';
   static const String clientUpdateProfile = '/client-update-profile';
   static const String vendorProfile = '/vendor-profile';
+  static const String addShop = '/add-shop';
   static const String settings = '/settings';
   static const String about = '/about';
   static const String contact = '/contact';
@@ -32,6 +34,10 @@ class AppRoutes {
   static const String pinPage = '/pin-page';
   static const String pinConfirmPage = '/pin-confirm-page';
   static const String paymentPage = '/payment-page';
+  static const String addOrder = '/add-order';
+  static const String searchClient = '/search-client';
+  static const String addClient = '/add-client';
+  static const String confirmOrder = '/confirm-order';
 
 // SHARED
   static const String parteners = '/parteners';

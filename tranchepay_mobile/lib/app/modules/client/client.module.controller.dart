@@ -1,8 +1,9 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tranchepay_mobile/app/modules/client/pages/client_payment_history.page.dart';
 import 'package:tranchepay_mobile/app/modules/client/pages/client_profile.page.dart';
 import 'package:tranchepay_mobile/app/modules/client/pages/client_settings.page.dart';
@@ -18,7 +19,28 @@ class ClientModuleController extends GetxController {
 
   final _storage = Get.find<LocalStorageService>();
   final loading = true.obs;
-  final pages = <PersistentBottomNavBarItem>[];
+
+  GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
+
+  final _pages = <BottomNavyBarItem>[
+    BottomNavyBarItem(
+        activeColor: Colors.white,
+        icon: SvgPicture.asset("assets/icons/b_1.svg", width: 20),
+        title: const Text("ACCUEIL", style: TextStyle(color: Colors.white, fontFamily: 'Poppins', fontSize: 12))),
+    BottomNavyBarItem(
+        activeColor: Colors.white,
+        icon: SvgPicture.asset("assets/icons/b_2.svg", width: 20),
+        title: const Text("COMMANDES", style: TextStyle(color: Colors.white, fontFamily: 'Poppins', fontSize: 12))),
+    BottomNavyBarItem(
+        activeColor: Colors.white,
+        icon: SvgPicture.asset("assets/icons/b_3.svg", width: 20),
+        title:const  Text("PAIMENTS", style: TextStyle(color: Colors.white, fontFamily: 'Poppins', fontSize: 12))),
+    BottomNavyBarItem(
+      activeColor: Colors.white,
+      icon: SvgPicture.asset("assets/icons/b_4.svg", width: 20,),
+      title:const Text("PARAMETRES", style: TextStyle(color: Colors.white, fontFamily: 'Poppins', fontSize: 12)),
+    ),
+  ];
 
   final screens = [
     const ClientProfilePage(),
@@ -27,7 +49,7 @@ class ClientModuleController extends GetxController {
     const ClientSettingsPage()
   ];
 
-  List<PersistentBottomNavBarItem> navBarsItems() => pages;
+  List<BottomNavyBarItem> navBarsItems() => _pages;
 
   List<Widget> buildScreens() => screens;
 
@@ -39,54 +61,17 @@ class ClientModuleController extends GetxController {
 
   @override
   void onInit() async {
-    pages.add(
-      PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home_rounded),
-          inactiveIcon: const Icon(Icons.home_rounded),
-          title: 'Accueil',
-          inactiveColorSecondary: Colors.white,
-          inactiveColorPrimary: Colors.white,
-          activeColorPrimary: Color(primaryColor),
-          activeColorSecondary: Color(primaryColor)),
-    );
-    pages.add(PersistentBottomNavBarItem(
-        icon: const Icon(Icons.shopping_bag_outlined),
-        inactiveIcon: const Icon(Icons.shopping_bag_outlined),
-        title: 'Commandes',
-        inactiveColorSecondary: Colors.white,
-        inactiveColorPrimary: Colors.white,
-        activeColorPrimary: Color(primaryColor),
-        activeColorSecondary: Color(primaryColor)));
-    pages.add(
-      PersistentBottomNavBarItem(
-          icon: const Icon(Icons.download_rounded),
-          inactiveIcon: const Icon(Icons.download_rounded),
-          title: 'Versements',
-          inactiveColorSecondary: Colors.white,
-          inactiveColorPrimary: Colors.white,
-          activeColorPrimary: Color(primaryColor),
-          activeColorSecondary: Color(primaryColor)),
-    );
-    pages.add(
-      PersistentBottomNavBarItem(
-          icon: const Icon(Icons.settings_rounded),
-          inactiveIcon: const Icon(Icons.settings_rounded),
-          title: 'Paramètres',
-          inactiveColorSecondary: Colors.white,
-          inactiveColorPrimary: Colors.white,
-          activeColorPrimary: Color(primaryColor),
-          activeColorSecondary: Color(primaryColor)),
-    );
-    await getSolde();
+     getSolde();
     super.onInit();
   }
 
   Future<void> getSolde() async {
     loading.value = false;
     try {
-      int? solde = await _clientService.solde();
+      double? solde = await _clientService.solde();
+      print("SOLDE $solde");
       if (solde != null) {
-        this.solde.value = solde;
+        this.solde.value = solde.toInt();
         this.solde.refresh();
       }
 

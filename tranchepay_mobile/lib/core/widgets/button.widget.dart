@@ -34,7 +34,7 @@ class PrimaryButton extends ElevatedButton {
 
 class SecondaryButton extends ElevatedButton {
   bool? disabled;
-  double? elevation = 2;
+  double? elevation = 0;
   SecondaryButton({
     Key? key,
     this.disabled = false,
@@ -46,12 +46,16 @@ class SecondaryButton extends ElevatedButton {
           onPressed: onPressed,
           child: child,
           style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
             foregroundColor: Colors.white,
             elevation: disabled! ? 0 : elevation,
             backgroundColor: Color(mainColor),
             shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              side: BorderSide(color: Color(mainColor), width: 1),
+              side: BorderSide(color: Color(primaryColor), width: 1),
             ),
           ),
         );

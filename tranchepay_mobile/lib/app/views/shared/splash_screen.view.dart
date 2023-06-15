@@ -4,6 +4,7 @@ import 'package:tranchepay_mobile/app/models/shared.model.dart';
 import 'package:tranchepay_mobile/app/services/local_storage.service.dart';
 import 'package:tranchepay_mobile/core/routes/routes.dart';
 import 'package:tranchepay_mobile/core/theme.colors.dart';
+import 'package:tranchepay_mobile/core/utils/helpers.dart';
 
 class SplashScreenView extends StatefulWidget {
   const SplashScreenView({super.key});
@@ -17,15 +18,17 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      bool isAuth = Get.find<LocalStorageService>().getIsLogged();
-      Get.log("IS AUTH: $isAuth");
-      if (isAuth) {
+      if (isAuth()) {
         if (Get.find<LocalStorageService>().getUserType() == 'client') {
           Get.offAllNamed(AppRoutes.clientModule);
-        } else {
-          Get.offAllNamed(AppRoutes.vendorDashboard);
+        } else if(localStorage.getVendorBoutique() == null){
+          Get.offAllNamed(AppRoutes.addShop);
+        }else{
+          Get.offAllNamed(AppRoutes.vendorModule);
         }
-      } else {
+      }else if(!localStorage.firstTimeInstall())  {
+        Get.offAllNamed(AppRoutes.firstTimeInstall);
+      }else{
         Get.offAllNamed(AppRoutes.loginNumber);
       }
     });
